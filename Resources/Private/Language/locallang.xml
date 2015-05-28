@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>misc</type>
+		<description>Language file for the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pleaseSet"><![CDATA[Please set: ]]></label>
+			<label index="contentData"><![CDATA[Content data]]></label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pleaseSet"><![CDATA[Bitte anlegen: ]]></label>
+			<label index="contentData"><![CDATA[Inhaltsdaten]]></label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="pleaseSet"><![CDATA[S'il vous plaît définir: ]]></label>
+		</languageKey>
+		<languageKey index="es" type="array">
+			<label index="pleaseSet"><![CDATA[Por favor, establece: ]]></label>
+		</languageKey>
+		<languageKey index="it" type="array">
+			<label index="pleaseSet"><![CDATA[Si prega di impostare: ]]></label>
+		</languageKey>
+		<languageKey index="ru" type="array">
+			<label index="pleaseSet"><![CDATA[Пожалуйста, установите: ]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

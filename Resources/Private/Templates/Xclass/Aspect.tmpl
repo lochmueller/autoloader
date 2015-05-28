@@ -1,0 +1,214 @@
+<?php
+/**
+ * Generated from Autoloader Extension.
+ *
+ * Do not modifiy THIS file!
+ *
+ * @author generated
+ */
+namespace HDNET\Autoloader\Xclass;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
+ * Aspect Xclass.
+ *
+ * @package HDNET\Autoloader\Xclass
+ */
+class __classname__ extends __extendedClass__ {
+
+	/**
+	 * Configuration Array for before-aspects.
+	 *
+	 * array(
+	 *  {joinPoint} => array(
+	 *          {method1}, {method2}, {method3}
+	 *      )
+	 * )
+	 *
+	 */
+	protected $before = __beforeAspectsConfiguration__;
+
+	/**
+	 * Configuration Array for replace-aspects.
+	 *
+	 * array(
+	 *  {joinPoint} => array(
+	 *          {method1}, {method2}, {method3}
+	 *      )
+	 * )
+	 *
+	 */
+	protected $replace = __replaceAspectsConfiguration__;
+
+	/**
+	 * Configuration Array for after-aspects.
+	 *
+	 * array(
+	 *  {joinPoint} => array(
+	 *          {method1}, {method2}, {method3}
+	 *      )
+	 * )
+	 *
+	 */
+	protected $after = __afterAspectsConfiguration__;
+
+	/**
+	 * Configuration Array for throw-aspects.
+	 *
+	 * array(
+	 *  {joinPoint} => array(
+	 *          {method1}, {method2}, {method3}
+	 *      )
+	 * )
+	 *
+	 */
+	protected $throw = __throwAspectsConfiguration__;
+
+	__joinPointMethods__
+
+	/**
+	 * @param $joinPoint
+	 * @param $args
+	 *
+	 * @return mixed
+	 *
+	 * @throws \Exception
+	 */
+	protected function aspectLogic($joinPoint, $args) {
+		$arguments = array(
+			'args' => $args,
+			'result' => NULL
+		);
+
+		$return = NULL;
+		try {
+			// Aspect: before
+			$arguments = $this->before($joinPoint, $arguments);
+
+			// Aspect: replace
+			$arguments = $this->replace($joinPoint, $arguments);
+
+			// Aspect: after
+			$arguments = $this->after($joinPoint, $arguments);
+
+		} catch (\Exception $e) {
+			// Aspect: throws
+			$arguments = $this->throws($joinPoint, $arguments, $e);
+		}
+
+		return $arguments['result'];
+	}
+
+	/**
+	 * Work the 'before' aspect. on the given joinPoint.
+	 *
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
+	 *
+	 * @return array $arguments
+	 */
+	protected function before($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->before)) {
+			$functionStack = $this->before[$joinPoint];
+
+			foreach ($functionStack as $key => $configuration) {
+				$arguments = $this->callAspect($configuration, $arguments);
+			}
+		}
+
+		return $arguments;
+	}
+
+	/**
+	 * Work the 'after' aspect. on the given joinPoint.
+	 *
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
+	 *
+	 * @return array $arguments
+	 */
+	protected function after($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->after)) {
+			$functionStack = $this->after[$joinPoint];
+
+			foreach ($functionStack as $key => $configuration) {
+				$arguments = $this->callAspect($configuration, $arguments);
+			}
+		}
+
+		return $arguments;
+	}
+
+	/**
+	 * Work the 'replace' aspect. on the given joinPoint.
+	 * If the replace aspect is called, the original method is not used anymore!
+	 *
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
+	 *
+	 * @return array $arguments
+	 */
+	protected function replace($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->replace) && $this->replace[$joinPoint]) {
+			$functionStack = $this->replace[$joinPoint];
+
+			foreach ($functionStack as $key => $configuration) {
+				$arguments = $this->callAspect($configuration, $arguments);
+			}
+		} else {
+			if (array_key_exists('args', $arguments)) {
+				$arguments['result'] = call_user_func_array('parent::' . $joinPoint, $arguments['args']);
+			} else {
+				$arguments['result'] = call_user_func_array('parent::' . $joinPoint, array());
+			}
+		}
+
+		return $arguments;
+	}
+
+	/**
+	 * Work the 'throw' aspect. on the given joinPoint.
+	 *
+	 * @param string     $joinPoint joinPoint in the class
+	 * @param array      $arguments arguments for the method defined by the joinPoint
+	 * @param \Exception $e
+	 *
+	 * @return array $arguments
+	 *
+	 * @throws \Exception
+	 */
+	protected function throws($joinPoint, $arguments, \Exception $e) {
+		if (array_key_exists($joinPoint, $this->throw)) {
+			$functionStack = $this->throw[$joinPoint];
+
+			foreach ($functionStack as $key => $configuration) {
+				$arguments = $this->callAspect($configuration, $arguments);
+			}
+		} else {
+			throw $e;
+		}
+
+		return $arguments;
+	}
+
+	/**
+	 * Call the given aspect in the User-Class.
+	 *
+	 * @param array $configuration
+	 * @param array $arguments
+	 *
+	 * @return array
+	 */
+	protected function callAspect(array $configuration, $arguments) {
+		$class = GeneralUtility::makeInstance($configuration['class']);
+		$return = call_user_func_array(
+			array($class, $configuration['function']),
+			array($this->parentClass, $arguments)
+		);
+
+		$arguments = ($return) ? $return : $arguments;
+
+		return $arguments;
+	}
+}

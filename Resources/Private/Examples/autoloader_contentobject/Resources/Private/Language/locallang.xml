@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description></description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tt_content.content_element.description"><![CDATA[content_element (Description)]]></label>
+			<label index="tt_content.content_element"><![CDATA[content_element (Title)]]></label>
+			<label index="tt_content.new_field"><![CDATA[The new Field]]></label>
+			<label index="tx_autoloadercontentobject_domain_model_content_teaser.new_field"><![CDATA[New field label (via LLL)]]></label>
+			<label index="tt_content.teaser"><![CDATA[Teaser]]></label>
+			<label index="tt_content.teaser.description"><![CDATA[Teaser description here...]]></label>
+			<label index="tt_content.autoloader_contentobject.header"><![CDATA[Example Content Object]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

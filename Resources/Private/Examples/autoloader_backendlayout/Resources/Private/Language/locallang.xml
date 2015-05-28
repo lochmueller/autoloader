@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+	<type>database</type>
+	<description>Language file is created via the HDNET extension on Thursday, 05-Mar-2015 13:49:15 UTC</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="backendLayout.OneColumn.txt"><![CDATA[OneColumn Label]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

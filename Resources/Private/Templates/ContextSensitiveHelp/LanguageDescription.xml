@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language file is generate by the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<f:for each="{properties}" as="property">
+			<label index="{property}.alttitle"><![CDATA[]]></label>
+			<label index="{property}.description"><![CDATA[]]></label>
+			</f:for>
+		</languageKey>
+		<languageKey index="xx" type="array">
+			<!-- more languages -->
+		</languageKey>
+	</data>
+</T3locallang>
