@@ -7,7 +7,7 @@ conf.py:
   copyright: 2014
   project: Autoloader
   version: 6.2
-  release: 1.5.7
+  release: 1.5.8
   highlight_language: php
   latex_documents:
   - - Index
