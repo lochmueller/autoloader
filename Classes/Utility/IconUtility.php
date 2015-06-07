@@ -46,7 +46,7 @@ class IconUtility {
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
 		$extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
+		$modelName = str_replace('\\', '/', $modelInformation['modelName']);
 
 		$tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
 		$fileExtension = self::getIconFileExtension($tableIconPath);

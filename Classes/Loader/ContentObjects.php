@@ -222,7 +222,7 @@ class ContentObjects implements LoaderInterface {
 			$tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
-    icon = ' . IconUtility::getByExtensionKey($loader->getExtensionKey()) . '
+    icon = ' . IconUtility::getByModelName($config['modelClass']) . '
     title = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
