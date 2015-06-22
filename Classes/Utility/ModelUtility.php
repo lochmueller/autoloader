@@ -141,6 +141,8 @@ class ModelUtility {
 			->setIgnoreEnableFields($ignoreEnableFields);
 		$query->getQuerySettings()
 			->setRespectStoragePage(FALSE);
+		$query->getQuerySettings()
+			->setRespectSysLanguage(FALSE);
 
 		$query->matching($query->equals('uid', $data['uid']));
 
