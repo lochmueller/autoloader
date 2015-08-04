@@ -17,6 +17,7 @@ use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * ContextSensitiveHelp (CSH) based on smart objects
@@ -86,6 +87,10 @@ class ContextSensitiveHelps implements LoaderInterface {
 	protected function checkCshFile($path, $modelClass) {
 		if (is_file($path)) {
 			return;
+		}
+		$dir = PathUtility::dirname($path);
+		if (!is_dir($dir)) {
+			GeneralUtility::mkdir_deep($dir);
 		}
 		$information = SmartObjectInformationService::getInstance()
 			->getCustomModelFieldTca($modelClass);
