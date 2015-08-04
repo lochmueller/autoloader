@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo    General file information
+ * Interface for L10N file writers
  *
  * @author  Tim Lochmüller
  */
@@ -8,10 +8,14 @@
 namespace HDNET\Autoloader\Localization\Writer;
 
 /**
- * @todo   General class information
+ * Interface for L10N file writers
  *
  * @author Tim Lochmüller
  */
-class LocalizationWriterInterface {
+interface LocalizationWriterInterface {
 
+	/**
+	 * @return string
+	 */
+	// public function getBaseFileContent();
 }

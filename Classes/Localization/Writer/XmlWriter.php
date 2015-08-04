@@ -12,6 +12,6 @@ namespace HDNET\Autoloader\Localization\Writer;
  *
  * @author Tim Lochmüller
  */
-class XmlWriter extends LocalizationWriterInterface {
+class XmlWriter implements LocalizationWriterInterface {
 
 }

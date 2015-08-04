@@ -12,6 +12,6 @@ namespace HDNET\Autoloader\Localization\Writer;
  *
  * @author Tim Lochmüller
  */
-class XliffWriter extends LocalizationWriterInterface {
+class XliffWriter implements LocalizationWriterInterface {
 
 }

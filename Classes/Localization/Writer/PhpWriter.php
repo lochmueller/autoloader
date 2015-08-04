@@ -12,6 +12,6 @@ namespace HDNET\Autoloader\Localization\Writer;
  *
  * @author Tim Lochmüller
  */
-class PhpWriter extends LocalizationWriterInterface {
+class PhpWriter implements LocalizationWriterInterface {
 
 }
