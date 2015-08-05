@@ -18,15 +18,22 @@ class XliffWriter extends AbstractLocalizationWriter {
 	/**
 	 * Get the base file content
 	 *
+	 * @param string $extensionKey
+	 *
 	 * @return string
 	 */
-	public function getBaseFileContent() {
-		// TODO: Implement getBaseFileContent() method.
+	public function getBaseFileContent($extensionKey) {
+		return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="' . date('c') . '" product-name="' . $extensionKey . '">
+		<header/>
+		<body>
+		</body>
+	</file>
+</xliff>';
 	}
 
 	/**
-	 * Get the absolute path
-	 *
 	 * @param string $extensionKey
 	 *
 	 * @return string
@@ -38,49 +45,29 @@ class XliffWriter extends AbstractLocalizationWriter {
 	/**
 	 * Add the Label to the local lang XLIFF
 	 *
-	 * @param string  $extensionName
-	 * @param string  $key
-	 * @param string  $value
-	 *
-	 * @param boolean $createFile
+	 * @param string $extensionKey
+	 * @param string $key
+	 * @param string $default
 	 *
 	 * @return NULL
 	 */
-	protected function addLabel2Xlf($extensionName, $key, $value, $createFile = FALSE) {
+	public function addLabel($extensionKey, $key, $default) {
 		// Exclude
-		if (!strlen($value)) {
+		if (!strlen($default)) {
 			return;
 		}
 		if (!strlen($key)) {
 			return;
 		}
-		if (!strlen($extensionName)) {
+		if (!strlen($extensionKey)) {
 			return;
 		}
 
-		$absolutePath = $this->getAbsoluteFilename($extensionName);
-
+		$absolutePath = $this->getAbsoluteFilename($extensionKey);
 		$content = GeneralUtility::getUrl($absolutePath);
-		if (strstr($content, '<xliff version="1.0">') === FALSE) {
-			return;
-		}
-
-		$replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source><![CDATA[' . $value . ']]></source></trans-unit>';
+		$replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source><![CDATA[' . $default . ']]></source></trans-unit>';
 		$content = str_replace('<body>', $replace, $content);
 		GeneralUtility::writeFile($absolutePath, $content);
 		$this->clearCache();
-	}
-
-	/**
-	 * Add the label
-	 *
-	 * @param string $extensionKey
-	 * @param string $key
-	 * @param string $default
-	 *
-	 * @return bool
-	 */
-	public function addLabel($extensionKey, $key, $default) {
-		// TODO: Implement addLabel() method.
 	}
 }

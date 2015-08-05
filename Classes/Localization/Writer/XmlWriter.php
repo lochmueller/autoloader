@@ -18,14 +18,16 @@ class XmlWriter extends AbstractLocalizationWriter {
 	/**
 	 * Get the base file content
 	 *
+	 * @param string $extensionKey
+	 *
 	 * @return string
 	 */
-	public function getBaseFileContent() {
+	public function getBaseFileContent($extensionKey) {
 		return '<?xml version="1.0"?>
 <T3locallang>
 	<meta type="array">
 	<type>database</type>
-	<description>Language file is created via the Autoloader extension on ' . date(DATE_COOKIE) . '</description>
+	<description>Language file is created via the autoloader for the ' . $extensionKey . ' extension on ' . date(DATE_COOKIE) . '</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -35,9 +37,6 @@ class XmlWriter extends AbstractLocalizationWriter {
 	}
 
 	/**
-	 *
-	 * Get the absolute path
-	 *
 	 * @param string $extensionKey
 	 *
 	 * @return string
@@ -49,50 +48,31 @@ class XmlWriter extends AbstractLocalizationWriter {
 	/**
 	 * Add the label to a XML file
 	 *
-	 * @param         $extensionName
-	 * @param         $key
-	 * @param         $value
-	 *
-	 * @param boolean $createFile
+	 * @param string $extensionKey
+	 * @param string $key
+	 * @param string $default
 	 *
 	 * @return NULL
 	 */
-	public function addLabel2Xml($extensionName, $key, $value, $createFile = FALSE) {
+	public function addLabel($extensionKey, $key, $default) {
 		// Excelude
-		if (!strlen($value)) {
+		if (!strlen($default)) {
 			return;
 		}
 		if (!strlen($key)) {
 			return;
 		}
-		if (!strlen($extensionName)) {
+		if (!strlen($extensionKey)) {
 			return;
 		}
 		if (GeneralUtility::isFirstPartOfStr($key, 'LLL:')) {
 			return;
 		}
-		$absolutePath = $this->getAbsoluteFilename($extensionName);
-
+		$absolutePath = $this->getAbsoluteFilename($extensionKey);
 		$content = GeneralUtility::getUrl($absolutePath);
-		if (strstr($content, '<languageKey index="default" type="array">') === FALSE) {
-			return;
-		}
-		$replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '"><![CDATA[' . $value . ']]></label>';
+		$replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '"><![CDATA[' . $default . ']]></label>';
 		$content = str_replace('<languageKey index="default" type="array">', $replace, $content);
 		GeneralUtility::writeFile($absolutePath, $content);
 		$this->clearCache();
-	}
-
-	/**
-	 * Add the label
-	 *
-	 * @param string $extensionKey
-	 * @param string $key
-	 * @param string $default
-	 *
-	 * @return bool
-	 */
-	public function addLabel($extensionKey, $key, $default) {
-		// TODO: Implement addLabel() method.
 	}
 }

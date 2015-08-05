@@ -34,7 +34,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 			GeneralUtility::mkdir_deep($dir);
 		}
 
-		GeneralUtility::writeFile($fileName, $this->getBaseFileContent());
+		GeneralUtility::writeFile($fileName, $this->getBaseFileContent($extensionKey));
 		return TRUE;
 	}
 

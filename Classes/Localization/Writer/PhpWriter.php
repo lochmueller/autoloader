@@ -18,9 +18,11 @@ class PhpWriter extends AbstractLocalizationWriter {
 	/**
 	 * Get the base file content
 	 *
+	 * @param string $extensionKey
+	 *
 	 * @return string
 	 */
-	public function getBaseFileContent() {
+	public function getBaseFileContent($extensionKey){
 		// TODO: Implement addLabel() method.
 	}
 
