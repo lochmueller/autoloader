@@ -63,6 +63,8 @@ class LanguageHandler extends LanguageStore {
 	}
 
 	/**
+	 * Get the best language writer
+	 *
 	 * @param $extensionKey
 	 *
 	 * @return AbstractLocalizationWriter

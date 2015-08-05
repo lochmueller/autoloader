@@ -16,6 +16,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class XliffWriter extends AbstractLocalizationWriter {
 
 	/**
+	 * Get the base file content
+	 *
 	 * @return string
 	 */
 	public function getBaseFileContent() {
@@ -23,6 +25,8 @@ class XliffWriter extends AbstractLocalizationWriter {
 	}
 
 	/**
+	 * Get the absolute path
+	 *
 	 * @param string $extensionKey
 	 *
 	 * @return string
