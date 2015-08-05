@@ -51,25 +51,4 @@ class ContentController extends ActionController {
 		$templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
 		return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
 	}
-
-	/**
-	 * Get the target object
-	 *
-	 * @param string $objectName
-	 * @param array  $data
-	 *
-	 * @return object
-	 * @deprecated moved to ModelUtility
-	 * @see        HDNET\Autoloader\Utility\ModelUtility::getModel
-	 */
-	protected function getObject($objectName, $data) {
-		$query = ExtendedUtility::getQuery($objectName);
-		$query->getQuerySettings()
-			->setRespectStoragePage(FALSE);
-		$query->getQuerySettings()
-			->setRespectSysLanguage(FALSE);
-		return $query->matching($query->equals('uid', $data['uid']))
-			->execute()
-			->getFirst();
-	}
 }

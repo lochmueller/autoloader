@@ -17,7 +17,7 @@ class XmlWriter extends AbstractLocalizationWriter {
 
 	/**
 	 * Get the base file content
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getBaseFileContent() {
