@@ -2,9 +2,7 @@
 /**
  * Clear Cache hook for the Backend
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Hooks;
@@ -18,8 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Clear Cache hook for the Backend
  *
- * @author Tim Lochmüller
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
+ * @hook TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
  */
 class ClearCache implements ClearCacheActionsHookInterface {
 

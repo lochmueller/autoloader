@@ -3,8 +3,7 @@
  * Exclude the IdentityMap in the regular data map for backend selection
  * We need on object in different languages and the IdentityMap do not respect that!
  *
- * @package Autoloader\Persistence
- * @author  Tim Lochmüller
+ * @author Tim Lochmüller
  */
 namespace HDNET\Autoloader\Persistence;
 
@@ -13,8 +12,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 /**
  * Exclude the IdentityMap in the regular data map for backend selection
  * We need on object in different languages and the IdentityMap do not respect that!
- *
- * @author Tim Lochmüller
  */
 class ExcludeIdentityMapDataMapper extends DataMapper {
 

@@ -2,11 +2,8 @@
 /**
  * Create the TCA files
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
-
 
 namespace HDNET\Autoloader\Loader;
 
@@ -16,8 +13,6 @@ use HDNET\Autoloader\SmartObjectManager;
 
 /**
  * Create the TCA files
- *
- * @author Tim Lochmüller
  */
 class TcaFiles implements LoaderInterface {
 

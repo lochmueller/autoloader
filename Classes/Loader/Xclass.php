@@ -2,9 +2,7 @@
 /**
  * Loading Xclass
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -19,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Loading Xclass
- *
- * @author Tim Lochmüller
  */
 class Xclass implements LoaderInterface {
 

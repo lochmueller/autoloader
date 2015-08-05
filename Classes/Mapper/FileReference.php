@@ -2,9 +2,7 @@
 /**
  * Map FileReference
  *
- * @category   Extension
- * @package    Autoloader\Mapper
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Mapper;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Map FileReference
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class FileReference implements MapperInterface {
 

@@ -2,9 +2,7 @@
 /**
  * Mapper for variables types to TCA and DB information
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -13,8 +11,6 @@ use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
  * Mapper for variables types to TCA and DB information
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Mapper implements SingletonInterface {
 

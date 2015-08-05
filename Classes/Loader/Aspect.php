@@ -2,9 +2,7 @@
 /**
  * Loading Aspect
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Carsten Biebricher
+ * @author Carsten Biebricher
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -22,8 +20,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * Aspects available: before, replace, after, throw
  * Used Tags: @aspectClass, @aspectJoinPoint, @aspectAdvice
- *
- * @author Carsten Biebricher
  */
 class Aspect implements LoaderInterface {
 

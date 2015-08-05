@@ -1,10 +1,8 @@
 <?php
 /**
- * TranslateUtility.php
+ * TranslateUtility
  *
- * @category Extension
- * @package  Autoloader\Utility
- * @author   Carsten Biebricher
+ * @author Carsten Biebricher
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * TranslateUtility
- *
- * @author Carsten Biebricher
  */
 class TranslateUtility {
 

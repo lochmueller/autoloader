@@ -2,8 +2,7 @@
 /**
  * Add backend layouts
  *
- * @package Autoloader
- * @author  Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Hooks;
@@ -17,9 +16,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Add backend layouts
  *
- * @author Tim Lochmüller / Thank you Georg for your Idea!
- * @see    https://github.com/georgringer/TYPO3.base/blob/master/typo3conf/ext/theme/Classes/View/BackendLayout/FileProvider.php
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|BackendLayoutDataProvider
+ * @see  https://github.com/georgringer/TYPO3.base/blob/master/typo3conf/ext/theme/Classes/View/BackendLayout/FileProvider.php
+ * @hook TYPO3_CONF_VARS|SC_OPTIONS|BackendLayoutDataProvider
  */
 class BackendLayoutProvider implements DataProviderInterface {
 
@@ -95,6 +93,5 @@ class BackendLayoutProvider implements DataProviderInterface {
 	 */
 	protected function getIdentifier($info) {
 		return $info['extension'] . '/' . $info['filename'];
-
 	}
 }

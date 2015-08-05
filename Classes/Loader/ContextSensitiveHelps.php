@@ -2,9 +2,7 @@
 /**
  * ContextSensitiveHelp (CSH) based on smart objects
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -21,8 +19,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * ContextSensitiveHelp (CSH) based on smart objects
- *
- * @author     Tim Lochmüller
  */
 class ContextSensitiveHelps implements LoaderInterface {
 

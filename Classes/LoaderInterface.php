@@ -2,9 +2,7 @@
 /**
  * General loading interface
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -14,8 +12,6 @@ use HDNET\Autoloader\Loader;
 /**
  * General loading interface
  * All Loader are singletons
- *
- * @author Tim Lochmüller
  */
 interface LoaderInterface extends SingletonInterface {
 

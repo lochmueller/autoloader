@@ -9,8 +9,6 @@ namespace HDNET\Autoloader\Localization\Writer;
 
 /**
  * Interface for L10N file writers
- *
- * @author Tim Lochmüller
  */
 interface LocalizationWriterInterface {
 

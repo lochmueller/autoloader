@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * PHP Writer
- *
- * @author Tim Lochmüller
  */
 class PhpWriter extends AbstractLocalizationWriter {
 

@@ -2,9 +2,7 @@
 /**
  * Register the aspect files and create the Xclass.
  *
- * @category Extension
- * @package  Autoloader
- * @author   Carsten Biebricher
+ * @author Carsten Biebricher
  */
 
 namespace HDNET\Autoloader\Hooks;
@@ -17,8 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Register the aspect files and create the needed Xclasses.
  *
- * @author Carsten Biebricher
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|GLOBAL|extTablesInclusion-PostProcessing
+ * @hook TYPO3_CONF_VARS|SC_OPTIONS|GLOBAL|extTablesInclusion-PostProcessing
  */
 class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 

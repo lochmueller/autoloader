@@ -2,9 +2,7 @@
 /**
  * Loading Slots
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -18,8 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Loading Slots
- *
- * @author Tim Lochmüller
  */
 class Slots implements LoaderInterface {
 

@@ -2,9 +2,7 @@
 /**
  * Custom Backend Preview for Elements like Content Objects.
  *
- * @category Extension
- * @package  Autoloader
- * @author   Carsten Biebricher
+ * @author Carsten Biebricher
  */
 namespace HDNET\Autoloader\Hooks;
 
@@ -18,9 +16,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class ElementBackendPreview
  *
- * @author Carsten Biebricher
- * @see    \TYPO3\CMS\Backend\View\PageLayoutView::tt_content_drawItem
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|tt_content_drawItem
+ * @see  \TYPO3\CMS\Backend\View\PageLayoutView::tt_content_drawItem
+ * @hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|tt_content_drawItem
  */
 class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 

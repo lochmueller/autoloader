@@ -2,9 +2,7 @@
 /**
  * Loading TypeConverter
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -18,8 +16,6 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
  * Loading TypeConverter
- *
- * @author Tim Lochmüller
  */
 class TypeConverter implements LoaderInterface {
 

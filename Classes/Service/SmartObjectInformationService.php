@@ -2,9 +2,7 @@
 /**
  * SmartObjectInformationService.php
  *
- * @category Extension
- * @package  Autoloader\Service
- * @author   Tim Spiekerkoetter
+ * @author Tim Spiekerkoetter
  */
 
 namespace HDNET\Autoloader\Service;
@@ -22,8 +20,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * SmartObjectInformationService
- *
- * @author Tim Spiekerkoetter
  */
 class SmartObjectInformationService {
 

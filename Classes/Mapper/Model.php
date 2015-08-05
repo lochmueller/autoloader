@@ -2,9 +2,7 @@
 /**
  * Map general Models
  *
- * @category   Extension
- * @package    Autoloader\Mapper
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Mapper;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Map general Models
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Model implements MapperInterface {
 

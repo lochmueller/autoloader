@@ -2,9 +2,7 @@
 /**
  * Utility functions for the Autoloader
  *
- * @category   Extension
- * @package    Autoloader\Utility
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Utility functions for the Autoloader
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class ExtendedUtility {
 

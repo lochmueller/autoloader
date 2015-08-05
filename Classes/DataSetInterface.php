@@ -2,9 +2,7 @@
 /**
  * data set interface
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -13,8 +11,6 @@ use HDNET\Autoloader\Loader;
 
 /**
  * data set interface
- *
- * @author Tim Lochmüller
  */
 interface DataSetInterface extends SingletonInterface {
 

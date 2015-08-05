@@ -2,9 +2,7 @@
 /**
  * TempClassAutoloader.php
  *
- * @category Extension
- * @package  Autoloader\Autoload
- * @author   Carsten Biebricher
+ * @author Carsten Biebricher
  */
 namespace HDNET\Autoloader\Autoload;
 
@@ -14,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class TempClassLoader
  * Thx to SJBR
- *
- * @author Carsten Biebricher
  */
 class TempClassLoader implements SingletonInterface {
 

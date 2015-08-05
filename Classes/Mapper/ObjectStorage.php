@@ -2,9 +2,7 @@
 /**
  * Map general ObjectStorage
  *
- * @category   Extension
- * @package    Autoloader\Mapper
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Mapper;
@@ -13,8 +11,6 @@ use HDNET\Autoloader\MapperInterface;
 
 /**
  * Map general ObjectStorage
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class ObjectStorage implements MapperInterface {
 

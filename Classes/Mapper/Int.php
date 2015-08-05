@@ -2,9 +2,7 @@
 /**
  * Map int
  *
- * @category   Extension
- * @package    Autoloader\Mapper
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Mapper;
@@ -13,8 +11,6 @@ use HDNET\Autoloader\MapperInterface;
 
 /**
  * Map int
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Int implements MapperInterface {
 

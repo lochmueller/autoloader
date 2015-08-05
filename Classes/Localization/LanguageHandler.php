@@ -16,8 +16,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Handling of the language files
- *
- * @author Tim Lochmüller
  */
 class LanguageHandler extends LanguageStore {
 

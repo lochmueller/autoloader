@@ -13,11 +13,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * handler to create the labels
  *
- * @hook   TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel
+ * @hook TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel
  */
 class Localization {
 
 	/**
+	 * Take care that the label exists
+	 *
 	 * @param string $key       key in the localization file
 	 * @param string $extensionName
 	 * @param string $default   default value of the label

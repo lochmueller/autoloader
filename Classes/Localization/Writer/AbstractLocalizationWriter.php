@@ -13,8 +13,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * Abstraction of the Writer
- *
- * @author Tim Lochmüller
  */
 abstract class AbstractLocalizationWriter implements LocalizationWriterInterface {
 

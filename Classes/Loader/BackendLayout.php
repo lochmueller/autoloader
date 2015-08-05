@@ -2,9 +2,7 @@
 /**
  * BackendLayout
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -21,8 +19,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * BackendLayout loader
- *
- * @author Tim Lochmüller
  */
 class BackendLayout implements LoaderInterface {
 

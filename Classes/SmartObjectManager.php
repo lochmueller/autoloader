@@ -2,9 +2,7 @@
 /**
  * Management for Smart Objects
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -19,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Management for Smart Objects
- *
- * @author Tim Lochmüller
  */
 class SmartObjectManager implements SingletonInterface {
 

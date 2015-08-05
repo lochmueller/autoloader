@@ -2,9 +2,7 @@
 /**
  * Central Loader object
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Central Loader object
- *
- * @author Tim Lochmüller
  */
 class Loader implements SingletonInterface {
 

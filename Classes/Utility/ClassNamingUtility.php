@@ -2,9 +2,7 @@
 /**
  * ClassNamingUtility.php
  *
- * @category Extension
- * @package  Autoloader\Utility
- * @author   Tim Spiekerkoetter
+ * @author Tim Spiekerkoetter
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -14,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ClassNamingUtility
- *
- * @author Tim Spiekerkoetter
  */
 class ClassNamingUtility {
 

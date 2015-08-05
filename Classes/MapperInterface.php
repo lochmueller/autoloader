@@ -2,17 +2,13 @@
 /**
  * Mapper Interface
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
 
 /**
  * Mapper Interface
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 interface MapperInterface extends SingletonInterface {
 

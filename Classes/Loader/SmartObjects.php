@@ -2,11 +2,8 @@
 /**
  * Loading SmartObjects
  *
- * @category Extension
- * @package  Autoloader\Loader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
-
 
 namespace HDNET\Autoloader\Loader;
 
@@ -20,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Loading SmartObjects
- *
- * @author Tim Lochmüller
  */
 class SmartObjects implements LoaderInterface {
 

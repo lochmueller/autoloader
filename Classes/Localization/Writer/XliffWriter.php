@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Xliff writer
- *
- * @author Tim Lochmüller
  */
 class XliffWriter extends AbstractLocalizationWriter {
 

@@ -2,17 +2,13 @@
 /**
  * Register for Smart Objects
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
 
 /**
  * Register for Smart Objects
- *
- * @author Tim Lochmüller
  */
 class SmartObjectRegister {
 

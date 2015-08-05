@@ -2,9 +2,7 @@
 /**
  * Map float/double
  *
- * @category   Extension
- * @package    Autoloader\Mapper
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Mapper;
@@ -13,8 +11,6 @@ use HDNET\Autoloader\MapperInterface;
 
 /**
  * Map float/double
- *
- * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Float implements MapperInterface {
 

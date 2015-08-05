@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * XML writer
- *
- * @author Tim Lochmüller
  */
 class XmlWriter extends AbstractLocalizationWriter {
 
