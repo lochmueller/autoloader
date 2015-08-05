@@ -22,8 +22,11 @@ class PhpWriter extends AbstractLocalizationWriter {
 	 *
 	 * @return string
 	 */
-	public function getBaseFileContent($extensionKey){
-		// TODO: Implement addLabel() method.
+	public function getBaseFileContent($extensionKey) {
+		$labels = array(
+			'default' => array(),
+		);
+		return $this->getPhpContentByLabels($labels);
 	}
 
 	/**
@@ -47,6 +50,34 @@ class PhpWriter extends AbstractLocalizationWriter {
 	 * @return bool
 	 */
 	public function addLabel($extensionKey, $key, $default) {
-		// TODO: Implement addLabel() method.
+		// Exclude
+		if (!strlen($default)) {
+			return;
+		}
+		if (!strlen($key)) {
+			return;
+		}
+		if (!strlen($extensionKey)) {
+			return;
+		}
+
+		$absolutePath = $this->getAbsoluteFilename($extensionKey);
+		include $absolutePath;
+		$LOCAL_LANG['default'][$key] = $default;
+		GeneralUtility::writeFile($absolutePath, $this->getPhpContentByLabels($LOCAL_LANG));
+		$this->clearCache();
+	}
+
+	/**
+	 * Get the right file content
+	 *
+	 * @param array $labels
+	 *
+	 * @return string
+	 */
+	protected function getPhpContentByLabels(array $labels) {
+		return '<?php
+$LOCAL_LANG = ' . var_export($labels, TRUE) . ';
+		?>';
 	}
 }
