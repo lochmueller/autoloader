@@ -41,14 +41,7 @@ class FileUtility {
 	 * @return array
 	 */
 	static public function getBaseFilesInDir($dirPath, $fileExtension) {
-		if (!is_dir($dirPath)) {
-			return array();
-		}
-		$files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
-		foreach ($files as $key => $file) {
-			$files[$key] = PathUtility::pathinfo($file, PATHINFO_FILENAME);
-		}
-		return array_values($files);
+		return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_FILENAME);
 	}
 
 	/**
@@ -61,12 +54,25 @@ class FileUtility {
 	 * @return array
 	 */
 	static public function getBaseFilesWithExtensionInDir($dirPath, $fileExtension) {
+		return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_BASENAME);
+	}
+
+	/**
+	 * Get file information in the given folder
+	 *
+	 * @param string $dirPath
+	 * @param string $fileExtension
+	 * @param int    $informationType
+	 *
+	 * @return array
+	 */
+	static protected function getFileInformationInDir($dirPath, $fileExtension, $informationType) {
 		if (!is_dir($dirPath)) {
 			return array();
 		}
 		$files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
 		foreach ($files as $key => $file) {
-			$files[$key] = PathUtility::pathinfo($file, PATHINFO_BASENAME);
+			$files[$key] = PathUtility::pathinfo($file, $informationType);
 		}
 		return array_values($files);
 	}
@@ -81,7 +87,6 @@ class FileUtility {
 	 * @param bool   $recursively
 	 *
 	 * @return array
-	 * @todo migrate this into the getBaseFilesInDir or rethink the fetch handling
 	 */
 	static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = TRUE) {
 		if (!is_dir($dirPath)) {

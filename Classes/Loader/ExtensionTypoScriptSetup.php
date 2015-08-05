@@ -67,8 +67,6 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * Add the given loader information as TypoScript
 	 *
 	 * @param array $loaderInformation
-	 *
-	 * @todo add TS only once (internal check)
 	 */
 	protected function addTypoScript(array $loaderInformation) {
 		if ($loaderInformation) {
