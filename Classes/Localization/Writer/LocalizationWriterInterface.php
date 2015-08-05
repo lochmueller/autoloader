@@ -15,7 +15,29 @@ namespace HDNET\Autoloader\Localization\Writer;
 interface LocalizationWriterInterface {
 
 	/**
+	 * Get the base file content
+	 *
 	 * @return string
 	 */
-	// public function getBaseFileContent();
+	public function getBaseFileContent();
+
+	/**
+	 * Get the absolute path to the file
+	 *
+	 * @param string $extensionKey
+	 *
+	 * @return string
+	 */
+	public function getAbsoluteFilename($extensionKey);
+
+	/**
+	 * Add the label
+	 *
+	 * @param string $extensionKey
+	 * @param string $key
+	 * @param string $default
+	 *
+	 * @return bool
+	 */
+	public function addLabel($extensionKey, $key, $default);
 }
