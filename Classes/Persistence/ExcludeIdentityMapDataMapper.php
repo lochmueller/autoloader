@@ -27,6 +27,7 @@ class ExcludeIdentityMapDataMapper extends DataMapper {
 		/** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface $object */
 		$object = $this->createEmptyObject($className);
 		$this->identityMap->registerObject($object, $row['uid']);
+		$this->persistenceSession->registerObject($object, $row['uid']);
 		$this->thawProperties($object, $row);
 		$object->_memorizeCleanState();
 		$this->persistenceSession->registerReconstitutedEntity($object);
