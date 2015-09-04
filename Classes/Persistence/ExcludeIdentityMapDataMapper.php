@@ -7,6 +7,7 @@
  */
 namespace HDNET\Autoloader\Persistence;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
@@ -26,9 +27,8 @@ class ExcludeIdentityMapDataMapper extends DataMapper
      */
     protected function mapSingleRow($className, array $row)
     {
-        /** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface $object */
+        /** @var AbstractEntity $object */
         $object = $this->createEmptyObject($className);
-        $this->identityMap->registerObject($object, $row['uid']);
         $this->persistenceSession->registerObject($object, $row['uid']);
         $this->thawProperties($object, $row);
         $object->_memorizeCleanState();
