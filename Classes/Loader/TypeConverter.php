@@ -17,57 +17,62 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 /**
  * Loading TypeConverter
  */
-class TypeConverter implements LoaderInterface {
+class TypeConverter implements LoaderInterface
+{
 
-	/**
-	 * Get all the complex data for the loader.
-	 * This return value will be cached and stored in the database
-	 * There is no file monitoring for this cache
-	 *
-	 * @param Loader $autoLoader
-	 * @param int    $type
-	 *
-	 * @return array
-	 */
-	public function prepareLoader(Loader $autoLoader, $type) {
-		$classes = array();
-		$converterPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
-		$converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', TRUE);
-		$extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
+    /**
+     * Get all the complex data for the loader.
+     * This return value will be cached and stored in the database
+     * There is no file monitoring for this cache
+     *
+     * @param Loader $autoLoader
+     * @param int    $type
+     *
+     * @return array
+     */
+    public function prepareLoader(Loader $autoLoader, $type)
+    {
+        $classes = array();
+        $converterPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
+        $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
+        $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
 
-		foreach ($converterClasses as $converterClass) {
-			$converterClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Property\\TypeConverter\\' . str_replace('/', '\\', $converterClass);
-			if ($autoLoader->isInstantiableClass($converterClass)) {
-				$classes[] = $converterClass;
-			}
-		}
+        foreach ($converterClasses as $converterClass) {
+            $converterClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Property\\TypeConverter\\' . str_replace('/',
+                    '\\', $converterClass);
+            if ($autoLoader->isInstantiableClass($converterClass)) {
+                $classes[] = $converterClass;
+            }
+        }
 
-		return $classes;
-	}
+        return $classes;
+    }
 
-	/**
-	 * Run the loading process for the ext_tables.php file
-	 *
-	 * @param Loader $autoLoader
-	 * @param array  $loaderInformation
-	 *
-	 * @return NULL
-	 */
-	public function loadExtensionTables(Loader $autoLoader, array $loaderInformation) {
-		return NULL;
-	}
+    /**
+     * Run the loading process for the ext_tables.php file
+     *
+     * @param Loader $autoLoader
+     * @param array  $loaderInformation
+     *
+     * @return NULL
+     */
+    public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
+    {
+        return null;
+    }
 
-	/**
-	 * Run the loading process for the ext_localconf.php file
-	 *
-	 * @param Loader $autoLoader
-	 * @param array  $loaderInformation
-	 *
-	 * @return NULL
-	 */
-	public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation) {
-		foreach ($loaderInformation as $class) {
-			ExtensionUtility::registerTypeConverter($class);
-		}
-	}
+    /**
+     * Run the loading process for the ext_localconf.php file
+     *
+     * @param Loader $autoLoader
+     * @param array  $loaderInformation
+     *
+     * @return NULL
+     */
+    public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
+    {
+        foreach ($loaderInformation as $class) {
+            ExtensionUtility::registerTypeConverter($class);
+        }
+    }
 }

@@ -17,35 +17,41 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
  *
  * @author Tim Lochmüller
  */
-class DummyConverter extends AbstractTypeConverter {
+class DummyConverter extends AbstractTypeConverter
+{
 
-	/**
-	 * Dummy source
-	 *
-	 * @var array<string>
-	 */
-	protected $sourceTypes = array(
-		'dummy',
-	);
+    /**
+     * Dummy source
+     *
+     * @var array<string>
+     */
+    protected $sourceTypes = array(
+        'dummy',
+    );
 
-	/**
-	 * Dummy target
-	 *
-	 * @var string
-	 */
-	protected $targetType = 'NULL';
+    /**
+     * Dummy target
+     *
+     * @var string
+     */
+    protected $targetType = 'NULL';
 
-	/**
-	 * Dummy function that do nothing
-	 *
-	 * @param mixed                                 $source
-	 * @param string                                $targetType
-	 * @param array                                 $childProperties
-	 * @param PropertyMappingConfigurationInterface $configuration
-	 *
-	 * @return mixed|null|\TYPO3\CMS\Extbase\Error\Error
-	 */
-	public function convertFrom($source, $targetType, array $childProperties = array(), PropertyMappingConfigurationInterface $configuration = NULL) {
-		return NULL;
-	}
+    /**
+     * Dummy function that do nothing
+     *
+     * @param mixed                                 $source
+     * @param string                                $targetType
+     * @param array                                 $childProperties
+     * @param PropertyMappingConfigurationInterface $configuration
+     *
+     * @return mixed|null|\TYPO3\CMS\Extbase\Error\Error
+     */
+    public function convertFrom(
+        $source,
+        $targetType,
+        array $childProperties = array(),
+        PropertyMappingConfigurationInterface $configuration = null
+    ) {
+        return null;
+    }
 }

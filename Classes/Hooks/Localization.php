@@ -15,20 +15,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @hook TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel
  */
-class Localization {
+class Localization
+{
 
-	/**
-	 * Take care that the label exists
-	 *
-	 * @param string $key       key in the localization file
-	 * @param string $extensionName
-	 * @param string $default   default value of the label
-	 * @param array  $arguments arguments are being passed over to vsprintf
-	 */
-	public function assureLabel($key, $extensionName, &$default, $arguments) {
-		/** @var LanguageHandler $languageHandler */
-		$languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
-		$languageHandler->handle($key, $extensionName, $default, $arguments);
-	}
+    /**
+     * Take care that the label exists
+     *
+     * @param string $key       key in the localization file
+     * @param string $extensionName
+     * @param string $default   default value of the label
+     * @param array  $arguments arguments are being passed over to vsprintf
+     */
+    public function assureLabel($key, $extensionName, &$default, $arguments)
+    {
+        /** @var LanguageHandler $languageHandler */
+        $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
+        $languageHandler->handle($key, $extensionName, $default, $arguments);
+    }
 
 }

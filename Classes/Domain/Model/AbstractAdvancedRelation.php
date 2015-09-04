@@ -14,30 +14,31 @@ namespace HDNET\Autoloader\Domain\Model;
  *
  * @smartExclude EnableFields,Language,Workspaces
  */
-abstract class AbstractAdvancedRelation extends AbstractSimpleRelation {
+abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
+{
 
-	/**
-	 * Tablesnames
-	 *
-	 * @var string
-	 * @db varchar(60) DEFAULT '' NOT NULL
-	 */
-	protected $tablenames;
+    /**
+     * Tablesnames
+     *
+     * @var string
+     * @db varchar(60) DEFAULT '' NOT NULL
+     */
+    protected $tablenames;
 
-	/**
-	 * Sorting foreign
-	 *
-	 * @var int
-	 * @db
-	 */
-	protected $sortingForeign;
+    /**
+     * Sorting foreign
+     *
+     * @var int
+     * @db
+     */
+    protected $sortingForeign;
 
-	/**
-	 * Ident
-	 *
-	 * @var string
-	 * @db varchar(30) DEFAULT '' NOT NULL
-	 */
-	protected $ident;
+    /**
+     * Ident
+     *
+     * @var string
+     * @db varchar(30) DEFAULT '' NOT NULL
+     */
+    protected $ident;
 
 }

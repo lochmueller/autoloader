@@ -17,73 +17,76 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Handling of the language files
  */
-class LanguageHandler extends LanguageStore {
+class LanguageHandler extends LanguageStore
+{
 
-	/**
-	 * Cache the created labels
-	 *
-	 * @var array
-	 */
-	protected static $createdLabelCache = array();
+    /**
+     * Cache the created labels
+     *
+     * @var array
+     */
+    protected static $createdLabelCache = array();
 
-	/**
-	 * handler the adding of files
-	 *
-	 * @param string $key       key in the localization file
-	 * @param string $extensionName
-	 * @param string $default   default value of the label
-	 * @param array  $arguments arguments are being passed over to vsprintf
-	 *
-	 * @return NULL|string
-	 */
-	public function handle($key, $extensionName, &$default, $arguments) {
-		if (!($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection)) {
-			return $default;
-		}
-		$value = LocalizationUtility::translate($key, $extensionName, $arguments);
+    /**
+     * handler the adding of files
+     *
+     * @param string $key       key in the localization file
+     * @param string $extensionName
+     * @param string $default   default value of the label
+     * @param array  $arguments arguments are being passed over to vsprintf
+     *
+     * @return NULL|string
+     */
+    public function handle($key, $extensionName, &$default, $arguments)
+    {
+        if (!($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection)) {
+            return $default;
+        }
+        $value = LocalizationUtility::translate($key, $extensionName, $arguments);
 
-		if ($value !== NULL) {
-			return $value;
-		}
+        if ($value !== null) {
+            return $value;
+        }
 
-		if ($default === NULL || $default === '') {
-			$default = $extensionName . ' ==> LLL:' . $key;
-		}
+        if ($default === null || $default === '') {
+            $default = $extensionName . ' ==> LLL:' . $key;
+        }
 
-		$handler = $this->getBestLanguageWriter($extensionName);
-		$handler->createFileIfNotExists($extensionName);
+        $handler = $this->getBestLanguageWriter($extensionName);
+        $handler->createFileIfNotExists($extensionName);
 
-		$labelCacheKey = $extensionName . '|' . $key;
-		if (!in_array($labelCacheKey, self::$createdLabelCache)) {
-			$handler->addLabel($extensionName, $key, $default);
-			self::$createdLabelCache[] = $labelCacheKey;
-		}
+        $labelCacheKey = $extensionName . '|' . $key;
+        if (!in_array($labelCacheKey, self::$createdLabelCache)) {
+            $handler->addLabel($extensionName, $key, $default);
+            self::$createdLabelCache[] = $labelCacheKey;
+        }
 
-		return $default;
-	}
+        return $default;
+    }
 
-	/**
-	 * Get the best language writer
-	 *
-	 * @param $extensionKey
-	 *
-	 * @return AbstractLocalizationWriter
-	 */
-	protected function getBestLanguageWriter($extensionKey) {
-		$services = array();
-		foreach ($this->getSupportedExtensions() as $serviceKey) {
-			if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey])) {
-				continue;
-			}
-			$serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
-			/** @var LocalizationWriterInterface $service */
-			$service = GeneralUtility::makeInstance($serviceName);
-			if (is_file($service->getAbsoluteFilename($extensionKey))) {
-				return $service;
-			}
-			$services[] = $service;
-		}
-		return $services[0];
-	}
+    /**
+     * Get the best language writer
+     *
+     * @param $extensionKey
+     *
+     * @return AbstractLocalizationWriter
+     */
+    protected function getBestLanguageWriter($extensionKey)
+    {
+        $services = array();
+        foreach ($this->getSupportedExtensions() as $serviceKey) {
+            if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey])) {
+                continue;
+            }
+            $serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
+            /** @var LocalizationWriterInterface $service */
+            $service = GeneralUtility::makeInstance($serviceName);
+            if (is_file($service->getAbsoluteFilename($extensionKey))) {
+                return $service;
+            }
+            $services[] = $service;
+        }
+        return $services[0];
+    }
 
 }

@@ -9,11 +9,11 @@
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
-	'title'       => 'Autoloader (Slots - Check the TYPO3 Login screen)',
-	'description' => '',
-	'constraints' => array(
-		'depends' => array(
-			'autoloader' => '1.7.0-9.9.9',
-		),
-	),
+    'title'       => 'Autoloader (Slots - Check the TYPO3 Login screen)',
+    'description' => '',
+    'constraints' => array(
+        'depends' => array(
+            'autoloader' => '1.7.0-9.9.9',
+        ),
+    ),
 );

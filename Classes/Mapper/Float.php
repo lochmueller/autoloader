@@ -12,48 +12,52 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map float/double
  */
-class Float implements MapperInterface {
+class Float implements MapperInterface
+{
 
-	/**
-	 * Check if the current mapper can handle the given type
-	 *
-	 * @param string $type
-	 *
-	 * @return bool
-	 */
-	public function canHandleType($type) {
-		return in_array(strtolower($type), array(
-			'float',
-			'double'
-		));
-	}
+    /**
+     * Check if the current mapper can handle the given type
+     *
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function canHandleType($type)
+    {
+        return in_array(strtolower($type), array(
+            'float',
+            'double'
+        ));
+    }
 
-	/**
-	 * Get the TCA configuration for the current type
-	 *
-	 * @param string $fieldName
-	 * @param bool   $overWriteLabel
-	 *
-	 * @return array
-	 */
-	public function getTcaConfiguration($fieldName, $overWriteLabel = FALSE) {
-		return array(
-			'exclude' => 1,
-			'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-			'config'  => array(
-				'type' => 'input',
-				'eval' => 'double2',
-				'size' => 8,
-			),
-		);
-	}
+    /**
+     * Get the TCA configuration for the current type
+     *
+     * @param string $fieldName
+     * @param bool   $overWriteLabel
+     *
+     * @return array
+     */
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    {
+        return array(
+            'exclude' => 1,
+            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config'  => array(
+                'type' => 'input',
+                'eval' => 'double2',
+                'size' => 8,
+            ),
+        );
+    }
 
-	/**
-	 * Get the database definition for the current mapper
-	 *
-	 * @return string
-	 */
-	public function getDatabaseDefinition() {
-		return 'varchar(255) DEFAULT \'\' NOT NULL';
-	}
+    /**
+     * Get the database definition for the current mapper
+     *
+     * @return string
+     */
+    public function getDatabaseDefinition()
+    {
+        return 'varchar(255) DEFAULT \'\' NOT NULL';
+    }
 }

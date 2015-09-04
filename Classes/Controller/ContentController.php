@@ -15,40 +15,43 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Content Controller
  */
-class ContentController extends ActionController {
+class ContentController extends ActionController
+{
 
-	/**
-	 * Render the content Element via ExtBase
-	 */
-	public function indexAction() {
-		$extensionKey = $this->settings['extensionKey'];
-		$vendorName = $this->settings['vendorName'];
-		$name = $this->settings['contentElement'];
-		$data = $this->configurationManager->getContentObject()->data;
+    /**
+     * Render the content Element via ExtBase
+     */
+    public function indexAction()
+    {
+        $extensionKey = $this->settings['extensionKey'];
+        $vendorName = $this->settings['vendorName'];
+        $name = $this->settings['contentElement'];
+        $data = $this->configurationManager->getContentObject()->data;
 
-		$camelCaseExtKey = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
-		$targetObject = $vendorName . '\\' . $camelCaseExtKey . '\\Domain\\Model\\Content\\' . $name;
-		$model = ModelUtility::getModel($targetObject, $data);
+        $camelCaseExtKey = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
+        $targetObject = $vendorName . '\\' . $camelCaseExtKey . '\\Domain\\Model\\Content\\' . $name;
+        $model = ModelUtility::getModel($targetObject, $data);
 
-		$view = $this->createStandaloneView();
-		$view->assignMultiple(array(
-			'data'     => $data,
-			'object'   => $model,
-			'settings' => $this->settings
-		));
-		return $view->render();
-	}
+        $view = $this->createStandaloneView();
+        $view->assignMultiple(array(
+            'data'     => $data,
+            'object'   => $model,
+            'settings' => $this->settings
+        ));
+        return $view->render();
+    }
 
-	/**
-	 * Create a StandaloneView for the ContentObject.
-	 *
-	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
-	 */
-	protected function createStandaloneView() {
-		$extensionKey = $this->settings['extensionKey'];
-		$name = $this->settings['contentElement'];
+    /**
+     * Create a StandaloneView for the ContentObject.
+     *
+     * @return \TYPO3\CMS\Fluid\View\StandaloneView
+     */
+    protected function createStandaloneView()
+    {
+        $extensionKey = $this->settings['extensionKey'];
+        $name = $this->settings['contentElement'];
 
-		$templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
-		return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
-	}
+        $templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
+        return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
+    }
 }

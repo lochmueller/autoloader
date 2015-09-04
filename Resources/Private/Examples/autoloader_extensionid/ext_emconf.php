@@ -9,11 +9,11 @@
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
-	'title'       => 'Autoloader (eID - run http://your-domain.de/?eID=Test to get a Hello World)',
-	'description' => '',
-	'constraints' => array(
-		'depends' => array(
-			'autoloader' => '1.7.0-9.9.9',
-		),
-	),
+    'title'       => 'Autoloader (eID - run http://your-domain.de/?eID=Test to get a Hello World)',
+    'description' => '',
+    'constraints' => array(
+        'depends' => array(
+            'autoloader' => '1.7.0-9.9.9',
+        ),
+    ),
 );

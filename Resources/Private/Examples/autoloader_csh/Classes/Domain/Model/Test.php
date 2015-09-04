@@ -17,52 +17,55 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db
  */
-class Test extends AbstractEntity {
+class Test extends AbstractEntity
+{
 
-	/**
-	 * A basic field
-	 *
-	 * @var string
-	 * @db
-	 */
-	protected $fieldName;
+    /**
+     * A basic field
+     *
+     * @var string
+     * @db
+     */
+    protected $fieldName;
 
-	/**
-	 * A boolean
-	 *
-	 * @var bool
-	 * @db
-	 */
-	protected $boolField;
+    /**
+     * A boolean
+     *
+     * @var bool
+     * @db
+     */
+    protected $boolField;
 
-	/**
-	 * @param bool $boolField
-	 */
-	public function setBoolField($boolField) {
-		$this->boolField = $boolField;
-	}
+    /**
+     * @param bool $boolField
+     */
+    public function setBoolField($boolField)
+    {
+        $this->boolField = $boolField;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function getBoolField() {
-		return $this->boolField;
-	}
+    /**
+     * @return bool
+     */
+    public function getBoolField()
+    {
+        return $this->boolField;
+    }
 
-	/**
-	 * @param string $fieldName
-	 */
-	public function setFieldName($fieldName) {
-		$this->fieldName = $fieldName;
-	}
+    /**
+     * @param string $fieldName
+     */
+    public function setFieldName($fieldName)
+    {
+        $this->fieldName = $fieldName;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFieldName() {
-		return $this->fieldName;
-	}
+    /**
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return $this->fieldName;
+    }
 
-
-
-} 
+}

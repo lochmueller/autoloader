@@ -16,30 +16,31 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * @smartExclude EnableFields,Language,Workspaces
  */
-abstract class AbstractSimpleRelation extends AbstractEntity {
+abstract class AbstractSimpleRelation extends AbstractEntity
+{
 
-	/**
-	 * Local UID
-	 *
-	 * @var int
-	 * @db
-	 */
-	protected $uidLocal;
+    /**
+     * Local UID
+     *
+     * @var int
+     * @db
+     */
+    protected $uidLocal;
 
-	/**
-	 * Foreign UID
-	 *
-	 * @var int
-	 * @db
-	 */
-	protected $uidForeign;
+    /**
+     * Foreign UID
+     *
+     * @var int
+     * @db
+     */
+    protected $uidForeign;
 
-	/**
-	 * Sorting
-	 *
-	 * @var int
-	 * @db
-	 */
-	protected $sorting;
+    /**
+     * Sorting
+     *
+     * @var int
+     * @db
+     */
+    protected $sorting;
 
 }
