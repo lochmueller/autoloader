@@ -108,6 +108,12 @@ class ContentObjects implements LoaderInterface {
 	 */
 	protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader) {
 		$siteRelPath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey());
+		$contentLayout = GeneralUtility::getFileAbsFileName($siteRelPath . 'Resources/Private/Layouts/Content.html');
+		if(!file_exists($contentLayout)) {
+			$contentLayoutTemplate = '<f:render section="Main" />';
+			FileUtility::writeFileAndCreateFolder($contentLayout, $contentLayoutTemplate);
+		}
+
 		foreach ($loaderInformation as $configuration) {
 			$templatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
 			$absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
@@ -115,7 +121,7 @@ class ContentObjects implements LoaderInterface {
 				$beTemplatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . 'Backend.html';
 				$absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
 
-				$templateContent = 'Use object to get access to your domain model: <f:debug>{object}</f:debug>';
+				$templateContent = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/ContentObjects/Frontend.html'));
 				FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, $templateContent);
 
 				$beTemplateContent = 'The ContentObject Preview is configurable in the ContentObject Backend Template.<br />

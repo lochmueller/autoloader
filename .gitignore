@@ -1,4 +1,5 @@
 .svn
+/Resources/Private/Examples/autoloader_contentobject/Resources/Private/Layouts/
 /Resources/Private/Examples/autoloader_contentobject/Configuration/
 /Resources/Private/Examples/autoloader_smartobject/Resources/
 /Resources/Private/Examples/autoloader_smartobject/Configuration/
