@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Localization\Writer;
 
+use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -36,7 +37,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
             GeneralUtility::mkdir_deep($dir);
         }
 
-        GeneralUtility::writeFile($fileName, $this->getBaseFileContent($extensionKey));
+        FileUtility::writeFileAndCreateFolder($fileName, $this->getBaseFileContent($extensionKey));
         return true;
     }
 

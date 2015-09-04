@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Localization\Writer;
 
+use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -76,7 +77,7 @@ class XmlWriter extends AbstractLocalizationWriter
         $content = GeneralUtility::getUrl($absolutePath);
         $replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '"><![CDATA[' . $default . ']]></label>';
         $content = str_replace('<languageKey index="default" type="array">', $replace, $content);
-        GeneralUtility::writeFile($absolutePath, $content);
+        FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();
     }
 }

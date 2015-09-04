@@ -12,6 +12,7 @@ use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
+use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -102,7 +103,7 @@ class ContextSensitiveHelps implements LoaderInterface
         $standaloneView->assign('properties', $properties);
         $content = $standaloneView->render();
 
-        GeneralUtility::writeFile($path, $content);
+        FileUtility::writeFileAndCreateFolder($path, $content);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Localization\Writer;
 
+use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -71,7 +72,7 @@ class XliffWriter extends AbstractLocalizationWriter
         $content = GeneralUtility::getUrl($absolutePath);
         $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source><![CDATA[' . $default . ']]></source></trans-unit>';
         $content = str_replace('<body>', $replace, $content);
-        GeneralUtility::writeFile($absolutePath, $content);
+        FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();
     }
 }

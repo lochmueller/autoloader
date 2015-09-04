@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Localization\Writer;
 
+use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -68,7 +69,7 @@ class PhpWriter extends AbstractLocalizationWriter
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         include $absolutePath;
         $LOCAL_LANG['default'][$key] = $default;
-        GeneralUtility::writeFile($absolutePath, $this->getPhpContentByLabels($LOCAL_LANG));
+        FileUtility::writeFileAndCreateFolder($absolutePath, $this->getPhpContentByLabels($LOCAL_LANG));
         $this->clearCache();
     }
 
