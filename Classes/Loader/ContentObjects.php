@@ -38,7 +38,7 @@ class ContentObjects implements LoaderInterface {
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 		if ($models) {
-			TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey(), $loader->getExtensionKey() . ' (Header)', NULL, 'xml');
+			TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey(), $loader->getExtensionKey() . ' (Header)');
 		}
 		foreach ($models as $model) {
 			$key = GeneralUtility::camelCaseToLowerCaseUnderscored($model);
@@ -50,8 +50,8 @@ class ContentObjects implements LoaderInterface {
 
 			// create labels in the ext_tables run, to have a valid DatabaseConnection
 			if ($type === LoaderInterface::EXT_TABLES) {
-				TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)', NULL, 'xml');
-				TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(), $key . ' (Description)', NULL, 'xml');
+				TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
+				TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(), $key . ' (Description)');
 				$fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
 				$defaultFields = $this->getDefaultTcaFields();
 				$fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
