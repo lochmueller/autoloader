@@ -31,14 +31,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
         if (is_file($fileName)) {
             return true;
         }
-
-        $dir = PathUtility::dirname($fileName);
-        if (!is_dir($dir)) {
-            GeneralUtility::mkdir_deep($dir);
-        }
-
-        FileUtility::writeFileAndCreateFolder($fileName, $this->getBaseFileContent($extensionKey));
-        return true;
+        return FileUtility::writeFileAndCreateFolder($fileName, $this->getBaseFileContent($extensionKey));
     }
 
     /**
