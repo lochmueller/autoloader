@@ -131,9 +131,8 @@ class ContentObjects implements LoaderInterface
                     'Resources/Private/Templates/ContentObjects/Frontend.html'));
                 FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, $templateContent);
 
-                $beTemplateContent = 'The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
-<code>File: ' . $beTemplatePath . '</code><br />
-<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />';
+                $beTemplateContent = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader',
+                    'Resources/Private/Templates/ContentObjects/Backend.html'));
                 FileUtility::writeFileAndCreateFolder($absoluteBeTemplatePath, $beTemplateContent);
             }
         }
