@@ -64,6 +64,9 @@ class TranslateUtility
         }
         if (self::getLll($key, $extensionKey) === null) {
             $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
+            if (TYPO3_MODE === 'BE' && isset($GLOBALS['LANG'])) {
+                self::assureLabel($key, $extensionKey, $key);
+            }
         }
         return $lllString;
     }
