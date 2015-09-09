@@ -211,7 +211,14 @@ class ContentObjects implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        // content register
+        $createWizardHeader = array();
+        $predefinedWizards = array(
+            'common',
+            'special',
+            'forms',
+            'plugins',
+        );
+
         foreach ($loaderInformation as $e => $config) {
             SmartObjectRegister::register($config['modelClass']);
 
@@ -232,6 +239,9 @@ class ContentObjects implements LoaderInterface
             }
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
+            if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
+                $createWizardHeader[] = $tabName;
+            }
             ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
     icon = ' . IconUtility::getByModelName($config['modelClass']) . '
@@ -251,13 +261,14 @@ mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' .
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
         }
 
-        if ($loaderInformation) {
-            ExtensionManagementUtility::addPageTSConfig('
-mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
+        if ($createWizardHeader) {
+            foreach ($createWizardHeader as $element) {
+                ExtensionManagementUtility::addPageTSConfig('
+mod.wizards.newContentElement.wizardItems.' . $element . ' {
 	show = *
-	header = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $loader->getExtensionKey() . '.header',
-                    $loader->getExtensionKey()) . '
+	header = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $element . '.header', $loader->getExtensionKey()) . '
 }');
+            }
         }
 
         return null;
