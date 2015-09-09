@@ -57,6 +57,11 @@ class TranslateUtility
     public static function getLllOrHelpMessage($key, $extensionKey)
     {
         $lllString = self::getLllString($key, $extensionKey);
+        if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG'])) {
+            // init for backend
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Lang\LanguageService::class);
+            $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
+        }
         if (self::getLll($key, $extensionKey) === null) {
             $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
         }
