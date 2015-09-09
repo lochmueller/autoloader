@@ -1,3 +1,7 @@
-The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
-<code>File: typo3conf/ext/--EXTKEY--/Resources/Private/Templates/Content/--PLUGIN--Backend.html</code><br />
-<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />
+{namespace a=HDNET\Autoloader\ViewHelpers}
+
+<a:be.editLink data="{data}">
+	The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
+	<code>File: typo3conf/ext/--EXTKEY--/Resources/Private/Templates/Content/--PLUGIN--Backend.html</code><br />
+	<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />
+</a:be.editLink>
