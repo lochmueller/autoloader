@@ -55,15 +55,18 @@ class Language implements DataSetInterface
                     'exclude'     => 1,
                     'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
                     'config'      => array(
-                        'type'                => 'select',
-                        'items'               => array(
+                        'type'                    => 'select',
+                        'items'                   => array(
                             array(
                                 '',
                                 0
                             ),
                         ),
-                        'foreign_table'       => $tableName,
-                        'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
+                        'foreign_table'           => $tableName,
+                        'foreign_table_where'     => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
+                        'foreign_table_loadIcons' => false,
+                        'iconsInOptionTags'       => false,
+                        'noIconsBelowSelect'      => true,
                     ),
                 ),
                 'l10n_diffsource'  => array(
