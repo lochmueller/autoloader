@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -38,7 +39,7 @@ class ClearCache implements ClearCacheActionsHookInterface
         $cacheActions[] = array(
             'id'    => 'autoloader',
             'title' => 'EXT:autoloader caches',
-            'href'  => 'ajax.php?ajaxID=autoloader::clearCache',
+            'href'  => BackendUtility::getAjaxUrl('autoloader::clearCache'),
             'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
         );
     }
