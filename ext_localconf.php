@@ -17,7 +17,13 @@ if (!defined('TYPO3_MODE')) {
     'StaticTyposcript'
 ));
 
-$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['autoloader::clearCache'] = 'HDNET\\Autoloader\\Hooks\\ClearCache->clear';
+$register = '';
+if(\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')){
+    $register = array(
+        'callbackMethod' => 'HDNET\\Autoloader\\Hooks\\ClearCache->clear',
+    );
+}
+$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['autoloader::clearCache'] = $register;
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = array(
     'php' => 'HDNET\\Autoloader\\Localization\\Writer\\PhpWriter',
     'xlf' => 'HDNET\\Autoloader\\Localization\\Writer\\XliffWriter',
