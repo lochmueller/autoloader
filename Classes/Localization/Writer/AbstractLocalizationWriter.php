@@ -10,7 +10,6 @@ namespace HDNET\Autoloader\Localization\Writer;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * Abstraction of the Writer
