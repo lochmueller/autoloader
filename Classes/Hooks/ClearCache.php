@@ -36,12 +36,12 @@ class ClearCache implements ClearCacheActionsHookInterface
             return;
         }
 
-        $cacheActions[] = array(
+        $cacheActions[] = [
             'id'    => 'autoloader',
             'title' => 'EXT:autoloader caches',
             'href'  => BackendUtility::getAjaxUrl('autoloader::clearCache'),
             'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
-        );
+        ];
     }
 
     /**

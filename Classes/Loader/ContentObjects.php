@@ -35,7 +35,7 @@ class ContentObjects implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $loaderInformation = array();
+        $loaderInformation = [];
 
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
         $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
@@ -49,7 +49,7 @@ class ContentObjects implements LoaderInterface
             if (!$loader->isInstantiableClass($className)) {
                 continue;
             }
-            $fieldConfiguration = array();
+            $fieldConfiguration = [];
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if ($type === LoaderInterface::EXT_TABLES) {
@@ -73,14 +73,14 @@ class ContentObjects implements LoaderInterface
                 }
             }
 
-            $entry = array(
+            $entry = [
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
                 'modelClass'         => $className,
                 'model'              => $model,
                 'icon'               => IconUtility::getByExtensionKey($loader->getExtensionKey()),
                 'noHeader'           => $this->isTaggedWithNoHeader($className),
                 'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
-            );
+            ];
 
             SmartObjectRegister::register($entry['modelClass']);
             $loaderInformation[$key] = $entry;
@@ -184,7 +184,7 @@ class ContentObjects implements LoaderInterface
         if ($configuration === null) {
             $configuration = $this->wrapDefaultTcaConfiguration('');
         }
-        $defaultFields = array();
+        $defaultFields = [];
         $existingFields = array_keys($GLOBALS['TCA']['tt_content']['columns']);
         $parts = GeneralUtility::trimExplode(',', $configuration, true);
         foreach ($parts as $fieldConfiguration) {
@@ -211,21 +211,21 @@ class ContentObjects implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        $createWizardHeader = array();
-        $predefinedWizards = array(
+        $createWizardHeader = [];
+        $predefinedWizards = [
             'common',
             'special',
             'forms',
             'plugins',
-        );
+        ];
 
         foreach ($loaderInformation as $e => $config) {
             SmartObjectRegister::register($config['modelClass']);
 
-            ExtensionManagementUtility::addPlugin(array(
+            ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
                 $loader->getExtensionKey() . '_' . $e
-            ), 'CType');
+            ], 'CType');
 
             $typeKey = $loader->getExtensionKey() . '_' . $e;
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
@@ -252,11 +252,11 @@ mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader-
     }
 }
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $loader->getExtensionKey() . '_' . $e . ')');
-            $cObjectConfiguration = array(
+            $cObjectConfiguration = [
                 'extensionKey'        => $loader->getExtensionKey(),
                 'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
                 'modelClass'          => $config['modelClass']
-            );
+            ];
 
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
         }
@@ -290,7 +290,7 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
 
         if ($loadPlugin) {
             $loadPlugin = false;
-            ExtensionUtility::configurePlugin('HDNET.autoloader', 'Content', array('Content' => 'index'), array('Content' => ''));
+            ExtensionUtility::configurePlugin('HDNET.autoloader', 'Content', ['Content' => 'index'], ['Content' => '']);
             if (!$csc) {
                 $typoScript .= 'tt_content = CASE
 tt_content.key.field = CType';

@@ -66,7 +66,7 @@ class ReflectionUtility
     static public function getPropertiesTaggedWith($className, $tag)
     {
         $classReflection = self::createReflectionClass($className);
-        $properties = array();
+        $properties = [];
         foreach ($classReflection->getProperties() as $property) {
             /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
             if ($property->isTaggedWith($tag)) {
@@ -120,7 +120,7 @@ class ReflectionUtility
      */
     static public function getDeclaringProperties($className)
     {
-        $properties = array();
+        $properties = [];
         $classReflection = self::createReflectionClass($className);
         foreach ($classReflection->getProperties() as $property) {
             /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */

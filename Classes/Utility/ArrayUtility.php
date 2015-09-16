@@ -33,7 +33,7 @@ class ArrayUtility
                 while (($key = array_shift($keys))) {
                     if ($keys) {
                         if (!isset($optTree[$key]) || !is_array($optTree[$key])) {
-                            $optTree[$key] = array();
+                            $optTree[$key] = [];
                         }
                         $optTree = &$optTree[$key];
                     } else {

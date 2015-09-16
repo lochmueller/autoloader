@@ -28,7 +28,7 @@ class SmartDatabase
     public function loadSmartObjectTables(array $sqlString)
     {
         $sqlString[] = SmartObjectManager::getSmartObjectRegisterSql();
-        return array('sqlString' => $sqlString);
+        return ['sqlString' => $sqlString];
     }
 
     /**
@@ -45,9 +45,9 @@ class SmartDatabase
     public function updateSmartObjectTables(array $sqlString, $extensionKey)
     {
         $sqlString[] = SmartObjectManager::getSmartObjectRegisterSql();
-        return array(
+        return [
             'sqlString'    => $sqlString,
             'extensionKey' => $extensionKey
-        );
+        ];
     }
 }

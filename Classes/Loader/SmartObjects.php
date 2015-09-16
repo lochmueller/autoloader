@@ -33,7 +33,7 @@ class SmartObjects implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $configuration = array();
+        $configuration = [];
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/';
         if (!is_dir($modelPath)) {
             return $configuration;

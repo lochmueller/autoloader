@@ -11,8 +11,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_contentobject', array(
+\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_contentobject', [
     'ContentObjects',
     'TcaFiles',
     'SmartObjects'
-));
+]);

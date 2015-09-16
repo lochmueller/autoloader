@@ -21,11 +21,11 @@ class DataSet implements SingletonInterface
      *
      * @var array
      */
-    protected $implementations = array(
+    protected $implementations = [
         'EnableFields',
         'Language',
         'Workspaces',
-    );
+    ];
 
     /**
      * Get all implementations and exclude the given list
@@ -68,7 +68,7 @@ class DataSet implements SingletonInterface
     public function getTcaInformation(array $implementations, $table)
     {
         $dataSetObjects = $this->getDataSetObjects($implementations);
-        $return = array();
+        $return = [];
         foreach ($dataSetObjects as $object) {
             /** @var $object DataSetInterface */
             $return = ArrayUtility::mergeRecursiveDistinct($return, $object->getTca($table));
@@ -87,7 +87,7 @@ class DataSet implements SingletonInterface
     public function getDatabaseSqlInformation(array $implementations, $table)
     {
         $dataSetObjects = $this->getDataSetObjects($implementations);
-        $return = array();
+        $return = [];
         foreach ($dataSetObjects as $object) {
             /** @var $object DataSetInterface */
             $return = array_merge($return, $object->getDatabaseSql($table));
@@ -107,7 +107,7 @@ class DataSet implements SingletonInterface
     {
 
         $dataSetObjects = $this->getDataSetObjects($implementations);
-        $return = array();
+        $return = [];
         foreach ($dataSetObjects as $object) {
             /** @var $object DataSetInterface */
             $return = array_merge($return, $object->getDatabaseSqlKey());

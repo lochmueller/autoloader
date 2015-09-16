@@ -32,7 +32,7 @@ class Slots implements LoaderInterface
      */
     public function prepareLoader(Loader $autoLoader, $type)
     {
-        $slots = array();
+        $slots = [];
         $slotPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
@@ -50,12 +50,12 @@ class Slots implements LoaderInterface
                 $methodTags = $methodReflection->getTagsValues();
 
                 if (isset($methodTags['signalClass'][0]) && isset($methodTags['signalName'][0])) {
-                    $slots[] = array(
+                    $slots[] = [
                         'signalClassName'       => trim($methodTags['signalClass'][0], '\\'),
                         'signalName'            => $methodTags['signalName'][0],
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName'        => $methodReflection->getName(),
-                    );
+                    ];
                 }
             }
         }

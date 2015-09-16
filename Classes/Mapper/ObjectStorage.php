@@ -37,16 +37,16 @@ class ObjectStorage implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        $baseConfig = array(
+        $baseConfig = [
             'type'     => 'user',
             'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->objectStorageInfoField',
-        );
+        ];
 
-        return array(
+        return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
             'config'  => $baseConfig,
-        );
+        ];
     }
 
     /**

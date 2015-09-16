@@ -18,7 +18,7 @@ class SmartObjectRegister
      *
      * @var array
      */
-    static protected $smartObjectRegistry = array();
+    static protected $smartObjectRegistry = [];
 
     /**
      * Add a model to the register

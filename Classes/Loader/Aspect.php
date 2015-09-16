@@ -36,7 +36,7 @@ class Aspect implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $aspects = array();
+        $aspects = [];
         $aspectPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Aspect/';
         $aspectClasses = FileUtility::getBaseFilesInDir($aspectPath, 'php');
         $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
@@ -65,14 +65,14 @@ class Aspect implements LoaderInterface
 
                         $aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
 
-                        $aspects[] = array(
+                        $aspects[] = [
                             'aspectClassName'          => $aspectClassName,
                             'aspectJoinPoint'          => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
                             'aspectAdvice'             => trim($methodTags['aspectAdvice'][0]),
                             'originClassName'          => $aspectClass,
                             'originMethodName'         => $methodReflection->getName()
-                        );
+                        ];
                     }
                 }
             } catch (\Exception $e) {
@@ -102,14 +102,14 @@ class Aspect implements LoaderInterface
 
         /** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
         $methodArguments = $methodReflection->getParameters();
-        $arguments = array();
+        $arguments = [];
         /** @var $argument \ReflectionParameter */
         foreach ($methodArguments as $argument) {
-            $arguments[] = array(
+            $arguments[] = [
                 'name'      => $argument->getName(),
                 'typeHint'  => $argument->getClass()->name,
                 'reference' => $argument->isPassedByReference()
-            );
+            ];
         }
 
         return $arguments;

@@ -27,7 +27,7 @@ class BackendLayoutProvider implements DataProviderInterface
      *
      * @var array
      */
-    static protected $backendLayoutInformation = array();
+    static protected $backendLayoutInformation = [];
 
     /**
      * Add one backend layout information

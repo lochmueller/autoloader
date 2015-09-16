@@ -32,7 +32,7 @@ class TypeConverter implements LoaderInterface
      */
     public function prepareLoader(Loader $autoLoader, $type)
     {
-        $classes = array();
+        $classes = [];
         $converterPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());

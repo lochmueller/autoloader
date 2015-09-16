@@ -24,10 +24,10 @@ class Boolean implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), array(
+        return in_array(strtolower($type), [
             'bool',
             'boolean'
-        ));
+        ]);
     }
 
     /**
@@ -40,13 +40,13 @@ class Boolean implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        return array(
+        return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => array(
+            'config'  => [
                 'type' => 'check',
-            ),
-        );
+            ],
+        ];
     }
 
     /**

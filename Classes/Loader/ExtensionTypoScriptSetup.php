@@ -35,7 +35,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     {
         // We don't have to prepare anything if the extension has no smart objects
         if (!$this->extensionHasSmartObjects($loader->getExtensionKey())) {
-            return array();
+            return [];
         }
 
         return $this->generateTypoScriptSetup($loader->getExtensionKey());
@@ -89,7 +89,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      */
     private function generateTypoScriptSetup($extensionKey)
     {
-        $setup = array();
+        $setup = [];
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
             $table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
             $recordType = (string)ReflectionUtility::getFirstTagValue($className, 'recordType');
@@ -132,7 +132,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     private function getSmartObjectsForExtensionKey($extensionKey)
     {
         $smartObjects = SmartObjectRegister::getRegister();
-        $extensionObjects = array();
+        $extensionObjects = [];
         foreach ($smartObjects as $className) {
             $objectExtension = ClassNamingUtility::getExtensionKeyByModel($className);
             if ($objectExtension === $extensionKey) {

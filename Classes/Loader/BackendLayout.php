@@ -35,7 +35,7 @@ class BackendLayout implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $backendLayouts = array();
+        $backendLayouts = [];
         $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/BackendLayouts/';
         $backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt');
 
@@ -48,13 +48,13 @@ class BackendLayout implements LoaderInterface
             if ($type === LoaderInterface::EXT_TABLES) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
             }
-            $backendLayouts[] = array(
+            $backendLayouts[] = [
                 'path'      => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
                 'filename'  => $pathInfo['filename'],
                 'icon'      => $extension ? $iconPath . $extension : false,
                 'label'     => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
                 'extension' => $loader->getExtensionKey(),
-            );
+            ];
         }
 
         return $backendLayouts;

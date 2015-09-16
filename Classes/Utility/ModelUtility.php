@@ -108,7 +108,7 @@ class ModelUtility
      */
     static public function getTcaOverrideInformation($extensionKey, $tableName)
     {
-        $return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : array();
+        $return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : [];
         $classNames = SmartObjectRegister::getRegister();
         $informationService = SmartObjectInformationService::getInstance();
 

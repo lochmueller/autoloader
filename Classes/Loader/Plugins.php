@@ -34,7 +34,7 @@ class Plugins implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $pluginInformation = array();
+        $pluginInformation = [];
 
         $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Controller/';
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
@@ -82,16 +82,16 @@ class Plugins implements LoaderInterface
     protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
     {
         if (!isset($pluginInformation[$pluginKey])) {
-            $pluginInformation[$pluginKey] = array(
-                'cache'   => array(),
-                'noCache' => array(),
-            );
+            $pluginInformation[$pluginKey] = [
+                'cache'   => [],
+                'noCache' => [],
+            ];
         }
 
-        $parts = $noCache ? array(
+        $parts = $noCache ? [
             'cache',
             'noCache'
-        ) : array('cache');
+        ] : ['cache'];
 
         foreach ($parts as $part) {
             if (!isset($pluginInformation[$pluginKey][$part][$controllerKey])) {

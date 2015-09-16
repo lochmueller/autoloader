@@ -34,10 +34,10 @@ class LoginController
     {
         $markers['NEWS'] = $this->autoloaderTest() . $markers['NEWS'];
 
-        return array(
+        return [
             $loginController,
             $markers
-        );
+        ];
     }
 
     /**

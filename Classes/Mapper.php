@@ -75,7 +75,7 @@ class Mapper implements SingletonInterface
      */
     protected function getMappers()
     {
-        $mapper = array(
+        $mapper = [
             'Boolean',
             'Float',
             'DateTime',
@@ -85,7 +85,7 @@ class Mapper implements SingletonInterface
             'Int',
             'String',
             'Model',
-        );
+        ];
         foreach ($mapper as $key => $value) {
             $mapper[$key] = ExtendedUtility::create('HDNET\\Autoloader\\Mapper\\' . $value);
         }

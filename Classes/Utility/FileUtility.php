@@ -73,7 +73,7 @@ class FileUtility
     static protected function getFileInformationInDir($dirPath, $fileExtension, $informationType)
     {
         if (!is_dir($dirPath)) {
-            return array();
+            return [];
         }
         $files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
         foreach ($files as $key => $file) {
@@ -96,10 +96,10 @@ class FileUtility
     static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = true)
     {
         if (!is_dir($dirPath)) {
-            return array();
+            return [];
         }
         $recursively = $recursively ? 99 : 0;
-        $files = GeneralUtility::getAllFilesAndFoldersInPath(array(), $dirPath, $fileExtension, false, $recursively);
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtension, false, $recursively);
         foreach ($files as $key => $file) {
             $pathInfo = PathUtility::pathinfo($file);
             $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];

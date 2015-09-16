@@ -32,7 +32,7 @@ class AlternativeImplementations implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $classNames = array();
+        $classNames = [];
         $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/AlternativeImplementations/';
         $alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
@@ -45,10 +45,10 @@ class AlternativeImplementations implements LoaderInterface
                 continue;
             }
 
-            $classNames[] = array(
+            $classNames[] = [
                 'originalName'         => ReflectionUtility::getParentClassName($aicClass),
                 'alternativeClassName' => $aicClass,
-            );
+            ];
         }
         return $classNames;
     }

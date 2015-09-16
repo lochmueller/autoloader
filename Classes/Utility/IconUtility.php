@@ -66,12 +66,12 @@ class IconUtility
      */
     static public function getIconFileExtension($absolutePathWithoutExtension)
     {
-        $fileExtensions = array(
+        $fileExtensions = [
             'svg',
             'png',
             'gif',
             'jpg',
-        );
+        ];
         foreach ($fileExtensions as $fileExtension) {
             if (is_file($absolutePathWithoutExtension . $fileExtension)) {
                 return $fileExtension;

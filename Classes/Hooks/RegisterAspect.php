@@ -92,11 +92,11 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $xclassTemplate = str_replace('__classname__', $shortName, $xclassTemplate);
         $xclassTemplate = str_replace('__extendedClass__', '\\' . $xClassName, $xclassTemplate);
 
-        $beforeConfiguration = array();
-        $replaceConfiguration = array();
-        $afterConfiguration = array();
-        $throwConfiguration = array();
-        $joinPointMethods = array();
+        $beforeConfiguration = [];
+        $replaceConfiguration = [];
+        $afterConfiguration = [];
+        $throwConfiguration = [];
+        $joinPointMethods = [];
 
         foreach ($xClass as $joinPoint => $advices) {
             $beforeConfiguration[$joinPoint] = $this->getConfigurationArray('before', $joinPoint, $advices);
@@ -107,20 +107,20 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
             $joinPointMethods[$joinPoint] = $this->getJoinPointMethod($joinPoint, $xClass);
         }
 
-        $search = array(
+        $search = [
             '__beforeAspectsConfiguration__',
             '__replaceAspectsConfiguration__',
             '__afterAspectsConfiguration__',
             '__throwAspectsConfiguration__',
             '__joinPointMethods__',
-        );
-        $replace = array(
+        ];
+        $replace = [
             $this->mergeConfigurationArrayForCode($beforeConfiguration),
             $this->mergeConfigurationArrayForCode($replaceConfiguration),
             $this->mergeConfigurationArrayForCode($afterConfiguration),
             $this->mergeConfigurationArrayForCode($throwConfiguration),
             implode("\n", $joinPointMethods),
-        );
+        ];
 
         return str_replace($search, $replace, $xclassTemplate);
     }
@@ -136,14 +136,14 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     protected function getJoinPointMethod($joinPoint, $xClass)
     {
         $config = $xClass[$joinPoint];
-        $argumentBlock = array();
-        $code = array();
+        $argumentBlock = [];
+        $code = [];
 
         $code[] = 'public function ' . $joinPoint . '(';
 
         // arguments
         if (is_array($config['arguments']) && sizeof($config['arguments']) > 0) {
-            $args = array();
+            $args = [];
             foreach ($config['arguments'] as $arguments) {
                 $type = '';
                 $reference = '';
@@ -187,7 +187,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      */
     protected function getConfigurationArray($type, $joinPoint, $advices)
     {
-        $code = array();
+        $code = [];
 
         if (!$advices[$type]) {
             return '';
@@ -273,28 +273,28 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      */
     protected function prepareConfiguration(array $aspectCollection)
     {
-        $xClasses = array();
+        $xClasses = [];
         foreach ($aspectCollection as $aspects) {
             foreach ($aspects as $aspect) {
                 if (!array_key_exists($aspect['aspectClassName'], $xClasses)) {
-                    $xClasses[$aspect['aspectClassName']] = array();
+                    $xClasses[$aspect['aspectClassName']] = [];
                 }
 
                 if (!array_key_exists($aspect['aspectJoinPoint'], $xClasses[$aspect['aspectClassName']])) {
-                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']] = array();
+                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']] = [];
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]['arguments'] = $aspect['aspectJoinPointArguments'];
                 }
 
                 if (!array_key_exists($aspect['aspectAdvice'],
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']])
                 ) {
-                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']] = array();
+                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']] = [];
                 }
 
-                $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = array(
+                $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = [
                     'originClassName'  => $aspect['originClassName'],
                     'originMethodName' => $aspect['originMethodName']
-                );
+                ];
             }
         }
 

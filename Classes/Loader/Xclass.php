@@ -33,7 +33,7 @@ class Xclass implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $return = array();
+        $return = [];
         if ($type === LoaderInterface::EXT_TABLES) {
             return $return;
         }
@@ -47,10 +47,10 @@ class Xclass implements LoaderInterface
                 continue;
             }
 
-            $return[] = array(
+            $return[] = [
                 'source' => ReflectionUtility::getParentClassName($xclassName),
                 'target' => $xclassName,
-            );
+            ];
         }
 
         return $return;

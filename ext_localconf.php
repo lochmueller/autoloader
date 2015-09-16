@@ -11,21 +11,21 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader', array(
+\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader', [
     'Hooks',
     'Slots',
     'StaticTyposcript'
-));
+]);
 
 $register = '';
 if(\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')){
-    $register = array(
+    $register = [
         'callbackMethod' => 'HDNET\\Autoloader\\Hooks\\ClearCache->clear',
-    );
+    ];
 }
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['autoloader::clearCache'] = $register;
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = array(
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = [
     'php' => 'HDNET\\Autoloader\\Localization\\Writer\\PhpWriter',
     'xlf' => 'HDNET\\Autoloader\\Localization\\Writer\\XliffWriter',
     'xml' => 'HDNET\\Autoloader\\Localization\\Writer\\XmlWriter',
-);
+];

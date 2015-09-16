@@ -30,13 +30,13 @@ class TcaFiles implements LoaderInterface
     public function prepareLoader(Loader $loader, $type)
     {
         if ($type !== LoaderInterface::EXT_TABLES) {
-            return array();
+            return [];
         }
 
         SmartObjectManager::checkAndCreateTcaInformation();
 
         // no preparations, because the smart objects fill the register
-        return array();
+        return [];
     }
 
     /**

@@ -41,10 +41,10 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
      */
     protected function clearCache()
     {
-        $caches = array(
+        $caches = [
             't3lib_l10n',
             'l10n'
-        );
+        ];
         /** @var CacheManager $cacheManager */
         $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
         foreach ($caches as $name) {

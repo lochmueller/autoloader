@@ -26,10 +26,10 @@ class EditLinkViewHelper extends AbstractViewHelper
      */
     public function render(array $data)
     {
-        $url = BackendUtility::getModuleUrl('record_edit', array(
+        $url = BackendUtility::getModuleUrl('record_edit', [
             'edit[tt_content][' . $data['uid'] . ']' => 'edit',
             'returnUrl'                              => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
-        ));
+        ]);
         return '<a href="' . $url . '">' . $this->renderChildren() . '</a>';
     }
 }

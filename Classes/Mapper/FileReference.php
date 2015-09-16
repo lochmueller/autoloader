@@ -25,9 +25,9 @@ class FileReference implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower(trim($type, '\\')), array(
+        return in_array(strtolower(trim($type, '\\')), [
             'typo3\\cms\\extbase\\domain\\model\\filereference',
-        ));
+        ]);
     }
 
     /**
@@ -40,11 +40,11 @@ class FileReference implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        return array(
+        return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, array('maxitems' => 1)),
-        );
+            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, ['maxitems' => 1]),
+        ];
     }
 
     /**

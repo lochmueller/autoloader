@@ -11,4 +11,4 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_aspect', array('Aspect'));
+\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_aspect', ['Aspect']);

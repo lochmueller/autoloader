@@ -27,10 +27,10 @@ class ExtendedUtility
     {
         $arguments = func_get_args();
         $objManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-        return call_user_func_array(array(
+        return call_user_func_array([
             $objManager,
             'get'
-        ), $arguments);
+        ], $arguments);
     }
 
     /**
@@ -67,9 +67,9 @@ class ExtendedUtility
             self::log($message);
             return false;
         }
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source] = array(
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source] = [
             'className' => $target,
-        );
+        ];
         return true;
     }
 
@@ -81,7 +81,7 @@ class ExtendedUtility
     static public function log($message)
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
-            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = array();
+            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = $message;
     }
@@ -109,7 +109,7 @@ class ExtendedUtility
     {
         $location = GeneralUtility::trimExplode('|', $location, true);
         array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
-        ArrayUtility::setNodes(array(implode('|', $location) => $configuration), $GLOBALS);
+        ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
     }
 
     /**
@@ -133,8 +133,8 @@ class ExtendedUtility
         $layoutPath = $siteRelPath . 'Resources/Private/Layouts';
 
         if (GeneralUtility::compat_version('7.0')) {
-            $view->setPartialRootPaths(array($partialPath));
-            $view->setLayoutRootPaths(array($layoutPath));
+            $view->setPartialRootPaths([$partialPath]);
+            $view->setLayoutRootPaths([$layoutPath]);
         } else {
             $view->setPartialRootPath($partialPath);
             $view->setLayoutRootPath($layoutPath);

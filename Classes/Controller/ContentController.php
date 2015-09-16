@@ -33,11 +33,11 @@ class ContentController extends ActionController
         $model = ModelUtility::getModel($targetObject, $data);
 
         $view = $this->createStandaloneView();
-        $view->assignMultiple(array(
+        $view->assignMultiple([
             'data'     => $data,
             'object'   => $model,
             'settings' => $this->settings
-        ));
+        ]);
         return $view->render();
     }
 

@@ -25,9 +25,9 @@ class DummyConverter extends AbstractTypeConverter
      *
      * @var array<string>
      */
-    protected $sourceTypes = array(
+    protected $sourceTypes = [
         'dummy',
-    );
+    ];
 
     /**
      * Dummy target
@@ -49,7 +49,7 @@ class DummyConverter extends AbstractTypeConverter
     public function convertFrom(
         $source,
         $targetType,
-        array $childProperties = array(),
+        array $childProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
         return null;

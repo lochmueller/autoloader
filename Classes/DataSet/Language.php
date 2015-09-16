@@ -24,61 +24,61 @@ class Language implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return array(
-            'ctrl'     => array(
+        return [
+            'ctrl'     => [
                 'languageField'            => 'sys_language_uid',
                 'transOrigPointerField'    => 'l10n_parent',
                 'transOrigDiffSourceField' => 'l10n_diffsource',
-            ),
-            'columns'  => array(
-                'sys_language_uid' => array(
+            ],
+            'columns'  => [
+                'sys_language_uid' => [
                     'exclude' => 1,
                     'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-                    'config'  => array(
+                    'config'  => [
                         'type'                => 'select',
                         'foreign_table'       => 'sys_language',
                         'foreign_table_where' => 'ORDER BY sys_language.title',
-                        'items'               => array(
-                            array(
+                        'items'               => [
+                            [
                                 'LLL:EXT:lang/locallang_general.xml:LGL.allLanguages',
                                 -1
-                            ),
-                            array(
+                            ],
+                            [
                                 'LLL:EXT:lang/locallang_general.xml:LGL.default_value',
                                 0
-                            )
-                        ),
-                    ),
-                ),
-                'l10n_parent'      => array(
+                            ]
+                        ],
+                    ],
+                ],
+                'l10n_parent'      => [
                     'displayCond' => 'FIELD:sys_language_uid:>:0',
                     'exclude'     => 1,
                     'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-                    'config'      => array(
+                    'config'      => [
                         'type'                    => 'select',
-                        'items'                   => array(
-                            array(
+                        'items'                   => [
+                            [
                                 '',
                                 0
-                            ),
-                        ),
+                            ],
+                        ],
                         'foreign_table'           => $tableName,
                         'foreign_table_where'     => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
                         'foreign_table_loadIcons' => false,
                         'iconsInOptionTags'       => false,
                         'noIconsBelowSelect'      => true,
-                    ),
-                ),
-                'l10n_diffsource'  => array(
-                    'config' => array(
+                    ],
+                ],
+                'l10n_diffsource'  => [
+                    'config' => [
                         'type' => 'passthrough',
-                    ),
-                ),
-            ),
-            'palettes' => array(
-                'language' => array('showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'),
-            ),
-        );
+                    ],
+                ],
+            ],
+            'palettes' => [
+                'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
+            ],
+        ];
     }
 
     /**
@@ -90,11 +90,11 @@ class Language implements DataSetInterface
      */
     public function getDatabaseSql($tableName)
     {
-        return array(
+        return [
             'sys_language_uid int(11) DEFAULT \'0\' NOT NULL',
             'l10n_parent int(11) DEFAULT \'0\' NOT NULL',
             'l10n_diffsource mediumblob',
-        );
+        ];
     }
 
     /**
@@ -104,8 +104,8 @@ class Language implements DataSetInterface
      */
     public function getDatabaseSqlKey()
     {
-        return array(
+        return [
             'KEY language (l10n_parent,sys_language_uid)'
-        );
+        ];
     }
 }

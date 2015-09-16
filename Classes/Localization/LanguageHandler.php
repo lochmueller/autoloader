@@ -25,7 +25,7 @@ class LanguageHandler extends LanguageStore
      *
      * @var array
      */
-    protected static $createdLabelCache = array();
+    protected static $createdLabelCache = [];
 
     /**
      * handler the adding of files
@@ -73,7 +73,7 @@ class LanguageHandler extends LanguageStore
      */
     protected function getBestLanguageWriter($extensionKey)
     {
-        $services = array();
+        $services = [];
         foreach ($this->getSupportedExtensions() as $serviceKey) {
             if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey])) {
                 continue;

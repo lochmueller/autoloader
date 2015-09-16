@@ -30,15 +30,15 @@ class ExtensionId implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $scripts = array();
+        $scripts = [];
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Php/eID/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
         foreach ($files as $eIdFile) {
-            $scripts[] = array(
+            $scripts[] = [
                 'name' => $eIdFile,
                 'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Php/eID/' . $eIdFile . '.php',
-            );
+            ];
         }
         return $scripts;
     }

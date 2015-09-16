@@ -26,9 +26,9 @@ class PhpWriter extends AbstractLocalizationWriter
      */
     public function getBaseFileContent($extensionKey)
     {
-        $labels = array(
-            'default' => array(),
-        );
+        $labels = [
+            'default' => [],
+        ];
         return $this->getPhpContentByLabels($labels);
     }
 

@@ -34,7 +34,7 @@ class Hooks implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $hooks = array();
+        $hooks = [];
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
@@ -54,10 +54,10 @@ class Hooks implements LoaderInterface
                     $classTags['hook'] = implode(' ', $classTags['hook']);
                 }
                 $classTags['hook'] = GeneralUtility::trimExplode(' ', $classTags['hook'], true);
-                $hooks[] = array(
+                $hooks[] = [
                     'locations'     => $classTags['hook'],
                     'configuration' => $hookClass,
-                );
+                ];
             }
 
             // add method hooks
@@ -69,10 +69,10 @@ class Hooks implements LoaderInterface
                         $methodTags['hook'] = implode(' ', $methodTags['hook']);
                     }
                     $methodTags['hook'] = GeneralUtility::trimExplode(' ', $methodTags['hook'], true);
-                    $hooks[] = array(
+                    $hooks[] = [
                         'locations'     => $methodTags['hook'],
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),
-                    );
+                    ];
                 }
             }
         }

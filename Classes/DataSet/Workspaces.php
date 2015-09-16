@@ -24,24 +24,24 @@ class Workspaces implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return array(
-            'ctrl'    => array(
+        return [
+            'ctrl'    => [
                 'versioningWS'                    => 2,
                 'versioning_followPages'          => true,
                 'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
                 'origUid'                         => 't3_origuid'
-            ),
-            'columns' => array(
-                't3ver_label' => array(
+            ],
+            'columns' => [
+                't3ver_label' => [
                     'label'  => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
-                    'config' => array(
+                    'config' => [
                         'type' => 'input',
                         'size' => 30,
                         'max'  => 255,
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
     }
 
     /**
@@ -54,7 +54,7 @@ class Workspaces implements DataSetInterface
      */
     public function getDatabaseSql($tableName)
     {
-        return array(
+        return [
             't3ver_oid int(11) DEFAULT \'0\' NOT NULL',
             't3ver_id int(11) DEFAULT \'0\' NOT NULL',
             't3ver_label varchar(255) DEFAULT \'\' NOT NULL',
@@ -65,7 +65,7 @@ class Workspaces implements DataSetInterface
             't3ver_tstamp int(11) DEFAULT \'0\' NOT NULL',
             't3ver_move_id int(11) DEFAULT \'0\' NOT NULL',
             't3_origuid int(11) DEFAULT \'0\' NOT NULL',
-        );
+        ];
     }
 
     /**
@@ -75,8 +75,8 @@ class Workspaces implements DataSetInterface
      */
     public function getDatabaseSqlKey()
     {
-        return array(
+        return [
             'KEY t3ver_oid (t3ver_oid,t3ver_wsid)'
-        );
+        ];
     }
 }

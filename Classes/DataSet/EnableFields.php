@@ -24,66 +24,66 @@ class EnableFields implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return array(
-            'ctrl'    => array(
-                'enablecolumns' => array(
+        return [
+            'ctrl'    => [
+                'enablecolumns' => [
                     'disabled'  => 'hidden',
                     'starttime' => 'starttime',
                     'endtime'   => 'endtime',
                     'fe_group'  => 'fe_group',
-                ),
-            ),
-            'columns' => array(
+                ],
+            ],
+            'columns' => [
                 'fe_group'  => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
-                'editlock'  => array(
+                'editlock'  => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
                     'label'     => 'LLL:EXT:lang/locallang_tca.xml:editlock',
-                    'config'    => array(
+                    'config'    => [
                         'type' => 'check'
-                    )
-                ),
-                'hidden'    => array(
+                    ]
+                ],
+                'hidden'    => [
                     'exclude' => 1,
                     'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-                    'config'  => array(
+                    'config'  => [
                         'type' => 'check',
-                    ),
-                ),
-                'starttime' => array(
+                    ],
+                ],
+                'starttime' => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
                     'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
-                    'config'    => array(
+                    'config'    => [
                         'type'     => 'input',
                         'size'     => 13,
                         'max'      => 20,
                         'eval'     => 'datetime',
                         'checkbox' => 0,
                         'default'  => 0,
-                        'range'    => array(
+                        'range'    => [
                             'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ),
-                    ),
-                ),
-                'endtime'   => array(
+                        ],
+                    ],
+                ],
+                'endtime'   => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
                     'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
-                    'config'    => array(
+                    'config'    => [
                         'type'     => 'input',
                         'size'     => 13,
                         'max'      => 20,
                         'eval'     => 'datetime',
                         'checkbox' => 0,
                         'default'  => 0,
-                        'range'    => array(
+                        'range'    => [
                             'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ),
-                    ),
-                ),
-            ),
-        );
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -95,13 +95,13 @@ class EnableFields implements DataSetInterface
      */
     public function getDatabaseSql($tableName)
     {
-        return array(
+        return [
             'hidden tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
             'starttime int(11) unsigned DEFAULT \'0\' NOT NULL',
             'endtime int(11) unsigned DEFAULT \'0\' NOT NULL',
             'fe_group varchar(100) DEFAULT \'0\' NOT NULL',
             'editlock tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
-        );
+        ];
     }
 
     /**
@@ -111,6 +111,6 @@ class EnableFields implements DataSetInterface
      */
     public function getDatabaseSqlKey()
     {
-        return array();
+        return [];
     }
 }

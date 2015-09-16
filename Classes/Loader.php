@@ -21,7 +21,7 @@ class Loader implements SingletonInterface
      *
      * @var array
      */
-    protected $implementations = array(
+    protected $implementations = [
         // class replacement
         'Xclass',
         'AlternativeImplementations',
@@ -43,7 +43,7 @@ class Loader implements SingletonInterface
         'ExtensionId',
         'TypeConverter',
         'BackendLayout',
-    );
+    ];
 
     /**
      * The Extension key
@@ -71,16 +71,16 @@ class Loader implements SingletonInterface
      *
      * @var array
      */
-    protected $cacheConfiguration = array(
+    protected $cacheConfiguration = [
         'backend'  => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
         'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
-        'groups'   => array(
+        'groups'   => [
             'system',
-        ),
-        'options'  => array(
+        ],
+        'options'  => [
             'defaultLifetime' => 0,
-        ),
-    );
+        ],
+    ];
 
     /**
      * Build up the object.
@@ -106,7 +106,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    static public function extTables($vendorName, $extensionKey, array $implementations = array())
+    static public function extTables($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
@@ -122,7 +122,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    static public function extLocalconf($vendorName, $extensionKey, array $implementations = array())
+    static public function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
@@ -138,7 +138,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    public function loadExtTables($vendorName, $extensionKey, array $implementations = array())
+    public function loadExtTables($vendorName, $extensionKey, array $implementations = [])
     {
         if ($this->disableFirstCall) {
             return;
@@ -166,7 +166,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = array())
+    public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
         if ($this->disableFirstCall) {
             return;
@@ -192,10 +192,10 @@ class Loader implements SingletonInterface
      *
      * @return array
      */
-    protected function buildAutoLoaderObjects(array $objectNames = array())
+    protected function buildAutoLoaderObjects(array $objectNames = [])
     {
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
-        $objects = array();
+        $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
             $objects[] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
         }
@@ -209,14 +209,14 @@ class Loader implements SingletonInterface
      *
      * @return array
      */
-    protected function getAutoLoaderNamesInRightOrder(array $objectNames = array())
+    protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
     {
         if (!$objectNames) {
             return $this->implementations;
         }
 
         // sort
-        $names = array();
+        $names = [];
         foreach ($this->implementations as $className) {
             if (in_array($className, $objectNames)) {
                 $names[] = $className;
@@ -261,7 +261,7 @@ class Loader implements SingletonInterface
      */
     protected function buildLoaderInformation($objects, $type)
     {
-        $return = array();
+        $return = [];
         foreach ($objects as $object) {
             /** @var LoaderInterface $object */
             $return[get_class($object)] = $object->prepareLoader($this, $type);

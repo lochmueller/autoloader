@@ -37,7 +37,7 @@ class ContextSensitiveHelps implements LoaderInterface
     public function prepareLoader(Loader $loader, $type)
     {
         $modelInformation = $this->findTableAndModelInformationForExtension($loader->getExtensionKey());
-        $tables = array();
+        $tables = [];
         foreach ($modelInformation as $information) {
             $tables[] = $information['table'];
             $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/locallang_csh_' . $information['table'] . '.xml';
@@ -59,16 +59,16 @@ class ContextSensitiveHelps implements LoaderInterface
      */
     protected function findTableAndModelInformationForExtension($extensionKey)
     {
-        $information = array();
+        $information = [];
         $register = SmartObjectRegister::getRegister();
         foreach ($register as $class) {
             $parts = ClassNamingUtility::explodeObjectModelName($class);
             if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey) {
                 if (ModelUtility::getTableNameByModelReflectionAnnotation($class) === '') {
-                    $information[] = array(
+                    $information[] = [
                         'table' => ModelUtility::getTableNameByModelName($class),
                         'class' => $class
-                    );
+                    ];
                 }
             }
         }

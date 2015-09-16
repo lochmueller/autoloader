@@ -31,7 +31,7 @@ class SmartObjectManager implements SingletonInterface
         $informationService = SmartObjectInformationService::getInstance();
         $register = SmartObjectRegister::getRegister();
 
-        $output = array();
+        $output = [];
         foreach ($register as $modelName) {
             $output[] = $informationService->getDatabaseInformation($modelName);
         }
@@ -50,10 +50,10 @@ class SmartObjectManager implements SingletonInterface
      */
     static public function isSmartObjectClass($className)
     {
-        $riskAutoLoader = array(
+        $riskAutoLoader = [
             'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
             'autoload'
-        );
+        ];
         $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
         if (!class_exists($className)) {
@@ -82,11 +82,11 @@ class SmartObjectManager implements SingletonInterface
         $defaultTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Default.tmpl');
         $overrideTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Override.tmpl');
 
-        $search = array(
+        $search = [
             '__modelName__',
             '__tableName__',
             '__extensionKey__',
-        );
+        ];
 
         foreach ($register as $model) {
             $extensionKey = ClassNamingUtility::getExtensionKeyByModel($model);
@@ -103,11 +103,11 @@ class SmartObjectManager implements SingletonInterface
             }
 
             if (!is_file($tcaFileName)) {
-                $replace = array(
+                $replace = [
                     str_replace('\\', '\\\\', $model),
                     $tableName,
                     $extensionKey
-                );
+                ];
 
                 $content = str_replace($search, $replace, $template);
                 FileUtility::writeFileAndCreateFolder($tcaFileName, $content);

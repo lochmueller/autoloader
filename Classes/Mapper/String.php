@@ -24,9 +24,9 @@ class String implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), array(
+        return in_array(strtolower($type), [
             'string',
-        ));
+        ]);
     }
 
     /**
@@ -39,13 +39,13 @@ class String implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        return array(
+        return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => array(
+            'config'  => [
                 'type' => 'input',
-            ),
-        );
+            ],
+        ];
     }
 
     /**

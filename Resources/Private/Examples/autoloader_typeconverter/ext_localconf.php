@@ -11,6 +11,6 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_typeconverter', array(
+\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_typeconverter', [
     'TypeConverter',
-));
+]);

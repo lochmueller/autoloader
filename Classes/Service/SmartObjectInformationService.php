@@ -62,14 +62,14 @@ class SmartObjectInformationService
      *
      * @return array
      */
-    public function getCustomModelFieldTca($modelClassName, &$searchFields = array())
+    public function getCustomModelFieldTca($modelClassName, &$searchFields = [])
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
         $extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
         $tableName = ModelUtility::getTableName($modelClassName);
         $customFieldInfo = $this->getCustomModelFields($modelClassName);
-        $searchFields = array();
-        $customFields = array();
+        $searchFields = [];
+        $customFields = [];
         foreach ($customFieldInfo as $info) {
             $key = $tableName . '.' . $info['name'];
             try {
@@ -110,14 +110,14 @@ class SmartObjectInformationService
         $reflectionTableName = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName);
         $tableName = ModelUtility::getTableNameByModelName($modelClassName);
 
-        $searchFields = array();
+        $searchFields = [];
         $customFields = $this->getCustomModelFieldTca($modelClassName, $searchFields);
 
         if ($reflectionTableName !== '') {
-            $customConfiguration = array(
+            $customConfiguration = [
                 'columns' => $customFields,
-            );
-            $base = is_array($GLOBALS['TCA'][$reflectionTableName]) ? $GLOBALS['TCA'][$reflectionTableName] : array();
+            ];
+            $base = is_array($GLOBALS['TCA'][$reflectionTableName]) ? $GLOBALS['TCA'][$reflectionTableName] : [];
             return ArrayUtility::mergeRecursiveDistinct($base, $customConfiguration);
         }
 
@@ -156,8 +156,8 @@ class SmartObjectInformationService
         }
         $showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
 
-        $overrideTca = array(
-            'ctrl'      => array(
+        $overrideTca = [
+            'ctrl'      => [
                 'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
                 'label'         => $labelField,
                 'tstamp'        => 'tstamp',
@@ -168,17 +168,17 @@ class SmartObjectInformationService
                 'delete'        => 'deleted',
                 'searchFields'  => implode(',', $searchFields),
                 'iconfile'      => IconUtility::getByModelName($modelClassName)
-            ),
-            'interface' => array(
+            ],
+            'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
-            ),
-            'types'     => array(
-                '1' => array('showitem' => implode(',', $showitem)),
-            ),
-            'palettes'  => array(
-                'access' => array('showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'),
-            ),
-        );
+            ],
+            'types'     => [
+                '1' => ['showitem' => implode(',', $showitem)],
+            ],
+            'palettes'  => [
+                'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
+            ],
+        ];
         return ArrayUtility::mergeRecursiveDistinct($baseTca, $overrideTca);
     }
 
@@ -192,7 +192,7 @@ class SmartObjectInformationService
     protected function getCustomDatabaseInformation($modelClassName)
     {
         $fieldInformation = $this->getCustomModelFields($modelClassName);
-        $fields = array();
+        $fields = [];
         foreach ($fieldInformation as $info) {
             if ($info['db'] === '') {
                 $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
@@ -232,7 +232,7 @@ class SmartObjectInformationService
     protected function getCustomModelFields($modelClassName)
     {
         $properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
-        $fields = array();
+        $fields = [];
         foreach ($properties as $property) {
             /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
             $var = '';
@@ -242,12 +242,12 @@ class SmartObjectInformationService
             }
 
             $dbInformation = $property->getTagValues('db');
-            $fields[] = array(
+            $fields[] = [
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
                 'db'   => trim($dbInformation[0]),
                 'var'  => trim($var),
                 'rte'  => (bool)$property->isTaggedWith('enableRichText'),
-            );
+            ];
         }
         return $fields;
     }
@@ -279,7 +279,7 @@ class SmartObjectInformationService
      */
     protected function generateCompleteSqlQuery($modelClassName, $tableName, array $custom)
     {
-        $fields = array();
+        $fields = [];
         $fields[] = 'uid int(11) NOT NULL auto_increment';
         $fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
         $fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';

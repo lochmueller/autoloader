@@ -30,13 +30,13 @@ class StaticTyposcript implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        $tsConfiguration = array();
+        $tsConfiguration = [];
         $extPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
         $baseDir = $extPath . 'Configuration/TypoScript/';
         if (!is_dir($baseDir)) {
             return $tsConfiguration;
         }
-        $typoScriptFolder = GeneralUtility::getAllFilesAndFoldersInPath(array(), $baseDir, '', true, 99, '(.*)\\.(.*)');
+        $typoScriptFolder = GeneralUtility::getAllFilesAndFoldersInPath([], $baseDir, '', true, 99, '(.*)\\.(.*)');
         $extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
         foreach ($typoScriptFolder as $folder) {
@@ -44,10 +44,10 @@ class StaticTyposcript implements LoaderInterface
                 $setupName = $extensionName . '/' . str_replace($baseDir, '', $folder);
                 $setupName = implode(' - ', GeneralUtility::trimExplode('/', $setupName, true));
                 $folder = str_replace($extPath, '', $folder);
-                $tsConfiguration[] = array(
+                $tsConfiguration[] = [
                     'path'  => $folder,
                     'title' => $setupName,
-                );
+                ];
             }
         }
 

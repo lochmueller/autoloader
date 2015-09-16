@@ -71,10 +71,10 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         $model = ModelUtility::getModel($config['modelClass'], $row, true);
 
         $view = ExtendedUtility::createExtensionStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
-        $view->assignMultiple(array(
+        $view->assignMultiple([
             'data'   => $row,
             'object' => $model
-        ));
+        ]);
         return $view->render();
     }
 
