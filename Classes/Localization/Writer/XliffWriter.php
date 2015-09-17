@@ -37,6 +37,8 @@ class XliffWriter extends AbstractLocalizationWriter
     }
 
     /**
+     * Get the absolute file name
+     *
      * @param string $extensionKey
      *
      * @return string
