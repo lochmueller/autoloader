@@ -43,6 +43,7 @@ class Loader implements SingletonInterface
         'ExtensionId',
         'TypeConverter',
         'BackendLayout',
+        'SoapServer',
     ];
 
     /**
