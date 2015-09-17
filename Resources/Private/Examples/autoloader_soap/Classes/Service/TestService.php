@@ -15,4 +15,16 @@ namespace HDNET\AutoloaderSoap\Service;
 class TestService
 {
 
+    /**
+     * Test function
+     *
+     * @param string $test
+     *
+     * @return int
+     */
+    public function testFunction($test)
+    {
+        return 1;
+    }
+
 }

@@ -13,6 +13,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Loading SoapServer
@@ -46,6 +47,7 @@ class SoapServer implements LoaderInterface
             }
 
             $property = ReflectionUtility::getFirstTagValue($serviceClass, 'soapServer');
+            DebuggerUtility::var_dump($property);
         }
 
         return $info;
@@ -74,6 +76,9 @@ class SoapServer implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {
+        foreach ($loaderInformation as $key => $class) {
+            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Soap'][$key] = $class;
+        }
         return null;
     }
 }
