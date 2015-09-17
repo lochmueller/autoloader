@@ -77,7 +77,9 @@ class SoapServer
         $server = new \SoapServer(null, [
             'uri' => $this->getServiceUri()
         ]);
-        $server->setClass($this->serverClass);
+        /** @var object $object */
+        $object = GeneralUtility::makeInstance($this->serverClass);
+        $server->setObject($object);
         try {
             $server->handle();
         } catch (\Exception $ex) {

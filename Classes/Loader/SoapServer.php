@@ -33,7 +33,9 @@ class SoapServer implements LoaderInterface
      */
     public function prepareLoader(Loader $autoLoader, $type)
     {
-        $info = [];
+        $info = [
+            #'test' => \HDNET\AutoloaderSoap\Service\TestService::class
+        ];
         return $info;
         $servicePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Service/';
         $serviceClasses = FileUtility::getBaseFilesRecursivelyInDir($servicePath, 'php');
@@ -63,6 +65,9 @@ class SoapServer implements LoaderInterface
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
+        foreach ($loaderInformation as $key => $class) {
+            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Soap'][$key] = $class;
+        }
         return null;
     }
 
