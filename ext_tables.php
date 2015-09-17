@@ -14,7 +14,8 @@ if (!defined('TYPO3_MODE')) {
 \HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader', [
     'Hooks',
     'Slots',
-    'StaticTyposcript'
+    'StaticTyposcript',
+    'ExtensionId'
 ]);
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = [
