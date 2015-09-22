@@ -26,10 +26,26 @@ class EditLinkViewHelper extends AbstractViewHelper
      */
     public function render(array $data)
     {
-        $url = BackendUtility::getModuleUrl('record_edit', [
+        $urlParameter = [
             'edit[tt_content][' . $data['uid'] . ']' => 'edit',
             'returnUrl'                              => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
-        ]);
+        ];
+        $url = BackendUtility::getModuleUrl('record_edit', $urlParameter);
+        if (!GeneralUtility::compat_version('7.0')) {
+            $url = $this->buildCompatibilityUrl($urlParameter);
+        }
         return '<a href="' . $url . '">' . $this->renderChildren() . '</a>';
+    }
+
+    /**
+     * Build the URI for the TYPO3 < 7.0
+     *
+     * @param array $urlParameter
+     *
+     * @return string
+     */
+    protected function buildCompatibilityUrl(array $urlParameter)
+    {
+        return 'alt_doc.php?' . http_build_query($urlParameter);
     }
 }
