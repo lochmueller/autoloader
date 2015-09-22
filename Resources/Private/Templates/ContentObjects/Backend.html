@@ -1,7 +1,14 @@
 {namespace a=HDNET\Autoloader\ViewHelpers}
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
-<a:be.editLink data="{data}">
-	The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
-	<code>File: typo3conf/ext/--EXTKEY--/Resources/Private/Templates/Content/--PLUGIN--Backend.html</code><br />
-	<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />
-</a:be.editLink>
+	<f:layout name="ContentBackend" />
+
+	<f:section name="Main">
+		<a:be.editLink data="{data}">
+			The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
+			<code>File: typo3conf/ext/--EXTKEY--/Resources/Private/Templates/Content/--PLUGIN--Backend.html</code><br />
+			<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />
+		</a:be.editLink>
+	</f:section>
+</div>

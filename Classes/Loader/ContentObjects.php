@@ -113,29 +113,40 @@ class ContentObjects implements LoaderInterface
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
     {
-        $siteRelPath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey());
-        $contentLayout = GeneralUtility::getFileAbsFileName($siteRelPath . 'Resources/Private/Layouts/Content.html');
-        if (!file_exists($contentLayout)) {
-            $contentLayoutTemplate = '<f:render section="Main" />';
-            FileUtility::writeFileAndCreateFolder($contentLayout, $contentLayoutTemplate);
+        $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
+        $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
+        if (!file_exists($frontendLayout)) {
+            $this->writeContentTemplateToTarget('FrontendLayout', $frontendLayout);
+        }
+        $backendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/ContentBackend.html');
+        if (!file_exists($backendLayout)) {
+            $this->writeContentTemplateToTarget('BackendLayout', $backendLayout);
         }
 
         foreach ($loaderInformation as $configuration) {
-            $templatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
+            $templatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . '.html';
             $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
             if (!is_file($absoluteTemplatePath)) {
-                $beTemplatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . 'Backend.html';
+                $beTemplatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . 'Backend.html';
                 $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
 
-                $templateContent = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader',
-                    'Resources/Private/Templates/ContentObjects/Frontend.html'));
-                FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, $templateContent);
-
-                $beTemplateContent = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader',
-                    'Resources/Private/Templates/ContentObjects/Backend.html'));
-                FileUtility::writeFileAndCreateFolder($absoluteBeTemplatePath, $beTemplateContent);
+                $this->writeContentTemplateToTarget('Frontend', $absoluteTemplatePath);
+                $this->writeContentTemplateToTarget('Backend', $absoluteBeTemplatePath);
             }
         }
+    }
+
+    /**
+     * Write the given content object template to the target path
+     *
+     * @param string $name
+     * @param string $absoluteTargetPath
+     */
+    protected function writeContentTemplateToTarget($name, $absoluteTargetPath)
+    {
+        $template = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader',
+            'Resources/Private/Templates/ContentObjects/' . $name . '.html'));
+        FileUtility::writeFileAndCreateFolder($absoluteTargetPath, $template);
     }
 
     /**
