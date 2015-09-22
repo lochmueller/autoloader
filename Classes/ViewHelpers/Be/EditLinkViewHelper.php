@@ -33,7 +33,7 @@ class EditLinkViewHelper extends AbstractViewHelper
         if (GeneralUtility::compat_version('7.0')) {
             $url = BackendUtility::getModuleUrl('record_edit', $urlParameter);
         } else {
-            $url = 'alt_doc.php?' . http_build_query($urlParameter);
+            $url = $GLOBALS['BACK_PATH'] . 'alt_doc.php?' . http_build_query($urlParameter);
         }
         return '<a href="' . $url . '">' . $this->renderChildren() . '</a>';
     }
