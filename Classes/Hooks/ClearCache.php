@@ -60,6 +60,14 @@ class ClearCache implements ClearCacheActionsHookInterface
         $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
         $cacheManager->getCache('autoloader')
             ->flush();
+
+        // clear autoload folder
+        if (GeneralUtility::compat_version('7.0')) {
+            $autoloadFolder = GeneralUtility::getFileAbsFileName('typo3temp/autoload/');
+            if (is_dir($autoloadFolder)) {
+                GeneralUtility::rmdir($autoloadFolder, true);
+            }
+        }
     }
 
     /**
