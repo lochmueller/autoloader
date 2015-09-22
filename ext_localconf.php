@@ -18,10 +18,11 @@ if (!defined('TYPO3_MODE')) {
     'ExtensionId'
 ]);
 
-$register = '';
-if(\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')){
+$register = 'HDNET\\Autoloader\\Hooks\\ClearCache->clear';
+if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
+    // wrap in array
     $register = [
-        'callbackMethod' => 'HDNET\\Autoloader\\Hooks\\ClearCache->clear',
+        'callbackMethod' => $register,
     ];
 }
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['autoloader::clearCache'] = $register;
