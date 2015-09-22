@@ -32,11 +32,15 @@ class SoapServer
     protected $serverClass = '';
 
     /**
+     * Check if the WSDL should rendered
+     *
      * @var bool
      */
     protected $renderWsdl = false;
 
     /**
+     * Build up the object
+     *
      * @param string  $server
      * @param boolean $wsdl
      */
@@ -50,7 +54,7 @@ class SoapServer
     }
 
     /**
-     *
+     * Handle the request
      */
     public function handle()
     {
@@ -70,7 +74,7 @@ class SoapServer
     }
 
     /**
-     *
+     * Handle the service request
      */
     protected function handleRequest()
     {
@@ -88,7 +92,7 @@ class SoapServer
     }
 
     /**
-     *
+     * Handle the WSDL request
      */
     protected function renderWsdl()
     {
@@ -100,6 +104,8 @@ class SoapServer
     }
 
     /**
+     * Get the Service URI
+     *
      * @return string
      */
     protected function getServiceUri()
