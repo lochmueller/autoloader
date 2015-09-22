@@ -129,8 +129,8 @@ class ExtendedUtility
         $view = self::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
         $view->setTemplatePathAndFilename($templatePath);
 
-        $partialPath = $siteRelPath . 'Resources/Private/Partials';
-        $layoutPath = $siteRelPath . 'Resources/Private/Layouts';
+        $partialPath = $siteRelPath . 'Resources/Private/Partials/';
+        $layoutPath = $siteRelPath . 'Resources/Private/Layouts/';
 
         if (GeneralUtility::compat_version('7.0')) {
             $view->setPartialRootPaths([$partialPath]);
