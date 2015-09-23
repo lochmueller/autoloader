@@ -172,15 +172,20 @@ class ContentObjects implements LoaderInterface
      */
     protected function wrapDefaultTcaConfiguration($configuration)
     {
+        if (GeneralUtility::compat_version('7.0')) {
+            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
+        } else {
+            $languagePrefix = 'LLL:EXT:cms/locallang_ttc.xml';
+        }
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
-        return '--palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general,
-    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.header;header,
+        return '--palette--;' . $languagePrefix . ':palette.general;general,
+    --palette--;' . $languagePrefix . ':palette.header;header,
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
     ' . $configuration . '
-    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,
-    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
-    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.access;access,
-    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.extended';
+    --div--;' . $languagePrefix . ':tabs.access,
+    --palette--;' . $languagePrefix . ':palette.visibility;visibility,
+    --palette--;' . $languagePrefix . ':palette.access;access,
+    --div--;' . $languagePrefix . ':tabs.extended';
     }
 
     /**
