@@ -53,8 +53,8 @@ class ContentObjects implements LoaderInterface
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if ($type === LoaderInterface::EXT_TABLES) {
-                TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
-                TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(),
+                TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
+                TranslateUtility::assureLabel('wizard.' . $key . '.description', $loader->getExtensionKey(),
                     $key . ' (Description)');
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
                 $defaultFields = $this->getDefaultTcaFields();
