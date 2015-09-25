@@ -7,7 +7,7 @@
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = [
-    'title'       => 'Autoloader (Soap - Try the WSDL with ###YOUR-SERVER###/?eID=SoapServer&server=test&wsdl=1)',
+    'title'       => 'Autoloader (Soap - Try the WSDL with ###YOUR-SERVER###/?eID=SoapServer&server=testService&wsdl=1)',
     'description' => '',
     'constraints' => [
         'depends' => [

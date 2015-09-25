@@ -5,14 +5,14 @@
  * @author  Tim Lochmüller
  */
 
-namespace HDNET\AutoloaderSoap\Service;
+namespace HDNET\AutoloaderSoap\Service\Soap;
+
+use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Test service
- *
- * @soapServer test
  */
-class TestService
+class TestService implements SingletonInterface
 {
 
     /**
