@@ -8,7 +8,7 @@
  */
 
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_extensionid', array('ExtensionId'));
+\HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader_extensionid', ['ExtensionId']);

@@ -16,36 +16,39 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  *
  * @author Tim Lochmüller
  */
-class LoginController {
+class LoginController
+{
 
-	/**
-	 * Render the Login Form
-	 *
-	 * @param \TYPO3\CMS\Backend\Controller\LoginController $loginController
-	 * @param array                                         $markers
-	 *
-	 * @return array
-	 *
-	 * @signalClass \TYPO3\CMS\Backend\Controller\LoginController
-	 * @signalName renderLoginForm
-	 */
-	public function renderLoginForm(\TYPO3\CMS\Backend\Controller\LoginController $loginController, array $markers) {
-		$markers['NEWS'] = $this->autoloaderTest() . $markers['NEWS'];
+    /**
+     * Render the Login Form
+     *
+     * @param \TYPO3\CMS\Backend\Controller\LoginController $loginController
+     * @param array                                         $markers
+     *
+     * @return array
+     *
+     * @signalClass \TYPO3\CMS\Backend\Controller\LoginController
+     * @signalName renderLoginForm
+     */
+    public function renderLoginForm(\TYPO3\CMS\Backend\Controller\LoginController $loginController, array $markers)
+    {
+        $markers['NEWS'] = $this->autoloaderTest() . $markers['NEWS'];
 
-		return array(
-			$loginController,
-			$markers
-		);
-	}
+        return [
+            $loginController,
+            $markers
+        ];
+    }
 
-	/**
-	 * Build up the HDNET contact Info Box
-	 *
-	 * @return string
-	 */
-	protected function autoloaderTest() {
-		$icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
-		$box = '<div id="t3-login-news-outer" class="t3-login-box">
+    /**
+     * Build up the HDNET contact Info Box
+     *
+     * @return string
+     */
+    protected function autoloaderTest()
+    {
+        $icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
+        $box = '<div id="t3-login-news-outer" class="t3-login-box">
 			<div class="t3-headline">
 				<h2 style="background: url(' . $icon . ') no-repeat scroll 10px center transparent;">Contact</h2>
 			</div>
@@ -69,7 +72,7 @@ class LoginController {
 		</div>
 		<div class="t3-login-box-border-bottom"></div>';
 
-		return $box;
-	}
+        return $box;
+    }
 
 }

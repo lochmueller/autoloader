@@ -2,15 +2,14 @@
 /**
  * Clear Cache hook for the Backend
  *
- * @category Extension
- * @package  Autoloader
- * @author   Tim Lochmüller
+ * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -18,75 +17,88 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Clear Cache hook for the Backend
  *
- * @author Tim Lochmüller
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
+ * @hook TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
  */
-class ClearCache implements ClearCacheActionsHookInterface {
+class ClearCache implements ClearCacheActionsHookInterface
+{
 
-	/**
-	 * Modifies CacheMenuItems array
-	 *
-	 * @param array $cacheActions
-	 * @param array $optionValues
-	 *
-	 * @return void
-	 */
-	public function manipulateCacheActions(&$cacheActions, &$optionValues) {
-		if ($this->isProduction() || !$this->isAdmin()) {
-			return;
-		}
+    /**
+     * Modifies CacheMenuItems array
+     *
+     * @param array $cacheActions
+     * @param array $optionValues
+     *
+     * @return void
+     */
+    public function manipulateCacheActions(&$cacheActions, &$optionValues)
+    {
+        if ($this->isProduction() || !$this->isAdmin()) {
+            return;
+        }
 
-		$cacheActions[] = array(
-			'id'    => 'autoloader',
-			'title' => 'EXT:autoloader caches',
-			'href'  => 'ajax.php?ajaxID=autoloader::clearCache',
-			'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
-		);
-	}
+        $cacheActions[] = [
+            'id'    => 'autoloader',
+            'title' => 'EXT:autoloader caches',
+            'href'  => BackendUtility::getAjaxUrl('autoloader::clearCache'),
+            'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
+        ];
+    }
 
-	/**
-	 * clear Cache ajax handler
-	 *
-	 * @param array              $ajaxParams
-	 * @param AjaxRequestHandler $ajaxObj
-	 */
-	public function clear($ajaxParams, AjaxRequestHandler $ajaxObj) {
-		if ($this->isProduction() || !$this->isAdmin()) {
-			return;
-		}
+    /**
+     * clear Cache ajax handler
+     *
+     * @param array              $ajaxParams
+     * @param AjaxRequestHandler $ajaxObj
+     */
+    public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
+    {
+        if ($this->isProduction() || !$this->isAdmin()) {
+            return;
+        }
 
-		/** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-		$cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
-		$cacheManager->getCache('autoloader')
-			->flush();
-	}
+        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+        $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager->getCache('autoloader')
+            ->flush();
 
-	/**
-	 * Return TRUE if the current instance is in production mode
-	 *
-	 * @return bool
-	 */
-	protected function isProduction() {
-		return GeneralUtility::getApplicationContext()
-			->isProduction();
-	}
+        // clear autoload folder
+        if (GeneralUtility::compat_version('7.0')) {
+            $autoloadFolder = GeneralUtility::getFileAbsFileName('typo3temp/autoload/');
+            if (is_dir($autoloadFolder)) {
+                GeneralUtility::rmdir($autoloadFolder, true);
+            }
+        }
+    }
 
-	/**
-	 * Check if the user is a admin
-	 *
-	 * @return bool
-	 */
-	protected function isAdmin() {
-		return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
-			->isAdmin();
-	}
+    /**
+     * Return TRUE if the current instance is in production mode
+     *
+     * @return bool
+     */
+    protected function isProduction()
+    {
+        return GeneralUtility::getApplicationContext()
+            ->isProduction();
+    }
 
-	/**
-	 * Return the Backend user authentication
-	 *
-	 * @return BackendUserAuthentication
-	 */
-	protected function getBackendUserAuthentication() {
-		return $GLOBALS['BE_USER'];
-	}
+    /**
+     * Check if the user is a admin
+     *
+     * @return bool
+     */
+    protected function isAdmin()
+    {
+        return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
+            ->isAdmin();
+    }
+
+    /**
+     * Return the Backend user authentication
+     *
+     * @return BackendUserAuthentication
+     */
+    protected function getBackendUserAuthentication()
+    {
+        return $GLOBALS['BE_USER'];
+    }
 }

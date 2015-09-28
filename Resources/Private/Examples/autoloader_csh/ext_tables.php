@@ -8,11 +8,11 @@
  */
 
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader_csh', array(
-	'SmartObjects',
-	'TcaFiles',
-	'ContextSensitiveHelps'
-));
+\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader_csh', [
+    'SmartObjects',
+    'TcaFiles',
+    'ContextSensitiveHelps'
+]);

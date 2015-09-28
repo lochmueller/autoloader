@@ -15,20 +15,21 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * @author Tim Lochmüller
  */
-class FirstController extends ActionController {
+class FirstController extends ActionController
+{
 
-	/**
-	 * @plugin First
-	 */
-	public function indexAction() {
+    /**
+     * @plugin First
+     */
+    public function indexAction()
+    {
+    }
 
-	}
-
-	/**
-	 * @plugin First Second
-	 */
-	public function bothAction() {
-
-	}
+    /**
+     * @plugin First Second
+     */
+    public function bothAction()
+    {
+    }
 
 }

@@ -15,20 +15,21 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * @author Tim Lochmüller
  */
-class SecondController extends ActionController {
+class SecondController extends ActionController
+{
 
-	/**
-	 * @plugin Second
-	 */
-	public function secondAction() {
+    /**
+     * @plugin Second
+     */
+    public function secondAction()
+    {
+    }
 
-	}
-
-	/**
-	 * @plugin Second
-	 * @noCache
-	 */
-	public function aNoCacheAction() {
-
-	}
+    /**
+     * @plugin Second
+     * @noCache
+     */
+    public function aNoCacheAction()
+    {
+    }
 }

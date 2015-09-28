@@ -8,11 +8,11 @@
  */
 
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader_contentobject', array(
-	'ContentObjects',
-	'TcaFiles',
-	'SmartObjects'
-));
+\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader_contentobject', [
+    'ContentObjects',
+    'TcaFiles',
+    'SmartObjects'
+]);

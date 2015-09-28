@@ -8,12 +8,12 @@
  */
 
 /** @var $_EXTKEY string */
-$EM_CONF[$_EXTKEY] = array(
-	'title'       => 'Autoloader (TypeConverter - There are two dummy type converter in the TYPO3_CONF_VARS/EXTCONF/extbase/typeConverters)',
-	'description' => '',
-	'constraints' => array(
-		'depends' => array(
-			'autoloader' => '1.6.0-9.9.9',
-		),
-	),
-);
+$EM_CONF[$_EXTKEY] = [
+    'title'       => 'Autoloader (TypeConverter - There are two dummy type converter in the TYPO3_CONF_VARS/EXTCONF/extbase/typeConverters)',
+    'description' => '',
+    'constraints' => [
+        'depends' => [
+            'autoloader' => '1.9.1-9.9.9',
+        ],
+    ],
+];

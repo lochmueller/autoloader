@@ -8,12 +8,12 @@
  */
 
 /** @var $_EXTKEY string */
-$EM_CONF[$_EXTKEY] = array(
-	'title'       => 'Autoloader (Hooks - You see a additional message in the recordList view in the footer)',
-	'description' => '',
-	'constraints' => array(
-		'depends' => array(
-			'autoloader' => '1.6.0-9.9.9',
-		),
-	),
-);
+$EM_CONF[$_EXTKEY] = [
+    'title'       => 'Autoloader (Hooks - You see a additional message in the recordList view in the footer)',
+    'description' => '',
+    'constraints' => [
+        'depends' => [
+            'autoloader' => '1.9.1-9.9.9',
+        ],
+    ],
+];

@@ -8,12 +8,12 @@
  */
 
 /** @var $_EXTKEY string */
-$EM_CONF[$_EXTKEY] = array(
-	'title'       => 'Autoloader (Plugin - There are two plugins in the plugin selection - no output)',
-	'description' => '',
-	'constraints' => array(
-		'depends' => array(
-			'autoloader' => '1.6.0-9.9.9',
-		),
-	),
-);
+$EM_CONF[$_EXTKEY] = [
+    'title'       => 'Autoloader (Plugin - There are two plugins in the plugin selection - no output)',
+    'description' => '',
+    'constraints' => [
+        'depends' => [
+            'autoloader' => '1.9.1-9.9.9',
+        ],
+    ],
+];
