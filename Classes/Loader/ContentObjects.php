@@ -113,6 +113,9 @@ class ContentObjects implements LoaderInterface
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
     {
+        if(empty($loaderInformation)) {
+            return;
+        }
         $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
         $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
         if (!file_exists($frontendLayout)) {
