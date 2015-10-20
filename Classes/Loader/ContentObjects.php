@@ -14,6 +14,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
+use TYPO3\CMS\Backend\Sprite\SpriteManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
@@ -29,7 +30,7 @@ class ContentObjects implements LoaderInterface
      * Prepare the content object loader
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -40,7 +41,8 @@ class ContentObjects implements LoaderInterface
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
         $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
         if ($models) {
-            TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey(),
+            TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header',
+                $loader->getExtensionKey(),
                 $loader->getExtensionKey() . ' (Header)');
         }
         foreach ($models as $model) {
@@ -75,11 +77,11 @@ class ContentObjects implements LoaderInterface
 
             $entry = [
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
-                'modelClass'         => $className,
-                'model'              => $model,
-                'icon'               => IconUtility::getByExtensionKey($loader->getExtensionKey()),
-                'noHeader'           => $this->isTaggedWithNoHeader($className),
-                'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
+                'modelClass' => $className,
+                'model' => $model,
+                'icon' => IconUtility::getByExtensionKey($loader->getExtensionKey()),
+                'noHeader' => $this->isTaggedWithNoHeader($className),
+                'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
 
             SmartObjectRegister::register($entry['modelClass']);
@@ -108,12 +110,12 @@ class ContentObjects implements LoaderInterface
      * Check if the templates are exist and create a dummy, if there
      * is no valid template
      *
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      * @param Loader $loader
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
     {
-        if(empty($loaderInformation)) {
+        if (empty($loaderInformation)) {
             return;
         }
         $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
@@ -224,7 +226,7 @@ class ContentObjects implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -240,13 +242,13 @@ class ContentObjects implements LoaderInterface
 
         foreach ($loaderInformation as $e => $config) {
             SmartObjectRegister::register($config['modelClass']);
+            $typeKey = $loader->getExtensionKey() . '_' . $e;
 
             ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
-                $loader->getExtensionKey() . '_' . $e
+                $typeKey
             ], 'CType');
 
-            $typeKey = $loader->getExtensionKey() . '_' . $e;
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
                 $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration']);
 
@@ -257,24 +259,28 @@ class ContentObjects implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
             }
 
+            $icon = IconUtility::getByModelName($config['modelClass']);
+            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, str_replace('../', '', $icon));
+
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
                 $createWizardHeader[] = $tabName;
             }
             ExtensionManagementUtility::addPageTSConfig('
-mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
-    icon = ' . IconUtility::getByModelName($config['modelClass']) . '
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
+    icon = ' . $icon . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
-    description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description', $loader->getExtensionKey()) . '
+    description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description',
+                    $loader->getExtensionKey()) . '
     tt_content_defValues {
-        CType = ' . $loader->getExtensionKey() . '_' . $e . '
+        CType = ' . $typeKey . '
     }
 }
-mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $loader->getExtensionKey() . '_' . $e . ')');
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $typeKey . ')');
             $cObjectConfiguration = [
-                'extensionKey'        => $loader->getExtensionKey(),
+                'extensionKey' => $loader->getExtensionKey(),
                 'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
-                'modelClass'          => $config['modelClass']
+                'modelClass' => $config['modelClass']
             ];
 
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
@@ -297,7 +303,7 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
