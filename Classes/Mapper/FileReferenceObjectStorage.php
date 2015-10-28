@@ -26,8 +26,7 @@ class FileReferenceObjectStorage implements MapperInterface
     public function canHandleType($type)
     {
         return in_array(strtolower(trim($type, '\\')), [
-            'typo3\\cms\\extbase\\persistence\\objectstorage<\\typo3\\cms\\extbase\\domain\\model\\filereference>',
-            ''
+            'typo3\\cms\\extbase\\persistence\\objectstorage<\\typo3\\cms\\extbase\\domain\\model\\filereference>'
         ]);
     }
 
