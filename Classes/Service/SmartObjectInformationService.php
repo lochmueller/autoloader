@@ -150,11 +150,18 @@ class SmartObjectInformationService
         if (!in_array('workspaces', $excludes)) {
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
-        if (!in_array('enableFields', $excludes)) {
-            $showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access';
-            $showitem[] = '--palette--;LLL:EXT:cms/locallang_tca.xlf:pages.palettes.access;access';
+
+        if (GeneralUtility::compat_version('7.0')) {
+            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
+        } else {
+            $languagePrefix = 'LLL:EXT:cms/';
         }
-        $showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
+
+        if (!in_array('enableFields', $excludes)) {
+            $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
+            $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
+        }
+        $showitem[] = '--div--;LLL:' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
             'ctrl'      => [
