@@ -161,7 +161,7 @@ class SmartObjectInformationService
             $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
             $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
         }
-        $showitem[] = '--div--;LLL:' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
+        $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
             'ctrl'      => [
