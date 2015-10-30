@@ -80,7 +80,7 @@ class Language implements DataSetInterface
             ],
         ];
 
-        if (GeneralUtility::compat_version('7.0')) {
+        if (!GeneralUtility::compat_version('7.0')) {
             $tca['columns']['l10n_parent']['config']['iconsInOptionTags'] = false;
         }
 
