@@ -19,16 +19,18 @@ class IconUtility
     /**
      * Get the relative path of the extension icon
      *
-     * @param $extensionKey
+     * @param string $extensionKey
+     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
-    public static function getByExtensionKey($extensionKey)
+    public static function getByExtensionKey($extensionKey, $extSyntax = false)
     {
         $extPath = ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.';
         $fileExtension = self::getIconFileExtension($extPath);
         if ($fileExtension) {
-            return ExtensionManagementUtility::extRelPath($extensionKey) . 'ext_icon.' . $fileExtension;
+            return self::returnRelativeIconPath($extensionKey,
+                'ext_icon.' . $fileExtension, $extSyntax);
         }
         return self::getByExtensionKey('autoloader');
     }
@@ -37,10 +39,11 @@ class IconUtility
      * Get the absolute table icon for the given model name
      *
      * @param string $modelClassName
+     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
-    static public function getByModelName($modelClassName)
+    static public function getByModelName($modelClassName, $extSyntax = false)
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
@@ -50,9 +53,10 @@ class IconUtility
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
         if ($fileExtension) {
-            return ExtensionManagementUtility::extRelPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.' . $fileExtension;
+            return self::returnRelativeIconPath($extensionKey,
+                'Resources/Public/Icons/' . $modelName . '.' . $fileExtension, $extSyntax);
         }
-        return self::getByExtensionKey($extensionKey);
+        return self::getByExtensionKey($extensionKey, $extSyntax);
     }
 
     /**
@@ -78,6 +82,22 @@ class IconUtility
             }
         }
         return false;
+    }
+
+    /**
+     * Return the right relative path
+     *
+     * @param string $extensionKey
+     * @param string $path
+     * @param boolean $extSyntax
+     * @return string
+     */
+    static protected function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
+    {
+        if ($extSyntax) {
+            return 'EXT:' . $extensionKey . '/' . $path;
+        }
+        return ExtensionManagementUtility::extRelPath($extensionKey) . $path;
     }
 
 }

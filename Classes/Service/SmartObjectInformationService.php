@@ -164,25 +164,25 @@ class SmartObjectInformationService
         $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
-            'ctrl'      => [
-                'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
-                'label'         => $labelField,
-                'tstamp'        => 'tstamp',
-                'crdate'        => 'crdate',
-                'cruser_id'     => 'cruser_id',
+            'ctrl' => [
+                'title' => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
+                'label' => $labelField,
+                'tstamp' => 'tstamp',
+                'crdate' => 'crdate',
+                'cruser_id' => 'cruser_id',
                 'dividers2tabs' => true,
-                'sortby'        => 'sorting',
-                'delete'        => 'deleted',
-                'searchFields'  => implode(',', $searchFields),
-                'iconfile'      => IconUtility::getByModelName($modelClassName)
+                'sortby' => 'sorting',
+                'delete' => 'deleted',
+                'searchFields' => implode(',', $searchFields),
+                'iconfile' => IconUtility::getByModelName($modelClassName, GeneralUtility::compat_version('7.0'))
             ],
             'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
             ],
-            'types'     => [
+            'types' => [
                 '1' => ['showitem' => implode(',', $showitem)],
             ],
-            'palettes'  => [
+            'palettes' => [
                 'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
             ],
         ];
@@ -251,9 +251,9 @@ class SmartObjectInformationService
             $dbInformation = $property->getTagValues('db');
             $fields[] = [
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                'db'   => trim($dbInformation[0]),
-                'var'  => trim($var),
-                'rte'  => (bool)$property->isTaggedWith('enableRichText'),
+                'db' => trim($dbInformation[0]),
+                'var' => trim($var),
+                'rte' => (bool)$property->isTaggedWith('enableRichText'),
             ];
         }
         return $fields;
@@ -263,7 +263,7 @@ class SmartObjectInformationService
      * Generate SQL Query
      *
      * @param string $tableName
-     * @param array  $fields
+     * @param array $fields
      *
      * @return string
      */
@@ -280,7 +280,7 @@ class SmartObjectInformationService
      *
      * @param string $modelClassName
      * @param string $tableName
-     * @param array  $custom
+     * @param array $custom
      *
      * @return string
      */
