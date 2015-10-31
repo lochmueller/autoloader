@@ -35,7 +35,7 @@ class SoapServer implements LoaderInterface
         $serviceClasses = FileUtility::getBaseFilesRecursivelyInDir($servicePath, 'php');
 
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
-
+        $info = [];
         foreach ($serviceClasses as $service) {
             $serviceClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Service\\Soap\\' . $service;
             $info[lcfirst($service)] = $serviceClass;
