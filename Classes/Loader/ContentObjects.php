@@ -79,7 +79,7 @@ class ContentObjects implements LoaderInterface
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
                 'modelClass' => $className,
                 'model' => $model,
-                'icon' => IconUtility::getByExtensionKey($loader->getExtensionKey()),
+                'icon' => IconUtility::getByModelName($className),
                 'noHeader' => $this->isTaggedWithNoHeader($className),
                 'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
@@ -259,8 +259,7 @@ class ContentObjects implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
             }
 
-            $icon = IconUtility::getByModelName($config['modelClass']);
-            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, str_replace('../', '', $icon));
+            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, str_replace('../', '', $config['icon']));
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
@@ -268,7 +267,7 @@ class ContentObjects implements LoaderInterface
             }
             ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
-    icon = ' . $icon . '
+    icon = ' . $config['icon'] . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description',
                     $loader->getExtensionKey()) . '
