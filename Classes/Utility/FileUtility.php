@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
@@ -23,12 +24,17 @@ class FileUtility
      * @param string $content
      *
      * @return bool
+     * @throws Exception
      */
     static public function writeFileAndCreateFolder($absoluteFileName, $content)
     {
         $dir = PathUtility::dirname($absoluteFileName) . '/';
         if (!is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
+        }
+        if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
+            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
+                234627835683);
         }
         return GeneralUtility::writeFile($absoluteFileName, $content);
     }
