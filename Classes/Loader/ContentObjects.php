@@ -338,10 +338,8 @@ tt_content.key.field = CType';
 	            }
             }
         }
-
-
-
-                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content';
+        config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content
+        ';
         }
 
         if ($csc) {
