@@ -17,6 +17,7 @@ use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Sprite\SpriteManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -259,7 +260,8 @@ class ContentObjects implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
             }
 
-            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, str_replace('../', '', $config['icon']));
+            $fullIconPath = substr(PathUtility::getAbsoluteWebPath($config['icon']), 1);
+            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, $fullIconPath);
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
