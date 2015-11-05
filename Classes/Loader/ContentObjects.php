@@ -260,7 +260,11 @@ class ContentObjects implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
             }
 
-            $fullIconPath = substr(PathUtility::getAbsoluteWebPath($config['icon']), 1);
+            if (GeneralUtility::compat_version('7.0')) {
+                $fullIconPath = substr(PathUtility::getAbsoluteWebPath($config['icon']), 1);
+            } else {
+                $fullIconPath = str_replace('../typo3/', '', $config['icon']);
+            }
             SpriteManager::addTcaTypeIcon('tt_content', $typeKey, $fullIconPath);
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
