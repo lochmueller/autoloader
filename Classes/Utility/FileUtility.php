@@ -94,18 +94,18 @@ class FileUtility
      * also the folder name. The filename is also "basename" only.
      *
      * @param string $dirPath
-     * @param string $fileExtension
+     * @param string $fileExtensions
      * @param bool   $recursively
      *
      * @return array
      */
-    static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = true)
+    static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
     {
         if (!is_dir($dirPath)) {
             return [];
         }
         $recursively = $recursively ? 99 : 0;
-        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtension, false, $recursively);
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtensions, false, $recursively);
         foreach ($files as $key => $file) {
             $pathInfo = PathUtility::pathinfo($file);
             $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
