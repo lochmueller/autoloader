@@ -48,21 +48,24 @@ class LanguageOverride implements LoaderInterface
             $parts = GeneralUtility::trimExplode('/', $file, true);
             $extension = GeneralUtility::camelCaseToLowerCaseUnderscored($parts[0]);
             unset($parts[0]);
+            $parts = array_values($parts);
 
             // language
             $language = 'default';
             $fileParts = GeneralUtility::trimExplode('.', PathUtility::basename($file), true);
             if (strlen($fileParts[0]) === 2) {
                 $language = $fileParts[0];
+                unset($fileParts[0]);
+                $parts[sizeof($parts) - 1] = implode('.', $fileParts);
             }
 
             $languageOverride[] = [
                 'language' => $language,
                 'original' => 'EXT:' . $extension . '/' . implode('/', $parts),
-                'replace'  => 'EXT:' . $autoLoader->getExtensionKey() . '/Resources/Private/Language/Overrides/' . $file,
+                'override' => 'EXT:' . $autoLoader->getExtensionKey() . '/Resources/Private/Language/Overrides/' . $file,
             ];
         }
-        
+
         return $languageOverride;
     }
 
@@ -91,7 +94,7 @@ class LanguageOverride implements LoaderInterface
     {
         if ($loaderInformation) {
             foreach ($loaderInformation as $files) {
-                $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$files['language']][$files['original']][] = $files['replace'];
+                $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$files['language']][$files['original']][] = $files['override'];
             }
         }
     }
