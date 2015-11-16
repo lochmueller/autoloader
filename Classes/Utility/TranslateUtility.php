@@ -62,9 +62,9 @@ class TranslateUtility
             $GLOBALS['LANG'] = GeneralUtility::makeInstance('TYPO3\\CMS\\Lang\\LanguageService');
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
-        if (self::getLll($key, $extensionKey) === null) {
+        if (TYPO3_MODE === 'BE' && self::getLll($key, $extensionKey) === null) {
             $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
-            if (TYPO3_MODE === 'BE' && isset($GLOBALS['LANG'])) {
+            if (isset($GLOBALS['LANG'])) {
                 self::assureLabel($key, $extensionKey, $key);
             }
         }
