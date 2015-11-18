@@ -81,6 +81,7 @@ class ContentObjects implements LoaderInterface
                 'modelClass' => $className,
                 'model' => $model,
                 'icon' => IconUtility::getByModelName($className),
+                'iconExt' => IconUtility::getByModelName($className, true),
                 'noHeader' => $this->isTaggedWithNoHeader($className),
                 'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
@@ -247,7 +248,8 @@ class ContentObjects implements LoaderInterface
 
             ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
-                $typeKey
+                $typeKey,
+                $config['iconExt']
             ], 'CType');
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
