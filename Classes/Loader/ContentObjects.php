@@ -314,6 +314,9 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
+        if(!$loaderInformation) {
+            return null;
+        }
         static $loadPlugin = true;
         $csc = ExtensionManagementUtility::isLoaded('css_styled_content');
         $typoScript = '';
