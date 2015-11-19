@@ -48,14 +48,10 @@ class Hooks implements LoaderInterface
             $classReflection = ReflectionUtility::createReflectionClass($hookClass);
 
             // add class hook
-            $classTags = $classReflection->getTagsValues();
-            if (isset($classTags['hook'])) {
-                if (is_array($classTags['hook'])) {
-                    $classTags['hook'] = implode(' ', $classTags['hook']);
-                }
-                $classTags['hook'] = GeneralUtility::trimExplode(' ', $classTags['hook'], true);
+            $tagConfiguration = ReflectionUtility::getTagConfiguration($classReflection, ['hook']);
+            if (sizeof($tagConfiguration['hook'])) {
                 $hooks[] = [
-                    'locations'     => $classTags['hook'],
+                    'locations'     => $tagConfiguration['hook'],
                     'configuration' => $hookClass,
                 ];
             }
@@ -63,14 +59,10 @@ class Hooks implements LoaderInterface
             // add method hooks
             foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                $methodTags = $methodReflection->getTagsValues();
-                if (isset($methodTags['hook'])) {
-                    if (is_array($methodTags['hook'])) {
-                        $methodTags['hook'] = implode(' ', $methodTags['hook']);
-                    }
-                    $methodTags['hook'] = GeneralUtility::trimExplode(' ', $methodTags['hook'], true);
+                $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
+                if (sizeof($tagConfiguration['hook'])) {
                     $hooks[] = [
-                        'locations'     => $methodTags['hook'],
+                        'locations'     => $tagConfiguration['hook'],
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),
                     ];
                 }
