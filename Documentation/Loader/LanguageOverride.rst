@@ -5,13 +5,15 @@
 Language Override
 ^^^^^^^^^^^^^^^^^
 
-Use this loader to create "locallangXMLOverride" configurations for foreign language files. Use the "Resources/Private/Language/Overrides" folder to create the same structure of folder like in the original extension. The first level is the extension key.
+Use this loader to create "locallangXMLOverride" configurations for language files. Recreate the same folder structure of the extension whose language files you want to override within `Resources/Private/Language/Overrides`. The first level is the extension name (`UpperCamelCase`). For XLIFF files language prefixes like `de.locallang_mod.xlf` are supported to register overrides for translations.
 
-e.g. You want to override "EXT:foo_bar/mod1/locallang_mod.xlf" just create this file "Resources/Private/Language/Overrides/FooBar/mod1/locallang_mod.xlf"
+For example to override `EXT:foo_bar/mod1/locallang_mod.xlf` just create the file `Resources/Private/Language/Overrides/FooBar/mod1/locallang_mod.xlf` and fill it with language entries. To override `EXT:foo_bar/mod1/de.locallang_mod.xlf` create  `Resources/Private/Language/Overrides/FooBar/mod1/de.locallang_mod.xlf`.
 
-The xlf files support language prefix like "de.locallang_mod.xlf".
+Even if an extension follows the usual `Resources/Private/Language` structure, you still have to recreate that structure within `Resources/Private/Language/Overrides`, e.g. `Resources/Private/Language/Overrides/BazQux/Resources/Private/Language/locallang.xlf`.
+
+Internally the following kind of configuration will be generated:
 
 .. code-block:: php
 
-	$TYPO3_CONF_VARS['SYS']['locallangXMLOverride']['default']['EXT:foo/Resources/Private/Language/locallang.xlf'][] = 'EXT:bar/Resources/Private/Language/Path/To/Foo/locallang.xlf';
-	$TYPO3_CONF_VARS['SYS']['locallangXMLOverride']['de']['EXT:foo/Resources/Private/Language/locallang.xlf'][] = 'EXT:bar/Resources/Private/Language/Path/To/Foo/de.locallang.xlf';
+	$TYPO3_CONF_VARS['SYS']['locallangXMLOverride']['default']['EXT:baz_qux/Resources/Private/Language/locallang.xlf'][] = 'EXT:my_ext/Resources/Private/Language/Overrides/BazQux/Resources/Private/Language/locallang.xlf';
+	$TYPO3_CONF_VARS['SYS']['locallangXMLOverride']['de']['EXT:baz_qux/Resources/Private/Language/locallang.xlf'][] = 'EXT:my_ext/Resources/Private/Language/Overrides/BazQux/Resources/Private/Language/de.locallang.xlf';
