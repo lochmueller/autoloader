@@ -234,6 +234,9 @@ class ContentObjects implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
+        if(!$loaderInformation) {
+            return null;
+        }
         $createWizardHeader = [];
         $predefinedWizards = [
             'common',
