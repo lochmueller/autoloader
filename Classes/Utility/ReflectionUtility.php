@@ -7,7 +7,9 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
+use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
  * Reflection helper
@@ -81,7 +83,7 @@ class ReflectionUtility
      *
      * @param string $className
      *
-     * @return \TYPO3\CMS\Extbase\Reflection\MethodReflection
+     * @return MethodReflection
      */
     static public function getPublicMethods($className)
     {
@@ -109,6 +111,30 @@ class ReflectionUtility
             return trim($values[0]);
         }
         return false;
+    }
+
+    /**
+     * Get the tag configuration from this method and respect multiple line and space configuration
+     *
+     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param array                            $tagNames
+     *
+     * @return array
+     */
+    static public function getTagConfiguration($reflectionObject, array $tagNames)
+    {
+        $tags = $reflectionObject->getTagsValues();
+        $configuration = [];
+        foreach ($tagNames as $tagName) {
+            $configuration[$tagName] = [];
+            if (!is_array($tags[$tagName])) {
+                continue;
+            }
+            foreach ($tags[$tagName] as $c) {
+                $configuration[$tagName] = array_merge($configuration[$tagName], GeneralUtility::trimExplode(' ', $c, true));
+            }
+        }
+        return $configuration;
     }
 
     /**

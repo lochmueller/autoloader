@@ -13,6 +13,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
  * Loading Slots
@@ -46,13 +47,15 @@ class Slots implements LoaderInterface
 
             $methods = ReflectionUtility::getPublicMethods($slotClass);
             foreach ($methods as $methodReflection) {
-                /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                $methodTags = $methodReflection->getTagsValues();
-
-                if (isset($methodTags['signalClass'][0]) && isset($methodTags['signalName'][0])) {
+                /** @var MethodReflection $methodReflection */
+                $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['signalClass', 'signalName']);
+                foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
+                    if (!isset($tagConfiguration['signalName'][$key])) {
+                        continue;
+                    }
                     $slots[] = [
-                        'signalClassName'       => trim($methodTags['signalClass'][0], '\\'),
-                        'signalName'            => $methodTags['signalName'][0],
+                        'signalClassName'       => trim($signalClass, '\\'),
+                        'signalName'            => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName'        => $methodReflection->getName(),
                     ];
