@@ -31,7 +31,7 @@ class ContentObjects implements LoaderInterface
      * Prepare the content object loader
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -42,8 +42,7 @@ class ContentObjects implements LoaderInterface
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
         $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
         if ($models) {
-            TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header',
-                $loader->getExtensionKey(),
+            TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey(),
                 $loader->getExtensionKey() . ' (Header)');
         }
         foreach ($models as $model) {
@@ -78,12 +77,12 @@ class ContentObjects implements LoaderInterface
 
             $entry = [
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
-                'modelClass' => $className,
-                'model' => $model,
-                'icon' => IconUtility::getByModelName($className),
-                'iconExt' => IconUtility::getByModelName($className, true),
-                'noHeader' => $this->isTaggedWithNoHeader($className),
-                'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
+                'modelClass'         => $className,
+                'model'              => $model,
+                'icon'               => IconUtility::getByModelName($className),
+                'iconExt'            => IconUtility::getByModelName($className, true),
+                'noHeader'           => $this->isTaggedWithNoHeader($className),
+                'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
 
             SmartObjectRegister::register($entry['modelClass']);
@@ -112,7 +111,7 @@ class ContentObjects implements LoaderInterface
      * Check if the templates are exist and create a dummy, if there
      * is no valid template
      *
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      * @param Loader $loader
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
@@ -228,13 +227,13 @@ class ContentObjects implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      *
      * @return NULL
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        if(!$loaderInformation) {
+        if (!$loaderInformation) {
             return null;
         }
         $createWizardHeader = [];
@@ -243,6 +242,12 @@ class ContentObjects implements LoaderInterface
             'special',
             'forms',
             'plugins',
+        ];
+
+        // Add the divider
+        $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
+            TranslateUtility::getLllString('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()),
+            '--div--'
         ];
 
         foreach ($loaderInformation as $e => $config) {
@@ -280,17 +285,16 @@ class ContentObjects implements LoaderInterface
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
     icon = ' . $config['icon'] . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
-    description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description',
-                    $loader->getExtensionKey()) . '
+    description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
         CType = ' . $typeKey . '
     }
 }
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $typeKey . ')');
             $cObjectConfiguration = [
-                'extensionKey' => $loader->getExtensionKey(),
+                'extensionKey'        => $loader->getExtensionKey(),
                 'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
-                'modelClass' => $config['modelClass']
+                'modelClass'          => $config['modelClass']
             ];
 
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
@@ -313,13 +317,13 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $loader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      *
      * @return NULL
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        if(!$loaderInformation) {
+        if (!$loaderInformation) {
             return null;
         }
         static $loadPlugin = true;
