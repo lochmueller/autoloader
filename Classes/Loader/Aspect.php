@@ -52,11 +52,15 @@ class Aspect implements LoaderInterface
                 $methods = ReflectionUtility::getPublicMethods($aspectClass);
                 foreach ($methods as $methodReflection) {
                     /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                    $methodTags = $methodReflection->getTagsValues();
+                    $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection,
+                        ['aspectClass', 'aspectJoinPoint', 'aspectAdvice']);
+                    foreach ($tagConfiguration['aspectClass'] as $key => $aspectClass) {
+                        if (!isset($tagConfiguration['aspectJoinPoint'][$key]) || !isset($tagConfiguration['aspectAdvice'][$key])) {
+                            continue;
+                        }
 
-                    if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinPoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
-                        $aspectClassName = trim($methodTags['aspectClass'][0], '\\');
-                        $aspectJoinPoint = trim($methodTags['aspectJoinPoint'][0]);
+                        $aspectClassName = trim($aspectClass, '\\');
+                        $aspectJoinPoint = trim($tagConfiguration['aspectJoinPoint'][$key]);
 
                         // check only if class exists
                         if (!$loader->isInstantiableClass($aspectClassName)) {
@@ -69,10 +73,11 @@ class Aspect implements LoaderInterface
                             'aspectClassName'          => $aspectClassName,
                             'aspectJoinPoint'          => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
-                            'aspectAdvice'             => trim($methodTags['aspectAdvice'][0]),
+                            'aspectAdvice'             => trim($tagConfiguration['aspectAdvice'][$key]),
                             'originClassName'          => $aspectClass,
                             'originMethodName'         => $methodReflection->getName()
                         ];
+
                     }
                 }
             } catch (\Exception $e) {
