@@ -14,10 +14,8 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
-use TYPO3\CMS\Backend\Sprite\SpriteManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -290,12 +288,7 @@ class ContentObjects implements LoaderInterface
                 }
             }
 
-            if (GeneralUtility::compat_version('7.0')) {
-                $fullIconPath = substr(PathUtility::getAbsoluteWebPath($config['icon']), 1);
-            } else {
-                $fullIconPath = str_replace('../typo3/', '', $config['icon']);
-            }
-            SpriteManager::addTcaTypeIcon('tt_content', $typeKey, $fullIconPath);
+            IconUtility::addTcaTypeIcon('tt_content', $typeKey, $config['icon']);
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
