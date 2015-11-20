@@ -52,6 +52,7 @@ class ContentObjects implements LoaderInterface
                 continue;
             }
             $fieldConfiguration = [];
+            $richTextFields = [];
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if ($type === LoaderInterface::EXT_TABLES) {
@@ -67,9 +68,14 @@ class ContentObjects implements LoaderInterface
                 foreach ($classReflection->getProperties() as $property) {
                     /** @var $property PropertyReflection */
                     if ($property->isTaggedWith('enableRichText')) {
-                        $search = array_search($property->getName(), $fieldConfiguration);
+                        $search = array_search(GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
+                            $fieldConfiguration);
                         if ($search !== false) {
-                            $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+                            if (GeneralUtility::compat_version('7.0')) {
+                                $richTextFields[] = $fieldConfiguration[$search];
+                            } else {
+                                $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+                            }
                         }
                     }
                 }
@@ -77,6 +83,7 @@ class ContentObjects implements LoaderInterface
 
             $entry = [
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
+                'richTextFields'     => $richTextFields,
                 'modelClass'         => $className,
                 'model'              => $model,
                 'icon'               => IconUtility::getByModelName($className),
@@ -254,6 +261,7 @@ class ContentObjects implements LoaderInterface
             SmartObjectRegister::register($config['modelClass']);
             $typeKey = $loader->getExtensionKey() . '_' . $e;
 
+
             ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
                 $typeKey,
@@ -268,6 +276,18 @@ class ContentObjects implements LoaderInterface
                 }
 
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
+            }
+
+            // RTE
+            if (isset($config['richTextFields']) && is_array($config['richTextFields']) && $config['richTextFields']) {
+                foreach ($config['richTextFields'] as $field) {
+                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = [
+                        'config'        => [
+                            'type' => 'text'
+                        ],
+                        'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
+                    ];
+                }
             }
 
             if (GeneralUtility::compat_version('7.0')) {

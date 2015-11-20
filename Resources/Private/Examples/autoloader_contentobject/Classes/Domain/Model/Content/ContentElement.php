@@ -29,6 +29,14 @@ class ContentElement extends AbstractEntity
     protected $bodytext;
 
     /**
+     * Test body with RTE
+     *
+     * @var string
+     * @enableRichText
+     */
+    protected $newTestBodyWithRte;
+
+    /**
      * Set bodytext
      *
      * @param string $bodytext
@@ -47,4 +55,21 @@ class ContentElement extends AbstractEntity
     {
         return $this->bodytext;
     }
+
+    /**
+     * @return string
+     */
+    public function getNewTestBodyWithRte()
+    {
+        return $this->newTestBodyWithRte;
+    }
+
+    /**
+     * @param string $newTestBodyWithRte
+     */
+    public function setNewTestBodyWithRte($newTestBodyWithRte)
+    {
+        $this->newTestBodyWithRte = $newTestBodyWithRte;
+    }
+
 }
