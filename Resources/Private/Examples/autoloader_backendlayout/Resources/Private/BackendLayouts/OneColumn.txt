@@ -5,7 +5,7 @@ backend_layout {
 		1 {
 			columns {
 				1 {
-					name = LLL:EXT:cms/locallang_ttc.xlf:colPos.I.1
+					name = Main
 					colspan = 1
 					colPos = 0
 				}

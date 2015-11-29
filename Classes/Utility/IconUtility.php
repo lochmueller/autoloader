@@ -7,8 +7,14 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use TYPO3\CMS\Backend\Sprite\SpriteManager;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
 
 /**
  * Icon helper
@@ -17,18 +23,46 @@ class IconUtility
 {
 
     /**
+     * Add the given icon to the TCA table type
+     *
+     * @param string $table
+     * @param string $type
+     * @param string $icon
+     */
+    public static function addTcaTypeIcon($table, $type, $icon)
+    {
+        if (GeneralUtility::compat_version('7.0')) {
+            $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
+            if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
+                $iconProviderClass = SvgIconProvider::class;
+            } else {
+                $iconProviderClass = BitmapIconProvider::class;
+            }
+            /** @var IconRegistry $iconRegistry */
+            $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+            $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
+            $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
+            $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
+        } else {
+            $fullIconPath = str_replace('../typo3/', '', $icon);
+            SpriteManager::addTcaTypeIcon('tt_content', $type, $fullIconPath);
+        }
+    }
+
+    /**
      * Get the relative path of the extension icon
      *
-     * @param $extensionKey
+     * @param string  $extensionKey
+     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
-    public static function getByExtensionKey($extensionKey)
+    public static function getByExtensionKey($extensionKey, $extSyntax = false)
     {
         $extPath = ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.';
         $fileExtension = self::getIconFileExtension($extPath);
         if ($fileExtension) {
-            return ExtensionManagementUtility::extRelPath($extensionKey) . 'ext_icon.' . $fileExtension;
+            return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
         }
         return self::getByExtensionKey('autoloader');
     }
@@ -36,11 +70,12 @@ class IconUtility
     /**
      * Get the absolute table icon for the given model name
      *
-     * @param string $modelClassName
+     * @param string  $modelClassName
+     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
-    static public function getByModelName($modelClassName)
+    static public function getByModelName($modelClassName, $extSyntax = false)
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
@@ -50,9 +85,10 @@ class IconUtility
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
         if ($fileExtension) {
-            return ExtensionManagementUtility::extRelPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.' . $fileExtension;
+            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
+                $extSyntax);
         }
-        return self::getByExtensionKey($extensionKey);
+        return self::getByExtensionKey($extensionKey, $extSyntax);
     }
 
     /**
@@ -78,6 +114,23 @@ class IconUtility
             }
         }
         return false;
+    }
+
+    /**
+     * Return the right relative path
+     *
+     * @param string  $extensionKey
+     * @param string  $path
+     * @param boolean $extSyntax
+     *
+     * @return string
+     */
+    static protected function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
+    {
+        if ($extSyntax) {
+            return 'EXT:' . $extensionKey . '/' . $path;
+        }
+        return ExtensionManagementUtility::extRelPath($extensionKey) . $path;
     }
 
 }

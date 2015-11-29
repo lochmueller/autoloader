@@ -27,8 +27,15 @@ class LoginController
      *
      * @return array
      *
+     * NOTE: Incl. a example of the configuration structure. Possible are space separated configurations
+     * and also multiple line configurations
+     *
      * @signalClass \TYPO3\CMS\Backend\Controller\LoginController
+     * @signalClass \TYPO3\CMS\Backend\Controller\LoginController2
+     * @signalClass \TYPO3\CMS\Backend\Controller\LoginController3 \TYPO3\CMS\Backend\Controller\LoginController4
      * @signalName renderLoginForm
+     * @signalName renderLoginForm2
+     * @signalName renderLoginForm3 renderLoginForm4
      */
     public function renderLoginForm(\TYPO3\CMS\Backend\Controller\LoginController $loginController, array $markers)
     {

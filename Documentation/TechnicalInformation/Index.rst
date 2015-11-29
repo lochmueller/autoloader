@@ -4,5 +4,6 @@ Technical Information
 
 	General
 	Structure
+	LocalizationStrings
 	SmartObjectManagement
 	AspectHandling

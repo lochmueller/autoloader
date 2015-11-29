@@ -138,7 +138,9 @@ class SmartObjectInformationService
         } catch (\Exception $ex) {
             // @todo handle
         }
-
+        if(!is_array($baseTca['columns'])) {
+            $baseTca['columns'] = [];
+        }
         $baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
 
         // items
@@ -150,32 +152,39 @@ class SmartObjectInformationService
         if (!in_array('workspaces', $excludes)) {
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
-        if (!in_array('enableFields', $excludes)) {
-            $showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access';
-            $showitem[] = '--palette--;LLL:EXT:cms/locallang_tca.xlf:pages.palettes.access;access';
+
+        if (GeneralUtility::compat_version('7.0')) {
+            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
+        } else {
+            $languagePrefix = 'LLL:EXT:cms/';
         }
-        $showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
+
+        if (!in_array('enableFields', $excludes)) {
+            $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
+            $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
+        }
+        $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
-            'ctrl'      => [
-                'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
-                'label'         => $labelField,
-                'tstamp'        => 'tstamp',
-                'crdate'        => 'crdate',
-                'cruser_id'     => 'cruser_id',
+            'ctrl' => [
+                'title' => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
+                'label' => $labelField,
+                'tstamp' => 'tstamp',
+                'crdate' => 'crdate',
+                'cruser_id' => 'cruser_id',
                 'dividers2tabs' => true,
-                'sortby'        => 'sorting',
-                'delete'        => 'deleted',
-                'searchFields'  => implode(',', $searchFields),
-                'iconfile'      => IconUtility::getByModelName($modelClassName)
+                'sortby' => 'sorting',
+                'delete' => 'deleted',
+                'searchFields' => implode(',', $searchFields),
+                'iconfile' => IconUtility::getByModelName($modelClassName, GeneralUtility::compat_version('7.0'))
             ],
             'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
             ],
-            'types'     => [
+            'types' => [
                 '1' => ['showitem' => implode(',', $showitem)],
             ],
-            'palettes'  => [
+            'palettes' => [
                 'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
             ],
         ];
@@ -244,9 +253,9 @@ class SmartObjectInformationService
             $dbInformation = $property->getTagValues('db');
             $fields[] = [
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                'db'   => trim($dbInformation[0]),
-                'var'  => trim($var),
-                'rte'  => (bool)$property->isTaggedWith('enableRichText'),
+                'db' => trim($dbInformation[0]),
+                'var' => trim($var),
+                'rte' => (bool)$property->isTaggedWith('enableRichText'),
             ];
         }
         return $fields;
@@ -256,7 +265,7 @@ class SmartObjectInformationService
      * Generate SQL Query
      *
      * @param string $tableName
-     * @param array  $fields
+     * @param array $fields
      *
      * @return string
      */
@@ -273,7 +282,7 @@ class SmartObjectInformationService
      *
      * @param string $modelClassName
      * @param string $tableName
-     * @param array  $custom
+     * @param array $custom
      *
      * @return string
      */

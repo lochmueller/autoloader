@@ -50,11 +50,12 @@ class ContentObjects implements LoaderInterface
                 continue;
             }
             $fieldConfiguration = [];
+            $richTextFields = [];
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if ($type === LoaderInterface::EXT_TABLES) {
-                TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
-                TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(),
+                TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
+                TranslateUtility::assureLabel('wizard.' . $key . '.description', $loader->getExtensionKey(),
                     $key . ' (Description)');
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
                 $defaultFields = $this->getDefaultTcaFields();
@@ -65,9 +66,14 @@ class ContentObjects implements LoaderInterface
                 foreach ($classReflection->getProperties() as $property) {
                     /** @var $property PropertyReflection */
                     if ($property->isTaggedWith('enableRichText')) {
-                        $search = array_search($property->getName(), $fieldConfiguration);
+                        $search = array_search(GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
+                            $fieldConfiguration);
                         if ($search !== false) {
-                            $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+                            if (GeneralUtility::compat_version('7.0')) {
+                                $richTextFields[] = $fieldConfiguration[$search];
+                            } else {
+                                $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+                            }
                         }
                     }
                 }
@@ -75,9 +81,11 @@ class ContentObjects implements LoaderInterface
 
             $entry = [
                 'fieldConfiguration' => implode(',', $fieldConfiguration),
+                'richTextFields'     => $richTextFields,
                 'modelClass'         => $className,
                 'model'              => $model,
-                'icon'               => IconUtility::getByExtensionKey($loader->getExtensionKey()),
+                'icon'               => IconUtility::getByModelName($className),
+                'iconExt'            => IconUtility::getByModelName($className, true),
                 'noHeader'           => $this->isTaggedWithNoHeader($className),
                 'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
@@ -113,6 +121,9 @@ class ContentObjects implements LoaderInterface
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
     {
+        if (empty($loaderInformation)) {
+            return;
+        }
         $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
         $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
         if (!file_exists($frontendLayout)) {
@@ -227,6 +238,9 @@ class ContentObjects implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
+        if (!$loaderInformation) {
+            return null;
+        }
         $createWizardHeader = [];
         $predefinedWizards = [
             'common',
@@ -235,15 +249,23 @@ class ContentObjects implements LoaderInterface
             'plugins',
         ];
 
+        // Add the divider
+        $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
+            TranslateUtility::getLllString('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()),
+            '--div--'
+        ];
+
         foreach ($loaderInformation as $e => $config) {
             SmartObjectRegister::register($config['modelClass']);
+            $typeKey = $loader->getExtensionKey() . '_' . $e;
+
 
             ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
-                $loader->getExtensionKey() . '_' . $e
+                $typeKey,
+                $config['iconExt']
             ], 'CType');
 
-            $typeKey = $loader->getExtensionKey() . '_' . $e;
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
                 $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration']);
 
@@ -254,20 +276,34 @@ class ContentObjects implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
             }
 
+            // RTE
+            if (isset($config['richTextFields']) && is_array($config['richTextFields']) && $config['richTextFields']) {
+                foreach ($config['richTextFields'] as $field) {
+                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = [
+                        'config'        => [
+                            'type' => 'text'
+                        ],
+                        'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
+                    ];
+                }
+            }
+
+            IconUtility::addTcaTypeIcon('tt_content', $typeKey, $config['icon']);
+
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
                 $createWizardHeader[] = $tabName;
             }
             ExtensionManagementUtility::addPageTSConfig('
-mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
-    icon = ' . IconUtility::getByModelName($config['modelClass']) . '
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
+    icon = ' . $config['icon'] . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
-        CType = ' . $loader->getExtensionKey() . '_' . $e . '
+        CType = ' . $typeKey . '
     }
 }
-mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $loader->getExtensionKey() . '_' . $e . ')');
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $typeKey . ')');
             $cObjectConfiguration = [
                 'extensionKey'        => $loader->getExtensionKey(),
                 'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
@@ -300,6 +336,9 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
+        if (!$loaderInformation) {
+            return null;
+        }
         static $loadPlugin = true;
         $csc = ExtensionManagementUtility::isLoaded('css_styled_content');
         $typoScript = '';
@@ -330,10 +369,8 @@ tt_content.key.field = CType';
 	            }
             }
         }
-
-
-
-                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content';
+        config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content
+        ';
         }
 
         if ($csc) {

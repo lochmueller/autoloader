@@ -74,8 +74,10 @@ class FlexForms implements LoaderInterface
                 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$info['pluginSignature']] = 'pi_flexform';
                 ExtensionManagementUtility::addPiFlexFormValue($info['pluginSignature'], $info['path']);
             } elseif (isset($info['contentSignature'])) {
-                // @todo check, why the field is not shown?!?!
-                $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'] .= ',pi_flexform';
+                $fields = GeneralUtility::trimExplode(',', $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem']);
+                if(!in_array('pi_flexform', $fields)) {
+                    $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'] .= ',pi_flexform';
+                }
                 ExtensionManagementUtility::addPiFlexFormValue('*', $info['path'], $info['contentSignature']);
             }
         }

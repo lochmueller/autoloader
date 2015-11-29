@@ -132,13 +132,9 @@ class ExtendedUtility
         $partialPath = $siteRelPath . 'Resources/Private/Partials/';
         $layoutPath = $siteRelPath . 'Resources/Private/Layouts/';
 
-        if (GeneralUtility::compat_version('7.0')) {
-            $view->setPartialRootPaths([$partialPath]);
-            $view->setLayoutRootPaths([$layoutPath]);
-        } else {
-            $view->setPartialRootPath($partialPath);
-            $view->setLayoutRootPath($layoutPath);
-        }
+        $view->setPartialRootPaths([$partialPath]);
+        $view->setLayoutRootPaths([$layoutPath]);
+
         return $view;
     }
 

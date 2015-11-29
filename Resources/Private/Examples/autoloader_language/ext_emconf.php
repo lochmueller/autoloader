@@ -3,13 +3,13 @@
  * $EM_CONF
  *
  * @category Extension
- * @package  AutoloaderPlugin
+ * @package  AutoloaderHooks
  * @author   Tim Lochmüller
  */
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = [
-    'title'       => 'Autoloader (Plugin - There are two plugins in the plugin selection - no output)',
+    'title'       => 'Autoloader (language - Check the TYPO3_CONF_VARS - there are new overrides)',
     'description' => '',
     'constraints' => [
         'depends' => [

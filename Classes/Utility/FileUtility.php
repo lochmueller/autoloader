@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
@@ -23,12 +24,17 @@ class FileUtility
      * @param string $content
      *
      * @return bool
+     * @throws Exception
      */
     static public function writeFileAndCreateFolder($absoluteFileName, $content)
     {
         $dir = PathUtility::dirname($absoluteFileName) . '/';
         if (!is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
+        }
+        if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
+            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
+                234627835683);
         }
         return GeneralUtility::writeFile($absoluteFileName, $content);
     }
@@ -88,18 +94,18 @@ class FileUtility
      * also the folder name. The filename is also "basename" only.
      *
      * @param string $dirPath
-     * @param string $fileExtension
+     * @param string $fileExtensions
      * @param bool   $recursively
      *
      * @return array
      */
-    static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = true)
+    static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
     {
         if (!is_dir($dirPath)) {
             return [];
         }
         $recursively = $recursively ? 99 : 0;
-        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtension, false, $recursively);
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtensions, false, $recursively);
         foreach ($files as $key => $file) {
             $pathInfo = PathUtility::pathinfo($file);
             $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];

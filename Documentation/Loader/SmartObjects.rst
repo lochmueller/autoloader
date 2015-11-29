@@ -17,3 +17,6 @@ If the variable contains a complex data type, you have to add a proper field def
 
 .. note::
 	Please also use the TcaFiles loader to create the right base TCA files for the first content objects.
+
+.. note::
+	You can place the Icon for the SmartObjects just in the right folder to connect the Model with the Icon. E.g. Your Model is VENDOR\Ext\Domain\Model\Test place the Icon in Resources/Public/Icons/Test.[svg,png,gif]. If your Model is in a more deeper folder, just add the folder also in the Icons folder to use the icon.

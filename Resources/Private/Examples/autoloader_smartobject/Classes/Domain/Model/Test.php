@@ -37,6 +37,15 @@ class Test extends AbstractEntity
     protected $boolField;
 
     /**
+     * Other field (RTE)
+     *
+     * @var string
+     * @enableRichText
+     * @db
+     */
+    protected $otherField;
+
+    /**
      * File example
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
@@ -51,6 +60,22 @@ class Test extends AbstractEntity
      * @db int(11) DEFAULT '0' NOT NULL
      */
     protected $customField;
+
+    /**
+     * @return string
+     */
+    public function getOtherField()
+    {
+        return $this->otherField;
+    }
+
+    /**
+     * @param string $otherField
+     */
+    public function setOtherField($otherField)
+    {
+        $this->otherField = $otherField;
+    }
 
     /**
      * Set the basic field

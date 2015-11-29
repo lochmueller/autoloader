@@ -23,3 +23,7 @@ Summarize: Create a domain model, create a template, maybe run database compare,
 	- a backend preview template (with suffix Backend)
 
 	If you don't need a Backend Preview for your ContentObject you can delete the template file and it will not be created again. The old behavior is in place.
+
+.. note::
+	You can use Icons in the same way like for :index:`SmartObjects`
+

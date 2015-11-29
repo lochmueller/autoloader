@@ -10,10 +10,8 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Loading SoapServer
@@ -27,29 +25,20 @@ class SoapServer implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $autoLoader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
     public function prepareLoader(Loader $autoLoader, $type)
     {
-        $info = [
-            #'test' => \HDNET\AutoloaderSoap\Service\TestService::class
-        ];
-        return $info;
-        $servicePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Service/';
+        $servicePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Service/Soap/';
         $serviceClasses = FileUtility::getBaseFilesRecursivelyInDir($servicePath, 'php');
 
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
-
+        $info = [];
         foreach ($serviceClasses as $service) {
-            $serviceClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Service\\' . $service;
-            if (!$autoLoader->isInstantiableClass($serviceClass)) {
-                continue;
-            }
-
-            $property = ReflectionUtility::getFirstTagValue($serviceClass, 'soapServer');
-            DebuggerUtility::var_dump($property);
+            $serviceClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Service\\Soap\\' . $service;
+            $info[lcfirst($service)] = $serviceClass;
         }
 
         return $info;
@@ -59,7 +48,7 @@ class SoapServer implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -75,7 +64,7 @@ class SoapServer implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */

@@ -8,6 +8,7 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * DataSet information for languages
@@ -24,21 +25,22 @@ class Language implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return [
-            'ctrl'     => [
-                'languageField'            => 'sys_language_uid',
-                'transOrigPointerField'    => 'l10n_parent',
+        $tca = [
+            'ctrl' => [
+                'languageField' => 'sys_language_uid',
+                'transOrigPointerField' => 'l10n_parent',
                 'transOrigDiffSourceField' => 'l10n_diffsource',
             ],
-            'columns'  => [
+            'columns' => [
                 'sys_language_uid' => [
                     'exclude' => 1,
-                    'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-                    'config'  => [
-                        'type'                => 'select',
-                        'foreign_table'       => 'sys_language',
+                    'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
+                    'config' => [
+                        'type' => 'select',
+                        'renderType' => 'selectSingle',
+                        'foreign_table' => 'sys_language',
                         'foreign_table_where' => 'ORDER BY sys_language.title',
-                        'items'               => [
+                        'items' => [
                             [
                                 'LLL:EXT:lang/locallang_general.xml:LGL.allLanguages',
                                 -1
@@ -50,26 +52,26 @@ class Language implements DataSetInterface
                         ],
                     ],
                 ],
-                'l10n_parent'      => [
+                'l10n_parent' => [
                     'displayCond' => 'FIELD:sys_language_uid:>:0',
-                    'exclude'     => 1,
-                    'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-                    'config'      => [
-                        'type'                    => 'select',
-                        'items'                   => [
+                    'exclude' => 1,
+                    'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
+                    'config' => [
+                        'type' => 'select',
+                        'renderType' => 'selectSingle',
+                        'items' => [
                             [
                                 '',
                                 0
                             ],
                         ],
-                        'foreign_table'           => $tableName,
-                        'foreign_table_where'     => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
+                        'foreign_table' => $tableName,
+                        'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
                         'foreign_table_loadIcons' => false,
-                        'iconsInOptionTags'       => false,
-                        'noIconsBelowSelect'      => true,
+                        'noIconsBelowSelect' => true,
                     ],
                 ],
-                'l10n_diffsource'  => [
+                'l10n_diffsource' => [
                     'config' => [
                         'type' => 'passthrough',
                     ],
@@ -79,6 +81,12 @@ class Language implements DataSetInterface
                 'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
             ],
         ];
+
+        if (!GeneralUtility::compat_version('7.0')) {
+            $tca['columns']['l10n_parent']['config']['iconsInOptionTags'] = false;
+        }
+
+        return $tca;
     }
 
     /**
