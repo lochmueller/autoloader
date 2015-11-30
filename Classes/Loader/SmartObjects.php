@@ -11,6 +11,7 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -39,9 +40,10 @@ class SmartObjects implements LoaderInterface
             return $configuration;
         }
 
-        $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
+        $models = FileUtility::getBaseFilesRecursivelyInDir($modelPath, 'php');
         foreach ($models as $model) {
-            $className = $loader->getVendorName() . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey())) . '\\Domain\\Model\\' . $model;
+            $className = ClassNamingUtility::getFqdnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Domain/Model/' . $model);
             if (SmartObjectManager::isSmartObjectClass($className)) {
                 $configuration[] = $className;
             }

@@ -61,4 +61,18 @@ class ClassNamingUtility
         $matches = self::explodeObjectModelName($modelClassName);
         return GeneralUtility::camelCaseToLowerCaseUnderscored($matches['extensionName']);
     }
+
+    /**
+     * Get FQDN by path (segment)
+     *
+     * @param string $vendorName
+     * @param string $extensionKey
+     * @param string $path
+     * @return string
+     */
+    static public function getFqdnByPath($vendorName, $extensionKey, $path)
+    {
+        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace('/',
+            '\\', ltrim($path, '/'));
+    }
 }
