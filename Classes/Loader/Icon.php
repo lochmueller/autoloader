@@ -73,6 +73,16 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
+        if (!$loaderInformation) {
+            return;
+        }
+
+        /** @var IconRegistry $iconRegistry */
+        $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+
+        foreach ($loaderInformation as $config) {
+            $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);
+        }
         return null;
     }
 
@@ -87,16 +97,6 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        if (!$loaderInformation) {
-            return;
-        }
-
-        /** @var IconRegistry $iconRegistry */
-        $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
-
-        foreach ($loaderInformation as $config) {
-            $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);
-        }
         return null;
     }
 }
