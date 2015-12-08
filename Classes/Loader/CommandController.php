@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -39,7 +40,8 @@ class CommandController implements LoaderInterface
                 continue;
             }
 
-            $className = $loader->getVendorName() . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey())) . '\\Command\\' . $controller;
+            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Command/' . $controller);
             if (!$loader->isInstantiableClass($className)) {
                 continue;
             }

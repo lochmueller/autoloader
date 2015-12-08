@@ -68,7 +68,7 @@ class ClassNamingUtility
      * @param string $vendorName
      * @param string $extensionKey
      * @param string $path
-     * 
+     *
      * @return string
      */
     static public function getFqnByPath($vendorName, $extensionKey, $path)

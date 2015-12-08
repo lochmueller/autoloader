@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -38,9 +39,9 @@ class Hooks implements LoaderInterface
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         foreach ($files as $hookFile) {
-            $hookClass = $loader->getVendorName() . '\\' . $extKey . '\\Hooks\\' . $hookFile;
+            $hookClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Hooks/' . $hookFile);
             if (!$loader->isInstantiableClass($hookClass)) {
                 continue;
             }

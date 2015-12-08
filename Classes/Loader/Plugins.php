@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
@@ -39,10 +40,9 @@ class Plugins implements LoaderInterface
         $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Controller/';
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
 
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         foreach ($controllers as $controller) {
-            $controllerName = $loader->getVendorName() . '\\' . $extKey . '\\Controller\\' . str_replace('/', '\\', $controller);
-
+            $controllerName = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Controller/' . $controller);
             if (!$loader->isInstantiableClass($controllerName)) {
                 continue;
             }

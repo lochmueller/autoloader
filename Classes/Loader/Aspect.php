@@ -10,6 +10,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Autoload\TempClassLoader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -42,7 +43,8 @@ class Aspect implements LoaderInterface
         $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
         foreach ($aspectClasses as $aspect) {
-            $aspectClass = $loader->getVendorName() . '\\' . $extKey . '\\Aspect\\' . $aspect;
+            $aspectClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Aspect/' . $aspect);
 
             if (!$loader->isInstantiableClass($aspectClass)) {
                 continue;

@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Controller;
 
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,8 +29,7 @@ class ContentController extends ActionController
         $name = $this->settings['contentElement'];
         $data = $this->configurationManager->getContentObject()->data;
 
-        $camelCaseExtKey = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
-        $targetObject = $vendorName . '\\' . $camelCaseExtKey . '\\Domain\\Model\\Content\\' . $name;
+        $targetObject = ClassNamingUtility::getFqnByPath($vendorName, $extensionKey, 'Domain/Model/Content/' . $name);
         $model = ModelUtility::getModel($targetObject, $data);
 
         $view = $this->createStandaloneView();

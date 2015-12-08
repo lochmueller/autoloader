@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -39,7 +40,8 @@ class Slots implements LoaderInterface
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
 
         foreach ($slotClasses as $slot) {
-            $slotClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Slots\\' . $slot;
+            $slotClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
+                'Slots/' . $slot);
 
             if (!$autoLoader->isInstantiableClass($slotClass)) {
                 continue;

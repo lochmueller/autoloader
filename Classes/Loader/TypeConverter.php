@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -35,11 +36,10 @@ class TypeConverter implements LoaderInterface
         $classes = [];
         $converterPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
 
         foreach ($converterClasses as $converterClass) {
-            $converterClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Property\\TypeConverter\\' . str_replace('/',
-                    '\\', $converterClass);
+            $converterClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
+                'Property/TypeConverter/' . $converterClass);
             if ($autoLoader->isInstantiableClass($converterClass)) {
                 $classes[] = $converterClass;
             }

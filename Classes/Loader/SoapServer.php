@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,10 +35,10 @@ class SoapServer implements LoaderInterface
         $servicePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Service/Soap/';
         $serviceClasses = FileUtility::getBaseFilesRecursivelyInDir($servicePath, 'php');
 
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
         $info = [];
         foreach ($serviceClasses as $service) {
-            $serviceClass = $autoLoader->getVendorName() . '\\' . $extKey . '\\Service\\Soap\\' . $service;
+            $serviceClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
+                'Service/Soap/' . $service);
             $info[lcfirst($service)] = $serviceClass;
         }
 

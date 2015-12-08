@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -40,16 +41,16 @@ class Xclass implements LoaderInterface
         $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';
         $xClasses = FileUtility::getBaseFilesRecursivelyInDir($xClassesPath, 'php');
 
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         foreach ($xClasses as $xClass) {
-            $xclassName = $loader->getVendorName() . '\\' . $extKey . '\\Xclass\\' . str_replace('/', '\\', $xClass);
-            if (!$loader->isInstantiableClass($xclassName)) {
+            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Xclass/' . $xClass);
+            if (!$loader->isInstantiableClass($className)) {
                 continue;
             }
 
             $return[] = [
-                'source' => ReflectionUtility::getParentClassName($xclassName),
-                'target' => $xclassName,
+                'source' => ReflectionUtility::getParentClassName($className),
+                'target' => $className,
             ];
         }
 

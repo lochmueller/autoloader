@@ -10,6 +10,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -45,7 +46,8 @@ class ContentObjects implements LoaderInterface
         }
         foreach ($models as $model) {
             $key = GeneralUtility::camelCaseToLowerCaseUnderscored($model);
-            $className = $loader->getVendorName() . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey())) . '\\Domain\\Model\\Content\\' . $model;
+            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'Domain/Model/Content/' . $model);
             if (!$loader->isInstantiableClass($className)) {
                 continue;
             }

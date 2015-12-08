@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -36,10 +37,9 @@ class AlternativeImplementations implements LoaderInterface
         $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/AlternativeImplementations/';
         $alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
-
         foreach ($alternativeClasses as $aic) {
-            $aicClass = $loader->getVendorName() . '\\' . $extKey . '\\AlternativeImplementations\\' . $aic;
+            $aicClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+                'AlternativeImplementations/' . $aic);
 
             if (!$loader->isInstantiableClass($aicClass)) {
                 continue;
