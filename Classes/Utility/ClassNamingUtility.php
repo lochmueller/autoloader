@@ -63,14 +63,15 @@ class ClassNamingUtility
     }
 
     /**
-     * Get FQDN by path (segment)
+     * Get FQN by path (segment)
      *
      * @param string $vendorName
      * @param string $extensionKey
      * @param string $path
+     * 
      * @return string
      */
-    static public function getFqdnByPath($vendorName, $extensionKey, $path)
+    static public function getFqnByPath($vendorName, $extensionKey, $path)
     {
         return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace('/',
             '\\', ltrim($path, '/'));

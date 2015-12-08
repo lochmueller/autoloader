@@ -42,7 +42,7 @@ class SmartObjects implements LoaderInterface
 
         $models = FileUtility::getBaseFilesRecursivelyInDir($modelPath, 'php');
         foreach ($models as $model) {
-            $className = ClassNamingUtility::getFqdnByPath($loader->getVendorName(), $loader->getExtensionKey(),
+            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
                 'Domain/Model/' . $model);
             if (SmartObjectManager::isSmartObjectClass($className)) {
                 $configuration[] = $className;
