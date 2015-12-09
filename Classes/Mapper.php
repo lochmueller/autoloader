@@ -65,7 +65,7 @@ class Mapper implements SingletonInterface
                 return $mapper;
             }
         }
-        throw new Exception('No valid mapper for the given type found: ' . $type, 12371263136);
+        throw new \Exception('No valid mapper for the given type found: ' . $type, 12371263136);
     }
 
     /**
@@ -87,7 +87,7 @@ class Mapper implements SingletonInterface
             'Model',
         ];
         foreach ($mapper as $key => $value) {
-            $mapper[$key] = ExtendedUtility::create('HDNET\\Autoloader\\Mapper\\' . $value);
+            $mapper[$key] = ExtendedUtility::create('HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper');
         }
         return $mapper;
     }
