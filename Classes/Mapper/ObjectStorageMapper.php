@@ -1,6 +1,6 @@
 <?php
 /**
- * Map FileReferenceObjectStorage
+ * Map general ObjectStorage
  *
  * @author Tim Lochmüller
  */
@@ -8,12 +8,11 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Map FileReferenceObjectStorage
+ * Map general ObjectStorage
  */
-class FileReferenceObjectStorage implements MapperInterface
+class ObjectStorageMapper implements MapperInterface
 {
 
     /**
@@ -25,9 +24,7 @@ class FileReferenceObjectStorage implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower(trim($type, '\\')), [
-            'typo3\\cms\\extbase\\persistence\\objectstorage<\\typo3\\cms\\extbase\\domain\\model\\filereference>'
-        ]);
+        return stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage') !== false;
     }
 
     /**
@@ -40,10 +37,15 @@ class FileReferenceObjectStorage implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
+        $baseConfig = [
+            'type'     => 'user',
+            'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->objectStorageInfoField',
+        ];
+
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName),
+            'config'  => $baseConfig,
         ];
     }
 
@@ -54,6 +56,6 @@ class FileReferenceObjectStorage implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'int(11) DEFAULT \'0\' NOT NULL';
+        return 'varchar(255) DEFAULT \'\' NOT NULL';
     }
 }

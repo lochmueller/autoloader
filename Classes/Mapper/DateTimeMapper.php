@@ -1,6 +1,6 @@
 <?php
 /**
- * Map general ObjectStorage
+ * Map DateTime
  *
  * @author Tim Lochmüller
  */
@@ -10,9 +10,9 @@ namespace HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map general ObjectStorage
+ * Map DateTime
  */
-class ObjectStorage implements MapperInterface
+class DateTimeMapper implements MapperInterface
 {
 
     /**
@@ -24,7 +24,9 @@ class ObjectStorage implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage') !== false;
+        return in_array(strtolower(trim($type, '\\')), [
+            'datetime',
+        ]);
     }
 
     /**
@@ -37,15 +39,14 @@ class ObjectStorage implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        $baseConfig = [
-            'type'     => 'user',
-            'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->objectStorageInfoField',
-        ];
-
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => $baseConfig,
+            'config'  => [
+                'type' => 'input',
+                'eval' => 'datetime',
+                'size' => 8,
+            ],
         ];
     }
 
@@ -56,6 +57,6 @@ class ObjectStorage implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'varchar(255) DEFAULT \'\' NOT NULL';
+        return 'int(11) DEFAULT \'0\' NOT NULL';
     }
 }

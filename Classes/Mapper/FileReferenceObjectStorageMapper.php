@@ -1,6 +1,6 @@
 <?php
 /**
- * Map int
+ * Map FileReferenceObjectStorage
  *
  * @author Tim Lochmüller
  */
@@ -8,11 +8,12 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Map int
+ * Map FileReferenceObjectStorage
  */
-class Int implements MapperInterface
+class FileReferenceObjectStorageMapper implements MapperInterface
 {
 
     /**
@@ -24,9 +25,8 @@ class Int implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), [
-            'int',
-            'integer'
+        return in_array(strtolower(trim($type, '\\')), [
+            'typo3\\cms\\extbase\\persistence\\objectstorage<\\typo3\\cms\\extbase\\domain\\model\\filereference>'
         ]);
     }
 
@@ -43,11 +43,7 @@ class Int implements MapperInterface
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => [
-                'type' => 'input',
-                'eval' => 'int',
-                'size' => 8,
-            ],
+            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName),
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Map general Models
+ * Map FileReference
  *
  * @author Tim Lochmüller
  */
@@ -8,12 +8,12 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Map general Models
+ * Map FileReference
  */
-class Model implements MapperInterface
+class FileReferenceMapper implements MapperInterface
 {
 
     /**
@@ -25,15 +25,9 @@ class Model implements MapperInterface
      */
     public function canHandleType($type)
     {
-        if (!class_exists($type)) {
-            return false;
-        }
-        try {
-            $dummy = new $type();
-            return ($dummy instanceof AbstractEntity);
-        } catch (\Exception $exception) {
-            return false;
-        }
+        return in_array(strtolower(trim($type, '\\')), [
+            'typo3\\cms\\extbase\\domain\\model\\filereference',
+        ]);
     }
 
     /**
@@ -46,15 +40,10 @@ class Model implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        $baseConfig = [
-            'type'     => 'user',
-            'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->modelInfoField',
-        ];
-
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => $baseConfig,
+            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, ['maxitems' => 1]),
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Map boolean
+ * Map int
  *
  * @author Tim Lochmüller
  */
@@ -10,9 +10,9 @@ namespace HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map boolean
+ * Map int
  */
-class Boolean implements MapperInterface
+class IntMapper implements MapperInterface
 {
 
     /**
@@ -25,8 +25,8 @@ class Boolean implements MapperInterface
     public function canHandleType($type)
     {
         return in_array(strtolower($type), [
-            'bool',
-            'boolean'
+            'int',
+            'integer'
         ]);
     }
 
@@ -44,7 +44,9 @@ class Boolean implements MapperInterface
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
             'config'  => [
-                'type' => 'check',
+                'type' => 'input',
+                'eval' => 'int',
+                'size' => 8,
             ],
         ];
     }
@@ -56,6 +58,6 @@ class Boolean implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
+        return 'int(11) DEFAULT \'0\' NOT NULL';
     }
 }

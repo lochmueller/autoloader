@@ -1,6 +1,6 @@
 <?php
 /**
- * Map DateTime
+ * Map boolean
  *
  * @author Tim Lochmüller
  */
@@ -10,9 +10,9 @@ namespace HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map DateTime
+ * Map boolean
  */
-class DateTime implements MapperInterface
+class BooleanMapper implements MapperInterface
 {
 
     /**
@@ -24,8 +24,9 @@ class DateTime implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower(trim($type, '\\')), [
-            'datetime',
+        return in_array(strtolower($type), [
+            'bool',
+            'boolean'
         ]);
     }
 
@@ -43,9 +44,7 @@ class DateTime implements MapperInterface
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
             'config'  => [
-                'type' => 'input',
-                'eval' => 'datetime',
-                'size' => 8,
+                'type' => 'check',
             ],
         ];
     }
@@ -57,6 +56,6 @@ class DateTime implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'int(11) DEFAULT \'0\' NOT NULL';
+        return 'tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
     }
 }

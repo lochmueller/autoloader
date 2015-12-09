@@ -1,6 +1,6 @@
 <?php
 /**
- * Map FileReference
+ * Map float/double
  *
  * @author Tim Lochmüller
  */
@@ -8,12 +8,11 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Map FileReference
+ * Map float/double
  */
-class FileReference implements MapperInterface
+class FloatMapper implements MapperInterface
 {
 
     /**
@@ -25,8 +24,9 @@ class FileReference implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower(trim($type, '\\')), [
-            'typo3\\cms\\extbase\\domain\\model\\filereference',
+        return in_array(strtolower($type), [
+            'float',
+            'double'
         ]);
     }
 
@@ -43,7 +43,11 @@ class FileReference implements MapperInterface
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, ['maxitems' => 1]),
+            'config'  => [
+                'type' => 'input',
+                'eval' => 'double2',
+                'size' => 8,
+            ],
         ];
     }
 
@@ -54,6 +58,6 @@ class FileReference implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'int(11) DEFAULT \'0\' NOT NULL';
+        return 'varchar(255) DEFAULT \'\' NOT NULL';
     }
 }

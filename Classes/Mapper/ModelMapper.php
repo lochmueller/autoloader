@@ -1,6 +1,6 @@
 <?php
 /**
- * Map float/double
+ * Map general Models
  *
  * @author Tim Lochmüller
  */
@@ -8,11 +8,12 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Map float/double
+ * Map general Models
  */
-class Float implements MapperInterface
+class ModelMapper implements MapperInterface
 {
 
     /**
@@ -24,10 +25,15 @@ class Float implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), [
-            'float',
-            'double'
-        ]);
+        if (!class_exists($type)) {
+            return false;
+        }
+        try {
+            $dummy = new $type();
+            return ($dummy instanceof AbstractEntity);
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 
     /**
@@ -40,14 +46,15 @@ class Float implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
+        $baseConfig = [
+            'type'     => 'user',
+            'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->modelInfoField',
+        ];
+
         return [
             'exclude' => 1,
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => [
-                'type' => 'input',
-                'eval' => 'double2',
-                'size' => 8,
-            ],
+            'config'  => $baseConfig,
         ];
     }
 
@@ -58,6 +65,6 @@ class Float implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'varchar(255) DEFAULT \'\' NOT NULL';
+        return 'int(11) DEFAULT \'0\' NOT NULL';
     }
 }
