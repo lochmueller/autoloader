@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map DateTime
  */
-class DateTime implements MapperInterface
+class DateTimeMapper implements MapperInterface
 {
 
     /**

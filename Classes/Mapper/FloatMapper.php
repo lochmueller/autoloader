@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map float/double
  */
-class Float implements MapperInterface
+class FloatMapper implements MapperInterface
 {
 
     /**

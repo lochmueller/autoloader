@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map int
  */
-class Int implements MapperInterface
+class IntMapper implements MapperInterface
 {
 
     /**

@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map general ObjectStorage
  */
-class ObjectStorage implements MapperInterface
+class ObjectStorageMapper implements MapperInterface
 {
 
     /**

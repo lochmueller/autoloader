@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map boolean
  */
-class Boolean implements MapperInterface
+class BooleanMapper implements MapperInterface
 {
 
     /**

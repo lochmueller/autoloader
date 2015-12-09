@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Map general Models
  */
-class Model implements MapperInterface
+class ModelMapper implements MapperInterface
 {
 
     /**

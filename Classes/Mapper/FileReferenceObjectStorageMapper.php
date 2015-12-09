@@ -13,7 +13,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Map FileReferenceObjectStorage
  */
-class FileReferenceObjectStorage implements MapperInterface
+class FileReferenceObjectStorageMapper implements MapperInterface
 {
 
     /**
