@@ -12,7 +12,7 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map String
  */
-class String implements MapperInterface
+class StringMapper implements MapperInterface
 {
 
     /**
