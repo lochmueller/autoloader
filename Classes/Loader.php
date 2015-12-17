@@ -46,6 +46,7 @@ class Loader implements SingletonInterface
         'SoapServer',
         'LanguageOverride',
         'Icon',
+        'Gridelement',
     ];
 
     /**
