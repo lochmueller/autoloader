@@ -57,7 +57,13 @@ class Gridelement implements LoaderInterface
             $label = TranslateUtility::getLllString($translationKey, $loader->getExtensionKey());
             $content = GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
 
-            $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, null);
+
+            $flexForm = 'EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Grids/' . $pathInfo['filename'] . '.xml';
+            $flexFormFile = GeneralUtility::getFileAbsFileName($flexForm);
+            $flexFormContent = is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
+
+
+            $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, $flexFormContent);
         }
 
         return $grids;
@@ -65,19 +71,25 @@ class Gridelement implements LoaderInterface
 
     protected function getPageTsConfig($id, $label, $config, $icon, $flexForm)
     {
-        return 'tx_gridelements.setup {
-	' . $id . ' {
-	title = ' . $label . '
-	' . $config . '
+        $lines = [];
+        $lines[] = 'tx_gridelements.setup {';
+        $lines[] = $id . ' {';
 
-	}
-}';
-        /**
-         * icon = ' . $icon . '
-         * flexformDS (
-         * ' . $flexForm . '
-         * )
-         */
+        $lines[] = 'title = ' . $label;
+        if ($icon) {
+            $lines[] = 'icon = ' . $icon;
+        }
+        $lines[] = $config;
+        if ($flexForm) {
+            $lines[] = 'flexformDS (';
+            $lines[] = $flexForm;
+            $lines[] = ')';
+        }
+
+        $lines[] = '}';
+        $lines[] = '}';
+
+        return implode("\n", $lines);
     }
 
     /**
