@@ -132,8 +132,8 @@ class ExtendedUtility
         $partialPath = $siteRelPath . 'Resources/Private/Partials/';
         $layoutPath = $siteRelPath . 'Resources/Private/Layouts/';
 
-        $view->setPartialRootPaths([$partialPath]);
-        $view->setLayoutRootPaths([$layoutPath]);
+        $view->setPartialRootPaths([GeneralUtility::getFileAbsFileName($partialPath)]);
+        $view->setLayoutRootPaths([GeneralUtility::getFileAbsFileName($layoutPath)]);
 
         return $view;
     }
