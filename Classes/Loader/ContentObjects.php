@@ -180,10 +180,11 @@ class ContentObjects implements LoaderInterface
      * Wrap the given field configuration in the CE default TCA fields
      *
      * @param string $configuration
+     * @param boolean $noHeader
      *
      * @return string
      */
-    protected function wrapDefaultTcaConfiguration($configuration)
+    protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
     {
         if (GeneralUtility::compat_version('7.0')) {
             $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
@@ -192,7 +193,7 @@ class ContentObjects implements LoaderInterface
         }
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
         return '--palette--;' . $languagePrefix . ':palette.general;general,
-    --palette--;' . $languagePrefix . ':palette.header;header,
+    ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
     ' . $configuration . '
     --div--;' . $languagePrefix . ':tabs.access,
@@ -269,7 +270,7 @@ class ContentObjects implements LoaderInterface
             ], 'CType');
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
-                $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration']);
+                $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration'], (bool)$config['noHeader']);
 
                 if (ExtensionManagementUtility::isLoaded('gridelements')) {
                     $baseTcaConfiguration .= ',tx_gridelements_container,tx_gridelements_columns';
@@ -319,8 +320,8 @@ mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' .
             foreach ($createWizardHeader as $element) {
                 ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $element . ' {
-	show = *
-	header = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $element . '.header', $loader->getExtensionKey()) . '
+    show = *
+    header = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $element . '.header', $loader->getExtensionKey()) . '
 }');
             }
         }
@@ -365,10 +366,10 @@ tt_content.key.field = CType';
                 pluginName = Content
                 vendorName = HDNET
                 settings {
-	                contentElement = ' . $config['model'] . '
-	                extensionKey = ' . $loader->getExtensionKey() . '
-	                vendorName = ' . $loader->getVendorName() . '
-	            }
+                    contentElement = ' . $config['model'] . '
+                    extensionKey = ' . $loader->getExtensionKey() . '
+                    vendorName = ' . $loader->getVendorName() . '
+                }
             }
         }
         config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content
