@@ -53,6 +53,7 @@ class ContentObjects implements LoaderInterface
             }
             $fieldConfiguration = [];
             $richTextFields = [];
+            $noHeader = $this->isTaggedWithNoHeader($className);
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if ($type === LoaderInterface::EXT_TABLES) {
@@ -60,7 +61,7 @@ class ContentObjects implements LoaderInterface
                 TranslateUtility::assureLabel('wizard.' . $key . '.description', $loader->getExtensionKey(),
                     $key . ' (Description)');
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
-                $defaultFields = $this->getDefaultTcaFields();
+                $defaultFields = $this->getDefaultTcaFields(null, $noHeader);
                 $fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
 
                 // RTE manipulation
@@ -88,7 +89,7 @@ class ContentObjects implements LoaderInterface
                 'model'              => $model,
                 'icon'               => IconUtility::getByModelName($className),
                 'iconExt'            => IconUtility::getByModelName($className, true),
-                'noHeader'           => $this->isTaggedWithNoHeader($className),
+                'noHeader'           => $noHeader,
                 'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
             ];
 
@@ -206,13 +207,14 @@ class ContentObjects implements LoaderInterface
      * Get the fields that are in the default configuration
      *
      * @param null|string $configuration
+     * @param boolean $noHeader
      *
      * @return array
      */
-    protected function getDefaultTcaFields($configuration = null)
+    protected function getDefaultTcaFields($configuration = null, $noHeader)
     {
         if ($configuration === null) {
-            $configuration = $this->wrapDefaultTcaConfiguration('');
+            $configuration = $this->wrapDefaultTcaConfiguration('', $noHeader);
         }
         $defaultFields = [];
         $existingFields = array_keys($GLOBALS['TCA']['tt_content']['columns']);
@@ -224,7 +226,7 @@ class ContentObjects implements LoaderInterface
             } elseif ($fieldConfiguration[0] == '--palette--') {
                 $paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
                 if (is_string($paletteConfiguration)) {
-                    $defaultFields = array_merge($defaultFields, $this->getDefaultTcaFields($paletteConfiguration));
+                    $defaultFields = array_merge($defaultFields, $this->getDefaultTcaFields($paletteConfiguration, $noHeader));
                 }
             }
         }
