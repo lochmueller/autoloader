@@ -102,11 +102,6 @@ class Gridelement implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        if (empty($loaderInformation)) {
-            return null;
-        }
-
-        ExtensionManagementUtility::addPageTSConfig(implode("\n", $loaderInformation));
         return null;
     }
 
@@ -120,6 +115,11 @@ class Gridelement implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
+        if (empty($loaderInformation)) {
+            return null;
+        }
+
+        ExtensionManagementUtility::addPageTSConfig(implode("\n", $loaderInformation));
         return null;
     }
 }
