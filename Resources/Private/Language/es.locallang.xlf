@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="es" datatype="plaintext" original="messages" date="2016-02-26T14:22:55Z">
+		<header>
+			<type>misc</type>
+			<description>Language file for the Autoloader extension</description>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="pleaseSet" approved="yes">
+			<source><![CDATA[Please set: ]]></source>
+			<target><![CDATA[Por favor, establece: ]]></target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

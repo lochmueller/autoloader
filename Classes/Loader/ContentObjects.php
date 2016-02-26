@@ -190,12 +190,12 @@ class ContentObjects implements LoaderInterface
         if (GeneralUtility::compat_version('7.0')) {
             $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
         } else {
-            $languagePrefix = 'LLL:EXT:cms/locallang_ttc.xml';
+            $languagePrefix = 'LLL:EXT:cms/locallang_ttc.xlf';
         }
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
-    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
+    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
     ' . $configuration . '
     --div--;' . $languagePrefix . ':tabs.access,
     --palette--;' . $languagePrefix . ':palette.visibility;visibility,

@@ -38,14 +38,14 @@ class EnableFields implements DataSetInterface
                 'editlock'  => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_tca.xml:editlock',
+                    'label'     => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
                     'config'    => [
                         'type' => 'check'
                     ]
                 ],
                 'hidden'    => [
                     'exclude' => 1,
-                    'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+                    'label'   => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
                     'config'  => [
                         'type' => 'check',
                     ],
@@ -53,7 +53,7 @@ class EnableFields implements DataSetInterface
                 'starttime' => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
+                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
                     'config'    => [
                         'type'     => 'input',
                         'size'     => 13,
@@ -69,7 +69,7 @@ class EnableFields implements DataSetInterface
                 'endtime'   => [
                     'exclude'   => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
+                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
                     'config'    => [
                         'type'     => 'input',
                         'size'     => 13,

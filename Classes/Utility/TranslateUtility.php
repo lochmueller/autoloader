@@ -80,7 +80,7 @@ class TranslateUtility
      *
      * @return string
      */
-    static public function getLllString($key, $extensionKey, $file = 'locallang.xml')
+    static public function getLllString($key, $extensionKey, $file = 'locallang.xlf')
     {
         return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
     }
