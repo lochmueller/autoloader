@@ -72,6 +72,9 @@ class XliffWriter extends AbstractLocalizationWriter
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
+        if (strpos($content, ' id="' . $key . '"') !== false) {
+            return;
+        }
         $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source><![CDATA[' . $default . ']]></source></trans-unit>';
         $content = str_replace('<body>', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);

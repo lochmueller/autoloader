@@ -82,7 +82,7 @@ class LanguageHandler extends LanguageStore
             $serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
             /** @var LocalizationWriterInterface $service */
             $service = GeneralUtility::makeInstance($serviceName);
-            if($overrideLanguageBase !== null) {
+            if ($overrideLanguageBase !== null) {
                 $service->setLanguageBaseName($overrideLanguageBase);
             }
             if (is_file($service->getAbsoluteFilename($extensionKey))) {

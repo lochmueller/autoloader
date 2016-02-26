@@ -77,6 +77,9 @@ class XmlWriter extends AbstractLocalizationWriter
         }
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
+        if (strpos($content, ' index="' . $key . '"') !== false) {
+            return;
+        }
         $replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '"><![CDATA[' . $default . ']]></label>';
         $content = str_replace('<languageKey index="default" type="array">', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);

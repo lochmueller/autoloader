@@ -13,11 +13,9 @@ use HDNET\Autoloader\Localization\LanguageHandler;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
-use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * ContextSensitiveHelp (CSH) based on smart objects
@@ -31,24 +29,28 @@ class ContextSensitiveHelps implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
     public function prepareLoader(Loader $loader, $type)
     {
+        if ($type !== LoaderInterface::EXT_TABLES) {
+            return [];
+        }
         $modelInformation = $this->findTableAndModelInformationForExtension($loader->getExtensionKey());
-        $tables = [];
+
+        $loaderInformation = [];
         foreach ($modelInformation as $information) {
-            $tables[] = $information['table'];
-            $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/locallang_csh_' . $information['table'] . '.xml';
-            $realPath = GeneralUtility::getFileAbsFileName($path);
-            if ($type === LoaderInterface::EXT_TABLES) {
-                $this->checkCshFile($realPath, $information['class']);
+            $table = $information['table'];
+            $path = $this->checkCshValues($loader->getExtensionKey(), $information['table'],
+                $information['properties']);
+            if ($path !== null) {
+                $loaderInformation[$table] = $path;
             }
         }
 
-        return $tables;
+        return $loaderInformation;
     }
 
     /**
@@ -66,9 +68,12 @@ class ContextSensitiveHelps implements LoaderInterface
             $parts = ClassNamingUtility::explodeObjectModelName($class);
             if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey) {
                 if (ModelUtility::getTableNameByModelReflectionAnnotation($class) === '') {
+                    $modelInformation = SmartObjectInformationService::getInstance()
+                        ->getCustomModelFieldTca($class);
+
                     $information[] = [
                         'table' => ModelUtility::getTableNameByModelName($class),
-                        'class' => $class
+                        'properties' => array_keys($modelInformation)
                     ];
                 }
             }
@@ -80,49 +85,44 @@ class ContextSensitiveHelps implements LoaderInterface
     /**
      * Check if the given file is already existing
      *
-     * @param $path
-     * @param $modelClass
+     * @param string $extensionKey
+     * @param string $table
+     * @param array $properties
      *
-     * @return void
+     * @return string|null
      */
-    protected function checkCshFile($path, $modelClass)
+    protected function checkCshValues($extensionKey, $table, array $properties)
     {
-        if (is_file($path)) {
-            return;
-        }
-        $dir = PathUtility::dirname($path);
-        if (!is_dir($dir)) {
-            GeneralUtility::mkdir_deep($dir);
-        }
-        $information = SmartObjectInformationService::getInstance()
-            ->getCustomModelFieldTca($modelClass);
-        $properties = array_keys($information);
 
+        $baseFileName = 'locallang_csh_' . $table;
         /** @var LanguageHandler $languageHandler */
-        #$languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
-        #$languageHandler->handle($key, $extensionName, $default, $arguments);
+        $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
+        foreach ($properties as $property) {
+            $default = '';
+            $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
+        }
 
-        $templatePath = 'Resources/Private/Templates/ContextSensitiveHelp/LanguageDescription.xml';
-        $standaloneView = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-        $standaloneView->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('autoloader', $templatePath));
-        $standaloneView->assign('properties', $properties);
-        $content = $standaloneView->render();
-
-        FileUtility::writeFileAndCreateFolder($path, $content);
+        $checkPath = ['xlf', 'xml', 'php'];
+        foreach ($checkPath as $extension) {
+            $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
+            if (is_file(GeneralUtility::getFileAbsFileName($path))) {
+                return $path;
+            }
+        }
+        return null;
     }
 
     /**
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        foreach ($loaderInformation as $table) {
-            $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/locallang_csh_' . $table . '.xml';
+        foreach ($loaderInformation as $table => $path) {
             ExtensionManagementUtility::addLLrefForTCAdescr($table, $path);
         }
 
@@ -133,7 +133,7 @@ class ContextSensitiveHelps implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param \HDNET\Autoloader\Loader $loader
-     * @param array                    $loaderInformation
+     * @param array $loaderInformation
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      * @return NULL
