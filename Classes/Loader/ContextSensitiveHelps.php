@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Localization\LanguageHandler;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
@@ -96,6 +97,10 @@ class ContextSensitiveHelps implements LoaderInterface
         $information = SmartObjectInformationService::getInstance()
             ->getCustomModelFieldTca($modelClass);
         $properties = array_keys($information);
+
+        /** @var LanguageHandler $languageHandler */
+        #$languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
+        #$languageHandler->handle($key, $extensionName, $default, $arguments);
 
         $templatePath = 'Resources/Private/Templates/ContextSensitiveHelp/LanguageDescription.xml';
         $standaloneView = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');

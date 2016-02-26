@@ -40,7 +40,7 @@ class PhpWriter extends AbstractLocalizationWriter
      */
     public function getAbsoluteFilename($extensionKey)
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/locallang.php');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.php');
     }
 
     /**

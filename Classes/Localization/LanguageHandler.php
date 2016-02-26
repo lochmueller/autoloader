@@ -30,14 +30,15 @@ class LanguageHandler extends LanguageStore
     /**
      * handler the adding of files
      *
-     * @param string $key       key in the localization file
+     * @param string $key key in the localization file
      * @param string $extensionName
-     * @param string $default   default value of the label
-     * @param array  $arguments arguments are being passed over to vsprintf
+     * @param string $default default value of the label
+     * @param array $arguments arguments are being passed over to vsprintf
+     * @param string $overrideLanguageBase
      *
      * @return NULL|string
      */
-    public function handle($key, $extensionName, &$default, $arguments)
+    public function handle($key, $extensionName, &$default, $arguments, $overrideLanguageBase = null)
     {
         if (!($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection)) {
             return $default;
@@ -52,7 +53,7 @@ class LanguageHandler extends LanguageStore
             $default = $extensionName . ' ==> LLL:' . $key;
         }
 
-        $handler = $this->getBestLanguageWriter($extensionName);
+        $handler = $this->getBestLanguageWriter($extensionName, $overrideLanguageBase);
         $handler->createFileIfNotExists($extensionName);
 
         $labelCacheKey = $extensionName . '|' . $key;
@@ -67,11 +68,11 @@ class LanguageHandler extends LanguageStore
     /**
      * Get the best language writer
      *
-     * @param $extensionKey
-     *
+     * @param string $extensionKey
+     * @param string $overrideLanguageBase
      * @return AbstractLocalizationWriter
      */
-    protected function getBestLanguageWriter($extensionKey)
+    protected function getBestLanguageWriter($extensionKey, $overrideLanguageBase = null)
     {
         $services = [];
         foreach ($this->getSupportedExtensions() as $serviceKey) {
@@ -81,6 +82,9 @@ class LanguageHandler extends LanguageStore
             $serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
             /** @var LocalizationWriterInterface $service */
             $service = GeneralUtility::makeInstance($serviceName);
+            if($overrideLanguageBase !== null) {
+                $service->setLanguageBaseName($overrideLanguageBase);
+            }
             if (is_file($service->getAbsoluteFilename($extensionKey))) {
                 return $service;
             }

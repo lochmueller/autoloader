@@ -41,4 +41,11 @@ interface LocalizationWriterInterface
      * @return bool
      */
     public function addLabel($extensionKey, $key, $default);
+
+    /**
+     * Set language base name
+     *
+     * @param string $languageBaseName
+     */
+    public function setLanguageBaseName($languageBaseName);
 }

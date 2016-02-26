@@ -45,7 +45,7 @@ class XliffWriter extends AbstractLocalizationWriter
      */
     public function getAbsoluteFilename($extensionKey)
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/locallang.xlf');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xlf');
     }
 
     /**

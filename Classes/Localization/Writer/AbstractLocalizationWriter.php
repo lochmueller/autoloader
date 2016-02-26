@@ -18,6 +18,13 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 {
 
     /**
+     * Language file base name
+     *
+     * @var string
+     */
+    protected $languageBaseName = 'locallang';
+
+    /**
      * Create default file
      *
      * @param string $extensionKey
@@ -55,5 +62,25 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
             } catch (\Exception $ex) {
             }
         }
+    }
+
+    /**
+     * Get language base name
+     *
+     * @return string
+     */
+    public function getLanguageBaseName()
+    {
+        return $this->languageBaseName;
+    }
+
+    /**
+     * Set language base name
+     *
+     * @param string $languageBaseName
+     */
+    public function setLanguageBaseName($languageBaseName)
+    {
+        $this->languageBaseName = $languageBaseName;
     }
 }

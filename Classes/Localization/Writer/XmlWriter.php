@@ -48,7 +48,7 @@ class XmlWriter extends AbstractLocalizationWriter
      */
     public function getAbsoluteFilename($extensionKey)
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/locallang.xml');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xml');
     }
 
     /**
