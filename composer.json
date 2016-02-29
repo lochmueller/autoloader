@@ -5,7 +5,11 @@
   "autoload": {
     "psr-4": {
       "HDNET\\Autoloader\\": "Classes/"
-    }
+    },
+    "exclude-from-classmap": [
+      "/Resources/Private/Examples/", 
+      "/Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/examples/"
+    ]
   },
   "keywords": [
     "TYPO3 CMS",
