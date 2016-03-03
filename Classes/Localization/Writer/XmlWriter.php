@@ -80,7 +80,7 @@ class XmlWriter extends AbstractLocalizationWriter
         if (strpos($content, ' index="' . $key . '"') !== false) {
             return;
         }
-        $replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '"><![CDATA[' . $default . ']]></label>';
+        $replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '">' . $this->wrapCdata($default) . '</label>';
         $content = str_replace('<languageKey index="default" type="array">', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

@@ -75,7 +75,7 @@ class XliffWriter extends AbstractLocalizationWriter
         if (strpos($content, ' id="' . $key . '"') !== false) {
             return;
         }
-        $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source><![CDATA[' . $default . ']]></source></trans-unit>';
+        $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';
         $content = str_replace('<body>', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

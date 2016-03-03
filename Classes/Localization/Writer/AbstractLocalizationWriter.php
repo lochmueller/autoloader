@@ -83,4 +83,19 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     {
         $this->languageBaseName = $languageBaseName;
     }
+
+    /**
+     * Wrap CDATA
+     *
+     * @param string $content
+     *
+     * @return string
+     */
+    protected function wrapCdata($content)
+    {
+        if (htmlentities($content, ENT_NOQUOTES) !== $content) {
+            $content = '<![CDATA[' . $content . ']]>';
+        }
+        return $content;
+    }
 }
