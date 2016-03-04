@@ -28,7 +28,7 @@ class Slots implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $autoLoader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -40,8 +40,11 @@ class Slots implements LoaderInterface
         $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
 
         foreach ($slotClasses as $slot) {
-            $slotClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
-                'Slots/' . $slot);
+            $slotClass = ClassNamingUtility::getFqnByPath(
+                $autoLoader->getVendorName(),
+                $autoLoader->getExtensionKey(),
+                'Slots/' . $slot
+            );
 
             if (!$autoLoader->isInstantiableClass($slotClass)) {
                 continue;
@@ -50,16 +53,19 @@ class Slots implements LoaderInterface
             $methods = ReflectionUtility::getPublicMethods($slotClass);
             foreach ($methods as $methodReflection) {
                 /** @var MethodReflection $methodReflection */
-                $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['signalClass', 'signalName']);
+                $tagConfiguration = ReflectionUtility::getTagConfiguration(
+                    $methodReflection,
+                    ['signalClass', 'signalName']
+                );
                 foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
                     if (!isset($tagConfiguration['signalName'][$key])) {
                         continue;
                     }
                     $slots[] = [
-                        'signalClassName'       => trim($signalClass, '\\'),
-                        'signalName'            => $tagConfiguration['signalName'][$key],
+                        'signalClassName' => trim($signalClass, '\\'),
+                        'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
-                        'slotMethodName'        => $methodReflection->getName(),
+                        'slotMethodName' => $methodReflection->getName(),
                     ];
                 }
             }
@@ -72,7 +78,7 @@ class Slots implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -85,7 +91,7 @@ class Slots implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -95,8 +101,13 @@ class Slots implements LoaderInterface
             /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
             $signalSlotDispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
             foreach ($loaderInformation as $slot) {
-                $signalSlotDispatcher->connect($slot['signalClassName'], $slot['signalName'], $slot['slotClassNameOrObject'],
-                    $slot['slotMethodName'], true);
+                $signalSlotDispatcher->connect(
+                    $slot['signalClassName'],
+                    $slot['signalName'],
+                    $slot['slotClassNameOrObject'],
+                    $slot['slotMethodName'],
+                    true
+                );
             }
         }
     }

@@ -34,7 +34,7 @@ class BackendLayoutProvider implements DataProviderInterface
      *
      * @param array $backendLayout
      */
-    static public function addBackendLayoutInformation(array $backendLayout)
+    public static function addBackendLayoutInformation(array $backendLayout)
     {
         self::$backendLayoutInformation[] = $backendLayout;
     }

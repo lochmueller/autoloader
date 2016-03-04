@@ -37,8 +37,11 @@ class SoapServer implements LoaderInterface
 
         $info = [];
         foreach ($serviceClasses as $service) {
-            $serviceClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
-                'Service/Soap/' . $service);
+            $serviceClass = ClassNamingUtility::getFqnByPath(
+                $autoLoader->getVendorName(),
+                $autoLoader->getExtensionKey(),
+                'Service/Soap/' . $service
+            );
             $info[lcfirst($service)] = $serviceClass;
         }
 

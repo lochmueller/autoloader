@@ -26,7 +26,7 @@ class ModelUtility
      *
      * @return string
      */
-    static public function getTableName($modelClassName)
+    public static function getTableName($modelClassName)
     {
         $reflectionName = self::getTableNameByModelReflectionAnnotation($modelClassName);
         return $reflectionName !== '' ? $reflectionName : self::getTableNameByModelName($modelClassName);
@@ -39,7 +39,7 @@ class ModelUtility
      *
      * @return string
      */
-    static public function getTableNameByModelReflectionAnnotation($modelClassName)
+    public static function getTableNameByModelReflectionAnnotation($modelClassName)
     {
         return (string)ReflectionUtility::getFirstTagValue($modelClassName, 'db');
     }
@@ -53,7 +53,7 @@ class ModelUtility
      * @return string The table name
      * @see DataMapFactory->resolveTableName
      */
-    static public function getTableNameByModelName($className)
+    public static function getTableNameByModelName($className)
     {
         $className = ltrim($className, '\\');
         if (strpos($className, '\\') !== false) {
@@ -79,7 +79,7 @@ class ModelUtility
      *
      * @return array
      */
-    static public function getSmartExcludesByModelName($name)
+    public static function getSmartExcludesByModelName($name)
     {
         return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
     }
@@ -91,7 +91,7 @@ class ModelUtility
      *
      * @return array
      */
-    static public function getTcaInformation($modelClassName)
+    public static function getTcaInformation($modelClassName)
     {
         $informationService = SmartObjectInformationService::getInstance();
         return $informationService->getTcaInformation($modelClassName);
@@ -106,7 +106,7 @@ class ModelUtility
      *
      * @return array
      */
-    static public function getTcaOverrideInformation($extensionKey, $tableName)
+    public static function getTcaOverrideInformation($extensionKey, $tableName)
     {
         $return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : [];
         $classNames = SmartObjectRegister::getRegister();

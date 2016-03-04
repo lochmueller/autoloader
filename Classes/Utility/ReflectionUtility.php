@@ -25,7 +25,7 @@ class ReflectionUtility
      *
      * @return ClassReflection
      */
-    static public function createReflectionClass($className)
+    public static function createReflectionClass($className)
     {
         return new ClassReflection($className);
     }
@@ -37,7 +37,7 @@ class ReflectionUtility
      *
      * @return bool
      */
-    static public function isInstantiable($className)
+    public static function isInstantiable($className)
     {
         return self::createReflectionClass($className)
             ->isInstantiable();
@@ -50,7 +50,7 @@ class ReflectionUtility
      *
      * @return string
      */
-    static public function getParentClassName($className)
+    public static function getParentClassName($className)
     {
         return self::createReflectionClass($className)
             ->getParentClass()
@@ -65,7 +65,7 @@ class ReflectionUtility
      *
      * @return array
      */
-    static public function getPropertiesTaggedWith($className, $tag)
+    public static function getPropertiesTaggedWith($className, $tag)
     {
         $classReflection = self::createReflectionClass($className);
         $properties = [];
@@ -85,7 +85,7 @@ class ReflectionUtility
      *
      * @return MethodReflection
      */
-    static public function getPublicMethods($className)
+    public static function getPublicMethods($className)
     {
         return self::createReflectionClass($className)
             ->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -100,7 +100,7 @@ class ReflectionUtility
      *
      * @return string|bool
      */
-    static public function getFirstTagValue($className, $tag)
+    public static function getFirstTagValue($className, $tag)
     {
         $classReflection = self::createReflectionClass($className);
         if (!$classReflection->isTaggedWith($tag)) {
@@ -117,11 +117,11 @@ class ReflectionUtility
      * Get the tag configuration from this method and respect multiple line and space configuration
      *
      * @param MethodReflection|ClassReflection $reflectionObject
-     * @param array                            $tagNames
+     * @param array $tagNames
      *
      * @return array
      */
-    static public function getTagConfiguration($reflectionObject, array $tagNames)
+    public static function getTagConfiguration($reflectionObject, array $tagNames)
     {
         $tags = $reflectionObject->getTagsValues();
         $configuration = [];
@@ -131,7 +131,10 @@ class ReflectionUtility
                 continue;
             }
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = array_merge($configuration[$tagName], GeneralUtility::trimExplode(' ', $c, true));
+                $configuration[$tagName] = array_merge(
+                    $configuration[$tagName],
+                    GeneralUtility::trimExplode(' ', $c, true)
+                );
             }
         }
         return $configuration;
@@ -144,7 +147,7 @@ class ReflectionUtility
      *
      * @return array
      */
-    static public function getDeclaringProperties($className)
+    public static function getDeclaringProperties($className)
     {
         $properties = [];
         $classReflection = self::createReflectionClass($className);
@@ -158,5 +161,4 @@ class ReflectionUtility
         }
         return $properties;
     }
-
 }

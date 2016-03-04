@@ -32,5 +32,4 @@ class Localization
         $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
         $languageHandler->handle($key, $extensionName, $default, $arguments);
     }
-
 }

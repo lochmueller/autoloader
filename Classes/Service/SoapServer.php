@@ -64,8 +64,10 @@ class SoapServer
             $server = new \SoapServer(null, [
                 'uri' => $this->getServiceUri()
             ]);
-            $server->fault(2342358923745,
-                'No valid server class name for the given server key: "' . $this->serverClass . '"');
+            $server->fault(
+                2342358923745,
+                'No valid server class name for the given server key: "' . $this->serverClass . '"'
+            );
             return;
         }
         if ($this->renderWsdl) {
@@ -117,5 +119,4 @@ class SoapServer
         $parts['query'] = 'eID=SoapServer&server=' . $this->serverKey;
         return HttpUtility::buildUrl($parts);
     }
-
 }

@@ -38,5 +38,4 @@ interface MapperInterface extends SingletonInterface
      * @return string
      */
     public function getDatabaseDefinition();
-
-} 
+}

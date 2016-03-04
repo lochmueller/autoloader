@@ -138,7 +138,7 @@ class SmartObjectInformationService
         } catch (\Exception $ex) {
             // @todo handle
         }
-        if(!is_array($baseTca['columns'])) {
+        if (!is_array($baseTca['columns'])) {
             $baseTca['columns'] = [];
         }
         $baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);

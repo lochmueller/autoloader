@@ -26,7 +26,7 @@ class CommandController implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -40,8 +40,11 @@ class CommandController implements LoaderInterface
                 continue;
             }
 
-            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'Command/' . $controller);
+            $className = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'Command/' . $controller
+            );
             if (!$loader->isInstantiableClass($className)) {
                 continue;
             }
@@ -55,7 +58,7 @@ class CommandController implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -68,7 +71,7 @@ class CommandController implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */

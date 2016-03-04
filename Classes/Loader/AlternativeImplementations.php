@@ -38,8 +38,11 @@ class AlternativeImplementations implements LoaderInterface
         $alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
         foreach ($alternativeClasses as $aic) {
-            $aicClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'AlternativeImplementations/' . $aic);
+            $aicClass = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'AlternativeImplementations/' . $aic
+            );
 
             if (!$loader->isInstantiableClass($aicClass)) {
                 continue;

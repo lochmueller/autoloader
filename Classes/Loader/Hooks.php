@@ -29,7 +29,7 @@ class Hooks implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -40,8 +40,11 @@ class Hooks implements LoaderInterface
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
         foreach ($files as $hookFile) {
-            $hookClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'Hooks/' . $hookFile);
+            $hookClass = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'Hooks/' . $hookFile
+            );
             if (!$loader->isInstantiableClass($hookClass)) {
                 continue;
             }
@@ -52,7 +55,7 @@ class Hooks implements LoaderInterface
             $tagConfiguration = ReflectionUtility::getTagConfiguration($classReflection, ['hook']);
             if (sizeof($tagConfiguration['hook'])) {
                 $hooks[] = [
-                    'locations'     => $tagConfiguration['hook'],
+                    'locations' => $tagConfiguration['hook'],
                     'configuration' => $hookClass,
                 ];
             }
@@ -63,7 +66,7 @@ class Hooks implements LoaderInterface
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
                 if (sizeof($tagConfiguration['hook'])) {
                     $hooks[] = [
-                        'locations'     => $tagConfiguration['hook'],
+                        'locations' => $tagConfiguration['hook'],
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),
                     ];
                 }
@@ -76,7 +79,7 @@ class Hooks implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -89,7 +92,7 @@ class Hooks implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param \HDNET\Autoloader\Loader $loader
-     * @param array                    $loaderInformation
+     * @param array $loaderInformation
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      * @return NULL

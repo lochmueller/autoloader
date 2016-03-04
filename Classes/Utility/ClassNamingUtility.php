@@ -26,7 +26,7 @@ class ClassNamingUtility
      * @throws Exception
      * @see \TYPO3\CMS\Core\Utility\ClassNamingUtility::explodeObjectControllerName
      */
-    static public function explodeObjectModelName($modelName)
+    public static function explodeObjectModelName($modelName)
     {
         if (strpos($modelName, '\\') !== false) {
             if (substr($modelName, 0, 9) === 'TYPO3\\CMS') {
@@ -53,7 +53,7 @@ class ClassNamingUtility
      *
      * @return string
      */
-    static public function getExtensionKeyByModel($modelClassName)
+    public static function getExtensionKeyByModel($modelClassName)
     {
         if (is_object($modelClassName)) {
             $modelClassName = get_class($modelClassName);
@@ -71,9 +71,12 @@ class ClassNamingUtility
      *
      * @return string
      */
-    static public function getFqnByPath($vendorName, $extensionKey, $path)
+    public static function getFqnByPath($vendorName, $extensionKey, $path)
     {
-        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace('/',
-            '\\', ltrim($path, '/'));
+        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace(
+            '/',
+            '\\',
+            ltrim($path, '/')
+        );
     }
 }

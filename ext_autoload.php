@@ -7,10 +7,10 @@ $resourcesPath = ExtensionManagementUtility::extPath('autoloader', 'Resources/Pr
 
 $composerFiles = $resourcesPath . 'vendor/composer/autoload_files.php';
 if (file_exists($composerFiles)) {
-	$files = include $composerFiles;
-	foreach ($files as $file) {
-		GeneralUtility::requireOnce($file);
-	}
+    $files = include $composerFiles;
+    foreach ($files as $file) {
+        GeneralUtility::requireOnce($file);
+    }
 }
 
 $composerClassMapPath = $resourcesPath . 'vendor/composer/autoload_classmap.php';

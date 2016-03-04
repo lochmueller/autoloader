@@ -80,7 +80,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      * Generate the Xclass code on base of the xclass-template.
      *
      * @param string $xClassName
-     * @param array  $xClass
+     * @param array $xClass
      * @param string $xclassTemplate
      *
      * @return string full xclass-code
@@ -129,7 +129,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      * Return the JoinPoint method.
      *
      * @param string $joinPoint
-     * @param array  $xClass
+     * @param array $xClass
      *
      * @return string
      */
@@ -181,7 +181,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      *
      * @param string $type before, throw, after, replace
      * @param string $joinPoint
-     * @param array  $advices
+     * @param array $advices
      *
      * @return string
      */
@@ -196,8 +196,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $code[] = '\'' . $joinPoint . '\' => array(';
         foreach ($advices[$type] as $method) {
             $code[] = 'array(';
-            $code[] = '\'id\' => \'' . GeneralUtility::shortMD5($method['originClassName'] . $method['originMethodName'],
-                    13) . '\',';
+            $code[] = '\'id\' => \'' . GeneralUtility::shortMD5(
+                $method['originClassName'] . $method['originMethodName'],
+                13
+            ) . '\',';
             $code[] = '\'class\' => \'\\' . $method['originClassName'] . '\',';
             $code[] = '\'function\' => \'' . $method['originMethodName'] . '\',';
             $code[] = '),';
@@ -285,14 +287,16 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]['arguments'] = $aspect['aspectJoinPointArguments'];
                 }
 
-                if (!array_key_exists($aspect['aspectAdvice'],
-                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']])
+                if (!array_key_exists(
+                    $aspect['aspectAdvice'],
+                    $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]
+                )
                 ) {
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']] = [];
                 }
 
                 $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = [
-                    'originClassName'  => $aspect['originClassName'],
+                    'originClassName' => $aspect['originClassName'],
                     'originMethodName' => $aspect['originMethodName']
                 ];
             }

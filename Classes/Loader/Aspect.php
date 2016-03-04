@@ -31,7 +31,7 @@ class Aspect implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array $loaderInformation
      */
@@ -43,8 +43,11 @@ class Aspect implements LoaderInterface
         $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
         foreach ($aspectClasses as $aspect) {
-            $aspectClass = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'Aspect/' . $aspect);
+            $aspectClass = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'Aspect/' . $aspect
+            );
 
             if (!$loader->isInstantiableClass($aspectClass)) {
                 continue;
@@ -54,8 +57,10 @@ class Aspect implements LoaderInterface
                 $methods = ReflectionUtility::getPublicMethods($aspectClass);
                 foreach ($methods as $methodReflection) {
                     /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                    $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection,
-                        ['aspectClass', 'aspectJoinPoint', 'aspectAdvice']);
+                    $tagConfiguration = ReflectionUtility::getTagConfiguration(
+                        $methodReflection,
+                        ['aspectClass', 'aspectJoinPoint', 'aspectAdvice']
+                    );
                     foreach ($tagConfiguration['aspectClass'] as $key => $aspectClass) {
                         if (!isset($tagConfiguration['aspectJoinPoint'][$key]) || !isset($tagConfiguration['aspectAdvice'][$key])) {
                             continue;
@@ -69,15 +74,18 @@ class Aspect implements LoaderInterface
                             continue;
                         }
 
-                        $aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
+                        $aspectJpArguments = $this->getMethodArgumentsFromClassMethod(
+                            $aspectClassName,
+                            $aspectJoinPoint
+                        );
 
                         $aspects[] = [
-                            'aspectClassName'          => $aspectClassName,
-                            'aspectJoinPoint'          => $aspectJoinPoint,
+                            'aspectClassName' => $aspectClassName,
+                            'aspectJoinPoint' => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
-                            'aspectAdvice'             => trim($tagConfiguration['aspectAdvice'][$key]),
-                            'originClassName'          => $aspectClass,
-                            'originMethodName'         => $methodReflection->getName()
+                            'aspectAdvice' => trim($tagConfiguration['aspectAdvice'][$key]),
+                            'originClassName' => $aspectClass,
+                            'originMethodName' => $methodReflection->getName()
                         ];
 
                     }
@@ -113,8 +121,8 @@ class Aspect implements LoaderInterface
         /** @var $argument \ReflectionParameter */
         foreach ($methodArguments as $argument) {
             $arguments[] = [
-                'name'      => $argument->getName(),
-                'typeHint'  => $argument->getClass()->name,
+                'name' => $argument->getName(),
+                'typeHint' => $argument->getClass()->name,
                 'reference' => $argument->isPassedByReference()
             ];
         }
@@ -126,7 +134,7 @@ class Aspect implements LoaderInterface
      * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -139,7 +147,7 @@ class Aspect implements LoaderInterface
      * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */

@@ -50,7 +50,7 @@ class IconUtility
     /**
      * Get the relative path of the extension icon
      *
-     * @param string  $extensionKey
+     * @param string $extensionKey
      * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
@@ -68,12 +68,12 @@ class IconUtility
     /**
      * Get the absolute table icon for the given model name
      *
-     * @param string  $modelClassName
+     * @param string $modelClassName
      * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
-    static public function getByModelName($modelClassName, $extSyntax = false)
+    public static function getByModelName($modelClassName, $extSyntax = false)
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
@@ -83,8 +83,11 @@ class IconUtility
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
         if ($fileExtension) {
-            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
-                $extSyntax);
+            return self::returnRelativeIconPath(
+                $extensionKey,
+                'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
+                $extSyntax
+            );
         }
         return self::getByExtensionKey($extensionKey, $extSyntax);
     }
@@ -98,7 +101,7 @@ class IconUtility
      *
      * @return string
      */
-    static public function getIconFileExtension($absolutePathWithoutExtension)
+    public static function getIconFileExtension($absolutePathWithoutExtension)
     {
         $fileExtensions = [
             'svg',
@@ -117,18 +120,17 @@ class IconUtility
     /**
      * Return the right relative path
      *
-     * @param string  $extensionKey
-     * @param string  $path
+     * @param string $extensionKey
+     * @param string $path
      * @param boolean $extSyntax
      *
      * @return string
      */
-    static protected function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
+    protected static function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
     {
         if ($extSyntax) {
             return 'EXT:' . $extensionKey . '/' . $path;
         }
         return ExtensionManagementUtility::extRelPath($extensionKey) . $path;
     }
-
 }

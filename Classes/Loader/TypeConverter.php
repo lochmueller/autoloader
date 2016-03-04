@@ -27,7 +27,7 @@ class TypeConverter implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $autoLoader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -38,8 +38,11 @@ class TypeConverter implements LoaderInterface
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
 
         foreach ($converterClasses as $converterClass) {
-            $converterClass = ClassNamingUtility::getFqnByPath($autoLoader->getVendorName(), $autoLoader->getExtensionKey(),
-                'Property/TypeConverter/' . $converterClass);
+            $converterClass = ClassNamingUtility::getFqnByPath(
+                $autoLoader->getVendorName(),
+                $autoLoader->getExtensionKey(),
+                'Property/TypeConverter/' . $converterClass
+            );
             if ($autoLoader->isInstantiableClass($converterClass)) {
                 $classes[] = $converterClass;
             }
@@ -52,7 +55,7 @@ class TypeConverter implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -65,7 +68,7 @@ class TypeConverter implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $autoLoader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */

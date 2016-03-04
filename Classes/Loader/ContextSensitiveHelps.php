@@ -43,8 +43,11 @@ class ContextSensitiveHelps implements LoaderInterface
         $loaderInformation = [];
         foreach ($modelInformation as $information) {
             $table = $information['table'];
-            $path = $this->checkCshValues($loader->getExtensionKey(), $information['table'],
-                $information['properties']);
+            $path = $this->checkCshValues(
+                $loader->getExtensionKey(),
+                $information['table'],
+                $information['properties']
+            );
             if ($path !== null) {
                 $loaderInformation[$table] = $path;
             }

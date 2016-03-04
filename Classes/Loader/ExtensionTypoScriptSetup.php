@@ -141,5 +141,4 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         }
         return $extensionObjects;
     }
-
 }
