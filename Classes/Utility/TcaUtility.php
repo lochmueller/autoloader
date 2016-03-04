@@ -35,7 +35,7 @@ class TcaUtility
      * @return array
      * @throws Exception
      */
-    static public function insertTabDividerBefore(&$base, $columnName, $tabTitle)
+    public static function insertTabDividerBefore(&$base, $columnName, $tabTitle)
     {
         if (!is_array($base)) {
             throw new Exception('A proper TCA configuration is needed!');
@@ -50,5 +50,4 @@ class TcaUtility
         }
         return $base;
     }
-
 }

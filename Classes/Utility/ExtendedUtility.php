@@ -59,7 +59,7 @@ class ExtendedUtility
      *
      * @return bool
      */
-    static public function addXclass($source, $target)
+    public static function addXclass($source, $target)
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source])) {
             $message = 'Double registration of Xclass for ' . $source;
@@ -78,7 +78,7 @@ class ExtendedUtility
      *
      * @param $message
      */
-    static public function log($message)
+    public static function log($message)
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = [];
@@ -92,7 +92,7 @@ class ExtendedUtility
      * @param array  $locations
      * @param string $configuration
      */
-    static public function addHooks(array $locations, $configuration)
+    public static function addHooks(array $locations, $configuration)
     {
         foreach ($locations as $location) {
             self::addHook($location, $configuration);
@@ -105,7 +105,7 @@ class ExtendedUtility
      * @param string $location The location of the hook separated bei pipes
      * @param string $configuration
      */
-    static public function addHook($location, $configuration)
+    public static function addHook($location, $configuration)
     {
         $location = GeneralUtility::trimExplode('|', $location, true);
         array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
@@ -120,7 +120,7 @@ class ExtendedUtility
      *
      * @return \TYPO3\CMS\Fluid\View\StandaloneView
      */
-    static public function createExtensionStandaloneView($extensionKey, $templatePath)
+    public static function createExtensionStandaloneView($extensionKey, $templatePath)
     {
         $siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
         $templatePath = GeneralUtility::getFileAbsFileName($templatePath);
@@ -137,5 +137,4 @@ class ExtendedUtility
 
         return $view;
     }
-
 }

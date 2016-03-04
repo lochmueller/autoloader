@@ -26,7 +26,7 @@ class SmartObjectManager implements SingletonInterface
      *
      * @return string
      */
-    static public function getSmartObjectRegisterSql()
+    public static function getSmartObjectRegisterSql()
     {
         $informationService = SmartObjectInformationService::getInstance();
         $register = SmartObjectRegister::getRegister();
@@ -48,7 +48,7 @@ class SmartObjectManager implements SingletonInterface
      *
      * @return bool
      */
-    static public function isSmartObjectClass($className)
+    public static function isSmartObjectClass($className)
     {
         $riskAutoLoader = [
             'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
@@ -74,7 +74,7 @@ class SmartObjectManager implements SingletonInterface
      * Check and create the TCA information
      * disable this for better performance
      */
-    static public function checkAndCreateTcaInformation()
+    public static function checkAndCreateTcaInformation()
     {
         $register = SmartObjectRegister::getRegister();
 
@@ -114,5 +114,4 @@ class SmartObjectManager implements SingletonInterface
             }
         }
     }
-
 }

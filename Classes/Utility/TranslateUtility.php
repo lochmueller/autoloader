@@ -80,7 +80,7 @@ class TranslateUtility
      *
      * @return string
      */
-    static public function getLllString($key, $extensionKey, $file = 'locallang.xlf')
+    public static function getLllString($key, $extensionKey, $file = 'locallang.xlf')
     {
         return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
     }
@@ -93,10 +93,9 @@ class TranslateUtility
      *
      * @return string
      */
-    static public function getLll($key, $extensionKey)
+    public static function getLll($key, $extensionKey)
     {
         $file = self::getLllString($key, $extensionKey);
         return LocalizationUtility::translate($file, $extensionKey);
     }
-
 }

@@ -42,7 +42,7 @@ class TempClassLoader implements SingletonInterface
      *
      * @return bool TRUE in case of success
      */
-    static public function registerAutoloader()
+    public static function registerAutoloader()
     {
         if (self::$isRegistered) {
             return false;
@@ -59,7 +59,7 @@ class TempClassLoader implements SingletonInterface
      *
      * @return void
      */
-    static public function autoload($className)
+    public static function autoload($className)
     {
         $className = ltrim($className, '\\');
 

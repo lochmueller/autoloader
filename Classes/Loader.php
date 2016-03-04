@@ -95,8 +95,10 @@ class Loader implements SingletonInterface
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {
             /** @var \TYPO3\CMS\Core\Configuration\ConfigurationManager $configurationManager */
             $configurationManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
-            $configurationManager->setLocalConfigurationValueByPath('SYS/caching/cacheConfigurations/autoloader',
-                $this->cacheConfiguration);
+            $configurationManager->setLocalConfigurationValueByPath(
+                'SYS/caching/cacheConfigurations/autoloader',
+                $this->cacheConfiguration
+            );
             $this->disableFirstCall = true;
         }
     }
@@ -110,7 +112,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    static public function extTables($vendorName, $extensionKey, array $implementations = [])
+    public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
@@ -126,7 +128,7 @@ class Loader implements SingletonInterface
      *
      * @return void
      */
-    static public function extLocalconf($vendorName, $extensionKey, array $implementations = [])
+    public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');

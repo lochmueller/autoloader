@@ -27,7 +27,7 @@ class SmartObjectRegister
      *
      * @return void
      */
-    static public function register($modelName)
+    public static function register($modelName)
     {
         if (!in_array($modelName, self::$smartObjectRegistry)) {
             self::$smartObjectRegistry[] = $modelName;
@@ -39,9 +39,8 @@ class SmartObjectRegister
      *
      * @return array
      */
-    static public function getRegister()
+    public static function getRegister()
     {
         return self::$smartObjectRegistry;
     }
-
 }

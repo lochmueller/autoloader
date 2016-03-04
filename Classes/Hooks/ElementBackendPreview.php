@@ -110,5 +110,4 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         $ctype = $row['CType'];
         return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
     }
-
 }

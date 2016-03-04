@@ -26,15 +26,17 @@ class FileUtility
      * @return bool
      * @throws Exception
      */
-    static public function writeFileAndCreateFolder($absoluteFileName, $content)
+    public static function writeFileAndCreateFolder($absoluteFileName, $content)
     {
         $dir = PathUtility::dirname($absoluteFileName) . '/';
         if (!is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
         }
         if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
-            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
-                234627835683);
+            throw new Exception(
+                'The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
+                234627835683
+            );
         }
         return GeneralUtility::writeFile($absoluteFileName, $content);
     }
@@ -48,7 +50,7 @@ class FileUtility
      *
      * @return array
      */
-    static public function getBaseFilesInDir($dirPath, $fileExtension)
+    public static function getBaseFilesInDir($dirPath, $fileExtension)
     {
         return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_FILENAME);
     }
@@ -62,7 +64,7 @@ class FileUtility
      *
      * @return array
      */
-    static public function getBaseFilesWithExtensionInDir($dirPath, $fileExtension)
+    public static function getBaseFilesWithExtensionInDir($dirPath, $fileExtension)
     {
         return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_BASENAME);
     }
@@ -72,11 +74,11 @@ class FileUtility
      *
      * @param string $dirPath
      * @param string $fileExtension
-     * @param int    $informationType
+     * @param int $informationType
      *
      * @return array
      */
-    static protected function getFileInformationInDir($dirPath, $fileExtension, $informationType)
+    protected static function getFileInformationInDir($dirPath, $fileExtension, $informationType)
     {
         if (!is_dir($dirPath)) {
             return [];
@@ -95,11 +97,11 @@ class FileUtility
      *
      * @param string $dirPath
      * @param string $fileExtensions
-     * @param bool   $recursively
+     * @param bool $recursively
      *
      * @return array
      */
-    static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
+    public static function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
     {
         if (!is_dir($dirPath)) {
             return [];

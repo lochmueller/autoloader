@@ -40,5 +40,4 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
      * @db varchar(30) DEFAULT '' NOT NULL
      */
     protected $ident;
-
 }

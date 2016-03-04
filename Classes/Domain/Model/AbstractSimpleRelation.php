@@ -42,5 +42,4 @@ abstract class AbstractSimpleRelation extends AbstractEntity
      * @db
      */
     protected $sorting;
-
 }

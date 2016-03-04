@@ -92,5 +92,4 @@ class LanguageHandler extends LanguageStore
         }
         return $services[0];
     }
-
 }

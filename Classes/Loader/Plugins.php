@@ -41,8 +41,11 @@ class Plugins implements LoaderInterface
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
 
         foreach ($controllers as $controller) {
-            $controllerName = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'Controller/' . $controller);
+            $controllerName = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'Controller/' . $controller
+            );
             if (!$loader->isInstantiableClass($controllerName)) {
                 continue;
             }
@@ -58,8 +61,13 @@ class Plugins implements LoaderInterface
                     $actionName = str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
-                        $pluginInformation = $this->addPluginInformation($pluginInformation, $pluginKey, $controllerKey,
-                            $actionName, $method->isTaggedWith('noCache'));
+                        $pluginInformation = $this->addPluginInformation(
+                            $pluginInformation,
+                            $pluginKey,
+                            $controllerKey,
+                            $actionName,
+                            $method->isTaggedWith('noCache')
+                        );
                     }
                 }
             }

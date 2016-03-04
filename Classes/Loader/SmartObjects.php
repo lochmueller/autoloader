@@ -28,7 +28,7 @@ class SmartObjects implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -42,8 +42,11 @@ class SmartObjects implements LoaderInterface
 
         $models = FileUtility::getBaseFilesRecursivelyInDir($modelPath, 'php');
         foreach ($models as $model) {
-            $className = ClassNamingUtility::getFqnByPath($loader->getVendorName(), $loader->getExtensionKey(),
-                'Domain/Model/' . $model);
+            $className = ClassNamingUtility::getFqnByPath(
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
+                'Domain/Model/' . $model
+            );
             if (SmartObjectManager::isSmartObjectClass($className)) {
                 $configuration[] = $className;
             }
@@ -58,7 +61,7 @@ class SmartObjects implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -72,7 +75,7 @@ class SmartObjects implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
