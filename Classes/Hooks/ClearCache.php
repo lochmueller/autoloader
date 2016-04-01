@@ -11,6 +11,7 @@ use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Core\ClassLoadingInformation;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -63,10 +64,7 @@ class ClearCache implements ClearCacheActionsHookInterface
 
         // clear autoload folder
         if (GeneralUtility::compat_version('7.0')) {
-            $autoloadFolder = GeneralUtility::getFileAbsFileName('typo3temp/autoload/');
-            if (is_dir($autoloadFolder)) {
-                GeneralUtility::rmdir($autoloadFolder, true);
-            }
+            ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }
 
