@@ -72,7 +72,7 @@ class XliffWriter extends AbstractLocalizationWriter
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (strpos($content, ' id="' . $key . '"') !== false) {
+        if (strpos($content, ' id="' . $key . '"') !== false || trim($content) === '') {
             return;
         }
         $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';
