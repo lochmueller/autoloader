@@ -62,8 +62,8 @@ class ClearCache implements ClearCacheActionsHookInterface
         $cacheManager->getCache('autoloader')
             ->flush();
 
-        // clear autoload folder
-        if (GeneralUtility::compat_version('7.0')) {
+        // Dump new class loading information
+        if (GeneralUtility::compat_version('7.0') && !\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }
