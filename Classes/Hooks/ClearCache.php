@@ -33,7 +33,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      */
     public function manipulateCacheActions(&$cacheActions, &$optionValues)
     {
-        if ($this->isProduction() || !$this->isAdmin()) {
+        if (!$this->isAdmin() || (!$this->isAlwaysActivated() && $this->isProduction())) {
             return;
         }
 
@@ -53,7 +53,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      */
     public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
     {
-        if ($this->isProduction() || !$this->isAdmin()) {
+        if (!$this->isAdmin() || (!$this->isAlwaysActivated() && $this->isProduction())) {
             return;
         }
 
@@ -66,6 +66,17 @@ class ClearCache implements ClearCacheActionsHookInterface
         if (GeneralUtility::compat_version('7.0') && !\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
+    }
+
+    /**
+     * Return if the clear cache element is als visible in production
+     *
+     * @return bool
+     */
+    protected function isAlwaysActivated()
+    {
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        return isset($configuration['enableAutoloaderClearCacheInProduction']) ? (bool)$configuration['enableAutoloaderClearCacheInProduction'] : false;
     }
 
     /**
