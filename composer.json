@@ -12,6 +12,12 @@
       "/Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/examples/"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "HDNET\\Autoloader\\Tests\\": "Tests",
+      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
+    }
+  },
   "keywords": [
     "TYPO3 CMS",
     "Autoloader",
