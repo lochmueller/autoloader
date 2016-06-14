@@ -18,23 +18,31 @@ class SlotTest extends UnitTestCase
         $slots = new Slots();
 
         $data = [
-            ['element' => 1, 'priority' => 50],
-            ['element' => 2, 'priority' => 0],
-            ['element' => 3, 'priority' => 0],
-            ['element' => 4, 'priority' => 100],
-            ['element' => 5, 'priority' => 0],
-            ['element' => 6, 'priority' => 20],
+            50 => [
+                ['element' => 1],
+            ],
+            0 => [
+                ['element' => 2],
+                ['element' => 3],
+                ['element' => 5],
+            ],
+            100 => [
+                ['element' => 4]
+            ],
+            20 => [
+                ['element' => 6],
+            ],
         ];
 
-        $result = $slots->sortSlotsByPriority($data);
+        $result = $slots->flattenSlotsByPriority($data);
 
         $expected = [
-            ['element' => 4, 'priority' => 100],
-            ['element' => 1, 'priority' => 50],
-            ['element' => 6, 'priority' => 20],
-            ['element' => 2, 'priority' => 0],
-            ['element' => 3, 'priority' => 0],
-            ['element' => 5, 'priority' => 0],
+            ['element' => 4],
+            ['element' => 1],
+            ['element' => 6],
+            ['element' => 2],
+            ['element' => 3],
+            ['element' => 5],
         ];
 
         $this->assertSame($expected, $result);
