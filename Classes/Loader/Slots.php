@@ -14,6 +14,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
@@ -61,8 +62,11 @@ class Slots implements LoaderInterface
                     if (!isset($tagConfiguration['signalName'][$key])) {
                         continue;
                     }
-                    $priority = isset($tagConfiguration['priority'][$key]) ? $tagConfiguration['priority'][$key] : '';
-                    $slots[$priority] = [
+
+                    $priority = (isset($tagConfiguration['priority'][$key]) && MathUtility::canBeInterpretedAsInteger($tagConfiguration['priority'][$key]) ? intval($tagConfiguration['priority'][$key]) : 0);
+                    $priorityKey = (float)$priority.'.'.hexdec(uniqid());
+
+                    $slots[$priorityKey] = [
                         'signalClassName' => trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
