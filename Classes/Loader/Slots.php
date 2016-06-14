@@ -55,13 +55,14 @@ class Slots implements LoaderInterface
                 /** @var MethodReflection $methodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration(
                     $methodReflection,
-                    ['signalClass', 'signalName']
+                    ['signalClass', 'signalName', 'priority']
                 );
                 foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
                     if (!isset($tagConfiguration['signalName'][$key])) {
                         continue;
                     }
-                    $slots[] = [
+                    $priority = isset($tagConfiguration['priority'][$key]) ? $tagConfiguration['priority'][$key] : '';
+                    $slots[$priority] = [
                         'signalClassName' => trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
@@ -70,7 +71,7 @@ class Slots implements LoaderInterface
                 }
             }
         }
-
+        krsort($slots);
         return $slots;
     }
 
