@@ -66,18 +66,17 @@ class Slots implements LoaderInterface
                     $priority = isset($tagConfiguration['signalPriority'][$key]) ? $tagConfiguration['signalPriority'][$key] : 0;
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
-                    $slots[] = [
+                    $slots[$priority][] = [
                         'signalClassName' => trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName' => $methodReflection->getName(),
-                        'priority' => $priority,
                     ];
                 }
             }
         }
 
-        $slots = $this->sortSlotsByPriority($slots);
+        $slots = $this->flattenSlotsByPriority($slots);
 
         return $slots;
     }
@@ -86,16 +85,16 @@ class Slots implements LoaderInterface
      * @param array $slots
      * @return array
      */
-    public function sortSlotsByPriority(array $slots) {
-        usort($slots, function ($slotA, $slotB) {
-            if ($slotA['priority'] == $slotB['priority']) {
-                return 0;
+    public function flattenSlotsByPriority(array $array) {
+        krsort($array);
+        $result = [];
+        foreach($array as $priority => $slots) {
+            foreach($slots as $slot) {
+                $result[] = $slot;
             }
+        }
 
-            return ($slotA['priority'] < $slotB['priority']) ? 1 : -1;
-        });
-
-        return $slots;
+        return $result;
     }
 
     /**
