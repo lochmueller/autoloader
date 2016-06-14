@@ -14,6 +14,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
@@ -55,13 +56,17 @@ class Slots implements LoaderInterface
                 /** @var MethodReflection $methodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration(
                     $methodReflection,
-                    ['signalClass', 'signalName']
+                    ['signalClass', 'signalName', 'priority']
                 );
                 foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
                     if (!isset($tagConfiguration['signalName'][$key])) {
                         continue;
                     }
-                    $slots[] = [
+
+                    $priority = (isset($tagConfiguration['priority'][$key]) && MathUtility::canBeInterpretedAsInteger($tagConfiguration['priority'][$key]) ? intval($tagConfiguration['priority'][$key]) : 0);
+                    $priorityKey = (float)$priority.'.'.hexdec(uniqid());
+
+                    $slots[$priorityKey] = [
                         'signalClassName' => trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
@@ -70,7 +75,7 @@ class Slots implements LoaderInterface
                 }
             }
         }
-
+        krsort($slots);
         return $slots;
     }
 
