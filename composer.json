@@ -21,6 +21,8 @@
   "keywords": [
     "TYPO3 CMS",
     "Autoloader",
+    "Component",
+    "Magic",
     "Extbase"
   ],
   "authors": [
