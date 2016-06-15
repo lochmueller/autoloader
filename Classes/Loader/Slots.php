@@ -38,7 +38,6 @@ class Slots implements LoaderInterface
         $slots = [];
         $slotPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($autoLoader->getExtensionKey());
 
         foreach ($slotClasses as $slot) {
             $slotClass = ClassNamingUtility::getFqnByPath(

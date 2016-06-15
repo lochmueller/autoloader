@@ -40,7 +40,6 @@ class Aspect implements LoaderInterface
         $aspects = [];
         $aspectPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Aspect/';
         $aspectClasses = FileUtility::getBaseFilesInDir($aspectPath, 'php');
-        $extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
         foreach ($aspectClasses as $aspect) {
             $aspectClass = ClassNamingUtility::getFqnByPath(
