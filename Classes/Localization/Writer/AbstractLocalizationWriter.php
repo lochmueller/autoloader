@@ -60,6 +60,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
                     $cache->flush();
                 }
             } catch (\Exception $ex) {
+                // Catch is empty, because we want to avoid exceptions in this process
             }
         }
     }
