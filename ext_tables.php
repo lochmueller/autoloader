@@ -19,7 +19,6 @@ if (!defined('TYPO3_MODE')) {
 ]);
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = [
-    'php' => 'HDNET\\Autoloader\\Localization\\Writer\\PhpWriter',
     'xlf' => 'HDNET\\Autoloader\\Localization\\Writer\\XliffWriter',
     'xml' => 'HDNET\\Autoloader\\Localization\\Writer\\XmlWriter',
 ];
