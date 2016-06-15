@@ -35,4 +35,4 @@ class TestCommandController extends CommandController
     public function runCommand($text, $boolTest)
     {
     }
-} 
+}

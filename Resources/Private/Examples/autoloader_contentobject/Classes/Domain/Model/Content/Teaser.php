@@ -74,5 +74,4 @@ class Teaser extends AbstractEntity
     {
         return $this->newField;
     }
-
-} 
+}

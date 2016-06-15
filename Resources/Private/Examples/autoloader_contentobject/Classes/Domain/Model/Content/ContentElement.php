@@ -71,5 +71,4 @@ class ContentElement extends AbstractEntity
     {
         $this->newTestBodyWithRte = $newTestBodyWithRte;
     }
-
 }

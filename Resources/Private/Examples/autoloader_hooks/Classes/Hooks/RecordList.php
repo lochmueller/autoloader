@@ -35,5 +35,4 @@ class RecordList
 					</h1>
 				</div>';
     }
-
 }

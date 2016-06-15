@@ -33,8 +33,11 @@ class RecordList
      */
     public function mainBefore($object, $params)
     {
-        $flashMessage = new FlashMessage('If you see this message, the list view is successfully extended with aspectAdvice::before',
-            'AutoloaderAspect', FlashMessage::OK);
+        $flashMessage = new FlashMessage(
+            'If you see this message, the list view is successfully extended with aspectAdvice::before',
+            'AutoloaderAspect',
+            FlashMessage::OK
+        );
 
         // Add FlashMessage
         $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
@@ -55,8 +58,11 @@ class RecordList
      */
     public function mainAfter($object, $params)
     {
-        $flashMessage = new FlashMessage('If you see this message, the list view is successfully extended with aspectAdvice::after',
-            'Aspect', FlashMessage::OK);
+        $flashMessage = new FlashMessage(
+            'If you see this message, the list view is successfully extended with aspectAdvice::after',
+            'Aspect',
+            FlashMessage::OK
+        );
 
         // Add FlashMessage
         $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
@@ -64,5 +70,4 @@ class RecordList
         $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $flashMessageQueue->enqueue($flashMessage);
     }
-
 }

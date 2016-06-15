@@ -31,5 +31,4 @@ class FirstController extends ActionController
     public function bothAction()
     {
     }
-
 }

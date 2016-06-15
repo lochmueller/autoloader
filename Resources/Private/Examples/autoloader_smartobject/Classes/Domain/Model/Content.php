@@ -107,4 +107,4 @@ class Content extends AbstractEntity
     {
         return $this->foreignModelWithoutSpecificDbAnnotation;
     }
-} 
+}

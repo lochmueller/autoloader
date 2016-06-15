@@ -67,5 +67,4 @@ class Test extends AbstractEntity
     {
         return $this->fieldName;
     }
-
 }

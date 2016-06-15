@@ -26,5 +26,4 @@ class TestService implements SingletonInterface
     {
         return 1;
     }
-
 }

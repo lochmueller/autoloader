@@ -37,8 +37,11 @@ class RecordList extends \TYPO3\CMS\Recordlist\RecordList
     protected function addDummyFlashMessage()
     {
 
-        $flashMessage = new FlashMessage('If you see this message, the list view is successfully extended', 'Xclass',
-            FlashMessage::OK);
+        $flashMessage = new FlashMessage(
+            'If you see this message, the list view is successfully extended',
+            'Xclass',
+            FlashMessage::OK
+        );
 
         // Add FlashMessage
         $flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
@@ -46,5 +49,4 @@ class RecordList extends \TYPO3\CMS\Recordlist\RecordList
         $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $flashMessageQueue->enqueue($flashMessage);
     }
-
-} 
+}
