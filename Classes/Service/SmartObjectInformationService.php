@@ -271,7 +271,7 @@ class SmartObjectInformationService
      */
     protected function generateSqlQuery($tableName, array $fields)
     {
-        if (!$fields) {
+        if (empty($fields)) {
             return '';
         }
         return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;

@@ -40,7 +40,7 @@ class ContentObjects implements LoaderInterface
 
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
         $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
-        if ($models) {
+        if (!empty($models)) {
             TranslateUtility::assureLabel(
                 'tt_content.' .
                 $loader->getExtensionKey() . '.header',
@@ -260,7 +260,7 @@ class ContentObjects implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        if (!$loaderInformation) {
+        if (empty($loaderInformation)) {
             return null;
         }
         $createWizardHeader = [];
@@ -367,7 +367,7 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        if (!$loaderInformation) {
+        if (empty($loaderInformation)) {
             return null;
         }
         static $loadPlugin = true;

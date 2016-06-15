@@ -217,7 +217,7 @@ class Loader implements SingletonInterface
      */
     protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
     {
-        if (!$objectNames) {
+        if (empty($objectNames)) {
             return $this->implementations;
         }
 

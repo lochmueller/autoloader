@@ -92,7 +92,7 @@ class LanguageOverride implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {
-        if ($loaderInformation) {
+        if (!empty($loaderInformation)) {
             foreach ($loaderInformation as $files) {
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride'][$files['language']][$files['original']][] = $files['override'];
             }

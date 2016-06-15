@@ -152,7 +152,7 @@ class Aspect implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        if ($loaderInformation) {
+        if (!empty($loaderInformation)) {
             TempClassLoader::registerAutoloader();
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'][] = $loaderInformation;
         }

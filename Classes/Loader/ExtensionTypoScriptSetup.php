@@ -74,7 +74,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      */
     protected function addTypoScript(array $loaderInformation)
     {
-        if ($loaderInformation) {
+        if (!empty($loaderInformation)) {
             ExtensionManagementUtility::addTypoScriptSetup(LF . implode(LF, $loaderInformation) . LF);
         }
     }

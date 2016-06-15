@@ -73,7 +73,7 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        if (!$loaderInformation) {
+        if (empty($loaderInformation)) {
             return;
         }
 
