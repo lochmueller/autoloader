@@ -85,11 +85,12 @@ class Slots implements LoaderInterface
      * @param array $slots
      * @return array
      */
-    public function flattenSlotsByPriority(array $array) {
+    public function flattenSlotsByPriority(array $array)
+    {
         krsort($array);
         $result = [];
-        foreach($array as $priority => $slots) {
-            foreach($slots as $slot) {
+        foreach ($array as $priority => $slots) {
+            foreach ($slots as $slot) {
                 $result[] = $slot;
             }
         }

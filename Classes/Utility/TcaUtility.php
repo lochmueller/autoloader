@@ -43,7 +43,6 @@ class TcaUtility
 
         $divider = '--div--;' . $tabTitle . ',';
         foreach ($base['types'] as $key => $layout) {
-
             $tempShowitem = explode($columnName, $layout['showitem']);
             $showItem = $tempShowitem[0] . $divider . $columnName . $tempShowitem[1];
             $base['types'][$key]['showitem'] = $showItem;

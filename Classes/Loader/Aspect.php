@@ -87,7 +87,6 @@ class Aspect implements LoaderInterface
                             'originClassName' => $aspectClass,
                             'originMethodName' => $methodReflection->getName()
                         ];
-
                     }
                 }
             } catch (\Exception $e) {
