@@ -116,7 +116,7 @@ class SoapServer
     {
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
         $parts = parse_url($uri);
-        $parts['query'] = 'eID=SoapServer&server=' . $this->serverKey;
+        $parts['query'] = 'eID=SoapServer&amp;server=' . $this->serverKey;
         return HttpUtility::buildUrl($parts);
     }
 }
