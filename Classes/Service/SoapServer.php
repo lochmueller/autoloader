@@ -101,7 +101,7 @@ class SoapServer
     protected function renderWsdl()
     {
         $uriParts = parse_url($this->getServiceUri());
-        if(!is_array($uriParts)) {
+        if (!is_array($uriParts)) {
             return;
         }
         unset($uriParts['query']);
