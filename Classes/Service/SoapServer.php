@@ -101,6 +101,9 @@ class SoapServer
     protected function renderWsdl()
     {
         $uriParts = parse_url($this->getServiceUri());
+        if(!is_array($uriParts)) {
+            return;
+        }
         unset($uriParts['query']);
         $wsdl = new WSDLCreator($this->serverClass, $this->getServiceUri());
         $wsdl->setNamespace(HttpUtility::buildUrl($uriParts));
@@ -115,7 +118,7 @@ class SoapServer
     protected function getServiceUri()
     {
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
-        $parts = parse_url($uri);
+        $parts = (array)parse_url($uri);
         $parts['query'] = 'eID=SoapServer&amp;server=' . $this->serverKey;
         return HttpUtility::buildUrl($parts);
     }

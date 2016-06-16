@@ -218,6 +218,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      */
     protected function mergeConfigurationArrayForCode($configuration)
     {
+        $code = [];
         $code[] = 'array(';
         $code[] = implode("\n", $configuration);
         $code[] = ')';

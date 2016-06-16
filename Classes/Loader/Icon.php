@@ -40,7 +40,7 @@ class Icon implements LoaderInterface
         $iconFolder = 'Resources/Public/Icon/';
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $iconFolder;
         $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
-        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, true);
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 0);
         if (!sizeof($files)) {
             return $icons;
         }
