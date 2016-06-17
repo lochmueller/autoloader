@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Json server handling
  *
@@ -12,6 +13,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
+
 
 /**
  * Json server handling
