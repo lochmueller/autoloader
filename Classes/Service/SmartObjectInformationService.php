@@ -136,7 +136,7 @@ class SmartObjectInformationService
         try {
             TranslateUtility::assureLabel($tableName, $extensionName);
         } catch (\Exception $ex) {
-            // @todo handle
+            // Do not handle the error of the assureLabel method
         }
         if (!is_array($baseTca['columns'])) {
             $baseTca['columns'] = [];
@@ -209,6 +209,7 @@ class SmartObjectInformationService
                 try {
                     $info['db'] = $this->getDatabaseMappingByVarType($info['db']);
                 } catch (\Exception $ex) {
+                    // Do not handle the getDatabaseMappingByVarType by db, Fallback is the var call
                 }
             }
             $fields[] = $info['name'] . ' ' . $info['db'];
