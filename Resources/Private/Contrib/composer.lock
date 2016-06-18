@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2cfc0f084ebfd8a851fa1c9c16c00238",
+    "hash": "101ca8a83808b584fa3d5620a31d24d6",
+    "content-hash": "cfc4cf981fba203219bdf3de55559bc6",
     "packages": [
         {
             "name": "letsdrink/ouzo-goodies",
@@ -51,16 +52,16 @@
         },
         {
             "name": "piotrooo/wsdl-creator",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/piotrooo/wsdl-creator.git",
-                "reference": "b67fef63fd544e1c2e30749cf26ebba7a87c94e1"
+                "reference": "add6a96e11d4342be9af56ae05dd1d5a2f2e2270"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/piotrooo/wsdl-creator/zipball/b67fef63fd544e1c2e30749cf26ebba7a87c94e1",
-                "reference": "b67fef63fd544e1c2e30749cf26ebba7a87c94e1",
+                "url": "https://api.github.com/repos/piotrooo/wsdl-creator/zipball/add6a96e11d4342be9af56ae05dd1d5a2f2e2270",
+                "reference": "add6a96e11d4342be9af56ae05dd1d5a2f2e2270",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +101,7 @@
                 "soap",
                 "wsdl"
             ],
-            "time": "2015-07-15 20:40:19"
+            "time": "2016-04-01 21:48:07"
         }
     ],
     "packages-dev": [],

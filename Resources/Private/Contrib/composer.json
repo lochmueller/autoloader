@@ -1,5 +1,5 @@
 {
     "require": {
-        "piotrooo/wsdl-creator": "~1.4"
+        "piotrooo/wsdl-creator": "1.4.2"
     }
 }
