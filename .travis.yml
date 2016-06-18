@@ -35,13 +35,12 @@ before_install:
   if [[ "$COVERAGE" == "0" ]]; then
     phpenv config-rm xdebug.ini
   fi;
-  - composer self-update
-  - composer --version
-  - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
+- composer self-update
+- composer --version
 
 before_script:
-  - composer require typo3/cms=$TYPO3_VERSION
-  - export TYPO3_PATH_WEB="$PWD/.Build/Web"
+- composer require typo3/cms=$TYPO3_VERSION
+- export TYPO3_PATH_WEB="$PWD/.Build/Web"
 
 script:
 - |
