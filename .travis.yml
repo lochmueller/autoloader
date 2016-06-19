@@ -46,9 +46,9 @@ script:
 - |
   echo; echo "Running unit tests";
   if [[ "$COVERAGE" == "1" ]]; then
-    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover Tests/Unit/
+    .Build/bin/phpunit -c Tests/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover
   else
-    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+    .Build/bin/phpunit -c Tests/UnitTests.xml
   fi;
 - |
   echo; echo "Executing PHP mess detector"; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true
