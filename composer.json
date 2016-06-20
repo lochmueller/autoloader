@@ -8,9 +8,16 @@
       "HDNET\\Autoloader\\": "Classes/",
       "WSDL\\": "Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/src/WSDL/",
       "Ouzo\\": "Resources/Private/Contrib/vendor/letsdrink/ouzo-goodies/",
-      "Zend\\Http": "Resources/Private/Contrib/vendor/zendframework/zend-http/src",
-      "Zend\\Server": "Resources/Private/Contrib/vendor/zendframework/zend-server/src",
-      "Zend\\Json": "Resources/Private/Contrib/vendor/zendframework/zend-json/src"
+      "Zend\\Http\\": "Resources/Private/Contrib/vendor/zendframework/zend-http/src/",
+      "Zend\\Server\\": "Resources/Private/Contrib/vendor/zendframework/zend-server/src/",
+      "Zend\\Json\\": "Resources/Private/Contrib/vendor/zendframework/zend-json/src/",
+      "Zend\\Uri\\": "Resources/Private/Contrib/vendor/zendframework/zend-uri/src/",
+      "Zend\\Stdlib\\": "Resources/Private/Contrib/vendor/zendframework/zend-stdlib/src/",
+      "Zend\\Loader\\": "Resources/Private/Contrib/vendor/zendframework/zend-loader/src/",
+      "Zend\\EventManager\\": "Resources/Private/Contrib/vendor/zendframework/zend-eventmanager/src/",
+      "Zend\\Escaper\\": "Resources/Private/Contrib/vendor/zendframework/zend-escaper/src/",
+      "Zend\\Code\\": "Resources/Private/Contrib/vendor/zendframework/zend-code/src/",
+      "Zend\\Validator\\": "Resources/Private/Contrib/vendor/zendframework/zend-validator/src/"
     },
     "exclude-from-classmap": [
       "/Resources/Private/Examples/",

@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 
-
 /**
  * Json server handling
  */
