@@ -1,5 +1,8 @@
 {
     "require": {
-        "piotrooo/wsdl-creator": "1.4.2"
+        "piotrooo/wsdl-creator": "1.4.2",
+        "zendframework/zend-http": "2.*",
+        "zendframework/zend-server": "2.*",
+        "zendframework/zend-json": "2.*"
     }
 }
