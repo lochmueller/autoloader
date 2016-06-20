@@ -90,7 +90,7 @@ class JsonServer
         try {
             $server->handle();
         } catch (\Exception $ex) {
-            $server->fault($ex->getMessage(), $ex->getCode());
+            echo $server->fault($ex->getMessage(), $ex->getCode());
         }
     }
 
