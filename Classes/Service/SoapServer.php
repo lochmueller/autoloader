@@ -11,7 +11,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use WSDL\WSDLCreator;
 
-
 /**
  * Soap server handling
  */
