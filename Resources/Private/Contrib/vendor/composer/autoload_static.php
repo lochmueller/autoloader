@@ -7,7 +7,6 @@ namespace Composer\Autoload;
 class ComposerStaticInit24189bb8d86fc963c9de229344b179ea
 {
     public static $prefixLengthsPsr4 = array (
-<<<<<<< HEAD
         'Z' => 
         array (
             'Zend\\Validator\\' => 15,
@@ -21,13 +20,10 @@ class ComposerStaticInit24189bb8d86fc963c9de229344b179ea
             'Zend\\Escaper\\' => 13,
             'Zend\\Code\\' => 10,
         ),
-=======
->>>>>>> lochmueller/master
         'O' => 
         array (
             'Ouzo\\' => 5,
         ),
-<<<<<<< HEAD
         'I' => 
         array (
             'Interop\\Container\\' => 18,
@@ -75,22 +71,14 @@ class ComposerStaticInit24189bb8d86fc963c9de229344b179ea
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
         ),
-=======
-    );
-
-    public static $prefixDirsPsr4 = array (
->>>>>>> lochmueller/master
         'Ouzo\\' => 
         array (
             0 => __DIR__ . '/..' . '/letsdrink/ouzo-goodies',
         ),
-<<<<<<< HEAD
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
         ),
-=======
->>>>>>> lochmueller/master
     );
 
     public static $prefixesPsr0 = array (
@@ -124,121 +112,12 @@ class ComposerStaticInit24189bb8d86fc963c9de229344b179ea
         ),
     );
 
-<<<<<<< HEAD
-=======
-    public static $classMap = array (
-        'Clients\\DocumentLiteralWrapped\\ObjectCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/DocumentLiteralWrapped/ObjectCommand.php',
-        'Clients\\DocumentLiteralWrapped\\SimpleCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/DocumentLiteralWrapped/SimpleCommand.php',
-        'Clients\\DocumentLiteralWrapped\\WrapperCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/DocumentLiteralWrapped/WrapperCommand.php',
-        'Clients\\InitCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/InitCommand.php',
-        'Clients\\RpcEncoded\\ObjectCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcEncoded/ObjectCommand.php',
-        'Clients\\RpcEncoded\\SimpleCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcEncoded/SimpleCommand.php',
-        'Clients\\RpcEncoded\\WrapperCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcEncoded/WrapperCommand.php',
-        'Clients\\RpcLiteral\\ObjectCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcLiteral/ObjectCommand.php',
-        'Clients\\RpcLiteral\\SimpleCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcLiteral/SimpleCommand.php',
-        'Clients\\RpcLiteral\\WrapperCommand' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/examples/Clients/RpcLiteral/WrapperCommand.php',
-        'Factory\\ParameterFactory' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Factory/ParameterFactory.php',
-        'Mocks\\MockClass' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/MockClass.php',
-        'Mocks\\MockMultipleWrappers' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/MockMultipleWrappers.php',
-        'Mocks\\MockUserWrapper' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/MockUserWrapper.php',
-        'Mocks\\Test\\MockClassMultipleNamespace' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/Test/MockClassMultipleNamespace.php',
-        'Mocks\\WrapperClass\\Customer' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/WrapperClass/Customer.php',
-        'Mocks\\WrapperClass\\Purchase' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/WrapperClass/Purchase.php',
-        'Mocks\\WrapperClass\\PurchaseResult' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/tests/Mocks/WrapperClass/PurchaseResult.php',
-        'Ouzo\\Tests\\ArrayAssert' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/ArrayAssert.php',
-        'Ouzo\\Tests\\Assert' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Assert.php',
-        'Ouzo\\Tests\\AssertAdapter' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/AssertAdapter.php',
-        'Ouzo\\Tests\\CatchException' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/CatchException.php',
-        'Ouzo\\Tests\\CatchExceptionAssert' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/CatchException.php',
-        'Ouzo\\Tests\\CatchExceptionObject' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/CatchException.php',
-        'Ouzo\\Tests\\Mock\\AnyArgument' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/AnyArgument.php',
-        'Ouzo\\Tests\\Mock\\AnyArgumentList' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/AnyArgumentList.php',
-        'Ouzo\\Tests\\Mock\\ArgumentMatcher' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/ArgumentMatcher.php',
-        'Ouzo\\Tests\\Mock\\CallStub' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/CallStub.php',
-        'Ouzo\\Tests\\Mock\\FluentArgumentMatcher' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/FluentArgumentMatcher.php',
-        'Ouzo\\Tests\\Mock\\MethodCall' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/MethodCall.php',
-        'Ouzo\\Tests\\Mock\\MethodCallMatcher' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/MethodCallMatcher.php',
-        'Ouzo\\Tests\\Mock\\Mock' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/Mock.php',
-        'Ouzo\\Tests\\Mock\\NotCalledVerifier' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/NotCalledVerifier.php',
-        'Ouzo\\Tests\\Mock\\SimpleMock' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/SimpleMock.php',
-        'Ouzo\\Tests\\Mock\\Verifier' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/Verifier.php',
-        'Ouzo\\Tests\\Mock\\WhenBuilder' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/WhenBuilder.php',
-        'Ouzo\\Tests\\Mock\\ZeroInteractionsVerifier' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/Mock/ZeroInteractionsVerifier.php',
-        'Ouzo\\Tests\\StreamStub' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/StreamStub.php',
-        'Ouzo\\Tests\\StringAssert' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Tests/StringAssert.php',
-        'Ouzo\\Utilities\\Arrays' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Arrays.php',
-        'Ouzo\\Utilities\\Booleans' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Booleans.php',
-        'Ouzo\\Utilities\\Cache' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Cache.php',
-        'Ouzo\\Utilities\\ClassName' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/ClassName.php',
-        'Ouzo\\Utilities\\Clock' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Clock.php',
-        'Ouzo\\Utilities\\Comparator' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Comparator.php',
-        'Ouzo\\Utilities\\Comparator\\CompoundComparator' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Comparator/CompoundComparator.php',
-        'Ouzo\\Utilities\\Comparator\\EvaluatingComparator' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Comparator/EvaluatingComparator.php',
-        'Ouzo\\Utilities\\Comparator\\ReversedComparator' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Comparator/ReversedComparator.php',
-        'Ouzo\\Utilities\\Date' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Date.php',
-        'Ouzo\\Utilities\\DeleteDirectory' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/DeleteDirectory.php',
-        'Ouzo\\Utilities\\Directory' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Directory.php',
-        'Ouzo\\Utilities\\DynamicProxy' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/DynamicProxy.php',
-        'Ouzo\\Utilities\\Extractor' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Extractor.php',
-        'Ouzo\\Utilities\\FileNotFoundException' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Files.php',
-        'Ouzo\\Utilities\\Files' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Files.php',
-        'Ouzo\\Utilities\\FluentArray' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/FluentArray.php',
-        'Ouzo\\Utilities\\FluentFunction' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/FluentFunction.php',
-        'Ouzo\\Utilities\\FluentFunctions' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/FluentFunctions.php',
-        'Ouzo\\Utilities\\Functions' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Functions.php',
-        'Ouzo\\Utilities\\Inflector' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Inflector.php',
-        'Ouzo\\Utilities\\Joiner' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Joiner.php',
-        'Ouzo\\Utilities\\Json' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Json.php',
-        'Ouzo\\Utilities\\NonCallableExtractor' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/NonCallableExtractor.php',
-        'Ouzo\\Utilities\\Objects' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Objects.php',
-        'Ouzo\\Utilities\\Optional' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Optional.php',
-        'Ouzo\\Utilities\\Path' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Path.php',
-        'Ouzo\\Utilities\\RecursiveStrSubstitutor' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/RecursiveStrSubstitutor.php',
-        'Ouzo\\Utilities\\StrSubstitutor' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/StrSubstitutor.php',
-        'Ouzo\\Utilities\\Strings' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Strings.php',
-        'Ouzo\\Utilities\\Supplier\\ExpiringMemoizingSupplier' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Supplier/ExpiringMemoizingSupplier.php',
-        'Ouzo\\Utilities\\Supplier\\MemoizingSupplier' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Supplier/MemoizingSupplier.php',
-        'Ouzo\\Utilities\\Suppliers' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Suppliers.php',
-        'Ouzo\\Utilities\\TimeAgo' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/TimeAgo.php',
-        'Ouzo\\Utilities\\Validator\\Validate' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Validator/Validate.php',
-        'Ouzo\\Utilities\\Validator\\ValidateException' => __DIR__ . '/..' . '/letsdrink/ouzo-goodies/Utilities/Validator/ValidateException.php',
-        'WSDL\\DocumentLiteralWrapper' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/DocumentLiteralWrapper.php',
-        'WSDL\\Parser\\ClassParser' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/ClassParser.php',
-        'WSDL\\Parser\\ComplexTypeParser' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/ComplexTypeParser.php',
-        'WSDL\\Parser\\MethodParser' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/MethodParser.php',
-        'WSDL\\Parser\\ParameterParser' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/ParameterParser.php',
-        'WSDL\\Parser\\ParameterParserException' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/ParameterParserException.php',
-        'WSDL\\Parser\\WrapperParser' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/WrapperParser.php',
-        'WSDL\\Parser\\WrapperParserException' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Parser/WrapperParserException.php',
-        'WSDL\\Service\\MethodWrapper' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Service/MethodWrapper.php',
-        'WSDL\\Service\\Service' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Service/Service.php',
-        'WSDL\\Types\\Arrays' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Types/Arrays.php',
-        'WSDL\\Types\\Object' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Types/Object.php',
-        'WSDL\\Types\\Simple' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Types/Simple.php',
-        'WSDL\\Types\\Type' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Types/Type.php',
-        'WSDL\\Utilities\\Strings' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Utilities/Strings.php',
-        'WSDL\\Utilities\\TypeHelper' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/Utilities/TypeHelper.php',
-        'WSDL\\WSDLCreator' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/WSDLCreator.php',
-        'WSDL\\XML\\Styles\\DocumentLiteralWrapped' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/DocumentLiteralWrapped.php',
-        'WSDL\\XML\\Styles\\RpcEncoded' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/RpcEncoded.php',
-        'WSDL\\XML\\Styles\\RpcLiteral' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/RpcLiteral.php',
-        'WSDL\\XML\\Styles\\Style' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/Style.php',
-        'WSDL\\XML\\Styles\\TypesComplex' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/TypesComplex.php',
-        'WSDL\\XML\\Styles\\TypesElement' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/Styles/TypesElement.php',
-        'WSDL\\XML\\XMLGenerator' => __DIR__ . '/..' . '/piotrooo/wsdl-creator/src/WSDL/XML/XMLGenerator.php',
-    );
-
->>>>>>> lochmueller/master
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit24189bb8d86fc963c9de229344b179ea::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit24189bb8d86fc963c9de229344b179ea::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit24189bb8d86fc963c9de229344b179ea::$prefixesPsr0;
-<<<<<<< HEAD
-=======
-            $loader->classMap = ComposerStaticInit24189bb8d86fc963c9de229344b179ea::$classMap;
->>>>>>> lochmueller/master
 
         }, null, ClassLoader::class);
     }

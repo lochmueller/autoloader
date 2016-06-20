@@ -4,13 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "860fa507e5acde9469f2777bdcd11552",
-    "content-hash": "ebfd05ad97b39f07f7b84dfa95ebd12f",
-=======
-    "hash": "101ca8a83808b584fa3d5620a31d24d6",
-    "content-hash": "cfc4cf981fba203219bdf3de55559bc6",
->>>>>>> lochmueller/master
+    "hash": "4f370bdb1d78f31e4b784687d768e7d1",
+    "content-hash": "8d702ae3e5b1661ba18567c0ef83010f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -134,7 +129,6 @@
                 "wsdl"
             ],
             "time": "2016-04-01 21:48:07"
-<<<<<<< HEAD
         },
         {
             "name": "zendframework/zend-code",
@@ -643,8 +637,6 @@
                 "zf2"
             ],
             "time": "2016-05-16 13:39:40"
-=======
->>>>>>> lochmueller/master
         }
     ],
     "packages-dev": [],
