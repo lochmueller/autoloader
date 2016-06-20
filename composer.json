@@ -7,7 +7,10 @@
     "psr-4": {
       "HDNET\\Autoloader\\": "Classes/",
       "WSDL\\": "Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/src/WSDL/",
-      "Ouzo\\": "Resources/Private/Contrib/vendor/letsdrink/ouzo-goodies/"
+      "Ouzo\\": "Resources/Private/Contrib/vendor/letsdrink/ouzo-goodies/",
+      "Zend\\Http": "Resources/Private/Contrib/vendor/zendframework/zend-http/src",
+      "Zend\\Server": "Resources/Private/Contrib/vendor/zendframework/zend-server/src",
+      "Zend\\Json": "Resources/Private/Contrib/vendor/zendframework/zend-json/src"
     },
     "exclude-from-classmap": [
       "/Resources/Private/Examples/",
