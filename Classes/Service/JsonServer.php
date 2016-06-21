@@ -65,12 +65,13 @@ class JsonServer
         header('Content-Type: application/json');
         if (!class_exists($this->serverClass)) {
             $server = new Server();
-            $server->fault(
-                'No valid server class name for the given server key: "' . $this->serverClass . '"',
+            echo $server->fault(
+                'No valid server class name for the given server key: "' . $this->serverKey . '"',
                 2342358923745
             );
             return;
         }
+
         if ($this->renderSmd) {
             $this->renderSmd();
         } else {
@@ -89,7 +90,7 @@ class JsonServer
         try {
             $server->handle();
         } catch (\Exception $ex) {
-            $server->fault($ex->getMessage(), $ex->getCode());
+            echo $server->fault($ex->getMessage(), $ex->getCode());
         }
     }
 

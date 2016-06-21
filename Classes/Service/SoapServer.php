@@ -66,7 +66,7 @@ class SoapServer
             ]);
             $server->fault(
                 2342358923745,
-                'No valid server class name for the given server key: "' . $this->serverClass . '"'
+                'No valid server class name for the given server key: "' . $this->serverKey . '"'
             );
             return;
         }
