@@ -118,7 +118,7 @@ class JsonServer
     {
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
         $parts = parse_url($uri);
-        $parts['query'] = 'eID=JsonServer&amp;server=' . $this->serverKey;
+        $parts['query'] = 'eID=JsonServer&server=' . $this->serverKey;
         return HttpUtility::buildUrl($parts);
     }
 }
