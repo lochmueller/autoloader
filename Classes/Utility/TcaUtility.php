@@ -33,12 +33,12 @@ class TcaUtility
      * @param string $tabTitle   The title of the tab
      *
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public static function insertTabDividerBefore(&$base, $columnName, $tabTitle)
     {
         if (!is_array($base)) {
-            throw new Exception('A proper TCA configuration is needed!');
+            throw new \Exception('A proper TCA configuration is needed!');
         }
 
         $divider = '--div--;' . $tabTitle . ',';
