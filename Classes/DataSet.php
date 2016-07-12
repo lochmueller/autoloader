@@ -70,8 +70,9 @@ class DataSet implements SingletonInterface
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
         foreach ($dataSetObjects as $object) {
+            $loadedTca = $object->getTca($table);
             /** @var $object DataSetInterface */
-            $return = ArrayUtility::mergeRecursiveDistinct($return, $object->getTca($table));
+            $return = ArrayUtility::mergeRecursiveDistinct($return, $loadedTca);
         }
         return $return;
     }
