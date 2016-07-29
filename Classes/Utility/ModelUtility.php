@@ -12,6 +12,7 @@ use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
  * Utility to interact with the Model
@@ -133,16 +134,16 @@ class ModelUtility
      * Get the target model.
      *
      * @param string $modelName
-     * @param array  $data
-     * @param bool   $ignoreEnableFields
+     * @param array $data
+     * @param bool $backendSelection
      *
      * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
-    public static function getModel($modelName, $data, $ignoreEnableFields = false)
+    public static function getModel($modelName, $data, $backendSelection = false)
     {
         $query = ExtendedUtility::getQuery($modelName);
         $query->getQuerySettings()
-            ->setIgnoreEnableFields($ignoreEnableFields);
+            ->setIgnoreEnableFields($backendSelection);
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
         $query->getQuerySettings()
@@ -150,8 +151,10 @@ class ModelUtility
 
         $query->matching($query->equals('uid', $data['uid']));
 
-        if ($ignoreEnableFields) {
-            // Backend selection
+        if ($backendSelection) {
+            $_GET['L'] = (int)$data['sys_language_uid'];
+            GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session')->destroy();
+
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
                 $query->getQuerySettings()
                     ->setLanguageOverlayMode(false);
@@ -168,7 +171,9 @@ class ModelUtility
             /** @var ExcludeIdentityMapDataMapper $dataMapper */
             $dataMapper = $objectManager->get('HDNET\\Autoloader\\Persistence\\ExcludeIdentityMapDataMapper');
             $objects = $dataMapper->map($modelName, $rows);
-            return current($objects);
+            $selection = current($objects);
+            $_GET['L'] = 0;
+            return $selection;
         }
 
         return $query->execute()
