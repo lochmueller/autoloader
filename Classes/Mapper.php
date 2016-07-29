@@ -16,11 +16,35 @@ class Mapper implements SingletonInterface
 {
 
     /**
+     * Custom mapper
+     *
+     * @var array
+     */
+    protected $customMapper = [];
+
+    /**
+     * Internal mapper
+     *
+     * @var array
+     */
+    protected $internalMapper = [
+        'Boolean',
+        'Float',
+        'DateTime',
+        'FileReference',
+        'FileReferenceObjectStorage',
+        'ObjectStorage',
+        'Int',
+        'String',
+        'Model',
+    ];
+
+    /**
      * Get the TCA configuration for the current type
      *
      * @param string $type
      * @param string $fieldName
-     * @param bool   $overWriteLabel
+     * @param bool $overWriteLabel
      *
      * @return array
      */
@@ -46,6 +70,16 @@ class Mapper implements SingletonInterface
     {
         $mapper = $this->getMapperByType($type);
         return $mapper->getDatabaseDefinition();
+    }
+
+    /**
+     * Add a custom mapper
+     *
+     * @param string $className
+     */
+    public function addCustomMapper($className)
+    {
+        $this->customMapper[] = $className;
     }
 
     /**
@@ -75,20 +109,25 @@ class Mapper implements SingletonInterface
      */
     protected function getMappers()
     {
-        $mapper = [
-            'Boolean',
-            'Float',
-            'DateTime',
-            'FileReference',
-            'FileReferenceObjectStorage',
-            'ObjectStorage',
-            'Int',
-            'String',
-            'Model',
-        ];
-        foreach ($mapper as $key => $value) {
-            $mapper[$key] = ExtendedUtility::create('HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper');
+        $mapper = array_merge($this->customMapper, $this->getInternalMapperClasses());
+        foreach ($mapper as $key => $className) {
+            $mapper[$key] = ExtendedUtility::create($className);
         }
         return $mapper;
     }
+
+    /**
+     * Get internal mapper class names
+     *
+     * @return array
+     */
+    protected function getInternalMapperClasses()
+    {
+        $mapper = [];
+        foreach ($this->internalMapper as $key => $value) {
+            $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper';
+        }
+        return $mapper;
+    }
+
 }
