@@ -129,5 +129,4 @@ class Mapper implements SingletonInterface
         }
         return $mapper;
     }
-
 }
