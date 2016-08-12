@@ -41,7 +41,7 @@ class ClassNamingUtility
 
         preg_match($regEx, $modelName, $matches);
         if (empty($matches)) {
-            throw new Exception('Could not determine extension key for: ' . $modelName, 1406577758);
+            throw new Exception('Could not determine extension key for: ' . $modelName, 140657775);
         }
         return $matches;
     }
