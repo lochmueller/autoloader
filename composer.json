@@ -59,7 +59,7 @@
     "issues": "https://github.com/lochmueller/autoloader/issues"
   },
   "require-dev": {
-    "namelesscoder/typo3-repository-client": "1.1.1",
+    "namelesscoder/typo3-repository-client": "1.2.0",
     "phpunit/phpunit": "~4.8.0",
     "squizlabs/php_codesniffer": "^2.6",
     "phpmd/phpmd": "^2.4",
