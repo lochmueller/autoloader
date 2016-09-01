@@ -26,7 +26,7 @@ class SecondController extends ActionController
     }
 
     /**
-     * @plugin Second
+     * @plugin Second!
      * @noCache
      */
     public function aNoCacheAction()
