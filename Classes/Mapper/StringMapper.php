@@ -55,6 +55,6 @@ class StringMapper implements MapperInterface
      */
     public function getDatabaseDefinition()
     {
-        return 'text NOT NULL';
+        return 'text';
     }
 }
