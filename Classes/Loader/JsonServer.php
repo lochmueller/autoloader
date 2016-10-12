@@ -43,7 +43,16 @@ class JsonServer implements LoaderInterface
                 $autoLoader->getExtensionKey(),
                 'Service/Json/' . $service
             );
-            $info[lcfirst($service)] = $serviceClass;
+
+            $legacyServiceName = lcfirst($service);
+            if (array_key_exists($legacyServiceName, $info)) {
+                throw new \Exception('Service "' . $service . '" already defined in: ' . $info[$legacyServiceName] . '!"');
+            }
+            $info[$legacyServiceName] = $serviceClass;
+
+
+            $serviceName = $autoLoader->getExtensionKey() . '/' . $service;
+            $info[$serviceName] = $serviceClass;
         }
 
         return $info;

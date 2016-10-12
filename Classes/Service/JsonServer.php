@@ -11,6 +11,7 @@ namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 
@@ -54,13 +55,14 @@ class JsonServer
         if (isset($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Json'][$server])) {
             $this->serverClass = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Json'][$server];
         }
+
         $this->renderSmd = (bool)$smd;
     }
 
     /**
      * Handle the request
      */
-    public function handle()
+    public function handle($request)
     {
         header('Content-Type: application/json');
         if (!class_exists($this->serverClass)) {
@@ -75,18 +77,22 @@ class JsonServer
         if ($this->renderSmd) {
             $this->renderSmd();
         } else {
-            $this->handleRequest();
+            $this->handleRequest($request);
         }
     }
 
     /**
      * Handle the service request
      */
-    protected function handleRequest()
+    protected function handleRequest($request)
     {
         $server = new Server();
+        $server->setRequest($request);
 
-        $server->setClass($this->serverClass);
+        /** @var ObjectManager $objectManager */
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+        $server->setClass($objectManager->get($this->serverClass));
         try {
             $server->handle();
         } catch (\Exception $ex) {
