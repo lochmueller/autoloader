@@ -1,6 +1,6 @@
 {
   "name": "lochmueller/autoloader",
-  "version": "2.1.0",
+  "version": "2.1.5",
   "type": "typo3-cms-extension",
   "description": "Automatic components loading of ExtBase extensions to get more time for coffee in the company ;) This ext is not a PHP SPL autoloader or class loader - it is better! Loads CommandController, Xclass, Hooks, Aspects, FlexForms, Slots, TypoScript, TypeConverter, BackendLayouts and take care of createing needed templates, TCA configuration or translations at the right location.",
   "autoload": {
@@ -46,9 +46,8 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0",
-    "typo3/cms-core": "~6.2.0||~7.6.0||~8.1.0||dev-master",
-    "typo3/cms": "^7.6.0"
+    "php": ">=5.5.0",
+    "typo3/cms-core": "~6.2.0||~7.6.0||<8.99.99||dev-master"
   },
   "replace": {
     "autoloader": "self.version",
@@ -60,7 +59,7 @@
     "issues": "https://github.com/lochmueller/autoloader/issues"
   },
   "require-dev": {
-    "namelesscoder/typo3-repository-client": "1.1.x-dev",
+    "namelesscoder/typo3-repository-client": "1.2.0",
     "phpunit/phpunit": "~4.8.0",
     "squizlabs/php_codesniffer": "^2.6",
     "phpmd/phpmd": "^2.4",

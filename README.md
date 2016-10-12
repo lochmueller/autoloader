@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/lochmueller/autoloader.svg?branch=master)](https://travis-ci.org/lochmueller/autoloader)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lochmueller/autoloader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lochmueller/autoloader/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/lochmueller/autoloader/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lochmueller/autoloader/?branch=master)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lochmueller/autoloader.svg)](http://isitmaintained.com/project/lochmueller/autoloader "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/lochmueller/autoloader.svg)](http://isitmaintained.com/project/lochmueller/autoloader "Percentage of issues still open")
 
 Autoloader: Swiss Knife for Developers
 ======================================

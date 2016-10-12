@@ -171,7 +171,7 @@ class ClassLoader
             // Register directories for a new namespace.
             $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
-                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
+                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.", 14837653);
             }
             $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             $this->prefixDirsPsr4[$prefix] = (array) $paths;
@@ -222,7 +222,7 @@ class ClassLoader
         } else {
             $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
-                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
+                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.", 29827327);
             }
             $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             $this->prefixDirsPsr4[$prefix] = (array) $paths;

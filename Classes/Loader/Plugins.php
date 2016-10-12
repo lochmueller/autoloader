@@ -89,6 +89,9 @@ class Plugins implements LoaderInterface
      */
     protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
     {
+        $first = strpos($pluginKey, '!') !== false;
+        $pluginKey = trim($pluginKey, '!');
+
         if (!isset($pluginInformation[$pluginKey])) {
             $pluginInformation[$pluginKey] = [
                 'cache'   => [],
@@ -103,10 +106,22 @@ class Plugins implements LoaderInterface
 
         foreach ($parts as $part) {
             if (!isset($pluginInformation[$pluginKey][$part][$controllerKey])) {
-                $pluginInformation[$pluginKey][$part][$controllerKey] .= $actionName;
-            } else {
-                $pluginInformation[$pluginKey][$part][$controllerKey] .= ',' . $actionName;
+                $pluginInformation[$pluginKey][$part][$controllerKey] = '';
             }
+            $actions = GeneralUtility::trimExplode(',', $pluginInformation[$pluginKey][$part][$controllerKey], true);
+            if ($first) {
+                array_unshift($actions, $actionName);
+                $targetController = [
+                    $controllerKey => $pluginInformation[$pluginKey][$part][$controllerKey]
+                ];
+                unset($pluginInformation[$pluginKey][$part][$controllerKey]);
+                $pluginInformation[$pluginKey][$part] = array_merge($targetController, $pluginInformation[$pluginKey][$part]);
+            } else {
+                $actions[] = $actionName;
+            }
+
+
+            $pluginInformation[$pluginKey][$part][$controllerKey] = implode(',', $actions);
         }
         return $pluginInformation;
     }
