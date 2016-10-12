@@ -76,6 +76,11 @@
       "Package": {
         "partOfMinimalUsableSystem": true
       }
+    },
+    "extra": {
+      "branch-alias": {
+        "dev-master": "2.1.x-dev"
+      }
     }
   }
 }
