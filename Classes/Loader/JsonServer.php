@@ -46,7 +46,7 @@ class JsonServer implements LoaderInterface
 
             $legacyServiceName = lcfirst($service);
             if (array_key_exists($legacyServiceName, $info)) {
-                throw new \Exception('Service "' . $service . '" already defined in: ' . $info[$legacyServiceName] . '!"');
+                trigger_error('Service "' . $service . '" already defined in: ' . $info[$legacyServiceName] . '!"', E_USER_NOTICE);
             }
             $info[$legacyServiceName] = $serviceClass;
 
