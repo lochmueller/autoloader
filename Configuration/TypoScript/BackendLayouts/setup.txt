@@ -22,17 +22,3 @@ autoloader.template {
 		2.wrap = |.html
 	}
 }
-
-## Page example
-#page = PAGE
-#page {
-#	10 = FLUIDTEMPLATE
-#	10 {
-#		file.stdWrap.cObject < autoloader.template
-#		partialRootPath = ...
-#		layoutRootPath = ...
-#		variables {
-#			# Variables
-#		}
-#	}
-#}
