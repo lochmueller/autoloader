@@ -8,9 +8,9 @@ namespace HDNET\Autoloader\Tests\Unit\Service;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- * SoapServerTest
+ * JsonServerServiceTest
  */
-class JsonServerTest extends UnitTestCase
+class JsonServerServiceTest extends UnitTestCase
 {
 
     /**
