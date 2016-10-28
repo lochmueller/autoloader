@@ -14,7 +14,7 @@ use WSDL\WSDLCreator;
 /**
  * Soap server handling
  */
-class SoapServer
+class SoapServer extends AbstractService
 {
 
     /**

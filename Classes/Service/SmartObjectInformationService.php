@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * SmartObjectInformationService
  */
-class SmartObjectInformationService
+class SmartObjectInformationService extends AbstractService
 {
 
     /**
