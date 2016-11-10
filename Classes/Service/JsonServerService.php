@@ -17,7 +17,7 @@ use Zend\Json\Server\Smd;
 /**
  * Json server handling
  */
-class JsonServer
+class JsonServerService extends AbstractService
 {
 
     /**
