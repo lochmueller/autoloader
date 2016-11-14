@@ -42,7 +42,8 @@ class JsonServer
     {
         /* @var $GLOBALS['TSFE'] \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
         $GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class, $GLOBALS['TYPO3_CONF_VARS'],
+            \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
+            $GLOBALS['TYPO3_CONF_VARS'],
             null,
             0
         );
