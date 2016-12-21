@@ -1,13 +1,11 @@
 <?php
 
-/**
- * Base TCA generation for the table __tableName__
- */
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 
-$GLOBALS['TCA']['__tableName__'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('__extensionKey__', '__tableName__');
+$GLOBALS['TCA']['__tableName__'] = ModelUtility::getTcaOverrideInformation('__extensionKey__', '__tableName__');
 
 // custom manipulation calls here
+$custom = [];
 
-$custom = array();
-
-$GLOBALS['TCA']['__tableName__'] = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['__tableName__'], $custom);
+$GLOBALS['TCA']['__tableName__'] = ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['__tableName__'], $custom);

@@ -104,7 +104,7 @@ class SmartObjectManager implements SingletonInterface
 
             if (!is_file($tcaFileName)) {
                 $replace = [
-                    str_replace('\\', '\\\\', $model),
+                    '\\' . trim($model) . '::class',
                     $tableName,
                     $extensionKey
                 ];
