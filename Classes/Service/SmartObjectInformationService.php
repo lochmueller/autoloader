@@ -167,7 +167,7 @@ class SmartObjectInformationService
 
         $overrideTca = [
             'ctrl' => [
-                'title' => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
+                'title' => $this->getTcaTitle($tableName, $extensionName),
                 'label' => $labelField,
                 'tstamp' => 'tstamp',
                 'crdate' => 'crdate',
@@ -327,5 +327,15 @@ class SmartObjectInformationService
     protected function getDataSet()
     {
         return GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet');
+    }
+
+    /**
+     * @param string $tableName
+     * @param string $extensionName
+     * @return string
+     */
+    protected function getTcaTitle($tableName, $extensionName)
+    {
+        return TranslateUtility::getLllOrHelpMessage($tableName, $extensionName);
     }
 }
