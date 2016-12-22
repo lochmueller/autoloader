@@ -12,7 +12,6 @@ use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
  * Utility to interact with the Model
@@ -137,7 +136,7 @@ class ModelUtility
      * @param array $data
      * @param bool $backendSelection
      *
-     * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+     * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity|object
      */
     public static function getModel($modelName, $data, $backendSelection = false)
     {

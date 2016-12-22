@@ -11,7 +11,6 @@ namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 
@@ -61,6 +60,8 @@ class JsonServer
 
     /**
      * Handle the request
+     *
+     * @param $request
      */
     public function handle($request)
     {
@@ -83,15 +84,15 @@ class JsonServer
 
     /**
      * Handle the service request
+     *
+     * @param $request
      */
     protected function handleRequest($request)
     {
         $server = new Server();
         $server->setRequest($request);
 
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
+        $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
         $server->setClass($objectManager->get($this->serverClass));
         try {
             $server->handle();
@@ -111,7 +112,7 @@ class JsonServer
         $smd =  $server->getServiceMap();
         $smd->setTarget($this->getServiceUri());
         $smd->setEnvelope(Smd::ENV_JSONRPC_2);
-        
+
         echo $smd;
     }
 

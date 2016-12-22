@@ -11,6 +11,7 @@ use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\ClassLoadingInformation;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -63,7 +64,7 @@ class ClearCache implements ClearCacheActionsHookInterface
             ->flush();
 
         // Dump new class loading information
-        if (GeneralUtility::compat_version('7.0') && !\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
+        if (GeneralUtility::compat_version('7.0') && !Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }

@@ -7,7 +7,6 @@
 
 namespace HDNET\Autoloader\Service;
 
-use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
@@ -196,7 +195,7 @@ class SmartObjectInformationService
      *
      * @param string $modelClassName
      *
-     * @return string
+     * @return array
      */
     protected function getCustomDatabaseInformation($modelClassName)
     {

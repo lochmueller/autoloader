@@ -8,7 +8,6 @@
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
-use HDNET\Autoloader\Localization\Writer\LocalizationWriterInterface;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Localization\LanguageStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -81,7 +80,8 @@ class LanguageHandler extends LanguageStore
                 continue;
             }
             $serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
-            /** @var LocalizationWriterInterface $service */
+
+            /** @var AbstractLocalizationWriter $service */
             $service = GeneralUtility::makeInstance($serviceName);
             if ($overrideLanguageBase !== null) {
                 $service->setLanguageBaseName($overrideLanguageBase);

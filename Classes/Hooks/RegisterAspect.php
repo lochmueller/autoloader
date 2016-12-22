@@ -66,7 +66,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     /**
      * Load the xclass template and cache it in a local property
      *
-     * @return null
+     * @return void
      */
     protected function loadXclassTemplate()
     {

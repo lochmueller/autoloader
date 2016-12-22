@@ -58,11 +58,11 @@ class XmlWriter extends AbstractLocalizationWriter
      * @param string $key
      * @param string $default
      *
-     * @return NULL
+     * @return void
      */
     public function addLabel($extensionKey, $key, $default)
     {
-        // Excelude
+        // Exclude
         if (!strlen($default)) {
             return;
         }

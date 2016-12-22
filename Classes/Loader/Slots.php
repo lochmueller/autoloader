@@ -81,7 +81,8 @@ class Slots implements LoaderInterface
     }
 
     /**
-     * @param array $slots
+     * @param array $array
+     *
      * @return array
      */
     public function flattenSlotsByPriority(array $array)
@@ -103,11 +104,10 @@ class Slots implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -116,7 +116,7 @@ class Slots implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

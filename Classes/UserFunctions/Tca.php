@@ -16,8 +16,8 @@ class Tca
     /**
      * Generate the help message for object storage fields
      *
-     * @param array                              $configuration
-     * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
+     * @param array $configuration
+     * @param object $formEngine FormEngine object
      *
      * @return string
      */
@@ -29,8 +29,8 @@ class Tca
     /**
      * Generate the help message for model fields
      *
-     * @param array                              $configuration
-     * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
+     * @param array $configuration
+     * @param object $formEngine FormEngine object
      *
      * @return string
      */

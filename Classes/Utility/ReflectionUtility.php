@@ -83,7 +83,7 @@ class ReflectionUtility
      *
      * @param string $className
      *
-     * @return MethodReflection
+     * @return MethodReflection[]
      */
     public static function getPublicMethods($className)
     {
