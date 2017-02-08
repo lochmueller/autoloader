@@ -43,7 +43,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
             return;
         }
 
-        if (!GeneralUtility::compat_version('7.0') && !ExtensionManagementUtility::isLoaded('css_styled_content')) {
+        if (!ExtendedUtility::isBranchActive(7) && !ExtensionManagementUtility::isLoaded('css_styled_content')) {
             // @todo avoid exception in the backend of TYPO3 6.2. Check why the backend is broken
             return;
         }

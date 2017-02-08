@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Utility functions for the Autoloader
@@ -147,6 +148,6 @@ class ExtendedUtility
      */
     public static function isBranchActive($branch)
     {
-        return GeneralUtility::compat_version($branch);
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger($branch);
     }
 }
