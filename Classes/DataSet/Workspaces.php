@@ -44,7 +44,7 @@ class Workspaces implements DataSetInterface
                 ]
             ]
         ];
-        if($isModernTca) {
+        if ($isModernTca) {
             unset($tca['ctrl']['versioning_followPages']);
         }
         return $tca;
