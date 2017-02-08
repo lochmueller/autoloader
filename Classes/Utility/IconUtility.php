@@ -29,7 +29,7 @@ class IconUtility
      */
     public static function addTcaTypeIcon($table, $type, $icon)
     {
-        if (GeneralUtility::compat_version('7.0')) {
+        if (ExtendedUtility::isBranchActive(7)) {
             $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
             if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
                 $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\SvgIconProvider';

@@ -137,4 +137,16 @@ class ExtendedUtility
 
         return $view;
     }
+
+    /**
+     * Check if the branch is higher-equals
+     *
+     * @param int $branch
+     *
+     * @return boolean
+     */
+    public static function isBranchActive($branch)
+    {
+        return GeneralUtility::compat_version($branch);
+    }
 }

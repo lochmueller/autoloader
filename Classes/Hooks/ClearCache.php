@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Hooks;
 
+use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -64,7 +65,7 @@ class ClearCache implements ClearCacheActionsHookInterface
             ->flush();
 
         // Dump new class loading information
-        if (GeneralUtility::compat_version('7.0') && !Bootstrap::usesComposerClassLoading()) {
+        if (ExtendedUtility::isBranchActive(7) && !Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }

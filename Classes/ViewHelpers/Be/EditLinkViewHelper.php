@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
+use HDNET\Autoloader\Utility\ExtendedUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -30,7 +31,7 @@ class EditLinkViewHelper extends AbstractViewHelper
             'edit[tt_content][' . $data['uid'] . ']' => 'edit',
             'returnUrl'                              => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
-        if (GeneralUtility::compat_version('7.0')) {
+        if (ExtendedUtility::isBranchActive(7)) {
             $url = BackendUtility::getModuleUrl('record_edit', $urlParameter);
         } else {
             $url = $GLOBALS['BACK_PATH'] . 'alt_doc.php?' . http_build_query($urlParameter);

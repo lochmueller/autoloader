@@ -8,7 +8,7 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
  * DataSet information for languages
@@ -78,7 +78,7 @@ class Language implements DataSetInterface
             ],
         ];
 
-        if (!GeneralUtility::compat_version('7.0')) {
+        if (!ExtendedUtility::isBranchActive(7)) {
             $tca['columns']['l10n_parent']['config']['iconsInOptionTags'] = false;
             $tca['columns']['l10n_parent']['config']['foreign_table_loadIcons'] = false;
             $tca['columns']['l10n_parent']['config']['noIconsBelowSelect'] = true;
