@@ -105,7 +105,7 @@ class ContextSensitiveHelps implements LoaderInterface
             $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
         }
 
-        $checkPath = ['xlf', 'xml', 'php'];
+        $checkPath = ['xlf', 'xml'];
         foreach ($checkPath as $extension) {
             $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
             if (is_file(GeneralUtility::getFileAbsFileName($path))) {
