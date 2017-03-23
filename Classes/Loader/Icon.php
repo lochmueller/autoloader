@@ -26,7 +26,7 @@ class Icon implements LoaderInterface
      * There is no file monitoring for this cache
      *
      * @param Loader $loader
-     * @param int    $type
+     * @param int $type
      *
      * @return array
      */
@@ -37,10 +37,23 @@ class Icon implements LoaderInterface
             return $icons;
         }
 
-        $iconFolder = 'Resources/Public/Icon/';
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $iconFolder;
+        return array_merge($this->getIconsByPath($loader, 'Resources/Public/Icon/'), $this->getIconsByPath($loader, 'Resources/Public/Icons/'));
+    }
+
+    /**
+     * Get the icons
+     *
+     * @param Loader $loader
+     * @param string $relPath
+     *
+     * @return array
+     */
+    protected function getIconsByPath(Loader $loader, $relPath)
+    {
+        $icons = [];
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $relPath;
         $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
-        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 0);
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 99);
         if (!sizeof($files)) {
             return $icons;
         }
@@ -51,12 +64,12 @@ class Icon implements LoaderInterface
                 $provider = 'TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider';
             }
             $relativePath = str_replace($extensionPath, '', $path);
-            $iconPath = str_replace($iconFolder, '', $relativePath);
+            $iconPath = str_replace($relPath, '', $relativePath);
 
-            $pathElements = PathUtility::pathinfo(strtolower(str_replace('/', '-', $iconPath)));
+            $pathElements = PathUtility::pathinfo(strtolower(str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
             $icons[] = [
-                'provider'   => $provider,
-                'path'       => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
+                'provider' => $provider,
+                'path' => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
                 'identifier' => str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
             ];
         }
@@ -67,7 +80,7 @@ class Icon implements LoaderInterface
      * Run the loading process for the ext_tables.php file
      *
      * @param Loader $loader
-     * @param array  $loaderInformation
+     * @param array $loaderInformation
      *
      * @return NULL
      */
@@ -90,7 +103,7 @@ class Icon implements LoaderInterface
      * Run the loading process for the ext_localconf.php file
      *
      * @param \HDNET\Autoloader\Loader $loader
-     * @param array                    $loaderInformation
+     * @param array $loaderInformation
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      * @return NULL
