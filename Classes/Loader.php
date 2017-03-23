@@ -201,10 +201,14 @@ class Loader implements SingletonInterface
      */
     protected function buildAutoLoaderObjects(array $objectNames = [])
     {
+        static $objectCache = [];
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
-            $objects[] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+            if(!isset($objectCache[$autoLoaderObjectName])) {
+                $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+            }
+            $objects[] = $objectCache[$autoLoaderObjectName];
         }
         return $objects;
     }
