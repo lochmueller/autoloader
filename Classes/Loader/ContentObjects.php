@@ -308,12 +308,23 @@ class ContentObjects implements LoaderInterface
             // RTE
             if (isset($config['richTextFields']) && is_array($config['richTextFields']) && $config['richTextFields']) {
                 foreach ($config['richTextFields'] as $field) {
-                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = [
-                        'config' => [
-                            'type' => 'text'
-                        ],
-                        'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
-                    ];
+                    if (ExtendedUtility::isBranchActive(8)) {
+                        $conf = [
+                            'config' => [
+                                'type' => 'text',
+                                'enableRichtext' => '1',
+                                'richtextConfiguration' => 'default',
+                            ],
+                        ];
+                    } else {
+                        $conf = [
+                            'config' => [
+                                'type' => 'text'
+                            ],
+                            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
+                        ];
+                    }
+                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = $conf;
                 }
             }
 
