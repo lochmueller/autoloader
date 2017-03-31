@@ -16,6 +16,8 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -331,11 +333,11 @@ class ContentObjects implements LoaderInterface
 
             /** @var IconRegistry $iconRegistry */
 
-            $provider = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
+            $provider = BitmapIconProvider::class;
             if (substr(strtolower($config['iconExt']), -3) === 'svg') {
-                $provider = 'TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider';
+                $provider = SvgIconProvider::class;
             }
-            $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+            $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
             $iconRegistry->registerIcon($tabName . '-' . $typeKey, $provider, ['source' => $config['iconExt']]);
 
             ExtensionManagementUtility::addPageTSConfig('

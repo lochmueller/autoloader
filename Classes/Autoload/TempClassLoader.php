@@ -7,6 +7,7 @@
 namespace HDNET\Autoloader\Autoload;
 
 use HDNET\Autoloader\SingletonInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -68,7 +69,7 @@ class TempClassLoader implements SingletonInterface
             $cacheIdentifier = 'XCLASS_' . $optimizedClassName;
 
             /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-            $cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')
+            $cache = GeneralUtility::makeInstance(CacheManager::class)
                 ->getCache('autoloader');
             if ($cache->has($cacheIdentifier)) {
                 $cache->requireOnce($cacheIdentifier);

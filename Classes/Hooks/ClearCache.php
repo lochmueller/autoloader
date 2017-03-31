@@ -12,6 +12,7 @@ use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\ClassLoadingInformation;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
@@ -60,7 +61,7 @@ class ClearCache implements ClearCacheActionsHookInterface
         }
 
         /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->getCache('autoloader')
             ->flush();
 

@@ -8,6 +8,8 @@
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Backend\Sprite\SpriteManager;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -31,12 +33,12 @@ class IconUtility
     {
         $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
         if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
-            $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\SvgIconProvider';
+            $iconProviderClass = SvgIconProvider::class;
         } else {
-            $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
+            $iconProviderClass = BitmapIconProvider::class;
         }
         /** @var IconRegistry $iconRegistry */
-        $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
         $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
         $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
         $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;

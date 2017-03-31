@@ -8,6 +8,8 @@ namespace HDNET\Autoloader\Utility;
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Utility\EidUtility;
 use Zend\Json\Server\Request;
 
@@ -60,7 +62,7 @@ class JsonServer
     public static function initEnvironment()
     {
         $GLOBALS['TSFE'] = GeneralUtility::makeInstance(
-            'TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
+            TypoScriptFrontendController::class,
             $GLOBALS['TYPO3_CONF_VARS'],
             null,
             0
@@ -77,7 +79,7 @@ class JsonServer
         $GLOBALS['TSFE']->initTemplate();
         $GLOBALS['TSFE']->getConfigArray();
         $GLOBALS['TSFE']->cObj = GeneralUtility::makeInstance(
-            'TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer'
+            ContentObjectRenderer::class
         );
         $GLOBALS['TSFE']->settingLanguage();
         $GLOBALS['TSFE']->settingLocale();

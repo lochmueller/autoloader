@@ -18,7 +18,7 @@ class JsonServerTest extends UnitTestCase
      */
     public function foreignFrameworkIsLoaded()
     {
-        $this->assertSame(true, class_exists('Zend\\Json\\Server\\Server'));
+        $this->assertSame(true, class_exists(\Zend\Json\Server\Server::class));
     }
 
 }

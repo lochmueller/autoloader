@@ -7,6 +7,7 @@
 
 namespace HDNET\Autoloader\Service;
 
+use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
@@ -30,7 +31,7 @@ class SmartObjectInformationService
      */
     public static function getInstance()
     {
-        return GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+        return GeneralUtility::makeInstance(SmartObjectInformationService::class);
     }
 
     /**
@@ -79,7 +80,7 @@ class SmartObjectInformationService
             }
 
             /** @var Mapper $mapper */
-            $mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
+            $mapper = ExtendedUtility::create(Mapper::class);
             $field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name'], $label);
 
             // RTE
@@ -226,7 +227,7 @@ class SmartObjectInformationService
     protected function getDatabaseMappingByVarType($var)
     {
         /** @var Mapper $mapper */
-        $mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
+        $mapper = ExtendedUtility::create(Mapper::class);
         return $mapper->getDatabaseDefinition($var);
     }
 
@@ -324,7 +325,7 @@ class SmartObjectInformationService
      */
     protected function getDataSet()
     {
-        return GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet');
+        return GeneralUtility::makeInstance(DataSet::class);
     }
 
     /**

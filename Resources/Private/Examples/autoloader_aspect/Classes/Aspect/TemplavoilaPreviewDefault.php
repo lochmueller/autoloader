@@ -10,6 +10,7 @@
 
 namespace HDNET\AutoloaderAspect\Aspect;
 
+use HDNET\Autoloader\Hooks\ElementBackendPreview;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -27,7 +28,7 @@ class TemplavoilaPreviewDefault
      * On default without ContenObjects it render the normal templavoila default preview.
      *
      * @param object $object class of the joinPoint
-     * @param array  $params arguments of the joinPoint
+     * @param array $params arguments of the joinPoint
      *
      * @aspectClass     tx_templavoila_preview_default
      * @aspectJoinPoint render_previewContent
@@ -40,7 +41,7 @@ class TemplavoilaPreviewDefault
         $row = $params['args'][0];
 
         /** @var \HDNET\Autoloader\Hooks\ElementBackendPreview $elementBackendPreview */
-        $elementBackendPreview = GeneralUtility::makeInstance('HDNET\\Autoloader\\Hooks\\ElementBackendPreview');
+        $elementBackendPreview = GeneralUtility::makeInstance(ElementBackendPreview::class);
 
         if (!$elementBackendPreview->isAutoloaderContenobject($row)) {
             return $params;

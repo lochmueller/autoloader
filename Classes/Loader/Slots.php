@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Loading Slots
@@ -122,7 +123,7 @@ class Slots implements LoaderInterface
     {
         if (!empty($loaderInformation)) {
             /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-            $signalSlotDispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
             foreach ($loaderInformation as $slot) {
                 $signalSlotDispatcher->connect(
                     $slot['signalClassName'],

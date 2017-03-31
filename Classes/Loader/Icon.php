@@ -9,6 +9,8 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,7 +35,7 @@ class Icon implements LoaderInterface
     public function prepareLoader(Loader $loader, $type)
     {
         $icons = [];
-        if (!class_exists('TYPO3\\CMS\\Core\\Imaging\\IconRegistry')) {
+        if (!class_exists(IconRegistry::class)) {
             return $icons;
         }
 
@@ -59,9 +61,9 @@ class Icon implements LoaderInterface
         }
 
         foreach ($files as $path) {
-            $provider = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
+            $provider = BitmapIconProvider::class;
             if (substr(strtolower($path), -3) === 'svg') {
-                $provider = 'TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider';
+                $provider = SvgIconProvider::class;
             }
             $relativePath = str_replace($extensionPath, '', $path);
             $iconPath = str_replace($relPath, '', $relativePath);
@@ -91,7 +93,7 @@ class Icon implements LoaderInterface
         }
 
         /** @var IconRegistry $iconRegistry */
-        $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
         foreach ($loaderInformation as $config) {
             $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);

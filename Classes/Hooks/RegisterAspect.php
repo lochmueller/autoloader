@@ -8,6 +8,7 @@
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\TableConfigurationPostProcessingHookInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -46,7 +47,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $this->loadXclassTemplate();
 
         /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-        $cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')
+        $cache = GeneralUtility::makeInstance(CacheManager::class)
             ->getCache('autoloader');
         foreach ($xClasses as $xClassName => $xClass) {
             // Register the Xclass in TYPO3

@@ -11,6 +11,7 @@ namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 
@@ -92,7 +93,7 @@ class JsonServer
         $server = new Server();
         $server->setRequest($request);
 
-        $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $server->setClass($objectManager->get($this->serverClass));
         try {
             $server->handle();

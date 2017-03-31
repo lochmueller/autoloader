@@ -52,7 +52,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
             'l10n'
         ];
         /** @var CacheManager $cacheManager */
-        $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         foreach ($caches as $name) {
             try {
                 $cache = $cacheManager->getCache($name);

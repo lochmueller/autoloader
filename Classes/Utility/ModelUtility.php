@@ -12,6 +12,7 @@ use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
  * Utility to interact with the Model
@@ -152,7 +153,7 @@ class ModelUtility
 
         if ($backendSelection) {
             $_GET['L'] = (int)$data['sys_language_uid'];
-            GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session')->destroy();
+            GeneralUtility::makeInstance(Session::class)->destroy();
 
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
                 $query->getQuerySettings()
@@ -168,7 +169,7 @@ class ModelUtility
             $rows = $query->execute(true);
             $objectManager = new ObjectManager();
             /** @var ExcludeIdentityMapDataMapper $dataMapper */
-            $dataMapper = $objectManager->get('HDNET\\Autoloader\\Persistence\\ExcludeIdentityMapDataMapper');
+            $dataMapper = $objectManager->get(ExcludeIdentityMapDataMapper::class);
             $objects = $dataMapper->map($modelName, $rows);
             $selection = current($objects);
             $_GET['L'] = 0;
