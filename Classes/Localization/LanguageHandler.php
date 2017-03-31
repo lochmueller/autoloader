@@ -37,7 +37,7 @@ class LanguageHandler extends LanguageStore
      *
      * @return NULL|string
      */
-    public function handle($key, $extensionName, &$default, $arguments, $overrideLanguageBase = null)
+    public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
         // If we are called early in the TYPO3 bootstrap we mus return early with the default label
         if (!($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection) || empty($GLOBALS['TCA'])) {

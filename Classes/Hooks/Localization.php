@@ -30,6 +30,6 @@ class Localization
     {
         /** @var LanguageHandler $languageHandler */
         $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
-        $languageHandler->handle($key, $extensionName, $default, $arguments);
+        $default = $languageHandler->handle($key, $extensionName, $default, $arguments);
     }
 }

@@ -85,7 +85,7 @@ class SmartObjectInformationService
             // RTE
             if ($info['rte']) {
                 $field['config']['type'] = 'text';
-                if(ExtendedUtility::isBranchActive(8)){
+                if (ExtendedUtility::isBranchActive(8)) {
                     $field['config']['enableRichtext'] = '1';
                     $field['config']['richtextConfiguration'] = 'default';
                 }

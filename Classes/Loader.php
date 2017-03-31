@@ -205,7 +205,7 @@ class Loader implements SingletonInterface
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
-            if(!isset($objectCache[$autoLoaderObjectName])) {
+            if (!isset($objectCache[$autoLoaderObjectName])) {
                 $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
             }
             $objects[] = $objectCache[$autoLoaderObjectName];
