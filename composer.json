@@ -46,8 +46,8 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.0||~7.6.0||<8.99.99||dev-master"
+    "php": ">=7.0.0",
+    "typo3/cms-core": "~7.6.0||~8.6.0||~8.7.0||dev-master"
   },
   "replace": {
     "autoloader": "self.version",

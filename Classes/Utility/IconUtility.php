@@ -29,22 +29,17 @@ class IconUtility
      */
     public static function addTcaTypeIcon($table, $type, $icon)
     {
-        if (ExtendedUtility::isBranchActive(7)) {
-            $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
-            if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
-                $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\SvgIconProvider';
-            } else {
-                $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
-            }
-            /** @var IconRegistry $iconRegistry */
-            $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
-            $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
-            $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
-            $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
+        $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
+        if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
+            $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\SvgIconProvider';
         } else {
-            $fullIconPath = str_replace('../typo3/', '', $icon);
-            SpriteManager::addTcaTypeIcon('tt_content', $type, $fullIconPath);
+            $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
         }
+        /** @var IconRegistry $iconRegistry */
+        $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+        $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
+        $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
+        $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
     }
 
     /**

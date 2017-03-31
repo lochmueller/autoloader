@@ -65,7 +65,7 @@ class ClearCache implements ClearCacheActionsHookInterface
             ->flush();
 
         // Dump new class loading information
-        if (ExtendedUtility::isBranchActive(7) && !Bootstrap::usesComposerClassLoading()) {
+        if (!Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }

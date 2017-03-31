@@ -156,12 +156,7 @@ class SmartObjectInformationService
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
 
-        if (ExtendedUtility::isBranchActive(7)) {
-            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
-        } else {
-            $languagePrefix = 'LLL:EXT:cms/';
-        }
-
+        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
         if (!in_array('enableFields', $excludes)) {
             $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
             $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
@@ -179,7 +174,7 @@ class SmartObjectInformationService
                 'sortby' => 'sorting',
                 'delete' => 'deleted',
                 'searchFields' => implode(',', $searchFields),
-                'iconfile' => IconUtility::getByModelName($modelClassName, ExtendedUtility::isBranchActive(7))
+                'iconfile' => IconUtility::getByModelName($modelClassName, true)
             ],
             'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),

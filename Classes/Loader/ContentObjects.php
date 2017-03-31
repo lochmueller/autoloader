@@ -85,11 +85,7 @@ class ContentObjects implements LoaderInterface
                             $fieldConfiguration
                         );
                         if ($search !== false) {
-                            if (ExtendedUtility::isBranchActive(7)) {
-                                $richTextFields[] = $fieldConfiguration[$search];
-                            } else {
-                                $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
-                            }
+                            $richTextFields[] = $fieldConfiguration[$search];
                         }
                     }
                 }
@@ -202,11 +198,7 @@ class ContentObjects implements LoaderInterface
      */
     protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
     {
-        if (ExtendedUtility::isBranchActive(7)) {
-            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
-        } else {
-            $languagePrefix = 'LLL:EXT:cms/locallang_ttc.xlf';
-        }
+        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
@@ -339,9 +331,9 @@ mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey
     icon = ' . $config['icon'] . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage(
-                'wizard.' . $e . '.description',
-                $loader->getExtensionKey()
-            ) . '
+                    'wizard.' . $e . '.description',
+                    $loader->getExtensionKey()
+                ) . '
     tt_content_defValues {
         CType = ' . $typeKey . '
     }
