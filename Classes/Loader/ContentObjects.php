@@ -16,6 +16,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
@@ -96,7 +97,7 @@ class ContentObjects implements LoaderInterface
                 'richTextFields' => $richTextFields,
                 'modelClass' => $className,
                 'model' => $model,
-                'icon' => IconUtility::getByModelName($className),
+                'icon' => IconUtility::getByModelName($className, false),
                 'iconExt' => IconUtility::getByModelName($className, true),
                 'noHeader' => $noHeader,
                 'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
@@ -326,14 +327,26 @@ class ContentObjects implements LoaderInterface
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
                 $createWizardHeader[] = $tabName;
             }
+
+
+            /** @var IconRegistry $iconRegistry */
+
+            $provider = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
+            if (substr(strtolower($config['iconExt']), -3) === 'svg') {
+                $provider = 'TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider';
+            }
+            $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+            $iconRegistry->registerIcon($tabName . '-' . $typeKey, $provider, ['source' => $config['iconExt']]);
+
             ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
     icon = ' . $config['icon'] . '
+    iconIdentifier = ' . $tabName . '-' . $typeKey . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage(
-                    'wizard.' . $e . '.description',
-                    $loader->getExtensionKey()
-                ) . '
+                'wizard.' . $e . '.description',
+                $loader->getExtensionKey()
+            ) . '
     tt_content_defValues {
         CType = ' . $typeKey . '
     }
