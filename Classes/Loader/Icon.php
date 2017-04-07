@@ -88,16 +88,6 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        if (empty($loaderInformation)) {
-            return;
-        }
-
-        /** @var IconRegistry $iconRegistry */
-        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-
-        foreach ($loaderInformation as $config) {
-            $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);
-        }
         return null;
     }
 
@@ -112,6 +102,16 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
+        if (empty($loaderInformation)) {
+            return;
+        }
+
+        /** @var IconRegistry $iconRegistry */
+        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+
+        foreach ($loaderInformation as $config) {
+            $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);
+        }
         return null;
     }
 }
