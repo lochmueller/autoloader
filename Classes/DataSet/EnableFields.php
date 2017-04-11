@@ -51,36 +51,31 @@ class EnableFields implements DataSetInterface
                     ],
                 ],
                 'starttime' => [
-                    'exclude'   => 1,
-                    'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
-                    'config'    => [
-                        'type'     => 'input',
-                        'size'     => 13,
-                        'max'      => 20,
-                        'eval'     => 'datetime',
-                        'checkbox' => 0,
-                        'default'  => 0,
-                        'range'    => [
-                            'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ],
+                    'exclude' => true,
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+                    'config' => [
+                        'type' => 'input',
+                        'renderType' => 'inputDateTime',
+                        'eval' => 'datetime',
+                        'default' => 0
                     ],
+                    'l10n_mode' => 'exclude',
+                    'l10n_display' => 'defaultAsReadonly'
                 ],
-                'endtime'   => [
-                    'exclude'   => 1,
-                    'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
-                    'config'    => [
-                        'type'     => 'input',
-                        'size'     => 13,
-                        'max'      => 20,
-                        'eval'     => 'datetime',
-                        'checkbox' => 0,
-                        'default'  => 0,
-                        'range'    => [
-                            'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ],
+                'endtime' => [
+                    'exclude' => true,
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+                    'config' => [
+                        'type' => 'input',
+                        'renderType' => 'inputDateTime',
+                        'eval' => 'datetime',
+                        'default' => 0,
+                        'range' => [
+                            'upper' => mktime(0, 0, 0, 1, 1, 2038)
+                        ]
                     ],
+                    'l10n_mode' => 'exclude',
+                    'l10n_display' => 'defaultAsReadonly'
                 ],
             ],
         ];
