@@ -12,6 +12,18 @@ namespace HDNET\Autoloader\UserFunctions;
  */
 class Tca
 {
+    /**
+     * Generate the help message for array fields
+     *
+     * @param array $configuration
+     * @param object $formEngine FormEngine object
+     *
+     * @return string
+     */
+    public function arrayInfoField($configuration, $formEngine)
+    {
+        return $this->generateGenericRelationMessage($configuration);
+    }
 
     /**
      * Generate the help message for object storage fields
