@@ -38,6 +38,7 @@ class Mapper implements SingletonInterface
         'String',
         'Model',
         'StaticInfoTables',
+        'Array',
     ];
 
     /**
