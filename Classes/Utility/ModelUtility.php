@@ -142,12 +142,12 @@ class ModelUtility
     public static function getModel($modelName, $data, $backendSelection = false)
     {
         $query = ExtendedUtility::getQuery($modelName);
-        $query->getQuerySettings()
-            ->setIgnoreEnableFields($backendSelection);
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
-        $query->getQuerySettings()
-            ->setRespectSysLanguage(false);
+        $settings = $query->getQuerySettings();
+        if (!$backendSelection) {
+            $settings->setIgnoreEnableFields($backendSelection);
+        }
+        $settings->setRespectStoragePage(false);
+        $settings->setRespectSysLanguage(false);
 
         $query->matching($query->equals('uid', $data['uid']));
 
@@ -156,14 +156,10 @@ class ModelUtility
             GeneralUtility::makeInstance(Session::class)->destroy();
 
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
-                $query->getQuerySettings()
-                    ->setLanguageOverlayMode(false);
-                $query->getQuerySettings()
-                    ->setLanguageMode(false);
-                $query->getQuerySettings()
-                    ->setRespectSysLanguage(true);
-                $query->getQuerySettings()
-                    ->setLanguageUid($data['sys_language_uid']);
+                $settings->setLanguageOverlayMode(false);
+                $settings->setLanguageMode(false);
+                $settings->setRespectSysLanguage(true);
+                $settings->setLanguageUid($data['sys_language_uid']);
             }
 
             $rows = $query->execute(true);
