@@ -8,6 +8,7 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
+use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
  * DataSet information for enableFields
@@ -24,29 +25,29 @@ class EnableFields implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return [
-            'ctrl'    => [
+        $tca = [
+            'ctrl' => [
                 'enablecolumns' => [
-                    'disabled'  => 'hidden',
+                    'disabled' => 'hidden',
                     'starttime' => 'starttime',
-                    'endtime'   => 'endtime',
-                    'fe_group'  => 'fe_group',
+                    'endtime' => 'endtime',
+                    'fe_group' => 'fe_group',
                 ],
             ],
             'columns' => [
-                'fe_group'  => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
-                'editlock'  => [
-                    'exclude'   => 1,
+                'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
+                'editlock' => [
+                    'exclude' => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
-                    'config'    => [
+                    'label' => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
+                    'config' => [
                         'type' => 'check'
                     ]
                 ],
-                'hidden'    => [
+                'hidden' => [
                     'exclude' => 1,
-                    'label'   => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
-                    'config'  => [
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+                    'config' => [
                         'type' => 'check',
                     ],
                 ],
@@ -79,6 +80,13 @@ class EnableFields implements DataSetInterface
                 ],
             ],
         ];
+        
+        if (ExtendedUtility::isBranchActive('8.0')) {
+            unset($tca['columns']['editlock']['l10n_mode']);
+            $tca['columns']['editlock']['config']['behaviour']['allowLanguageSynchronization'] = true;
+        }
+
+        return $tca;
     }
 
     /**
