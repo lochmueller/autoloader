@@ -52,6 +52,7 @@ class Loader implements SingletonInterface
         'LanguageOverride',
         'Icon',
         'Gridelement',
+        'FluidNamespace',
     ];
 
     /**
