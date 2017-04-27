@@ -7,6 +7,8 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor;
+use SJBR\StaticInfoTables\Hook\Backend\Form\Wizard\SuggestReceiver;
 
 /**
  * StaticInfoTablesMapper
@@ -52,18 +54,23 @@ class StaticInfoTablesMapper implements MapperInterface
         switch ($withoutNameSpace) {
             case 'country':
                 $table = 'static_countries';
+                $itemsProcFunc = 'translateCountriesSelector';
                 break;
             case 'countryzone':
                 $table = 'static_country_zones';
+                $itemsProcFunc = 'translateCountryZonesSelector';
                 break;
             case 'currency':
                 $table = 'static_currencies';
+                $itemsProcFunc = 'translateCurrenciesSelector';
                 break;
             case 'language':
                 $table = 'static_languages';
+                $itemsProcFunc = 'translateLanguagesSelector';
                 break;
             case 'territory':
                 $table = 'static_territories';
+                $itemsProcFunc = 'translateTerritoriesSelector';
                 break;
             default:
                 return [];
@@ -74,7 +81,21 @@ class StaticInfoTablesMapper implements MapperInterface
             'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
             'config' => [
                 'type' => 'select',
+                'size' => 1,
+                'minitems' => 0,
+                'maxitems' => 1,
+                'items' => [
+                    ['', 0],
+                ],
+                'itemsProcFunc' => TcaSelectItemsProcessor::class . '->' . $itemsProcFunc,
                 'foreign_table' => $table,
+                'wizards' => [
+                    'suggest' => ['type' => 'suggest',
+                        'default' => [
+                            'receiverClass' => SuggestReceiver::class
+                        ],
+                    ],
+                ],
             ],
         ];
     }
