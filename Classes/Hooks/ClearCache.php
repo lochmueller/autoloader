@@ -40,18 +40,25 @@ class ClearCache implements ClearCacheActionsHookInterface
             return;
         }
 
-        $cacheActions[] = [
-            'id'    => 'autoloader',
-            'title' => 'EXT:autoloader caches',
-            'href'  => BackendUtility::getAjaxUrl('autoloader::clearCache'),
-            'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
+        $action = [
+            'id' => 'autoloader',
+            'title' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.title',
+            'description' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.description',
+            'href' => BackendUtility::getAjaxUrl('autoloader::clearCache'),
+            'icon' => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
         ];
+
+        if (ExtendedUtility::isBranchActive('8.0')) {
+            unset($action['icon']);
+            $action['iconIdentifier'] = 'extension-autoloader';
+        }
+        $cacheActions[] = $action;
     }
 
     /**
      * clear Cache ajax handler
      *
-     * @param array              $ajaxParams
+     * @param array $ajaxParams
      * @param AjaxRequestHandler $ajaxObj
      */
     public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
@@ -101,7 +108,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     protected function isAdmin()
     {
         return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
-            ->isAdmin();
+                ->isAdmin();
     }
 
     /**

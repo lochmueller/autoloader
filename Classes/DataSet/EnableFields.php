@@ -80,7 +80,7 @@ class EnableFields implements DataSetInterface
                 ],
             ],
         ];
-        
+
         if (ExtendedUtility::isBranchActive('8.0')) {
             unset($tca['columns']['editlock']['l10n_mode']);
             $tca['columns']['editlock']['config']['behaviour']['allowLanguageSynchronization'] = true;

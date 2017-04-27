@@ -13,6 +13,12 @@
 		<trans-unit id="pleaseSet">
 			<source><![CDATA[Please set: ]]></source>
 		</trans-unit>
+		<trans-unit id="cache.title">
+			<source>EXT:autoloader caches</source>
+		</trans-unit>
+		<trans-unit id="cache.description">
+			<source>Remove autoloader related caches to rebuild and regenerate the loader functions.</source>
+		</trans-unit>
 		</body>
 	</file>
 </xliff>
