@@ -14,7 +14,7 @@ autoloader.template = TEXT
 autoloader.template {
 
 	stdWrap.cache {
-		key = tscobj-template-{TSFE:id}
+		key = tscobj-template-{TSFE:id}-{TSFE:sys_language_uid}
 		key.insertData = 1
 	}
 	
