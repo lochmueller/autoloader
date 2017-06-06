@@ -83,6 +83,6 @@ class JsonServer
         );
         $GLOBALS['TSFE']->settingLanguage();
         $GLOBALS['TSFE']->settingLocale();
-        Bootstrap::getInstance()->loadCachedTca();
+        Bootstrap::getInstance()->loadBaseTca();
     }
 }
