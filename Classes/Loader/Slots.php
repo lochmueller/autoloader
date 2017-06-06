@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Loading Slots
@@ -81,7 +82,8 @@ class Slots implements LoaderInterface
     }
 
     /**
-     * @param array $slots
+     * @param array $array
+     *
      * @return array
      */
     public function flattenSlotsByPriority(array $array)
@@ -103,11 +105,10 @@ class Slots implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -116,13 +117,13 @@ class Slots implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {
         if (!empty($loaderInformation)) {
             /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-            $signalSlotDispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
             foreach ($loaderInformation as $slot) {
                 $signalSlotDispatcher->connect(
                     $slot['signalClassName'],

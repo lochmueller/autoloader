@@ -75,11 +75,10 @@ class LanguageOverride implements LoaderInterface
      * @param Loader $autoLoader
      * @param array  $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -88,7 +87,7 @@ class LanguageOverride implements LoaderInterface
      * @param Loader $autoLoader
      * @param array  $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

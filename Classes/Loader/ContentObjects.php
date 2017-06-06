@@ -11,10 +11,14 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
+use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
@@ -84,11 +88,7 @@ class ContentObjects implements LoaderInterface
                             $fieldConfiguration
                         );
                         if ($search !== false) {
-                            if (GeneralUtility::compat_version('7.0')) {
-                                $richTextFields[] = $fieldConfiguration[$search];
-                            } else {
-                                $fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
-                            }
+                            $richTextFields[] = $fieldConfiguration[$search];
                         }
                     }
                 }
@@ -99,7 +99,7 @@ class ContentObjects implements LoaderInterface
                 'richTextFields' => $richTextFields,
                 'modelClass' => $className,
                 'model' => $model,
-                'icon' => IconUtility::getByModelName($className),
+                'icon' => IconUtility::getByModelName($className, false),
                 'iconExt' => IconUtility::getByModelName($className, true),
                 'noHeader' => $noHeader,
                 'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
@@ -201,11 +201,7 @@ class ContentObjects implements LoaderInterface
      */
     protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
     {
-        if (GeneralUtility::compat_version('7.0')) {
-            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
-        } else {
-            $languagePrefix = 'LLL:EXT:cms/locallang_ttc.xlf';
-        }
+        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
@@ -307,12 +303,23 @@ class ContentObjects implements LoaderInterface
             // RTE
             if (isset($config['richTextFields']) && is_array($config['richTextFields']) && $config['richTextFields']) {
                 foreach ($config['richTextFields'] as $field) {
-                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = [
-                        'config' => [
-                            'type' => 'text'
-                        ],
-                        'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
-                    ];
+                    if (ExtendedUtility::isBranchActive(8)) {
+                        $conf = [
+                            'config' => [
+                                'type' => 'text',
+                                'enableRichtext' => '1',
+                                'richtextConfiguration' => 'default',
+                            ],
+                        ];
+                    } else {
+                        $conf = [
+                            'config' => [
+                                'type' => 'text'
+                            ],
+                            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
+                        ];
+                    }
+                    $GLOBALS['TCA']['tt_content']['types'][$typeKey]['columnsOverrides'][$field] = $conf;
                 }
             }
 
@@ -322,9 +329,21 @@ class ContentObjects implements LoaderInterface
             if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
                 $createWizardHeader[] = $tabName;
             }
+
+
+            /** @var IconRegistry $iconRegistry */
+
+            $provider = BitmapIconProvider::class;
+            if (substr(strtolower($config['iconExt']), -3) === 'svg') {
+                $provider = SvgIconProvider::class;
+            }
+            $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+            $iconRegistry->registerIcon($tabName . '-' . $typeKey, $provider, ['source' => $config['iconExt']]);
+
             ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $typeKey . ' {
     icon = ' . $config['icon'] . '
+    iconIdentifier = ' . $tabName . '-' . $typeKey . '
     title = ' . TranslateUtility::getLllOrHelpMessage('wizard.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage(
                 'wizard.' . $e . '.description',

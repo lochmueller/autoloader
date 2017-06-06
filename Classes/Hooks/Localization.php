@@ -29,7 +29,7 @@ class Localization
     public function assureLabel($key, $extensionName, &$default, $arguments)
     {
         /** @var LanguageHandler $languageHandler */
-        $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
-        $languageHandler->handle($key, $extensionName, $default, $arguments);
+        $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
+        $default = $languageHandler->handle($key, $extensionName, $default, $arguments);
     }
 }

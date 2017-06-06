@@ -12,7 +12,13 @@ autoloader.templateConfiguration {
 
 autoloader.template = TEXT
 autoloader.template {
-	cObject < autoloader.templateConfiguration
+
+	stdWrap.cache {
+		key = tscobj-template-{TSFE:id}-{TSFE:sys_language_uid}
+		key.insertData = 1
+	}
+	
+	cObject =< autoloader.templateConfiguration
 	split {
 		token = /
 		cObjNum = 1 || 2

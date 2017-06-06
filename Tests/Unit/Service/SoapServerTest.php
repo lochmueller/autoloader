@@ -18,7 +18,7 @@ class SoapServerTest extends UnitTestCase
      */
     public function foreignFrameworkIsLoaded()
     {
-        $this->assertSame(true, class_exists('WSDL\\WSDLCreator'));
+        $this->assertSame(true, class_exists(\WSDL\WSDLCreator::class));
     }
 
 }

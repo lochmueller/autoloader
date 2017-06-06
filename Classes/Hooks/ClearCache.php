@@ -7,10 +7,13 @@
 
 namespace HDNET\Autoloader\Hooks;
 
+use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\ClassLoadingInformation;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -37,18 +40,25 @@ class ClearCache implements ClearCacheActionsHookInterface
             return;
         }
 
-        $cacheActions[] = [
-            'id'    => 'autoloader',
-            'title' => 'EXT:autoloader caches',
-            'href'  => BackendUtility::getAjaxUrl('autoloader::clearCache'),
-            'icon'  => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
+        $action = [
+            'id' => 'autoloader',
+            'title' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.title',
+            'description' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.description',
+            'href' => BackendUtility::getAjaxUrl('autoloader::clearCache'),
+            'icon' => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
         ];
+
+        if (ExtendedUtility::isBranchActive('8.0')) {
+            unset($action['icon']);
+            $action['iconIdentifier'] = 'extension-autoloader';
+        }
+        $cacheActions[] = $action;
     }
 
     /**
      * clear Cache ajax handler
      *
-     * @param array              $ajaxParams
+     * @param array $ajaxParams
      * @param AjaxRequestHandler $ajaxObj
      */
     public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
@@ -58,12 +68,12 @@ class ClearCache implements ClearCacheActionsHookInterface
         }
 
         /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->getCache('autoloader')
             ->flush();
 
         // Dump new class loading information
-        if (GeneralUtility::compat_version('7.0') && !\TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()) {
+        if (!Bootstrap::usesComposerClassLoading()) {
             ClassLoadingInformation::dumpClassLoadingInformation();
         }
     }
@@ -98,7 +108,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     protected function isAdmin()
     {
         return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
-            ->isAdmin();
+                ->isAdmin();
     }
 
     /**

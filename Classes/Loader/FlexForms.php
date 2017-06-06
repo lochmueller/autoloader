@@ -90,7 +90,7 @@ class FlexForms implements LoaderInterface
      * @param Loader $loader
      * @param array  $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

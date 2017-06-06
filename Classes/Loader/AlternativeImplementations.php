@@ -80,7 +80,7 @@ class AlternativeImplementations implements LoaderInterface
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
         /** @var \TYPO3\CMS\Extbase\Object\Container\Container $objectManager */
-        $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\Container\\Container');
+        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class);
         foreach ($loaderInformation as $classInformation) {
             $objectManager->registerImplementation($classInformation['originalName'], $classInformation['alternativeClassName']);
         }

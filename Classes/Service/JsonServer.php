@@ -61,6 +61,8 @@ class JsonServer
 
     /**
      * Handle the request
+     *
+     * @param $request
      */
     public function handle($request)
     {
@@ -83,15 +85,15 @@ class JsonServer
 
     /**
      * Handle the service request
+     *
+     * @param $request
      */
     protected function handleRequest($request)
     {
         $server = new Server();
         $server->setRequest($request);
 
-        /** @var ObjectManager $objectManager */
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
         $server->setClass($objectManager->get($this->serverClass));
         try {
             $server->handle();
@@ -111,7 +113,7 @@ class JsonServer
         $smd =  $server->getServiceMap();
         $smd->setTarget($this->getServiceUri());
         $smd->setEnvelope(Smd::ENV_JSONRPC_2);
-        
+
         echo $smd;
     }
 

@@ -8,7 +8,6 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * DataSet information for languages
@@ -64,8 +63,7 @@ class Language implements DataSetInterface
                         ],
                         'foreign_table' => $tableName,
                         'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
-                        'foreign_table_loadIcons' => false,
-                        'noIconsBelowSelect' => true,
+                        'showIconTable' => false,
                     ],
                 ],
                 'l10n_diffsource' => [
@@ -78,10 +76,6 @@ class Language implements DataSetInterface
                 'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
             ],
         ];
-
-        if (!GeneralUtility::compat_version('7.0')) {
-            $tca['columns']['l10n_parent']['config']['iconsInOptionTags'] = false;
-        }
 
         return $tca;
     }

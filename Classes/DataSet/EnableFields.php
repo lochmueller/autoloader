@@ -8,6 +8,7 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
+use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
  * DataSet information for enableFields
@@ -24,66 +25,68 @@ class EnableFields implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return [
-            'ctrl'    => [
+        $tca = [
+            'ctrl' => [
                 'enablecolumns' => [
-                    'disabled'  => 'hidden',
+                    'disabled' => 'hidden',
                     'starttime' => 'starttime',
-                    'endtime'   => 'endtime',
-                    'fe_group'  => 'fe_group',
+                    'endtime' => 'endtime',
+                    'fe_group' => 'fe_group',
                 ],
             ],
             'columns' => [
-                'fe_group'  => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
-                'editlock'  => [
-                    'exclude'   => 1,
+                'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
+                'editlock' => [
+                    'exclude' => 1,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
-                    'config'    => [
+                    'label' => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
+                    'config' => [
                         'type' => 'check'
                     ]
                 ],
-                'hidden'    => [
+                'hidden' => [
                     'exclude' => 1,
-                    'label'   => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
-                    'config'  => [
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+                    'config' => [
                         'type' => 'check',
                     ],
                 ],
                 'starttime' => [
-                    'exclude'   => 1,
-                    'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
-                    'config'    => [
-                        'type'     => 'input',
-                        'size'     => 13,
-                        'max'      => 20,
-                        'eval'     => 'datetime',
-                        'checkbox' => 0,
-                        'default'  => 0,
-                        'range'    => [
-                            'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ],
+                    'exclude' => true,
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+                    'config' => [
+                        'type' => 'input',
+                        'renderType' => 'inputDateTime',
+                        'eval' => 'datetime',
+                        'default' => 0
                     ],
+                    'l10n_mode' => 'exclude',
+                    'l10n_display' => 'defaultAsReadonly'
                 ],
-                'endtime'   => [
-                    'exclude'   => 1,
-                    'l10n_mode' => 'mergeIfNotBlank',
-                    'label'     => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
-                    'config'    => [
-                        'type'     => 'input',
-                        'size'     => 13,
-                        'max'      => 20,
-                        'eval'     => 'datetime',
-                        'checkbox' => 0,
-                        'default'  => 0,
-                        'range'    => [
-                            'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-                        ],
+                'endtime' => [
+                    'exclude' => true,
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+                    'config' => [
+                        'type' => 'input',
+                        'renderType' => 'inputDateTime',
+                        'eval' => 'datetime',
+                        'default' => 0,
+                        'range' => [
+                            'upper' => mktime(0, 0, 0, 1, 1, 2038)
+                        ]
                     ],
+                    'l10n_mode' => 'exclude',
+                    'l10n_display' => 'defaultAsReadonly'
                 ],
             ],
         ];
+
+        if (ExtendedUtility::isBranchActive('8.0')) {
+            unset($tca['columns']['editlock']['l10n_mode']);
+            $tca['columns']['editlock']['config']['behaviour']['allowLanguageSynchronization'] = true;
+        }
+
+        return $tca;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * DataSet information for workspaces
@@ -24,9 +25,10 @@ class Workspaces implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        return [
+        $isModernTca = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('8.0');
+        $tca = [
             'ctrl'    => [
-                'versioningWS'                    => 2,
+                'versioningWS'                    => $isModernTca ? true : 2,
                 'versioning_followPages'          => true,
                 'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
                 'origUid'                         => 't3_origuid'
@@ -42,6 +44,10 @@ class Workspaces implements DataSetInterface
                 ]
             ]
         ];
+        if ($isModernTca) {
+            unset($tca['ctrl']['versioning_followPages']);
+        }
+        return $tca;
     }
 
     /**

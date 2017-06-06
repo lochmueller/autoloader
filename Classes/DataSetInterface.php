@@ -7,8 +7,6 @@
 
 namespace HDNET\Autoloader;
 
-use HDNET\Autoloader\Loader;
-
 /**
  * data set interface
  */

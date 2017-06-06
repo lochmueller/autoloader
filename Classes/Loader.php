@@ -8,6 +8,10 @@
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
+use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -48,6 +52,7 @@ class Loader implements SingletonInterface
         'LanguageOverride',
         'Icon',
         'Gridelement',
+        'FluidNamespace',
     ];
 
     /**
@@ -77,8 +82,8 @@ class Loader implements SingletonInterface
      * @var array
      */
     protected $cacheConfiguration = [
-        'backend'  => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
-        'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
+        'backend'  => SimpleFileBackend::class,
+        'frontend' => PhpFrontend::class,
         'groups'   => [
             'system',
         ],
@@ -95,7 +100,7 @@ class Loader implements SingletonInterface
     {
         if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {
             /** @var \TYPO3\CMS\Core\Configuration\ConfigurationManager $configurationManager */
-            $configurationManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
             $configurationManager->setLocalConfigurationValueByPath(
                 'SYS/caching/cacheConfigurations/autoloader',
                 $this->cacheConfiguration
@@ -116,7 +121,7 @@ class Loader implements SingletonInterface
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
-        $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
+        $loader = GeneralUtility::makeInstance(Loader::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
     }
 
@@ -132,7 +137,7 @@ class Loader implements SingletonInterface
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
-        $loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
+        $loader = GeneralUtility::makeInstance(Loader::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }
 
@@ -201,10 +206,14 @@ class Loader implements SingletonInterface
      */
     protected function buildAutoLoaderObjects(array $objectNames = [])
     {
+        static $objectCache = [];
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
-            $objects[] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+            if (!isset($objectCache[$autoLoaderObjectName])) {
+                $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+            }
+            $objects[] = $objectCache[$autoLoaderObjectName];
         }
         return $objects;
     }
@@ -283,7 +292,7 @@ class Loader implements SingletonInterface
      */
     protected function getCacheManager()
     {
-        return GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        return GeneralUtility::makeInstance(CacheManager::class);
     }
 
     /**

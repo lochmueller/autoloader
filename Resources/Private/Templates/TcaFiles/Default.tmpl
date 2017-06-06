@@ -1,11 +1,15 @@
 <?php
 
-/**
- * Base TCA generation for the model __modelName__
- */
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('__modelName__');
+// return (function () {
 
-$custom = array();
+    $base = ModelUtility::getTcaInformation(__modelName__);
 
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+    // custom manipulation calls here
+    $custom = [];
+
+    return ArrayUtility::mergeRecursiveDistinct($base, $custom);
+
+// })();

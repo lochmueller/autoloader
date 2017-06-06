@@ -13,6 +13,7 @@ Here we describe the different implemented Loader.
 	ExtensionId
 	ExtensionTypoScriptSetup
 	FlexForms
+	Gridelements
 	Hooks
 	LanguageOverride
 	Plugins

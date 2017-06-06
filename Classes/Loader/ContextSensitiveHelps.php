@@ -99,13 +99,13 @@ class ContextSensitiveHelps implements LoaderInterface
 
         $baseFileName = 'locallang_csh_' . $table;
         /** @var LanguageHandler $languageHandler */
-        $languageHandler = GeneralUtility::makeInstance('HDNET\\Autoloader\\Localization\\LanguageHandler');
+        $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
         foreach ($properties as $property) {
             $default = '';
             $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
         }
 
-        $checkPath = ['xlf', 'xml', 'php'];
+        $checkPath = ['xlf', 'xml'];
         foreach ($checkPath as $extension) {
             $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
             if (is_file(GeneralUtility::getFileAbsFileName($path))) {

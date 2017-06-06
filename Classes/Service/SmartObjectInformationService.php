@@ -31,7 +31,7 @@ class SmartObjectInformationService
      */
     public static function getInstance()
     {
-        return GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+        return GeneralUtility::makeInstance(SmartObjectInformationService::class);
     }
 
     /**
@@ -80,12 +80,16 @@ class SmartObjectInformationService
             }
 
             /** @var Mapper $mapper */
-            $mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
+            $mapper = ExtendedUtility::create(Mapper::class);
             $field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name'], $label);
 
             // RTE
             if ($info['rte']) {
                 $field['config']['type'] = 'text';
+                if (ExtendedUtility::isBranchActive(8)) {
+                    $field['config']['enableRichtext'] = '1';
+                    $field['config']['richtextConfiguration'] = 'default';
+                }
                 $field['defaultExtras'] = 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
             }
 
@@ -153,12 +157,7 @@ class SmartObjectInformationService
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
 
-        if (GeneralUtility::compat_version('7.0')) {
-            $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
-        } else {
-            $languagePrefix = 'LLL:EXT:cms/';
-        }
-
+        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
         if (!in_array('enableFields', $excludes)) {
             $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
             $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
@@ -167,7 +166,7 @@ class SmartObjectInformationService
 
         $overrideTca = [
             'ctrl' => [
-                'title' => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
+                'title' => $this->getTcaTitle($tableName, $extensionName),
                 'label' => $labelField,
                 'tstamp' => 'tstamp',
                 'crdate' => 'crdate',
@@ -176,7 +175,7 @@ class SmartObjectInformationService
                 'sortby' => 'sorting',
                 'delete' => 'deleted',
                 'searchFields' => implode(',', $searchFields),
-                'iconfile' => IconUtility::getByModelName($modelClassName, GeneralUtility::compat_version('7.0'))
+                'iconfile' => IconUtility::getByModelName($modelClassName, true)
             ],
             'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
@@ -196,7 +195,7 @@ class SmartObjectInformationService
      *
      * @param string $modelClassName
      *
-     * @return string
+     * @return array
      */
     protected function getCustomDatabaseInformation($modelClassName)
     {
@@ -228,7 +227,7 @@ class SmartObjectInformationService
     protected function getDatabaseMappingByVarType($var)
     {
         /** @var Mapper $mapper */
-        $mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
+        $mapper = ExtendedUtility::create(Mapper::class);
         return $mapper->getDatabaseDefinition($var);
     }
 
@@ -326,6 +325,16 @@ class SmartObjectInformationService
      */
     protected function getDataSet()
     {
-        return GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet');
+        return GeneralUtility::makeInstance(DataSet::class);
+    }
+
+    /**
+     * @param string $tableName
+     * @param string $extensionName
+     * @return string
+     */
+    protected function getTcaTitle($tableName, $extensionName)
+    {
+        return TranslateUtility::getLllOrHelpMessage($tableName, $extensionName);
     }
 }

@@ -8,6 +8,8 @@
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Backend\Sprite\SpriteManager;
+use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
+use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,22 +31,17 @@ class IconUtility
      */
     public static function addTcaTypeIcon($table, $type, $icon)
     {
-        if (GeneralUtility::compat_version('7.0')) {
-            $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
-            if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
-                $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\SvgIconProvider';
-            } else {
-                $iconProviderClass = 'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider';
-            }
-            /** @var IconRegistry $iconRegistry */
-            $iconRegistry = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
-            $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
-            $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
-            $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
+        $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
+        if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
+            $iconProviderClass = SvgIconProvider::class;
         } else {
-            $fullIconPath = str_replace('../typo3/', '', $icon);
-            SpriteManager::addTcaTypeIcon('tt_content', $type, $fullIconPath);
+            $iconProviderClass = BitmapIconProvider::class;
         }
+        /** @var IconRegistry $iconRegistry */
+        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
+        $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
+        $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
+        $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
     }
 
     /**

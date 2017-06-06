@@ -1,11 +1,28 @@
 <?php
+/**
+ * JsonServer
+ */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;
+use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Utility\EidUtility;
 use Zend\Json\Server\Request;
 
+/**
+ * JsonServer
+ */
 class JsonServer
 {
+    /**
+     * @param $namespace
+     * @param $method
+     * @return array
+     */
     public static function getNamespaceAndMethod($namespace, $method)
     {
         if (strpos($method, '.') !== false) {
@@ -15,12 +32,16 @@ class JsonServer
 
         $namespace = str_replace('.', '/', $namespace);
 
-        return array(
+        return [
             $namespace,
             $method
-        );
+        ];
     }
 
+    /**
+     * @param $namespace
+     * @param $singleJsonRequest
+     */
     public static function handleRequest($namespace, $singleJsonRequest)
     {
         $methodRaw = $singleJsonRequest['method'];
@@ -40,29 +61,28 @@ class JsonServer
      */
     public static function initEnvironment()
     {
-        /* @var $GLOBALS['TSFE'] \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
-        $GLOBALS['TSFE'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
+        $GLOBALS['TSFE'] = GeneralUtility::makeInstance(
+            TypoScriptFrontendController::class,
             $GLOBALS['TYPO3_CONF_VARS'],
             null,
             0
         );
 
-        \TYPO3\CMS\Frontend\Utility\EidUtility::initLanguage();
+        EidUtility::initLanguage();
         $GLOBALS['TSFE']->connectToDB();
         $GLOBALS['TSFE']->initFEuser();
         $GLOBALS['TSFE']->initUserGroups();
-        \TYPO3\CMS\Frontend\Utility\EidUtility::initTCA();
+        EidUtility::initTCA();
         $GLOBALS['TSFE']->checkAlternativeIdMethods();
         $GLOBALS['TSFE']->clear_preview();
         $GLOBALS['TSFE']->determineId();
         $GLOBALS['TSFE']->initTemplate();
         $GLOBALS['TSFE']->getConfigArray();
-        $GLOBALS['TSFE']->cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::class
+        $GLOBALS['TSFE']->cObj = GeneralUtility::makeInstance(
+            ContentObjectRenderer::class
         );
         $GLOBALS['TSFE']->settingLanguage();
         $GLOBALS['TSFE']->settingLocale();
-        \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+        Bootstrap::getInstance()->loadCachedTca();
     }
 }

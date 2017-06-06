@@ -8,7 +8,6 @@
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
-use HDNET\Autoloader\Localization\Writer\LocalizationWriterInterface;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Localization\LanguageStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -38,10 +37,10 @@ class LanguageHandler extends LanguageStore
      *
      * @return NULL|string
      */
-    public function handle($key, $extensionName, &$default, $arguments, $overrideLanguageBase = null)
+    public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
         // If we are called early in the TYPO3 bootstrap we mus return early with the default label
-        if (!($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection) || empty($GLOBALS['TCA'])) {
+        if (empty($GLOBALS['TCA'])) { // !($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection) ||
             return $default;
         }
         $value = LocalizationUtility::translate($key, $extensionName, $arguments);
@@ -81,7 +80,8 @@ class LanguageHandler extends LanguageStore
                 continue;
             }
             $serviceName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'][$serviceKey];
-            /** @var LocalizationWriterInterface $service */
+
+            /** @var AbstractLocalizationWriter $service */
             $service = GeneralUtility::makeInstance($serviceName);
             if ($overrideLanguageBase !== null) {
                 $service->setLanguageBaseName($overrideLanguageBase);

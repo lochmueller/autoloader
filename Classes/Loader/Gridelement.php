@@ -69,6 +69,14 @@ class Gridelement implements LoaderInterface
         return $grids;
     }
 
+    /**
+     * @param $id
+     * @param $label
+     * @param $config
+     * @param $icon
+     * @param $flexForm
+     * @return string
+     */
     protected function getPageTsConfig($id, $label, $config, $icon, $flexForm)
     {
         $lines = [];

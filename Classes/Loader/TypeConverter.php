@@ -12,7 +12,6 @@ use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -57,11 +56,10 @@ class TypeConverter implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -70,7 +68,7 @@ class TypeConverter implements LoaderInterface
      * @param Loader $autoLoader
      * @param array $loaderInformation
      *
-     * @return NULL
+     * @return void
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

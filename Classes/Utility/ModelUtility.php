@@ -137,39 +137,35 @@ class ModelUtility
      * @param array $data
      * @param bool $backendSelection
      *
-     * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+     * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity|object
      */
     public static function getModel($modelName, $data, $backendSelection = false)
     {
         $query = ExtendedUtility::getQuery($modelName);
-        $query->getQuerySettings()
-            ->setIgnoreEnableFields($backendSelection);
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
-        $query->getQuerySettings()
-            ->setRespectSysLanguage(false);
+        $settings = $query->getQuerySettings();
+        if (!$backendSelection) {
+            $settings->setIgnoreEnableFields($backendSelection);
+        }
+        $settings->setRespectStoragePage(false);
+        $settings->setRespectSysLanguage(false);
 
         $query->matching($query->equals('uid', $data['uid']));
 
         if ($backendSelection) {
             $_GET['L'] = (int)$data['sys_language_uid'];
-            GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Session')->destroy();
+            GeneralUtility::makeInstance(Session::class)->destroy();
 
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
-                $query->getQuerySettings()
-                    ->setLanguageOverlayMode(false);
-                $query->getQuerySettings()
-                    ->setLanguageMode(false);
-                $query->getQuerySettings()
-                    ->setRespectSysLanguage(true);
-                $query->getQuerySettings()
-                    ->setLanguageUid($data['sys_language_uid']);
+                $settings->setLanguageOverlayMode(false);
+                $settings->setLanguageMode(false);
+                $settings->setRespectSysLanguage(true);
+                $settings->setLanguageUid($data['sys_language_uid']);
             }
 
             $rows = $query->execute(true);
             $objectManager = new ObjectManager();
             /** @var ExcludeIdentityMapDataMapper $dataMapper */
-            $dataMapper = $objectManager->get('HDNET\\Autoloader\\Persistence\\ExcludeIdentityMapDataMapper');
+            $dataMapper = $objectManager->get(ExcludeIdentityMapDataMapper::class);
             $objects = $dataMapper->map($modelName, $rows);
             $selection = current($objects);
             $_GET['L'] = 0;

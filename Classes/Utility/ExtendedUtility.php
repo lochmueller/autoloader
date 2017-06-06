@@ -9,6 +9,10 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Utility functions for the Autoloader
@@ -26,7 +30,7 @@ class ExtendedUtility
     public static function create($className)
     {
         $arguments = func_get_args();
-        $objManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+        $objManager = GeneralUtility::makeInstance(ObjectManager::class);
         return call_user_func_array([
             $objManager,
             'get'
@@ -46,7 +50,7 @@ class ExtendedUtility
         /** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
         static $manager = null;
         if ($manager === null) {
-            $manager = self::create('TYPO3\\CMS\\Extbase\\Persistence\\PersistenceManagerInterface');
+            $manager = self::create(PersistenceManagerInterface::class);
         }
         return $manager->createQueryForType($objectName);
     }
@@ -126,7 +130,7 @@ class ExtendedUtility
         $templatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-        $view = self::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+        $view = self::create(StandaloneView::class);
         $view->setTemplatePathAndFilename($templatePath);
 
         $partialPath = $siteRelPath . 'Resources/Private/Partials/';
@@ -136,5 +140,17 @@ class ExtendedUtility
         $view->setLayoutRootPaths([GeneralUtility::getFileAbsFileName($layoutPath)]);
 
         return $view;
+    }
+
+    /**
+     * Check if the branch is higher-equals
+     *
+     * @param int $branch
+     *
+     * @return boolean
+     */
+    public static function isBranchActive($branch)
+    {
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger($branch);
     }
 }
