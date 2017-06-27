@@ -59,6 +59,13 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         if (!$this->hasBackendPreview($row)) {
             return '';
         }
+
+        // Workarround for wrong FrontendUserGroup Restriction in TYPO3 8.x
+        if (TYPO3_MODE === 'BE' && !is_object($GLOBALS['TSFE'])) {
+            $GLOBALS['TSFE'] = new \stdClass();
+            $GLOBALS['TSFE']->gr_list = '';
+        }
+
         $ctype = $row['CType'];
         /** @var array $config */
         $config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
