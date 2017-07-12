@@ -150,7 +150,7 @@ class SmartObjectInformationService
         // items
         $showitem = $fields;
         if (!in_array('language', $excludes)) {
-            $showitem[] = '--palette--;LLL:EXT:lang/locallang_general.xlf:LGL.language;language';
+            $showitem[] = '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language;language';
         }
 
         if (!in_array('workspaces', $excludes)) {
