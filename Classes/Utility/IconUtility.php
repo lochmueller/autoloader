@@ -7,7 +7,6 @@
 
 namespace HDNET\Autoloader\Utility;
 
-use TYPO3\CMS\Backend\Sprite\SpriteManager;
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
