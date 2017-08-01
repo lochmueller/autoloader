@@ -36,7 +36,7 @@ class JsonServer
     protected $serverClass = '';
 
     /**
-     * Check if the WSDL should rendered
+     * Check if the SMD should rendered
      *
      * @var bool
      */
@@ -63,9 +63,14 @@ class JsonServer
      * Handle the request
      *
      * @param $request
+     * @throws \Exception
      */
     public function handle($request)
     {
+        if (!class_exists(Server::class)) {
+            throw new \Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
+        }
+
         header('Content-Type: application/json');
         if (!class_exists($this->serverClass)) {
             $server = new Server();

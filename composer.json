@@ -6,22 +6,9 @@
   "autoload": {
     "psr-4": {
       "HDNET\\Autoloader\\": "Classes/",
-      "WSDL\\": "Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/src/WSDL/",
-      "Ouzo\\": "Resources/Private/Contrib/vendor/letsdrink/ouzo-goodies/",
-      "Zend\\Http\\": "Resources/Private/Contrib/vendor/zendframework/zend-http/src/",
-      "Zend\\Server\\": "Resources/Private/Contrib/vendor/zendframework/zend-server/src/",
-      "Zend\\Json\\": "Resources/Private/Contrib/vendor/zendframework/zend-json/src/",
-      "Zend\\Uri\\": "Resources/Private/Contrib/vendor/zendframework/zend-uri/src/",
-      "Zend\\Stdlib\\": "Resources/Private/Contrib/vendor/zendframework/zend-stdlib/src/",
-      "Zend\\Loader\\": "Resources/Private/Contrib/vendor/zendframework/zend-loader/src/",
-      "Zend\\EventManager\\": "Resources/Private/Contrib/vendor/zendframework/zend-eventmanager/src/",
-      "Zend\\Escaper\\": "Resources/Private/Contrib/vendor/zendframework/zend-escaper/src/",
-      "Zend\\Code\\": "Resources/Private/Contrib/vendor/zendframework/zend-code/src/",
-      "Zend\\Validator\\": "Resources/Private/Contrib/vendor/zendframework/zend-validator/src/"
     },
     "exclude-from-classmap": [
-      "/Resources/Private/Examples/",
-      "/Resources/Private/Contrib/vendor/piotrooo/wsdl-creator/examples/"
+      "/Resources/Private/Examples/"
     ]
   },
   "autoload-dev": {
@@ -48,6 +35,12 @@
   "require": {
     "php": ">=7.0.0",
     "typo3/cms-core": "~7.6.0||~8.6.0||~8.7.0||dev-master"
+  },
+  "suggest": {
+    "zendframework/zend-http": "2.* - Need for JSON Server support",
+    "zendframework/zend-server": "2.* - Need for JSON Server support",
+    "zendframework/zend-json": "2.* - Need for JSON Server support",
+    "piotrooo/wsdl-creator": "1.4.2 - Need for SOAP Server support"
   },
   "replace": {
     "autoloader": "self.version",

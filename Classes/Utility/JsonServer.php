@@ -41,9 +41,13 @@ class JsonServer
     /**
      * @param $namespace
      * @param $singleJsonRequest
+     * @throws \Exception
      */
     public static function handleRequest($namespace, $singleJsonRequest)
     {
+        if (!class_exists(Request::class)) {
+            throw new \Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
+        }
         $methodRaw = $singleJsonRequest['method'];
         list($namespace, $method) = self::getNamespaceAndMethod($namespace, $methodRaw);
         $singleJsonRequest['method'] = $method;

@@ -1,2 +1,0 @@
-Create the composer file with:
-composer dumpautoload -o
