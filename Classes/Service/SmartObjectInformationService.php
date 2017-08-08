@@ -4,7 +4,6 @@
  *
  * @author Tim Spiekerkoetter
  */
-
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\DataSet;
@@ -31,7 +30,7 @@ class SmartObjectInformationService
      */
     public static function getInstance()
     {
-        return GeneralUtility::makeInstance(SmartObjectInformationService::class);
+        return GeneralUtility::makeInstance(self::class);
     }
 
     /**

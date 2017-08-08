@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -30,7 +29,7 @@ class ModelMapper implements MapperInterface
         }
         try {
             $dummy = new $type();
-            return ($dummy instanceof AbstractEntity);
+            return $dummy instanceof AbstractEntity;
         } catch (\Exception $exception) {
             return false;
         }

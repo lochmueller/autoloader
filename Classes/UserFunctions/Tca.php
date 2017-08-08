@@ -4,7 +4,6 @@
  *
  * @author Carsten Biebricher
  */
-
 namespace HDNET\Autoloader\UserFunctions;
 
 /**

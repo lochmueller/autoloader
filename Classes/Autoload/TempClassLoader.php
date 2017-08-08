@@ -22,21 +22,21 @@ class TempClassLoader implements SingletonInterface
      *
      * @var string
      */
-    static protected $className = __CLASS__;
+    protected static $className = __CLASS__;
 
     /**
      * Name space of the Domain Model of StaticInfoTables
      *
      * @var string
      */
-    static protected $namespace = 'HDNET\\Autoloader\\Xclass\\';
+    protected static $namespace = 'HDNET\\Autoloader\\Xclass\\';
 
     /**
      * Is TRUE, if the autoloader is registered
      *
      * @var bool
      */
-    static protected $isRegistered = false;
+    protected static $isRegistered = false;
 
     /**
      * Registers the cached class loader.

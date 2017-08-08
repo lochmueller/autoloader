@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Hooks\BackendLayoutProvider;

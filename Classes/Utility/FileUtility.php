@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -23,8 +22,8 @@ class FileUtility
      * @param string $absoluteFileName
      * @param string $content
      *
-     * @return bool
      * @throws Exception
+     * @return bool
      */
     public static function writeFileAndCreateFolder($absoluteFileName, $content)
     {

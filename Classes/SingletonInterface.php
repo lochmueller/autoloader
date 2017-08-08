@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader;
 
 /**
@@ -12,5 +11,4 @@ namespace HDNET\Autoloader;
  */
 interface SingletonInterface extends \TYPO3\CMS\Core\SingletonInterface
 {
-
 }

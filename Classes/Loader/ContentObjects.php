@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -195,7 +194,7 @@ class ContentObjects implements LoaderInterface
      * Wrap the given field configuration in the CE default TCA fields
      *
      * @param string $configuration
-     * @param boolean $noHeader
+     * @param bool $noHeader
      *
      * @return string
      */
@@ -217,7 +216,7 @@ class ContentObjects implements LoaderInterface
      * Get the fields that are in the default configuration
      *
      * @param null|string $configuration
-     * @param boolean $noHeader
+     * @param bool $noHeader
      *
      * @return array
      */
@@ -332,7 +331,6 @@ class ContentObjects implements LoaderInterface
 
 
             /** @var IconRegistry $iconRegistry */
-
             $provider = BitmapIconProvider::class;
             if (substr(strtolower($config['iconExt']), -3) === 'svg') {
                 $provider = SvgIconProvider::class;

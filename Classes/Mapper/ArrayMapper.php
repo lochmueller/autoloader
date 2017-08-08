@@ -4,7 +4,6 @@
  *
  * @author René Backhaus
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

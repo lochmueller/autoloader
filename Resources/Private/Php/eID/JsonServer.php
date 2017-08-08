@@ -1,6 +1,5 @@
 <?php
 
-use HDNET\Autoloader\Utility\EID;
 use HDNET\Autoloader\Utility\JsonServer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -24,7 +23,6 @@ if (preg_match('/^\[.*\]$/', $json)) {
     }
 
     echo json_encode($responses);
-
 } else {
     $singleJsonRequest = json_decode($json, true);
     JsonServer::handleRequest($namespace, $singleJsonRequest);

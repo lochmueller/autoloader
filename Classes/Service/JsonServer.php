@@ -6,7 +6,6 @@
  * @author  Tim Lochmüller
  * @author  Tito Duarte <duartito@gmail.com>
  */
-
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -46,7 +45,7 @@ class JsonServer
      * Build up the object
      *
      * @param string $server
-     * @param boolean $smd
+     * @param bool $smd
      * @todo move to hook logic
      */
     public function __construct($server, $smd)

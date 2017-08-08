@@ -4,7 +4,6 @@
  *
  * @author Tim Spiekerkoetter
  */
-
 namespace HDNET\Autoloader;
 
 /**
@@ -12,5 +11,4 @@ namespace HDNET\Autoloader;
  */
 class Exception extends \TYPO3\CMS\Extbase\Exception
 {
-
 }

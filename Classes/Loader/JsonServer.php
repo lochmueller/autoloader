@@ -5,7 +5,6 @@
  * @author Tim Lochmüller
  * @author Tito Duarte <duartito@gmail.com>
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

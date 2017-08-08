@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ArrayUtility;
@@ -106,7 +105,6 @@ class DataSet implements SingletonInterface
      */
     public function getDatabaseSqlKeyInformation(array $implementations, $table)
     {
-
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
         foreach ($dataSetObjects as $object) {

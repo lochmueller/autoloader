@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -147,7 +146,7 @@ class ExtendedUtility
      *
      * @param int $branch
      *
-     * @return boolean
+     * @return bool
      */
     public static function isBranchActive($branch)
     {

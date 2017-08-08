@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -56,7 +55,7 @@ class LanguageOverride implements LoaderInterface
             if (strlen($fileParts[0]) === 2) {
                 $language = $fileParts[0];
                 unset($fileParts[0]);
-                $parts[sizeof($parts) - 1] = implode('.', $fileParts);
+                $parts[count($parts) - 1] = implode('.', $fileParts);
             }
 
             $languageOverride[] = [

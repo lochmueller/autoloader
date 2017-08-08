@@ -4,7 +4,6 @@
  *
  * @author Tim Spiekerkoetter
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
