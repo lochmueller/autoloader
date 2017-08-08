@@ -44,13 +44,9 @@ class ClearCache implements ClearCacheActionsHookInterface
             'title' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.title',
             'description' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.description',
             'href' => BackendUtility::getAjaxUrl('autoloader::clearCache'),
-            'icon' => '<img src="' . IconUtility::getByExtensionKey('autoloader') . '">',
+            'iconIdentifier' => 'extension-autoloader',
         ];
 
-        if (ExtendedUtility::isBranchActive('8.0')) {
-            unset($action['icon']);
-            $action['iconIdentifier'] = 'extension-autoloader';
-        }
         $cacheActions[] = $action;
     }
 

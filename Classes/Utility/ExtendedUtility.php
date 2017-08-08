@@ -140,16 +140,4 @@ class ExtendedUtility
 
         return $view;
     }
-
-    /**
-     * Check if the branch is higher-equals
-     *
-     * @param int $branch
-     *
-     * @return bool
-     */
-    public static function isBranchActive($branch)
-    {
-        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger($branch);
-    }
 }

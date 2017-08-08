@@ -43,6 +43,7 @@ class DateTimeMapper implements MapperInterface
             'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
             'config'  => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'eval' => 'datetime',
                 'size' => 8,
             ],

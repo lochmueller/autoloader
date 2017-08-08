@@ -37,10 +37,12 @@ class EnableFields implements DataSetInterface
                 'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
                 'editlock' => [
                     'exclude' => 1,
-                    'l10n_mode' => 'mergeIfNotBlank',
                     'label' => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
                     'config' => [
-                        'type' => 'check'
+                        'type' => 'check',
+                        'behaviour' => [
+                            'allowLanguageSynchronization' => true,
+                        ],
                     ]
                 ],
                 'hidden' => [
@@ -79,12 +81,6 @@ class EnableFields implements DataSetInterface
                 ],
             ],
         ];
-
-        if (ExtendedUtility::isBranchActive('8.0')) {
-            unset($tca['columns']['editlock']['l10n_mode']);
-            $tca['columns']['editlock']['config']['behaviour']['allowLanguageSynchronization'] = true;
-        }
-
         return $tca;
     }
 
