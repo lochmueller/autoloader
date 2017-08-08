@@ -5,13 +5,9 @@
  * General file information
  *
  * @category     Extension
- * @package      HDNET\Autoloader\Utility
- * @subpackage   TcaUtility.php
  * @author       Christian Lewin HDNET GmbH & Co. <christian.lewin@hdnet.de>
  *
  */
-
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -19,7 +15,6 @@ use HDNET\Autoloader\Exception;
 /**
  * A basic TCA manipulation utility class
  *
- * @package      HDNET\Autoloader\Utility
  * @author       Christian Lewin HDNET GmbH & Co. <christian.lewin@hdnet.de>
  */
 class TcaUtility
@@ -32,8 +27,8 @@ class TcaUtility
      * @param string $columnName The column name before to insert a tab divider
      * @param string $tabTitle   The title of the tab
      *
-     * @return array
      * @throws Exception
+     * @return array
      */
     public static function insertTabDividerBefore(&$base, $columnName, $tabTitle)
     {

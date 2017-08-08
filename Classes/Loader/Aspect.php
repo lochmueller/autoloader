@@ -4,7 +4,6 @@
  *
  * @author Carsten Biebricher
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Autoload\TempClassLoader;
@@ -104,8 +103,8 @@ class Aspect implements LoaderInterface
      * @param $aspectClassName
      * @param $aspectJoinPoint
      *
-     * @return array
      * @throws \HDNET\Autoloader\Exception
+     * @return array
      */
     protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint)
     {

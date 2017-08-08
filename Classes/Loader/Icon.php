@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -56,7 +55,7 @@ class Icon implements LoaderInterface
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $relPath;
         $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
         $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 99);
-        if (!sizeof($files)) {
+        if (!count($files)) {
             return $icons;
         }
 

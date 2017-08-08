@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader;
 
 /**
@@ -18,7 +17,7 @@ class SmartObjectRegister
      *
      * @var array
      */
-    static protected $smartObjectRegistry = [];
+    protected static $smartObjectRegistry = [];
 
     /**
      * Add a model to the register

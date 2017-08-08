@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -23,7 +22,7 @@ class EditLinkViewHelper extends AbstractViewHelper
      *
      * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
      *
-     * @var boolean
+     * @var bool
      * @api
      */
     protected $escapeChildren = false;
@@ -32,7 +31,7 @@ class EditLinkViewHelper extends AbstractViewHelper
      * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
      * @see isOutputEscapingEnabled()
      *
-     * @var boolean
+     * @var bool
      * @api
      */
     protected $escapeOutput = false;

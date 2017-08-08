@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
@@ -47,7 +46,7 @@ class IconUtility
      * Get the relative path of the extension icon
      *
      * @param string $extensionKey
-     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
+     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
@@ -65,7 +64,7 @@ class IconUtility
      * Get the absolute table icon for the given model name
      *
      * @param string $modelClassName
-     * @param boolean $extSyntax Get the EXT: Syntax instead of a rel Path
+     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
@@ -118,7 +117,7 @@ class IconUtility
      *
      * @param string $extensionKey
      * @param string $path
-     * @param boolean $extSyntax
+     * @param bool $extSyntax
      *
      * @return string
      */

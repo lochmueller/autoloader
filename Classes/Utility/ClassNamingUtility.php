@@ -4,7 +4,6 @@
  *
  * @author Tim Spiekerkoetter
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -22,8 +21,8 @@ class ClassNamingUtility
      *
      * @param string $modelName The model name to be exploded
      *
-     * @return array Parts of the object model name
      * @throws Exception
+     * @return array Parts of the object model name
      * @see \TYPO3\CMS\Core\Utility\ClassNamingUtility::explodeObjectControllerName
      */
     public static function explodeObjectModelName($modelName)

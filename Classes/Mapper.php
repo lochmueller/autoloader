@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -89,8 +88,8 @@ class Mapper implements SingletonInterface
      *
      * @param string $type
      *
-     * @return MapperInterface
      * @throws \Exception
+     * @return MapperInterface
      */
     protected function getMapperByType($type)
     {

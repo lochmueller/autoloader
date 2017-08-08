@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -42,7 +41,7 @@ class SoapServer
      * Build up the object
      *
      * @param string $server
-     * @param boolean $wsdl
+     * @param bool $wsdl
      * @todo move to hook logic
      */
     public function __construct($server, $wsdl)

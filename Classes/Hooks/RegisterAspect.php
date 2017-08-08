@@ -4,7 +4,6 @@
  *
  * @author Carsten Biebricher
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -26,7 +25,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      *
      * @var string
      */
-    static protected $xclassTemplate = false;
+    protected static $xclassTemplate = false;
 
     /**
      * Function which may process data created / registered by extTables
@@ -143,7 +142,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $code[] = 'public function ' . $joinPoint . '(';
 
         // arguments
-        if (is_array($config['arguments']) && sizeof($config['arguments']) > 0) {
+        if (is_array($config['arguments']) && count($config['arguments']) > 0) {
             $args = [];
             foreach ($config['arguments'] as $arguments) {
                 $type = '';

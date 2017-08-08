@@ -3,7 +3,6 @@
 /**
  * StaticInfoTablesMapper
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

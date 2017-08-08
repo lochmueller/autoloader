@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -121,7 +120,7 @@ class Loader implements SingletonInterface
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
-        $loader = GeneralUtility::makeInstance(Loader::class);
+        $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
     }
 
@@ -137,7 +136,7 @@ class Loader implements SingletonInterface
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
         /** @var \HDNET\Autoloader\Loader $loader */
-        $loader = GeneralUtility::makeInstance(Loader::class);
+        $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }
 

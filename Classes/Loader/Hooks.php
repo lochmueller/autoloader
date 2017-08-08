@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -52,7 +51,7 @@ class Hooks implements LoaderInterface
 
             // add class hook
             $tagConfiguration = ReflectionUtility::getTagConfiguration($classReflection, ['hook']);
-            if (sizeof($tagConfiguration['hook'])) {
+            if (count($tagConfiguration['hook'])) {
                 $hooks[] = [
                     'locations' => $tagConfiguration['hook'],
                     'configuration' => $hookClass,
@@ -63,7 +62,7 @@ class Hooks implements LoaderInterface
             foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
-                if (sizeof($tagConfiguration['hook'])) {
+                if (count($tagConfiguration['hook'])) {
                     $hooks[] = [
                         'locations' => $tagConfiguration['hook'],
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),

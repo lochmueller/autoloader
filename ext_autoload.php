@@ -1,7 +1,6 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 $resourcesPath = ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Contrib/');
 

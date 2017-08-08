@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -96,7 +95,6 @@ class ContextSensitiveHelps implements LoaderInterface
      */
     protected function checkCshValues($extensionKey, $table, array $properties)
     {
-
         $baseFileName = 'locallang_csh_' . $table;
         /** @var LanguageHandler $languageHandler */
         $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);

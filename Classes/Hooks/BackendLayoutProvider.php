@@ -4,7 +4,6 @@
  *
  * @author Tim Lochmüller
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\View\BackendLayout\BackendLayout;
@@ -27,7 +26,7 @@ class BackendLayoutProvider implements DataProviderInterface
      *
      * @var array
      */
-    static protected $backendLayoutInformation = [];
+    protected static $backendLayoutInformation = [];
 
     /**
      * Add one backend layout information
@@ -58,7 +57,7 @@ class BackendLayoutProvider implements DataProviderInterface
      * Gets a backend layout by (regular) identifier.
      *
      * @param string  $identifier
-     * @param integer $pageId
+     * @param int $pageId
      *
      * @return NULL|BackendLayout
      */
