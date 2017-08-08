@@ -2,7 +2,6 @@ preset: psr2
 
 enabled:
     - phpdoc_order
-    - declare_strict_types
     - no_leading_import_slash
     - no_trailing_comma_in_singleline_array
     - no_singleline_whitespace_before_semicolons
@@ -33,5 +32,6 @@ finder:
   not-path:
     - ".Build"
     - "Documentation"
+    - "Resources/Private/Examples"
 
 
