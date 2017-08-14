@@ -6,8 +6,6 @@
  */
 namespace HDNET\Autoloader\Hooks;
 
-use HDNET\Autoloader\Utility\ExtendedUtility;
-use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

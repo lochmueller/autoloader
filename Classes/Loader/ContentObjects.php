@@ -10,7 +10,6 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
-use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
