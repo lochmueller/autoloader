@@ -7,7 +7,6 @@
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Localization\LanguageStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -39,7 +38,7 @@ class LanguageHandler extends LanguageStore
     public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
         // If we are called early in the TYPO3 bootstrap we mus return early with the default label
-        if (empty($GLOBALS['TCA'])) { // !($GLOBALS['TYPO3_DB'] instanceof DatabaseConnection) ||
+        if (empty($GLOBALS['TCA'])) {
             return $default;
         }
         $value = LocalizationUtility::translate($key, $extensionName, $arguments);

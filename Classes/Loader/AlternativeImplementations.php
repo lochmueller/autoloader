@@ -13,6 +13,7 @@ use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\Container\Container;
 
 /**
  * Loading AlternativeImplementations
@@ -78,8 +79,8 @@ class AlternativeImplementations implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        /** @var \TYPO3\CMS\Extbase\Object\Container\Container $objectManager */
-        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class);
+        /** @var Container $objectManager */
+        $objectManager = GeneralUtility::makeInstance(Container::class);
         foreach ($loaderInformation as $classInformation) {
             $objectManager->registerImplementation($classInformation['originalName'], $classInformation['alternativeClassName']);
         }
