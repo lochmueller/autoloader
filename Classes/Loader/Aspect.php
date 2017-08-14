@@ -78,11 +78,10 @@ class Aspect implements LoaderInterface
 
                         $aspects[] = [
                             'aspectClassName' => $aspectClassName,
+                            'aspectMethodName' => $methodReflection->getName(),
                             'aspectJoinPoint' => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
                             'aspectAdvice' => trim($tagConfiguration['aspectAdvice'][$key]),
-                            'originClassName' => $aspectClass,
-                            'originMethodName' => $methodReflection->getName()
                         ];
                     }
                 }

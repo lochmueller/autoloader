@@ -197,11 +197,11 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         foreach ($advices[$type] as $method) {
             $code[] = 'array(';
             $code[] = '\'id\' => \'' . GeneralUtility::shortMD5(
-                $method['originClassName'] . $method['originMethodName'],
+                $method['aspectClassName'] . $method['aspectMethodName'],
                 13
             ) . '\',';
-            $code[] = '\'class\' => \'\\' . $method['originClassName'] . '\',';
-            $code[] = '\'function\' => \'' . $method['originMethodName'] . '\',';
+            $code[] = '\'class\' => \'' . $method['aspectClassName'] . '\',';
+            $code[] = '\'function\' => \'' . $method['aspectMethodName'] . '\',';
             $code[] = '),';
         }
         $code[] = '),';
@@ -297,8 +297,8 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
                 }
 
                 $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = [
-                    'originClassName' => $aspect['originClassName'],
-                    'originMethodName' => $aspect['originMethodName']
+                    'aspectClassName' => $aspect['aspectClassName'],
+                    'aspectMethodName' => $aspect['aspectMethodName']
                 ];
             }
         }
