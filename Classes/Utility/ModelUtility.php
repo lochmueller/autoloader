@@ -57,14 +57,16 @@ class ModelUtility
     {
         $className = ltrim($className, '\\');
         if (strpos($className, '\\') !== false) {
-            $classNameParts = explode('\\', $className, 6);
+            $classNameParts = explode('\\', $className);
             // Skip vendor and product name for core classes
             if (strpos($className, 'TYPO3\\CMS\\') === 0) {
                 $classPartsToSkip = 2;
             } else {
                 $classPartsToSkip = 1;
             }
-            $tableName = 'tx_' . strtolower(implode('_', array_slice($classNameParts, $classPartsToSkip)));
+            $classNameParts = array_slice($classNameParts, $classPartsToSkip);
+            $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
+            $tableName = 'tx_' . str_replace('\\', '', strtolower(implode('_', $classNameParts)));
         } else {
             $tableName = strtolower($className);
         }

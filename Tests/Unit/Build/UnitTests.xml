@@ -1,8 +1,8 @@
 <phpunit
 	backupGlobals="true"
 	backupStaticAttributes="false"
-	bootstrap="../.Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTestsBootstrap.php"
-	colors="true"
+ 	bootstrap="../../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+ 	colors="true"
 	convertErrorsToExceptions="true"
 	convertWarningsToExceptions="true"
 	forceCoversAnnotation="false"
@@ -15,15 +15,15 @@
 >
 	<testsuites>
 		<testsuite name="autoloader tests">
-			<directory>Unit/</directory>
+			<directory>../../Unit/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">../Classes/</directory>
+			<directory suffix=".php">../../../Classes/</directory>
 		</whitelist>
 		<blacklist>
-			<directory>../.Build/</directory>
+			<directory>../../../.Build/</directory>
 		</blacklist>
 	</filter>
 </phpunit>
