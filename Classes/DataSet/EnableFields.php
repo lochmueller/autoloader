@@ -7,7 +7,6 @@
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
-use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
  * DataSet information for enableFields
