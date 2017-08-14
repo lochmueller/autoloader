@@ -69,9 +69,9 @@ class Tca
         $infoField .= '</li></ul>';
         $infoField .= 'Common foreign tables are <em>tt_content</em>, <em>tt_address</em>, &hellip;.<br/><br/>';
         $infoField .= 'Information about proper TCA configuration as ';
-        $infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Group/Index.html" target="_blank">group</a>, ';
-        $infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Inline/Index.html" target="_blank">inline</a> or ';
-        $infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Select/Index.html" target="_blank">select</a>';
+        $infoField .= '<a href="https://docs.typo3.org/typo3cms/TCAReference/ColumnsConfig/Type/Group.html" target="_blank">group</a>, ';
+        $infoField .= '<a href="https://docs.typo3.org/typo3cms/TCAReference/ColumnsConfig/Type/Inline.html" target="_blank">inline</a> or ';
+        $infoField .= '<a href="https://docs.typo3.org/typo3cms/TCAReference/ColumnsConfig/Type/Select.html" target="_blank">select</a>';
         $infoField .= '-type can be found in the TCA-documentation.<br/>';
         return $this->wrapInInfoBox($infoField);
     }
