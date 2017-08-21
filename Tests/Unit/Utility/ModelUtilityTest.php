@@ -22,7 +22,7 @@ class ModelUtilityTest extends UnitTestCase
         $output = [
             'tx_name_domain_model_name',
             'tx_name_domain_model_name',
-            'tx_name_domain_model_namedeeperdeeper',
+            'tx_name_domain_model_name_deeper_deeper',
         ];
 
         foreach ($input as $key => $value) {

@@ -66,7 +66,7 @@ class ModelUtility
             }
             $classNameParts = array_slice($classNameParts, $classPartsToSkip);
             $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
-            $tableName = 'tx_' . str_replace('\\', '', strtolower(implode('_', $classNameParts)));
+            $tableName = 'tx_' . str_replace('\\', '_', strtolower(implode('_', $classNameParts)));
         } else {
             $tableName = strtolower($className);
         }
