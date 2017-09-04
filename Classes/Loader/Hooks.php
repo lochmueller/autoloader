@@ -64,7 +64,7 @@ class Hooks implements LoaderInterface
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
                 if (count($tagConfiguration['hook'])) {
                     $hooks[] = [
-                        'locations' => $tagConfiguration['hook'],
+                        'locations' => trim($tagConfiguration['hook'], " \t\n\r\0\x0B|"),
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),
                     ];
                 }

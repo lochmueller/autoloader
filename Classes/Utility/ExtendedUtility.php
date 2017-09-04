@@ -109,7 +109,7 @@ class ExtendedUtility
      */
     public static function addHook($location, $configuration)
     {
-        $location = GeneralUtility::trimExplode('|', $location, true);
+        $location = explode('|', $location);
         array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
         ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
     }
