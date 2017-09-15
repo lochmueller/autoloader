@@ -9,6 +9,10 @@ SmartObjects
 If the model is mapped to a existing table, you have to add the table name like "@db tt_content". In this case, the create table statement is
 create without the TYPO3 default fields like e.g. tstamp, crdate, sorting.
 
+In addition, it is possible to add one or more key / index definitions for the table with the @key annotation as follows: "@key key_name (column_name_1, column_name_2)"
+Caution: There is currently no validation of whether the key columns are present. Like any changes in the @db definitions, even @key needs to visit the installtool and start comparing the database.
+Alternatively, the typo3_console extension can do this on the command line.
+
 Furthermore the properties should have also a "@db" annotation, if the property is stored in the database. The field definition determined by the variable type of the property.
 If the variable contains a complex data type, you have to add a proper field definition like "@db int(11) NOT NULL" on the right field.
 
