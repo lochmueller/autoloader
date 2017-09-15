@@ -3,7 +3,6 @@
  * SmartObjectInformationService.php.
  *
  */
-
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\DataSet;

@@ -3,7 +3,6 @@
  * ClassNamingUtility.php.
  *
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;

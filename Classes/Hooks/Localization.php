@@ -3,7 +3,6 @@
  * handler to create the labels.
  *
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Localization\LanguageHandler;

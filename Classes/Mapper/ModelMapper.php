@@ -3,7 +3,6 @@
  * Map general Models.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

@@ -3,11 +3,9 @@
  * DataSet information for workspaces.
  *
  */
-
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * DataSet information for workspaces.

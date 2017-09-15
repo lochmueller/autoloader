@@ -3,7 +3,6 @@
  * Register the aspect files and create the Xclass.
  *
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;

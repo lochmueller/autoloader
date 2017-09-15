@@ -3,7 +3,6 @@
  * Create the TCA files.
  *
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

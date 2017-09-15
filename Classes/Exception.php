@@ -3,7 +3,6 @@
  * Exception.
  *
  */
-
 namespace HDNET\Autoloader;
 
 /**

@@ -3,7 +3,6 @@
  * Map Array.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

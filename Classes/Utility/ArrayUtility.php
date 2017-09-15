@@ -3,7 +3,6 @@
  * Arrays utility.
  *
  */
-
 namespace HDNET\Autoloader\Utility;
 
 /**

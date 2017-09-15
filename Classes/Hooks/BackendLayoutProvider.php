@@ -3,7 +3,6 @@
  * Add backend layouts.
  *
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\View\BackendLayout\BackendLayout;

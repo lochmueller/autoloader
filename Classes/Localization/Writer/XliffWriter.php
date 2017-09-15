@@ -3,7 +3,6 @@
  * Xliff writer.
  *
  */
-
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;

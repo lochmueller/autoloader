@@ -3,7 +3,6 @@
  * Map boolean.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

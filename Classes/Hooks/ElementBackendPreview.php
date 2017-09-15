@@ -3,7 +3,6 @@
  * Custom Backend Preview for Elements like Content Objects.
  *
  */
-
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
