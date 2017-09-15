@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading CommandController
+ * Loading CommandController.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -13,18 +13,17 @@ use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Loading CommandController
+ * Loading CommandController.
  */
 class CommandController implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -49,16 +48,15 @@ class CommandController implements LoaderInterface
 
             $classNames[] = $className;
         }
+
         return $classNames;
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -66,18 +64,17 @@ class CommandController implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
         foreach ($loaderInformation as $className) {
             $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = $className;
         }
+
         return null;
     }
 }

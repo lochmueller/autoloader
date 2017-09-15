@@ -1,22 +1,21 @@
 <?php
 /**
- * Map general Models
+ * Map general Models.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Map general Models
+ * Map general Models.
  */
 class ModelMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -29,6 +28,7 @@ class ModelMapper implements MapperInterface
         }
         try {
             $dummy = new $type();
+
             return $dummy instanceof AbstractEntity;
         } catch (\Exception $exception) {
             return false;
@@ -36,7 +36,7 @@ class ModelMapper implements MapperInterface
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -46,19 +46,19 @@ class ModelMapper implements MapperInterface
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
         $baseConfig = [
-            'type'     => 'user',
+            'type' => 'user',
             'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->modelInfoField',
         ];
 
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => $baseConfig,
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => $baseConfig,
         ];
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

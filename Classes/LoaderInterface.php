@@ -1,25 +1,24 @@
 <?php
 /**
- * General loading interface
+ * General loading interface.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 /**
  * General loading interface
- * All Loader are singletons
+ * All Loader are singletons.
  */
 interface LoaderInterface extends SingletonInterface
 {
-
     /**
-     * Preparation type for (ext_localconf)
+     * Preparation type for (ext_localconf).
      */
     const EXT_LOCAL_CONFIGURATION = 1;
 
     /**
-     * Preparation type for (ext_tables)
+     * Preparation type for (ext_tables).
      */
     const EXT_TABLES = 2;
 
@@ -36,7 +35,7 @@ interface LoaderInterface extends SingletonInterface
     public function prepareLoader(Loader $loader, $type);
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
@@ -44,7 +43,7 @@ interface LoaderInterface extends SingletonInterface
     public function loadExtensionTables(Loader $loader, array $loaderInformation);
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation

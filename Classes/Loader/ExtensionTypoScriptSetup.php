@@ -1,9 +1,9 @@
 <?php
 /**
- * ExtensionTypoScriptSetup
+ * ExtensionTypoScriptSetup.
  *
- * @author Tim Spiekerkoetter
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -15,15 +15,14 @@ use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * ExtensionTypoScriptSetup
+ * ExtensionTypoScriptSetup.
  */
 class ExtensionTypoScriptSetup implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
      * @param int    $type
@@ -41,7 +40,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
@@ -52,7 +51,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
@@ -63,7 +62,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     }
 
     /**
-     * Add the given loader information as TypoScript
+     * Add the given loader information as TypoScript.
      *
      * @param array $loaderInformation
      */
@@ -76,7 +75,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
 
     /**
      * Generate the TypoScript setup for the smart objects defined
-     * within the extension
+     * within the extension.
      *
      * @param string $extensionKey
      *
@@ -87,8 +86,8 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         $setup = [];
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
             $table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
-            $recordType = (string)ReflectionUtility::getFirstTagValue($className, 'recordType');
-            $parentClass = (string)ReflectionUtility::getFirstTagValue($className, 'parentClass');
+            $recordType = (string) ReflectionUtility::getFirstTagValue($className, 'recordType');
+            $parentClass = (string) ReflectionUtility::getFirstTagValue($className, 'parentClass');
             if ($table !== '') {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
             }
@@ -99,11 +98,12 @@ class ExtensionTypoScriptSetup implements LoaderInterface
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
             }
         }
+
         return $setup;
     }
 
     /**
-     * Check if the extension has smart objects
+     * Check if the extension has smart objects.
      *
      * @param string $extensionKey
      *
@@ -114,11 +114,12 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         if ($this->getSmartObjectsForExtensionKey($extensionKey)) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * Get the smart objects for the given extension
+     * Get the smart objects for the given extension.
      *
      * @param $extensionKey
      *
@@ -134,6 +135,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
                 $extensionObjects[] = $className;
             }
         }
+
         return $extensionObjects;
     }
 }

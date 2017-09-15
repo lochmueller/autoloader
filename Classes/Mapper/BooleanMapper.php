@@ -1,21 +1,20 @@
 <?php
 /**
- * Map boolean
+ * Map boolean.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map boolean
+ * Map boolean.
  */
 class BooleanMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -25,12 +24,12 @@ class BooleanMapper implements MapperInterface
     {
         return in_array(strtolower($type), [
             'bool',
-            'boolean'
+            'boolean',
         ]);
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -41,15 +40,15 @@ class BooleanMapper implements MapperInterface
     {
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => [
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => [
                 'type' => 'check',
             ],
         ];
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

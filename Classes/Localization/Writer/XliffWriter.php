@@ -1,9 +1,9 @@
 <?php
 /**
- * Xliff writer
+ * Xliff writer.
  *
- * @author  Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -11,13 +11,12 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Xliff writer
+ * Xliff writer.
  */
 class XliffWriter extends AbstractLocalizationWriter
 {
-
     /**
-     * Get the base file content
+     * Get the base file content.
      *
      * @param string $extensionKey
      *
@@ -36,7 +35,7 @@ class XliffWriter extends AbstractLocalizationWriter
     }
 
     /**
-     * Get the absolute file name
+     * Get the absolute file name.
      *
      * @param string $extensionKey
      *
@@ -48,11 +47,12 @@ class XliffWriter extends AbstractLocalizationWriter
     }
 
     /**
-     * Add the Label to the local lang XLIFF
+     * Add the Label to the local lang XLIFF.
      *
      * @param string $extensionKey
      * @param string $key
      * @param string $default
+     *
      * @return bool|void
      */
     public function addLabel($extensionKey, $key, $default)

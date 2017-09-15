@@ -1,19 +1,18 @@
 <?php
 /**
- * data set interface
+ * data set interface.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 /**
- * data set interface
+ * data set interface.
  */
 interface DataSetInterface extends SingletonInterface
 {
-
     /**
-     * Get TCA information
+     * Get TCA information.
      *
      * @param string $tableName
      *
@@ -22,7 +21,7 @@ interface DataSetInterface extends SingletonInterface
     public function getTca($tableName);
 
     /**
-     * Get database sql information
+     * Get database sql information.
      *
      * @param string $tableName
      *
@@ -31,7 +30,7 @@ interface DataSetInterface extends SingletonInterface
     public function getDatabaseSql($tableName);
 
     /**
-     * Get database sql key information
+     * Get database sql key information.
      *
      * @return array
      */

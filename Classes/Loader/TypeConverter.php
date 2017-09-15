@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading TypeConverter
+ * Loading TypeConverter.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -14,18 +14,17 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
- * Loading TypeConverter
+ * Loading TypeConverter.
  */
 class TypeConverter implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $autoLoader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -50,20 +49,20 @@ class TypeConverter implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

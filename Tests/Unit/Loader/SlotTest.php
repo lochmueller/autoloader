@@ -6,7 +6,7 @@ use HDNET\Autoloader\Loader\Slots;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- * SlotTest
+ * SlotTest.
  */
 class SlotTest extends UnitTestCase
 {
@@ -27,7 +27,7 @@ class SlotTest extends UnitTestCase
                 ['element' => 5],
             ],
             100 => [
-                ['element' => 4]
+                ['element' => 4],
             ],
             20 => [
                 ['element' => 6],

@@ -1,28 +1,29 @@
 <?php
 /**
- * ClassNamingUtility.php
+ * ClassNamingUtility.php.
  *
- * @author Tim Spiekerkoetter
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * ClassNamingUtility
+ * ClassNamingUtility.
  */
 class ClassNamingUtility
 {
-
     /**
      * Explodes a modelName like \Vendor\Ext\Domain\Model\Foo into several
-     * pieces like vendorName, extensionName, subpackageKey and controllerName
+     * pieces like vendorName, extensionName, subpackageKey and controllerName.
      *
      * @param string $modelName The model name to be exploded
      *
      * @throws Exception
+     *
      * @return array Parts of the object model name
+     *
      * @see \TYPO3\CMS\Core\Utility\ClassNamingUtility::explodeObjectControllerName
      */
     public static function explodeObjectModelName($modelName)
@@ -42,11 +43,12 @@ class ClassNamingUtility
         if (empty($matches)) {
             throw new Exception('Could not determine extension key for: ' . $modelName, 140657775);
         }
+
         return $matches;
     }
 
     /**
-     * Get the extension key by the given model name
+     * Get the extension key by the given model name.
      *
      * @param string|object $modelClassName
      *
@@ -58,11 +60,12 @@ class ClassNamingUtility
             $modelClassName = get_class($modelClassName);
         }
         $matches = self::explodeObjectModelName($modelClassName);
+
         return GeneralUtility::camelCaseToLowerCaseUnderscored($matches['extensionName']);
     }
 
     /**
-     * Get FQN by path (segment)
+     * Get FQN by path (segment).
      *
      * @param string $vendorName
      * @param string $extensionKey

@@ -1,22 +1,21 @@
 <?php
 /**
- * Central DataSet object
+ * Central DataSet object.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Central DataSet object
+ * Central DataSet object.
  */
 class DataSet implements SingletonInterface
 {
-
     /**
-     * The different implementations and the order of the execution
+     * The different implementations and the order of the execution.
      *
      * @var array
      */
@@ -27,7 +26,7 @@ class DataSet implements SingletonInterface
     ];
 
     /**
-     * Get all implementations and exclude the given list
+     * Get all implementations and exclude the given list.
      *
      * @param array $list
      *
@@ -41,11 +40,12 @@ class DataSet implements SingletonInterface
                 unset($return[$key]);
             }
         }
+
         return $return;
     }
 
     /**
-     * Get none implementations and include the given list
+     * Get none implementations and include the given list.
      *
      * @param array $list
      *
@@ -57,7 +57,7 @@ class DataSet implements SingletonInterface
     }
 
     /**
-     * Get the TCA information of the given data sets
+     * Get the TCA information of the given data sets.
      *
      * @param $implementations
      * @param $table
@@ -73,11 +73,12 @@ class DataSet implements SingletonInterface
             /** @var $object DataSetInterface */
             $return = ArrayUtility::mergeRecursiveDistinct($return, $loadedTca);
         }
+
         return $return;
     }
 
     /**
-     * Get the SQL information of the given data sets
+     * Get the SQL information of the given data sets.
      *
      * @param array $implementations
      * @param       $table
@@ -92,11 +93,12 @@ class DataSet implements SingletonInterface
             /** @var $object DataSetInterface */
             $return = array_merge($return, $object->getDatabaseSql($table));
         }
+
         return $return;
     }
 
     /**
-     * Get the SQL Key information of the given data sets
+     * Get the SQL Key information of the given data sets.
      *
      * @param $implementations
      * @param $table
@@ -111,11 +113,12 @@ class DataSet implements SingletonInterface
             /** @var $object DataSetInterface */
             $return = array_merge($return, $object->getDatabaseSqlKey());
         }
+
         return $return;
     }
 
     /**
-     * Create the data set objects
+     * Create the data set objects.
      *
      * @param array $implementations
      *
@@ -126,6 +129,7 @@ class DataSet implements SingletonInterface
         foreach ($implementations as $key => $value) {
             $implementations[$key] = GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet\\' . $value);
         }
+
         return $implementations;
     }
 }

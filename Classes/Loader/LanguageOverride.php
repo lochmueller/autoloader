@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading LanguageOverride
+ * Loading LanguageOverride.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -13,15 +13,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
- * Loading LanguageOverride
+ * Loading LanguageOverride.
  */
 class LanguageOverride implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $autoLoader
      * @param int    $type
@@ -69,7 +68,7 @@ class LanguageOverride implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $autoLoader
      * @param array  $loaderInformation
@@ -79,7 +78,7 @@ class LanguageOverride implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $autoLoader
      * @param array  $loaderInformation

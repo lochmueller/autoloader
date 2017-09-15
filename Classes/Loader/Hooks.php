@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Hooks
+ * Loading Hooks.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -16,18 +16,17 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
- * Loading Hooks
+ * Loading Hooks.
  */
 class Hooks implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -63,7 +62,7 @@ class Hooks implements LoaderInterface
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
                 if (count($tagConfiguration['hook']) > 0) {
-                    $hookLocations = array_map(function($hook){
+                    $hookLocations = array_map(function ($hook) {
                         return trim($hook, " \t\n\r\0\x0B|");
                     }, $tagConfiguration['hook']);
 
@@ -74,16 +73,15 @@ class Hooks implements LoaderInterface
                 }
             }
         }
+
         return $hooks;
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -91,19 +89,19 @@ class Hooks implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param \HDNET\Autoloader\Loader $loader
-     * @param array $loaderInformation
+     * @param array                    $loaderInformation
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
-     * @return NULL
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
         foreach ($loaderInformation as $hook) {
             ExtendedUtility::addHooks($hook['locations'], $hook['configuration']);
         }
+
         return null;
     }
 }

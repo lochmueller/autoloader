@@ -1,21 +1,21 @@
 <?php
 /**
- * Tca UserFunctions
+ * Tca UserFunctions.
  *
- * @author Carsten Biebricher
  */
+
 namespace HDNET\Autoloader\UserFunctions;
 
 /**
- * Tca UserFunctions
+ * Tca UserFunctions.
  */
 class Tca
 {
     /**
-     * Generate the help message for array fields
+     * Generate the help message for array fields.
      *
-     * @param array $configuration
-     * @param object $formEngine FormEngine object
+     * @param array  $configuration
+     * @param object $formEngine    FormEngine object
      *
      * @return string
      */
@@ -25,10 +25,10 @@ class Tca
     }
 
     /**
-     * Generate the help message for object storage fields
+     * Generate the help message for object storage fields.
      *
-     * @param array $configuration
-     * @param object $formEngine FormEngine object
+     * @param array  $configuration
+     * @param object $formEngine    FormEngine object
      *
      * @return string
      */
@@ -38,10 +38,10 @@ class Tca
     }
 
     /**
-     * Generate the help message for model fields
+     * Generate the help message for model fields.
      *
-     * @param array $configuration
-     * @param object $formEngine FormEngine object
+     * @param array  $configuration
+     * @param object $formEngine    FormEngine object
      *
      * @return string
      */
@@ -51,7 +51,7 @@ class Tca
     }
 
     /**
-     * Get a generic text for an info box
+     * Get a generic text for an info box.
      *
      * @param array $configuration
      *
@@ -73,11 +73,12 @@ class Tca
         $infoField .= '<a href="https://docs.typo3.org/typo3cms/TCAReference/ColumnsConfig/Type/Inline.html" target="_blank">inline</a> or ';
         $infoField .= '<a href="https://docs.typo3.org/typo3cms/TCAReference/ColumnsConfig/Type/Select.html" target="_blank">select</a>';
         $infoField .= '-type can be found in the TCA-documentation.<br/>';
+
         return $this->wrapInInfoBox($infoField);
     }
 
     /**
-     * Wrap the given content in a info box for the backend
+     * Wrap the given content in a info box for the backend.
      *
      * @param string $content
      *

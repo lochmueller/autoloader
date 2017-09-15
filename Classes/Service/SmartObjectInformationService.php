@@ -1,9 +1,9 @@
 <?php
 /**
- * SmartObjectInformationService.php
+ * SmartObjectInformationService.php.
  *
- * @author Tim Spiekerkoetter
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\DataSet;
@@ -18,13 +18,12 @@ use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * SmartObjectInformationService
+ * SmartObjectInformationService.
  */
 class SmartObjectInformationService
 {
-
     /**
-     * Get a instance of this object
+     * Get a instance of this object.
      *
      * @return \HDNET\Autoloader\Service\SmartObjectInformationService
      */
@@ -34,7 +33,7 @@ class SmartObjectInformationService
     }
 
     /**
-     * Get database information
+     * Get database information.
      *
      * @param $modelClassName
      *
@@ -50,11 +49,12 @@ class SmartObjectInformationService
         if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName) !== '') {
             return $this->generateSqlQuery($tableName, $custom);
         }
+
         return $this->generateCompleteSqlQuery($modelClassName, $tableName, $custom);
     }
 
     /**
-     * Get the custom Model field TCA structure
+     * Get the custom Model field TCA structure.
      *
      * @param       $modelClassName
      * @param array $searchFields
@@ -98,7 +98,7 @@ class SmartObjectInformationService
     }
 
     /**
-     * Pre build TCA information for the given model
+     * Pre build TCA information for the given model.
      *
      * @param string $modelClassName
      *
@@ -119,6 +119,7 @@ class SmartObjectInformationService
                 'columns' => $customFields,
             ];
             $base = is_array($GLOBALS['TCA'][$reflectionTableName]) ? $GLOBALS['TCA'][$reflectionTableName] : [];
+
             return ArrayUtility::mergeRecursiveDistinct($base, $customConfiguration);
         }
 
@@ -172,7 +173,7 @@ class SmartObjectInformationService
                 'sortby' => 'sorting',
                 'delete' => 'deleted',
                 'searchFields' => implode(',', $searchFields),
-                'iconfile' => IconUtility::getByModelName($modelClassName, true)
+                'iconfile' => IconUtility::getByModelName($modelClassName, true),
             ],
             'interface' => [
                 'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
@@ -184,11 +185,12 @@ class SmartObjectInformationService
                 'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
             ],
         ];
+
         return ArrayUtility::mergeRecursiveDistinct($baseTca, $overrideTca);
     }
 
     /**
-     * Get custom database information for the given model
+     * Get custom database information for the given model.
      *
      * @param string $modelClassName
      *
@@ -210,26 +212,29 @@ class SmartObjectInformationService
             }
             $fields[] = $info['name'] . ' ' . $info['db'];
         }
+
         return $fields;
     }
 
     /**
-     * Get the right mapping
+     * Get the right mapping.
      *
      * @param $var
      *
      * @throws \HDNET\Autoloader\Exception
+     *
      * @return string
      */
     protected function getDatabaseMappingByVarType($var)
     {
         /** @var Mapper $mapper */
         $mapper = ExtendedUtility::create(Mapper::class);
+
         return $mapper->getDatabaseDefinition($var);
     }
 
     /**
-     * Get custom database information for the given model
+     * Get custom database information for the given model.
      *
      * @param string $modelClassName
      *
@@ -252,17 +257,18 @@ class SmartObjectInformationService
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
                 'db' => trim($dbInformation[0]),
                 'var' => trim($var),
-                'rte' => (bool)$property->isTaggedWith('enableRichText'),
+                'rte' => (bool) $property->isTaggedWith('enableRichText'),
             ];
         }
+
         return $fields;
     }
 
     /**
-     * Generate SQL Query
+     * Generate SQL Query.
      *
      * @param string $tableName
-     * @param array $fields
+     * @param array  $fields
      *
      * @return string
      */
@@ -271,15 +277,16 @@ class SmartObjectInformationService
         if (empty($fields)) {
             return '';
         }
+
         return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
     }
 
     /**
-     * Generate complete SQL Query
+     * Generate complete SQL Query.
      *
      * @param string $modelClassName
      * @param string $tableName
-     * @param array $custom
+     * @param array  $custom
      *
      * @return string
      */
@@ -316,7 +323,7 @@ class SmartObjectInformationService
     }
 
     /**
-     * Get the data set object
+     * Get the data set object.
      *
      * @return \HDNET\Autoloader\DataSet
      */
@@ -328,6 +335,7 @@ class SmartObjectInformationService
     /**
      * @param string $tableName
      * @param string $extensionName
+     *
      * @return string
      */
     protected function getTcaTitle($tableName, $extensionName)

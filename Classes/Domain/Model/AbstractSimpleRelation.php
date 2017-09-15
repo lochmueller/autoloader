@@ -1,15 +1,15 @@
 <?php
 /**
- * Simple relation model
+ * Simple relation model.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Simple relation model
+ * Simple relation model.
  *
  * Note copy the SmartExclude to your relation model
  *
@@ -17,9 +17,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 abstract class AbstractSimpleRelation extends AbstractEntity
 {
-
     /**
-     * Local UID
+     * Local UID.
      *
      * @var int
      * @db
@@ -27,7 +26,7 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     protected $uidLocal;
 
     /**
-     * Foreign UID
+     * Foreign UID.
      *
      * @var int
      * @db
@@ -35,7 +34,7 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     protected $uidForeign;
 
     /**
-     * Sorting
+     * Sorting.
      *
      * @var int
      * @db

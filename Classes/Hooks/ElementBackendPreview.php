@@ -2,8 +2,8 @@
 /**
  * Custom Backend Preview for Elements like Content Objects.
  *
- * @author Carsten Biebricher
  */
+
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -13,14 +13,13 @@ use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class ElementBackendPreview
+ * Class ElementBackendPreview.
  *
  * @see  \TYPO3\CMS\Backend\View\PageLayoutView::tt_content_drawItem
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|tt_content_drawItem
  */
 class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 {
-
     /**
      * Preprocesses the preview rendering of a content element.
      *
@@ -71,9 +70,10 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 
         $view = ExtendedUtility::createExtensionStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
         $view->assignMultiple([
-            'data'   => $row,
-            'object' => $model
+            'data' => $row,
+            'object' => $model,
         ]);
+
         return $view->render();
     }
 
@@ -94,6 +94,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         $config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
 
         $beTemplatePath = GeneralUtility::getFileAbsFileName($config['backendTemplatePath']);
+
         return is_file($beTemplatePath);
     }
 
@@ -107,6 +108,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     public function isAutoloaderContenobject(array $row)
     {
         $ctype = $row['CType'];
-        return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+
+        return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
     }
 }

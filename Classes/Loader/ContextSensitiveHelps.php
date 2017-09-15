@@ -1,9 +1,9 @@
 <?php
 /**
- * ContextSensitiveHelp (CSH) based on smart objects
+ * ContextSensitiveHelp (CSH) based on smart objects.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -17,18 +17,17 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * ContextSensitiveHelp (CSH) based on smart objects
+ * ContextSensitiveHelp (CSH) based on smart objects.
  */
 class ContextSensitiveHelps implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -56,7 +55,7 @@ class ContextSensitiveHelps implements LoaderInterface
     }
 
     /**
-     * Find table and model information for the given extension key
+     * Find table and model information for the given extension key.
      *
      * @param string $extensionKey
      *
@@ -75,7 +74,7 @@ class ContextSensitiveHelps implements LoaderInterface
 
                     $information[] = [
                         'table' => ModelUtility::getTableNameByModelName($class),
-                        'properties' => array_keys($modelInformation)
+                        'properties' => array_keys($modelInformation),
                     ];
                 }
             }
@@ -85,11 +84,11 @@ class ContextSensitiveHelps implements LoaderInterface
     }
 
     /**
-     * Check if the given file is already existing
+     * Check if the given file is already existing.
      *
      * @param string $extensionKey
      * @param string $table
-     * @param array $properties
+     * @param array  $properties
      *
      * @return string|null
      */
@@ -110,16 +109,15 @@ class ContextSensitiveHelps implements LoaderInterface
                 return $path;
             }
         }
+
         return null;
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -131,13 +129,12 @@ class ContextSensitiveHelps implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param \HDNET\Autoloader\Loader $loader
-     * @param array $loaderInformation
+     * @param array                    $loaderInformation
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
-     * @return NULL
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

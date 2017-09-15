@@ -1,9 +1,9 @@
 <?php
 /**
- * Content Controller
+ * Content Controller.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Controller;
 
 use HDNET\Autoloader\Utility\ClassNamingUtility;
@@ -14,13 +14,12 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Content Controller
+ * Content Controller.
  */
 class ContentController extends ActionController
 {
-
     /**
-     * Render the content Element via ExtBase
+     * Render the content Element via ExtBase.
      */
     public function indexAction()
     {
@@ -48,10 +47,11 @@ class ContentController extends ActionController
         }
 
         $view->assignMultiple([
-            'data'     => $data,
-            'object'   => $model,
-            'settings' => $this->settings
+            'data' => $data,
+            'object' => $model,
+            'settings' => $this->settings,
         ]);
+
         return $view->render();
     }
 
@@ -66,6 +66,7 @@ class ContentController extends ActionController
         $name = $this->settings['contentElement'];
 
         $templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
+
         return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
     }
 }

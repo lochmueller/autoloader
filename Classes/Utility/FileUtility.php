@@ -1,9 +1,9 @@
 <?php
 /**
- * FileUtility
+ * FileUtility.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -11,18 +11,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
- * FileUtility
+ * FileUtility.
  */
 class FileUtility
 {
-
     /**
-     * Write a file and create the target folder, if the folder do not exists
+     * Write a file and create the target folder, if the folder do not exists.
      *
      * @param string $absoluteFileName
      * @param string $content
      *
      * @throws Exception
+     *
      * @return bool
      */
     public static function writeFileAndCreateFolder($absoluteFileName, $content)
@@ -37,12 +37,13 @@ class FileUtility
                 234627835
             );
         }
+
         return GeneralUtility::writeFile($absoluteFileName, $content);
     }
 
     /**
      * Get all base file names in the given directory with the given file extension
-     * Check also if the directory exists
+     * Check also if the directory exists.
      *
      * @param string $dirPath
      * @param string $fileExtension
@@ -56,7 +57,7 @@ class FileUtility
 
     /**
      * Get all base file names in the given directory with the given file extension
-     * Check also if the directory exists
+     * Check also if the directory exists.
      *
      * @param string $dirPath
      * @param string $fileExtension
@@ -69,11 +70,11 @@ class FileUtility
     }
 
     /**
-     * Get file information in the given folder
+     * Get file information in the given folder.
      *
      * @param string $dirPath
      * @param string $fileExtension
-     * @param int $informationType
+     * @param int    $informationType
      *
      * @return array
      */
@@ -86,6 +87,7 @@ class FileUtility
         foreach ($files as $key => $file) {
             $files[$key] = PathUtility::pathinfo($file, $informationType);
         }
+
         return array_values($files);
     }
 
@@ -96,7 +98,7 @@ class FileUtility
      *
      * @param string $dirPath
      * @param string $fileExtensions
-     * @param bool $recursively
+     * @param bool   $recursively
      *
      * @return array
      */
@@ -112,6 +114,7 @@ class FileUtility
             $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
         }
         $files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
+
         return array_values($files);
     }
 }

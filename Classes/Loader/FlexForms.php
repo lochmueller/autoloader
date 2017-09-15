@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading FlexForms
+ * Loading FlexForms.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -13,15 +13,14 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Loading FlexForms
+ * Loading FlexForms.
  */
 class FlexForms implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
      * @param int    $type
@@ -40,7 +39,7 @@ class FlexForms implements LoaderInterface
             $pluginSignature = strtolower($extensionName . '_' . $fileKey);
             $flexForms[] = [
                 'pluginSignature' => $pluginSignature,
-                'path'            => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
+                'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
             ];
         }
 
@@ -50,7 +49,7 @@ class FlexForms implements LoaderInterface
             $contentSignature = strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
             $flexForms[] = [
                 'contentSignature' => $contentSignature,
-                'path'             => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
+                'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
             ];
         }
 
@@ -58,12 +57,10 @@ class FlexForms implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return NULL
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -80,11 +77,12 @@ class FlexForms implements LoaderInterface
                 ExtensionManagementUtility::addPiFlexFormValue('*', $info['path'], $info['contentSignature']);
             }
         }
+
         return null;
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation

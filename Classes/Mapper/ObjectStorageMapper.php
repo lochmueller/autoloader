@@ -1,21 +1,20 @@
 <?php
 /**
- * Map general ObjectStorage
+ * Map general ObjectStorage.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map general ObjectStorage
+ * Map general ObjectStorage.
  */
 class ObjectStorageMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -27,7 +26,7 @@ class ObjectStorageMapper implements MapperInterface
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -37,19 +36,19 @@ class ObjectStorageMapper implements MapperInterface
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
         $baseConfig = [
-            'type'     => 'user',
+            'type' => 'user',
             'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->objectStorageInfoField',
         ];
 
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => $baseConfig,
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => $baseConfig,
         ];
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

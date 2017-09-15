@@ -1,9 +1,9 @@
 <?php
 /**
- * XML writer
+ * XML writer.
  *
- * @author  Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -11,13 +11,12 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * XML writer
+ * XML writer.
  */
 class XmlWriter extends AbstractLocalizationWriter
 {
-
     /**
-     * Get the base file content
+     * Get the base file content.
      *
      * @param string $extensionKey
      *
@@ -39,7 +38,7 @@ class XmlWriter extends AbstractLocalizationWriter
     }
 
     /**
-     * Get the absolute file name
+     * Get the absolute file name.
      *
      * @param string $extensionKey
      *
@@ -51,13 +50,13 @@ class XmlWriter extends AbstractLocalizationWriter
     }
 
     /**
-     * Add the label to a XML file
+     * Add the label to a XML file.
      *
      * @param string $extensionKey
      * @param string $key
      * @param string $default
      *
-     * @return void
+     * @return bool|void
      */
     public function addLabel($extensionKey, $key, $default)
     {

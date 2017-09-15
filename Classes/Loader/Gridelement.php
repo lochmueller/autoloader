@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Gridelements
+ * Loading Gridelements.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -16,15 +16,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
- * Loading Gridelements
+ * Loading Gridelements.
  */
 class Gridelement implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
      * @param int    $type
@@ -56,11 +55,9 @@ class Gridelement implements LoaderInterface
             $label = TranslateUtility::getLllString($translationKey, $loader->getExtensionKey());
             $content = GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
 
-
             $flexForm = 'EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Grids/' . $pathInfo['filename'] . '.xml';
             $flexFormFile = GeneralUtility::getFileAbsFileName($flexForm);
             $flexFormContent = is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
-
 
             $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, $flexFormContent);
         }
@@ -74,6 +71,7 @@ class Gridelement implements LoaderInterface
      * @param $config
      * @param $icon
      * @param $flexForm
+     *
      * @return string
      */
     protected function getPageTsConfig($id, $label, $config, $icon, $flexForm)
@@ -100,12 +98,10 @@ class Gridelement implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return NULL
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -113,12 +109,10 @@ class Gridelement implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return NULL
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
@@ -127,6 +121,7 @@ class Gridelement implements LoaderInterface
         }
 
         ExtensionManagementUtility::addPageTSConfig(implode("\n", $loaderInformation));
+
         return null;
     }
 }

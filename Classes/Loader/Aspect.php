@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Aspect
+ * Loading Aspect.
  *
- * @author Carsten Biebricher
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Autoload\TempClassLoader;
@@ -15,21 +15,20 @@ use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Loading Aspect
+ * Loading Aspect.
  *
  * Aspects available: before, replace, after, throw
  * Used Tags: @aspectClass, @aspectJoinPoint, @aspectAdvice
  */
 class Aspect implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array $loaderInformation
      */
@@ -103,6 +102,7 @@ class Aspect implements LoaderInterface
      * @param $aspectJoinPoint
      *
      * @throws \HDNET\Autoloader\Exception
+     *
      * @return array
      */
     protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint)
@@ -118,7 +118,7 @@ class Aspect implements LoaderInterface
             $arguments[] = [
                 'name' => $argument->getName(),
                 'typeHint' => $argument->getClass()->name,
-                'reference' => $argument->isPassedByReference()
+                'reference' => $argument->isPassedByReference(),
             ];
         }
 
@@ -129,9 +129,7 @@ class Aspect implements LoaderInterface
      * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -142,9 +140,7 @@ class Aspect implements LoaderInterface
      * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

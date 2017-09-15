@@ -1,9 +1,9 @@
 <?php
 /**
- * Utility functions for the Autoloader
+ * Utility functions for the Autoloader.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -13,13 +13,12 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
- * Utility functions for the Autoloader
+ * Utility functions for the Autoloader.
  */
 class ExtendedUtility
 {
-
     /**
-     * Create a object with the given class name
+     * Create a object with the given class name.
      *
      * @param string $className
      *
@@ -29,14 +28,15 @@ class ExtendedUtility
     {
         $arguments = func_get_args();
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         return call_user_func_array([
             $objManager,
-            'get'
+            'get',
         ], $arguments);
     }
 
     /**
-     * Get the query for the given class name oder object
+     * Get the query for the given class name oder object.
      *
      * @param string|object $objectName
      *
@@ -50,11 +50,12 @@ class ExtendedUtility
         if ($manager === null) {
             $manager = self::create(PersistenceManagerInterface::class);
         }
+
         return $manager->createQueryForType($objectName);
     }
 
     /**
-     * Add a xclass/object replacement
+     * Add a xclass/object replacement.
      *
      * @param $source
      * @param $target
@@ -67,16 +68,18 @@ class ExtendedUtility
             $message = 'Double registration of Xclass for ' . $source;
             $message .= ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
             self::log($message);
+
             return false;
         }
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source] = [
             'className' => $target,
         ];
+
         return true;
     }
 
     /**
-     * Log into the TYPO3_CONF_VARS to get more information in the backend
+     * Log into the TYPO3_CONF_VARS to get more information in the backend.
      *
      * @param $message
      */
@@ -89,7 +92,7 @@ class ExtendedUtility
     }
 
     /**
-     * Add a hooks
+     * Add a hooks.
      *
      * @param array  $locations
      * @param string $configuration
@@ -102,9 +105,9 @@ class ExtendedUtility
     }
 
     /**
-     * Add a hook
+     * Add a hook.
      *
-     * @param string $location The location of the hook separated bei pipes
+     * @param string $location      The location of the hook separated bei pipes
      * @param string $configuration
      */
     public static function addHook($location, $configuration)
@@ -115,7 +118,7 @@ class ExtendedUtility
     }
 
     /**
-     * Create a StandaloneView for a extension context
+     * Create a StandaloneView for a extension context.
      *
      * @param string $extensionKey
      * @param string $templatePath

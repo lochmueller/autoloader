@@ -1,9 +1,9 @@
 <?php
 /**
- * TempClassAutoloader.php
+ * TempClassAutoloader.php.
  *
- * @author Carsten Biebricher
  */
+
 namespace HDNET\Autoloader\Autoload;
 
 use HDNET\Autoloader\SingletonInterface;
@@ -12,11 +12,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class TempClassLoader
- * Thx to SJBR
+ * Thx to SJBR.
  */
 class TempClassLoader implements SingletonInterface
 {
-
     /**
      * Cached class loader class name.
      *
@@ -25,14 +24,14 @@ class TempClassLoader implements SingletonInterface
     protected static $className = __CLASS__;
 
     /**
-     * Name space of the Domain Model of StaticInfoTables
+     * Name space of the Domain Model of StaticInfoTables.
      *
      * @var string
      */
     protected static $namespace = 'HDNET\\Autoloader\\Xclass\\';
 
     /**
-     * Is TRUE, if the autoloader is registered
+     * Is TRUE, if the autoloader is registered.
      *
      * @var bool
      */
@@ -50,6 +49,7 @@ class TempClassLoader implements SingletonInterface
         }
 
         self::$isRegistered = true;
+
         return spl_autoload_register(static::$className . '::autoload', true, true);
     }
 

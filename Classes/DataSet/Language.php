@@ -1,21 +1,20 @@
 <?php
 /**
- * DataSet information for languages
+ * DataSet information for languages.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
 
 /**
- * DataSet information for languages
+ * DataSet information for languages.
  */
 class Language implements DataSetInterface
 {
-
     /**
-     * Get TCA information
+     * Get TCA information.
      *
      * @param string $tableName
      *
@@ -42,8 +41,8 @@ class Language implements DataSetInterface
                             [
                                 'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
                                 -1,
-                                'flags-multiple'
-                            ]
+                                'flags-multiple',
+                            ],
                         ],
                     ],
                 ],
@@ -57,7 +56,7 @@ class Language implements DataSetInterface
                         'items' => [
                             [
                                 '',
-                                0
+                                0,
                             ],
                         ],
                         'foreign_table' => $tableName,
@@ -80,7 +79,7 @@ class Language implements DataSetInterface
     }
 
     /**
-     * Get database sql information
+     * Get database sql information.
      *
      * @param string $tableName
      *
@@ -96,14 +95,14 @@ class Language implements DataSetInterface
     }
 
     /**
-     * Get database sql key information
+     * Get database sql key information.
      *
      * @return array
      */
     public function getDatabaseSqlKey()
     {
         return [
-            'KEY language (l10n_parent,sys_language_uid)'
+            'KEY language (l10n_parent,sys_language_uid)',
         ];
     }
 }

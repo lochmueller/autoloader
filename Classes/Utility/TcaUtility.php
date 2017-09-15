@@ -1,25 +1,22 @@
 <?php
 /**
- * TcaUtility.php
+ * TcaUtility.php.
  *
  * General file information
  *
- * @category     Extension
- * @author       Christian Lewin HDNET GmbH & Co. <christian.lewin@hdnet.de>
  *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
 
 /**
- * A basic TCA manipulation utility class
+ * A basic TCA manipulation utility class.
  *
- * @author       Christian Lewin HDNET GmbH & Co. <christian.lewin@hdnet.de>
  */
 class TcaUtility
 {
-
     /**
      * Inserts a divider tab before a given column name.
      *
@@ -28,6 +25,7 @@ class TcaUtility
      * @param string $tabTitle   The title of the tab
      *
      * @throws Exception
+     *
      * @return array
      */
     public static function insertTabDividerBefore(&$base, $columnName, $tabTitle)
@@ -42,6 +40,7 @@ class TcaUtility
             $showItem = $tempShowitem[0] . $divider . $columnName . $tempShowitem[1];
             $base['types'][$key]['showitem'] = $showItem;
         }
+
         return $base;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Slots
+ * Loading Slots.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -23,16 +23,15 @@ use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
- * Loading Slots
+ * Loading Slots.
  */
 class ContentObjects implements LoaderInterface
 {
-
     /**
-     * Prepare the content object loader
+     * Prepare the content object loader.
      *
      * @param Loader $loader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -100,7 +99,7 @@ class ContentObjects implements LoaderInterface
                 'icon' => IconUtility::getByModelName($className, false),
                 'iconExt' => IconUtility::getByModelName($className, true),
                 'noHeader' => $noHeader,
-                'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
+                'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab'),
             ];
 
             SmartObjectRegister::register($entry['modelClass']);
@@ -113,7 +112,7 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Check if the class is tagged with noHeader
+     * Check if the class is tagged with noHeader.
      *
      * @param $class
      *
@@ -122,14 +121,15 @@ class ContentObjects implements LoaderInterface
     protected function isTaggedWithNoHeader($class)
     {
         $classReflection = ReflectionUtility::createReflectionClass($class);
+
         return $classReflection->isTaggedWith('noHeader');
     }
 
     /**
      * Check if the templates are exist and create a dummy, if there
-     * is no valid template
+     * is no valid template.
      *
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      * @param Loader $loader
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
@@ -161,7 +161,7 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Write the given content object template to the target path
+     * Write the given content object template to the target path.
      *
      * @param string $name
      * @param string $absoluteTargetPath
@@ -176,7 +176,7 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Same as getClassProperties, but the fields are in LowerCaseUnderscored
+     * Same as getClassProperties, but the fields are in LowerCaseUnderscored.
      *
      * @param $className
      *
@@ -190,10 +190,10 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Wrap the given field configuration in the CE default TCA fields
+     * Wrap the given field configuration in the CE default TCA fields.
      *
      * @param string $configuration
-     * @param bool $noHeader
+     * @param bool   $noHeader
      *
      * @return string
      */
@@ -201,6 +201,7 @@ class ContentObjects implements LoaderInterface
     {
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
         $configuration = trim($configuration) ? trim($configuration) . ',' : '';
+
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
@@ -212,10 +213,10 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Get the fields that are in the default configuration
+     * Get the fields that are in the default configuration.
      *
      * @param null|string $configuration
-     * @param bool $noHeader
+     * @param bool        $noHeader
      *
      * @return array
      */
@@ -241,16 +242,15 @@ class ContentObjects implements LoaderInterface
                 }
             }
         }
+
         return $defaultFields;
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -271,24 +271,23 @@ class ContentObjects implements LoaderInterface
                 'tt_content.' . $loader->getExtensionKey() . '.header',
                 $loader->getExtensionKey()
             ),
-            '--div--'
+            '--div--',
         ];
 
         foreach ($loaderInformation as $e => $config) {
             SmartObjectRegister::register($config['modelClass']);
             $typeKey = $loader->getExtensionKey() . '_' . $e;
 
-
             ExtensionManagementUtility::addPlugin([
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
                 $typeKey,
-                $config['iconExt']
+                $config['iconExt'],
             ], 'CType');
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
                 $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration(
                     $config['fieldConfiguration'],
-                    (bool)$config['noHeader']
+                    (bool) $config['noHeader']
                 );
 
                 if (ExtensionManagementUtility::isLoaded('gridelements')) {
@@ -319,7 +318,6 @@ class ContentObjects implements LoaderInterface
                 $createWizardHeader[] = $tabName;
             }
 
-
             /** @var IconRegistry $iconRegistry */
             $provider = BitmapIconProvider::class;
             if (substr(strtolower($config['iconExt']), -3) === 'svg') {
@@ -345,7 +343,7 @@ mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' .
             $cObjectConfiguration = [
                 'extensionKey' => $loader->getExtensionKey(),
                 'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
-                'modelClass' => $config['modelClass']
+                'modelClass' => $config['modelClass'],
             ];
 
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
@@ -365,12 +363,10 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

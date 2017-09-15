@@ -1,10 +1,9 @@
 <?php
 /**
- * Loading JsonServer
+ * Loading JsonServer.
  *
- * @author Tim Lochmüller
- * @author Tito Duarte <duartito@gmail.com>
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -14,18 +13,17 @@ use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Loading JsonServer
+ * Loading JsonServer.
  */
 class JsonServer implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $autoLoader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -48,7 +46,6 @@ class JsonServer implements LoaderInterface
             }
             $info[$legacyServiceName] = $serviceClass;
 
-
             $serviceName = $autoLoader->getExtensionKey() . '/' . $service;
             $info[$serviceName] = $serviceClass;
         }
@@ -57,34 +54,32 @@ class JsonServer implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Json'][$key] = $class;
         }
+
         return null;
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
-     *
-     * @return NULL
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Json'][$key] = $class;
         }
+
         return null;
     }
 }

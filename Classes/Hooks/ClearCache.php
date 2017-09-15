@@ -1,8 +1,7 @@
 <?php
 /**
- * Clear Cache hook for the Backend
+ * Clear Cache hook for the Backend.
  *
- * @author Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Hooks;
@@ -18,15 +17,14 @@ use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Clear Cache hook for the Backend
+ * Clear Cache hook for the Backend.
  *
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
  */
 class ClearCache implements ClearCacheActionsHookInterface
 {
-
     /**
-     * Modifies CacheMenuItems array
+     * Modifies CacheMenuItems array.
      *
      * @param array $cacheActions
      * @param array $optionValues
@@ -49,7 +47,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
-     * Get Ajax URI
+     * Get Ajax URI.
      *
      * @return string
      */
@@ -63,13 +61,14 @@ class ClearCache implements ClearCacheActionsHookInterface
         } catch (RouteNotFoundException $e) {
             return '';
         }
-        return (string)$uri;
+
+        return (string) $uri;
     }
 
     /**
-     * clear Cache ajax handler
+     * clear Cache ajax handler.
      *
-     * @param array $ajaxParams
+     * @param array              $ajaxParams
      * @param AjaxRequestHandler $ajaxObj
      */
     public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
@@ -90,18 +89,19 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
-     * Return if the clear cache element is als visible in production
+     * Return if the clear cache element is als visible in production.
      *
      * @return bool
      */
     protected function isAlwaysActivated()
     {
-        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
-        return isset($configuration['enableAutoloaderClearCacheInProduction']) ? (bool)$configuration['enableAutoloaderClearCacheInProduction'] : false;
+        $configuration = unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+
+        return isset($configuration['enableAutoloaderClearCacheInProduction']) ? (bool) $configuration['enableAutoloaderClearCacheInProduction'] : false;
     }
 
     /**
-     * Return TRUE if the current instance is in production mode
+     * Return TRUE if the current instance is in production mode.
      *
      * @return bool
      */
@@ -112,7 +112,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
-     * Check if the user is a admin
+     * Check if the user is a admin.
      *
      * @return bool
      */
@@ -123,7 +123,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
-     * Return the Backend user authentication
+     * Return the Backend user authentication.
      *
      * @return BackendUserAuthentication
      */

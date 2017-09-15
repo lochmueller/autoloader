@@ -1,19 +1,18 @@
 <?php
 /**
- * Mapper Interface
+ * Mapper Interface.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 /**
- * Mapper Interface
+ * Mapper Interface.
  */
 interface MapperInterface extends SingletonInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -22,7 +21,7 @@ interface MapperInterface extends SingletonInterface
     public function canHandleType($type);
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -32,7 +31,7 @@ interface MapperInterface extends SingletonInterface
     public function getTcaConfiguration($fieldName, $overWriteLabel = false);
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

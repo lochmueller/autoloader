@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Plugins
+ * Loading Plugins.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -17,15 +17,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
- * Loading Plugins
+ * Loading Plugins.
  */
 class Plugins implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
      * @param int    $type
@@ -76,7 +75,7 @@ class Plugins implements LoaderInterface
     }
 
     /**
-     * Add the given plugin information to the plugin information array
+     * Add the given plugin information to the plugin information array.
      *
      * @param array  $pluginInformation
      * @param string $pluginKey
@@ -93,14 +92,14 @@ class Plugins implements LoaderInterface
 
         if (!isset($pluginInformation[$pluginKey])) {
             $pluginInformation[$pluginKey] = [
-                'cache'   => [],
+                'cache' => [],
                 'noCache' => [],
             ];
         }
 
         $parts = $noCache ? [
             'cache',
-            'noCache'
+            'noCache',
         ] : ['cache'];
 
         foreach ($parts as $part) {
@@ -111,7 +110,7 @@ class Plugins implements LoaderInterface
             if ($first) {
                 array_unshift($actions, $actionName);
                 $targetController = [
-                    $controllerKey => $pluginInformation[$pluginKey][$part][$controllerKey]
+                    $controllerKey => $pluginInformation[$pluginKey][$part][$controllerKey],
                 ];
                 unset($pluginInformation[$pluginKey][$part][$controllerKey]);
                 $pluginInformation[$pluginKey][$part] = array_merge($targetController, $pluginInformation[$pluginKey][$part]);
@@ -119,14 +118,14 @@ class Plugins implements LoaderInterface
                 $actions[] = $actionName;
             }
 
-
             $pluginInformation[$pluginKey][$part][$controllerKey] = implode(',', $actions);
         }
+
         return $pluginInformation;
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
@@ -140,7 +139,7 @@ class Plugins implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation

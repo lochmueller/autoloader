@@ -1,9 +1,9 @@
 <?php
 /**
- * Central Loader object
+ * Central Loader object.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -14,13 +14,12 @@ use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Central Loader object
+ * Central Loader object.
  */
 class Loader implements SingletonInterface
 {
-
     /**
-     * The different implementations and the order of the execution
+     * The different implementations and the order of the execution.
      *
      * @var array
      */
@@ -55,45 +54,45 @@ class Loader implements SingletonInterface
     ];
 
     /**
-     * The Extension key
+     * The Extension key.
      *
      * @var string
      */
     protected $extensionKey;
 
     /**
-     * The vendorName
+     * The vendorName.
      *
      * @var string
      */
     protected $vendorName;
 
     /**
-     * Set to tro, if there is no valid autoloader cache
+     * Set to tro, if there is no valid autoloader cache.
      *
      * @var bool
      */
     protected $disableFirstCall = false;
 
     /**
-     * Default cache configuration
+     * Default cache configuration.
      *
      * @var array
      */
     protected $cacheConfiguration = [
-        'backend'  => SimpleFileBackend::class,
+        'backend' => SimpleFileBackend::class,
         'frontend' => PhpFrontend::class,
-        'groups'   => [
+        'groups' => [
             'system',
         ],
-        'options'  => [
+        'options' => [
             'defaultLifetime' => 0,
         ],
     ];
 
     /**
      * Build up the object.
-     * If there is no valid cache in the LocalConfiguration add one
+     * If there is no valid cache in the LocalConfiguration add one.
      */
     public function __construct()
     {
@@ -109,7 +108,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Call this method in the ext_tables.php file
+     * Call this method in the ext_tables.php file.
      *
      * @param string $vendorName
      * @param string $extensionKey
@@ -123,7 +122,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Call this method in the ext_localconf.php file
+     * Call this method in the ext_localconf.php file.
      *
      * @param string $vendorName
      * @param string $extensionKey
@@ -137,7 +136,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Load the ext tables information
+     * Load the ext tables information.
      *
      * @param string $vendorName
      * @param string $extensionKey
@@ -163,7 +162,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Load the ext localconf information
+     * Load the ext localconf information.
      *
      * @param string $vendorName
      * @param string $extensionKey
@@ -189,7 +188,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Build the Autoloader objects
+     * Build the Autoloader objects.
      *
      * @param array $objectNames
      *
@@ -206,11 +205,12 @@ class Loader implements SingletonInterface
             }
             $objects[] = $objectCache[$autoLoaderObjectName];
         }
+
         return $objects;
     }
 
     /**
-     * Get the Autoloader Names in the right order
+     * Get the Autoloader Names in the right order.
      *
      * @param array $objectNames
      *
@@ -234,7 +234,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Prepare the autoLoader information
+     * Prepare the autoLoader information.
      *
      * @param array $objects
      * @param int   $type
@@ -259,7 +259,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Build the loader information
+     * Build the loader information.
      *
      * @param $objects
      * @param $type
@@ -270,14 +270,15 @@ class Loader implements SingletonInterface
     {
         $return = [];
         foreach ($objects as $object) {
-            /** @var LoaderInterface $object */
+            /* @var LoaderInterface $object */
             $return[get_class($object)] = $object->prepareLoader($this, $type);
         }
+
         return $return;
     }
 
     /**
-     * Get the cache manager
+     * Get the cache manager.
      *
      * @return \TYPO3\CMS\Core\Cache\CacheManager
      */
@@ -287,7 +288,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Get the extension key
+     * Get the extension key.
      *
      * @return string
      */
@@ -297,7 +298,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Get the vendor name
+     * Get the vendor name.
      *
      * @return string
      */
@@ -308,7 +309,7 @@ class Loader implements SingletonInterface
 
     /**
      * check if the class is loadable and is instantiable
-     * (exists and is no interface or abstraction etc.)
+     * (exists and is no interface or abstraction etc.).
      *
      * @param $class
      *

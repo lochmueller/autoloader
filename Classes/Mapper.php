@@ -1,28 +1,27 @@
 <?php
 /**
- * Mapper for variables types to TCA and DB information
+ * Mapper for variables types to TCA and DB information.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
 
 /**
- * Mapper for variables types to TCA and DB information
+ * Mapper for variables types to TCA and DB information.
  */
 class Mapper implements SingletonInterface
 {
-
     /**
-     * Custom mapper
+     * Custom mapper.
      *
      * @var array
      */
     protected $customMapper = [];
 
     /**
-     * Internal mapper
+     * Internal mapper.
      *
      * @var array
      */
@@ -41,11 +40,11 @@ class Mapper implements SingletonInterface
     ];
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $type
      * @param string $fieldName
-     * @param bool $overWriteLabel
+     * @param bool   $overWriteLabel
      *
      * @return array
      */
@@ -57,11 +56,12 @@ class Mapper implements SingletonInterface
             // always return a valid mapper
             $mapper = $this->getMapperByType('String');
         }
+
         return $mapper->getTcaConfiguration($fieldName, $overWriteLabel);
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @param string $type
      *
@@ -70,11 +70,12 @@ class Mapper implements SingletonInterface
     public function getDatabaseDefinition($type)
     {
         $mapper = $this->getMapperByType($type);
+
         return $mapper->getDatabaseDefinition();
     }
 
     /**
-     * Add a custom mapper
+     * Add a custom mapper.
      *
      * @param string $className
      */
@@ -84,11 +85,12 @@ class Mapper implements SingletonInterface
     }
 
     /**
-     * Get a valid mapper for the given type
+     * Get a valid mapper for the given type.
      *
      * @param string $type
      *
      * @throws \Exception
+     *
      * @return MapperInterface
      */
     protected function getMapperByType($type)
@@ -104,7 +106,7 @@ class Mapper implements SingletonInterface
     }
 
     /**
-     * Get all mappers
+     * Get all mappers.
      *
      * @return array
      */
@@ -114,11 +116,12 @@ class Mapper implements SingletonInterface
         foreach ($mapper as $key => $className) {
             $mapper[$key] = ExtendedUtility::create($className);
         }
+
         return $mapper;
     }
 
     /**
-     * Get internal mapper class names
+     * Get internal mapper class names.
      *
      * @return array
      */
@@ -128,6 +131,7 @@ class Mapper implements SingletonInterface
         foreach ($this->internalMapper as $key => $value) {
             $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper';
         }
+
         return $mapper;
     }
 }

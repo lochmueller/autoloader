@@ -1,8 +1,9 @@
 <?php
 
 /**
- * StaticInfoTablesMapper
+ * StaticInfoTablesMapper.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -10,13 +11,12 @@ use SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProce
 use SJBR\StaticInfoTables\Hook\Backend\Form\Wizard\SuggestReceiver;
 
 /**
- * StaticInfoTablesMapper
+ * StaticInfoTablesMapper.
  */
 class StaticInfoTablesMapper implements MapperInterface
 {
-
     /**
-     * Class base
+     * Class base.
      */
     const CLASS_BASE = 'sjbr\\staticinfotables\\domain\\model\\';
 
@@ -26,7 +26,7 @@ class StaticInfoTablesMapper implements MapperInterface
     protected $lastClass;
 
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -35,14 +35,15 @@ class StaticInfoTablesMapper implements MapperInterface
     public function canHandleType($type)
     {
         $this->lastClass = strtolower($type);
+
         return !(strpos($this->lastClass, self::CLASS_BASE) === false);
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
-     * @param bool $overWriteLabel
+     * @param bool   $overWriteLabel
      *
      * @return array
      */
@@ -91,7 +92,7 @@ class StaticInfoTablesMapper implements MapperInterface
                 'wizards' => [
                     'suggest' => ['type' => 'suggest',
                         'default' => [
-                            'receiverClass' => SuggestReceiver::class
+                            'receiverClass' => SuggestReceiver::class,
                         ],
                     ],
                 ],
@@ -100,7 +101,7 @@ class StaticInfoTablesMapper implements MapperInterface
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

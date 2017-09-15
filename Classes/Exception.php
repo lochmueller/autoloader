@@ -1,13 +1,13 @@
 <?php
 /**
- * Exception
+ * Exception.
  *
- * @author Tim Spiekerkoetter
  */
+
 namespace HDNET\Autoloader;
 
 /**
- * Exception
+ * Exception.
  */
 class Exception extends \TYPO3\CMS\Extbase\Exception
 {

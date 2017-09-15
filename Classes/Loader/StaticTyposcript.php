@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Slots
+ * Loading Slots.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -12,15 +12,14 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Loading Slots
+ * Loading Slots.
  */
 class StaticTyposcript implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $loader
      * @param int    $type
@@ -44,7 +43,7 @@ class StaticTyposcript implements LoaderInterface
                 $setupName = implode(' - ', GeneralUtility::trimExplode('/', $setupName, true));
                 $folder = str_replace($extPath, '', $folder);
                 $tsConfiguration[] = [
-                    'path'  => $folder,
+                    'path' => $folder,
                     'title' => $setupName,
                 ];
             }
@@ -54,28 +53,25 @@ class StaticTyposcript implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return NULL
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
         foreach ($loaderInformation as $tsConfig) {
             ExtensionManagementUtility::addStaticFile($loader->getExtensionKey(), $tsConfig['path'], $tsConfig['title']);
         }
+
         return null;
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return NULL
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

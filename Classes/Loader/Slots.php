@@ -1,9 +1,9 @@
 <?php
 /**
- * Loading Slots
+ * Loading Slots.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -18,18 +18,17 @@ use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Loading Slots
+ * Loading Slots.
  */
 class Slots implements LoaderInterface
 {
-
     /**
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
-     * There is no file monitoring for this cache
+     * There is no file monitoring for this cache.
      *
      * @param Loader $autoLoader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */
@@ -62,7 +61,7 @@ class Slots implements LoaderInterface
                         continue;
                     }
 
-                    $priority = isset($tagConfiguration['signalPriority'][$key]) ? $tagConfiguration['signalPriority'][$key] : 0;
+                    $priority = $tagConfiguration['signalPriority'][$key] ?? 0;
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
@@ -99,20 +98,20 @@ class Slots implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $autoLoader
-     * @param array $loaderInformation
+     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

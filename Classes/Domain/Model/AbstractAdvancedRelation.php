@@ -1,13 +1,13 @@
 <?php
 /**
- * Advanced relation model
+ * Advanced relation model.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Domain\Model;
 
 /**
- * Advanced relation model
+ * Advanced relation model.
  *
  * Note copy the SmartExclude to your relation model
  *
@@ -15,9 +15,8 @@ namespace HDNET\Autoloader\Domain\Model;
  */
 abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
 {
-
     /**
-     * Tablesnames
+     * Tablesnames.
      *
      * @var string
      * @db varchar(60) DEFAULT '' NOT NULL
@@ -25,7 +24,7 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     protected $tablenames;
 
     /**
-     * Sorting foreign
+     * Sorting foreign.
      *
      * @var int
      * @db
@@ -33,7 +32,7 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     protected $sortingForeign;
 
     /**
-     * Ident
+     * Ident.
      *
      * @var string
      * @db varchar(30) DEFAULT '' NOT NULL

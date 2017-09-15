@@ -1,9 +1,9 @@
 <?php
 /**
- * Abstraction of the Writer
+ * Abstraction of the Writer.
  *
- * @author  Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -11,20 +11,19 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Abstraction of the Writer
+ * Abstraction of the Writer.
  */
 abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 {
-
     /**
-     * Language file base name
+     * Language file base name.
      *
      * @var string
      */
     protected $languageBaseName = 'locallang';
 
     /**
-     * Create default file
+     * Create default file.
      *
      * @param string $extensionKey
      *
@@ -36,17 +35,18 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
         if (is_file($fileName)) {
             return true;
         }
+
         return FileUtility::writeFileAndCreateFolder($fileName, $this->getBaseFileContent($extensionKey));
     }
 
     /**
-     * flush the l10n caches
+     * flush the l10n caches.
      */
     protected function clearCache()
     {
         $caches = [
             't3lib_l10n',
-            'l10n'
+            'l10n',
         ];
         /** @var CacheManager $cacheManager */
         $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
@@ -63,7 +63,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     }
 
     /**
-     * Get language base name
+     * Get language base name.
      *
      * @return string
      */
@@ -73,7 +73,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     }
 
     /**
-     * Set language base name
+     * Set language base name.
      *
      * @param string $languageBaseName
      */
@@ -83,7 +83,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     }
 
     /**
-     * Wrap CDATA
+     * Wrap CDATA.
      *
      * @param string $content
      *
@@ -94,6 +94,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
         if (htmlentities($content, ENT_NOQUOTES) !== $content) {
             $content = '<![CDATA[' . $content . ']]>';
         }
+
         return $content;
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Json server handling
+ * Json server handling.
  *
- * @author  Tim Lochmüller
- * @author  Tito Duarte <duartito@gmail.com>
  */
+
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -15,37 +14,37 @@ use Zend\Json\Server\Server;
 use Zend\Json\Server\Smd;
 
 /**
- * Json server handling
+ * Json server handling.
  */
 class JsonServer
 {
-
     /**
-     * Server key
+     * Server key.
      *
      * @var string
      */
     protected $serverKey = '';
 
     /**
-     * Server class
+     * Server class.
      *
      * @var string
      */
     protected $serverClass = '';
 
     /**
-     * Check if the SMD should rendered
+     * Check if the SMD should rendered.
      *
      * @var bool
      */
     protected $renderSmd = false;
 
     /**
-     * Build up the object
+     * Build up the object.
      *
      * @param string $server
-     * @param bool $smd
+     * @param bool   $smd
+     *
      * @todo move to hook logic
      */
     public function __construct($server, $smd)
@@ -55,13 +54,14 @@ class JsonServer
             $this->serverClass = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Json'][$server];
         }
 
-        $this->renderSmd = (bool)$smd;
+        $this->renderSmd = (bool) $smd;
     }
 
     /**
-     * Handle the request
+     * Handle the request.
      *
      * @param $request
+     *
      * @throws \Exception
      */
     public function handle($request)
@@ -77,6 +77,7 @@ class JsonServer
                 'No valid server class name for the given server key: "' . $this->serverKey . '"',
                 2342358923745
             );
+
             return;
         }
 
@@ -88,7 +89,7 @@ class JsonServer
     }
 
     /**
-     * Handle the service request
+     * Handle the service request.
      *
      * @param $request
      */
@@ -107,14 +108,14 @@ class JsonServer
     }
 
     /**
-     * Handle the SMD request
+     * Handle the SMD request.
      */
     protected function renderSmd()
     {
         $server = new Server();
         $server->setClass($this->serverClass);
 
-        $smd =  $server->getServiceMap();
+        $smd = $server->getServiceMap();
         $smd->setTarget($this->getServiceUri());
         $smd->setEnvelope(Smd::ENV_JSONRPC_2);
 
@@ -122,7 +123,7 @@ class JsonServer
     }
 
     /**
-     * Get the Service URI
+     * Get the Service URI.
      *
      * @return string
      */
@@ -131,6 +132,7 @@ class JsonServer
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
         $parts = parse_url($uri);
         $parts['query'] = 'eID=JsonServer&server=' . $this->serverKey;
+
         return HttpUtility::buildUrl($parts);
     }
 }

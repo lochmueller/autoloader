@@ -1,9 +1,9 @@
 <?php
 /**
- * BackendLayout
+ * BackendLayout.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Hooks\BackendLayoutProvider;
@@ -17,11 +17,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
- * BackendLayout loader
+ * BackendLayout loader.
  */
 class BackendLayout implements LoaderInterface
 {
-
     /**
      * Get all the complex data and information for the loader.
      * This return value will be cached and stored in the core_cache of TYPO3.
@@ -48,10 +47,10 @@ class BackendLayout implements LoaderInterface
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
             }
             $backendLayouts[] = [
-                'path'      => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
-                'filename'  => $pathInfo['filename'],
-                'icon'      => $extension ? $iconPath . $extension : false,
-                'label'     => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
+                'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
+                'filename' => $pathInfo['filename'],
+                'icon' => $extension ? $iconPath . $extension : false,
+                'label' => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
                 'extension' => $loader->getExtensionKey(),
             ];
         }
@@ -60,7 +59,7 @@ class BackendLayout implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_tables.php file
+     * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation
@@ -70,7 +69,7 @@ class BackendLayout implements LoaderInterface
     }
 
     /**
-     * Run the loading process for the ext_localconf.php file
+     * Run the loading process for the ext_localconf.php file.
      *
      * @param Loader $loader
      * @param array  $loaderInformation

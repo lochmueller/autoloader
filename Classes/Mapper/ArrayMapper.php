@@ -1,21 +1,20 @@
 <?php
 /**
- * Map Array
+ * Map Array.
  *
- * @author René Backhaus
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map Array
+ * Map Array.
  */
 class ArrayMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -29,7 +28,7 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -39,19 +38,19 @@ class ArrayMapper implements MapperInterface
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
         $baseConfig = [
-            'type'     => 'user',
+            'type' => 'user',
             'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->arrayInfoField',
         ];
 
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => $baseConfig,
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => $baseConfig,
         ];
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

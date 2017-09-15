@@ -1,9 +1,9 @@
 <?php
 /**
- * Utility to interact with the Model
+ * Utility to interact with the Model.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Persistence\ExcludeIdentityMapDataMapper;
@@ -14,13 +14,12 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
- * Utility to interact with the Model
+ * Utility to interact with the Model.
  */
 class ModelUtility
 {
-
     /**
-     * Get the table name by either reflection or model name
+     * Get the table name by either reflection or model name.
      *
      * @param $modelClassName
      *
@@ -29,11 +28,12 @@ class ModelUtility
     public static function getTableName($modelClassName)
     {
         $reflectionName = self::getTableNameByModelReflectionAnnotation($modelClassName);
+
         return $reflectionName !== '' ? $reflectionName : self::getTableNameByModelName($modelClassName);
     }
 
     /**
-     * Get the table name by reflection
+     * Get the table name by reflection.
      *
      * @param string $modelClassName
      *
@@ -41,16 +41,17 @@ class ModelUtility
      */
     public static function getTableNameByModelReflectionAnnotation($modelClassName)
     {
-        return (string)ReflectionUtility::getFirstTagValue($modelClassName, 'db');
+        return (string) ReflectionUtility::getFirstTagValue($modelClassName, 'db');
     }
 
     /**
      * Resolve the table name for the given class name
-     * Original method from extbase core to create the table name
+     * Original method from extbase core to create the table name.
      *
      * @param string $className
      *
      * @return string The table name
+     *
      * @see DataMapFactory->resolveTableName
      */
     public static function getTableNameByModelName($className)
@@ -70,12 +71,13 @@ class ModelUtility
         } else {
             $tableName = strtolower($className);
         }
+
         return $tableName;
     }
 
     /**
      * get the smart exclude values e.g. language, workspace,
-     * enableFields from the given model
+     * enableFields from the given model.
      *
      * @param string $name
      *
@@ -83,11 +85,11 @@ class ModelUtility
      */
     public static function getSmartExcludesByModelName($name)
     {
-        return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
+        return GeneralUtility::trimExplode(',', (string) ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
     }
 
     /**
-     * Get the base TCA for the given Model
+     * Get the base TCA for the given Model.
      *
      * @param string $modelClassName
      *
@@ -96,6 +98,7 @@ class ModelUtility
     public static function getTcaInformation($modelClassName)
     {
         $informationService = SmartObjectInformationService::getInstance();
+
         return $informationService->getTcaInformation($modelClassName);
     }
 
@@ -110,7 +113,7 @@ class ModelUtility
      */
     public static function getTcaOverrideInformation($extensionKey, $tableName)
     {
-        $return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : [];
+        $return = $GLOBALS['TCA'][$tableName] ?? [];
         $classNames = SmartObjectRegister::getRegister();
         $informationService = SmartObjectInformationService::getInstance();
 
@@ -135,8 +138,8 @@ class ModelUtility
      * Get the target model.
      *
      * @param string $modelName
-     * @param array $data
-     * @param bool $backendSelection
+     * @param array  $data
+     * @param bool   $backendSelection
      *
      * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity|object
      */
@@ -153,7 +156,7 @@ class ModelUtility
         $query->matching($query->equals('uid', $data['uid']));
 
         if ($backendSelection) {
-            $_GET['L'] = (int)$data['sys_language_uid'];
+            $_GET['L'] = (int) $data['sys_language_uid'];
             GeneralUtility::makeInstance(Session::class)->destroy();
 
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
@@ -170,6 +173,7 @@ class ModelUtility
             $objects = $dataMapper->map($modelName, $rows);
             $selection = current($objects);
             $_GET['L'] = 0;
+
             return $selection;
         }
 

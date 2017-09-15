@@ -1,9 +1,9 @@
 <?php
 /**
- * Management for Smart Objects
+ * Management for Smart Objects.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
@@ -15,13 +15,12 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Management for Smart Objects
+ * Management for Smart Objects.
  */
 class SmartObjectManager implements SingletonInterface
 {
-
     /**
-     * Return the SQL String for all registered smart objects
+     * Return the SQL String for all registered smart objects.
      *
      * @return string
      */
@@ -34,11 +33,12 @@ class SmartObjectManager implements SingletonInterface
         foreach ($register as $modelName) {
             $output[] = $informationService->getDatabaseInformation($modelName);
         }
+
         return implode(LF, $output);
     }
 
     /**
-     * Check if the given class is a smart object
+     * Check if the given class is a smart object.
      *
      * Also add a work around, because the static_info_tables SPL Autoloader
      * get into a conflict with different classes.
@@ -51,7 +51,7 @@ class SmartObjectManager implements SingletonInterface
     {
         $riskAutoLoader = [
             'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
-            'autoload'
+            'autoload',
         ];
         $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
@@ -59,7 +59,7 @@ class SmartObjectManager implements SingletonInterface
             $return = false;
         } else {
             $classReflection = ReflectionUtility::createReflectionClass($className);
-            $return = !(bool)(!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db'));
+            $return = !(bool) (!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db'));
         }
 
         if ($registerAutoLoader) {
@@ -71,7 +71,7 @@ class SmartObjectManager implements SingletonInterface
 
     /**
      * Check and create the TCA information
-     * disable this for better performance
+     * disable this for better performance.
      */
     public static function checkAndCreateTcaInformation()
     {
@@ -105,7 +105,7 @@ class SmartObjectManager implements SingletonInterface
                 $replace = [
                     '\\' . trim($model) . '::class',
                     $tableName,
-                    $extensionKey
+                    $extensionKey,
                 ];
 
                 $content = str_replace($search, $replace, $template);

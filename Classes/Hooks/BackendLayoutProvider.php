@@ -1,9 +1,9 @@
 <?php
 /**
- * Add backend layouts
+ * Add backend layouts.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\View\BackendLayout\BackendLayout;
@@ -13,23 +13,22 @@ use TYPO3\CMS\Backend\View\BackendLayout\DataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Add backend layouts
+ * Add backend layouts.
  *
  * @see  https://github.com/georgringer/TYPO3.base/blob/master/typo3conf/ext/theme/Classes/View/BackendLayout/FileProvider.php
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|BackendLayoutDataProvider
  */
 class BackendLayoutProvider implements DataProviderInterface
 {
-
     /**
-     * Layout information
+     * Layout information.
      *
      * @var array
      */
     protected static $backendLayoutInformation = [];
 
     /**
-     * Add one backend layout information
+     * Add one backend layout information.
      *
      * @param array $backendLayout
      */
@@ -54,10 +53,10 @@ class BackendLayoutProvider implements DataProviderInterface
     /**
      * Gets a backend layout by (regular) identifier.
      *
-     * @param string  $identifier
-     * @param int $pageId
+     * @param string $identifier
+     * @param int    $pageId
      *
-     * @return NULL|BackendLayout
+     * @return null|BackendLayout
      */
     public function getBackendLayout($identifier, $pageId)
     {
@@ -66,11 +65,12 @@ class BackendLayoutProvider implements DataProviderInterface
                 return $this->createBackendLayout($info);
             }
         }
+
         return null;
     }
 
     /**
-     * Create a backend layout with the given information
+     * Create a backend layout with the given information.
      *
      * @param $info
      *
@@ -83,11 +83,12 @@ class BackendLayoutProvider implements DataProviderInterface
         if ($info['icon']) {
             $backendLayout->setIconPath(str_replace(PATH_site, '', $info['icon']));
         }
+
         return $backendLayout;
     }
 
     /**
-     * Get identifier
+     * Get identifier.
      *
      * @param $info
      *

@@ -1,19 +1,18 @@
 <?php
 /**
- * Arrays utility
+ * Arrays utility.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 /**
- * Arrays utility
+ * Arrays utility.
  */
 class ArrayUtility
 {
-
     /**
-     * Set a node in the array
+     * Set a node in the array.
      *
      * @param array $data
      * @param array $array
@@ -44,7 +43,7 @@ class ArrayUtility
     }
 
     /**
-     * Merge the Array Smart
+     * Merge the Array Smart.
      *
      * @param array $array1
      * @param array $array2

@@ -1,19 +1,18 @@
 <?php
 /**
- * Interface for L10N file writers
+ * Interface for L10N file writers.
  *
- * @author  Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 /**
- * Interface for L10N file writers
+ * Interface for L10N file writers.
  */
 interface LocalizationWriterInterface
 {
-
     /**
-     * Get the base file content
+     * Get the base file content.
      *
      * @param string $extensionKey
      *
@@ -22,7 +21,7 @@ interface LocalizationWriterInterface
     public function getBaseFileContent($extensionKey);
 
     /**
-     * Get the absolute path to the file
+     * Get the absolute path to the file.
      *
      * @param string $extensionKey
      *
@@ -31,7 +30,7 @@ interface LocalizationWriterInterface
     public function getAbsoluteFilename($extensionKey);
 
     /**
-     * Add the label
+     * Add the label.
      *
      * @param string $extensionKey
      * @param string $key
@@ -42,7 +41,7 @@ interface LocalizationWriterInterface
     public function addLabel($extensionKey, $key, $default);
 
     /**
-     * Set language base name
+     * Set language base name.
      *
      * @param string $languageBaseName
      */

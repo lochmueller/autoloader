@@ -1,21 +1,20 @@
 <?php
 /**
- * Map float/double
+ * Map float/double.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 
 /**
- * Map float/double
+ * Map float/double.
  */
 class FloatMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -25,12 +24,12 @@ class FloatMapper implements MapperInterface
     {
         return in_array(strtolower($type), [
             'float',
-            'double'
+            'double',
         ]);
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -41,8 +40,8 @@ class FloatMapper implements MapperInterface
     {
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => [
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => [
                 'type' => 'input',
                 'eval' => 'double2',
                 'size' => 8,
@@ -51,7 +50,7 @@ class FloatMapper implements MapperInterface
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

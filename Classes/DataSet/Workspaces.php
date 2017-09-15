@@ -1,22 +1,21 @@
 <?php
 /**
- * DataSet information for workspaces
+ * DataSet information for workspaces.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
- * DataSet information for workspaces
+ * DataSet information for workspaces.
  */
 class Workspaces implements DataSetInterface
 {
-
     /**
-     * Get TCA information
+     * Get TCA information.
      *
      * @param string $tableName
      *
@@ -26,35 +25,37 @@ class Workspaces implements DataSetInterface
     {
         $isModernTca = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('8.0');
         $tca = [
-            'ctrl'    => [
-                'versioningWS'                    => $isModernTca ? true : 2,
-                'versioning_followPages'          => true,
+            'ctrl' => [
+                'versioningWS' => $isModernTca ? true : 2,
+                'versioning_followPages' => true,
                 'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
-                'origUid'                         => 't3_origuid'
+                'origUid' => 't3_origuid',
             ],
             'columns' => [
                 't3ver_label' => [
-                    'label'  => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
                     'config' => [
                         'type' => 'input',
                         'size' => 30,
-                        'max'  => 255,
-                    ]
-                ]
-            ]
+                        'max' => 255,
+                    ],
+                ],
+            ],
         ];
         if ($isModernTca) {
             unset($tca['ctrl']['versioning_followPages']);
         }
+
         return $tca;
     }
 
     /**
-     * Get database sql information
+     * Get database sql information.
      *
      * @param string $tableName
      *
      * @return array
+     *
      * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html
      */
     public function getDatabaseSql($tableName)
@@ -74,14 +75,14 @@ class Workspaces implements DataSetInterface
     }
 
     /**
-     * Get database sql key information
+     * Get database sql key information.
      *
      * @return array
      */
     public function getDatabaseSqlKey()
     {
         return [
-            'KEY t3ver_oid (t3ver_oid,t3ver_wsid)'
+            'KEY t3ver_oid (t3ver_oid,t3ver_wsid)',
         ];
     }
 }

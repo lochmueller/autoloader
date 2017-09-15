@@ -1,9 +1,9 @@
 <?php
 /**
- * Icon helper
+ * Icon helper.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
@@ -15,13 +15,12 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Core\Utility\StringUtility;
 
 /**
- * Icon helper
+ * Icon helper.
  */
 class IconUtility
 {
-
     /**
-     * Add the given icon to the TCA table type
+     * Add the given icon to the TCA table type.
      *
      * @param string $table
      * @param string $type
@@ -43,10 +42,10 @@ class IconUtility
     }
 
     /**
-     * Get the relative path of the extension icon
+     * Get the relative path of the extension icon.
      *
      * @param string $extensionKey
-     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
+     * @param bool   $extSyntax    Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
@@ -57,14 +56,15 @@ class IconUtility
         if ($fileExtension) {
             return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
         }
+
         return self::getByExtensionKey('autoloader');
     }
 
     /**
-     * Get the absolute table icon for the given model name
+     * Get the absolute table icon for the given model name.
      *
      * @param string $modelClassName
-     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
+     * @param bool   $extSyntax      Get the EXT: Syntax instead of a rel Path
      *
      * @return string
      */
@@ -84,13 +84,14 @@ class IconUtility
                 $extSyntax
             );
         }
+
         return self::getByExtensionKey($extensionKey, $extSyntax);
     }
 
     /**
      * Get the file extension (svg,png,gif) of the absolute path. The path is
      * without file extension but incl. the dot. e.g.:
-     * "/test/icon."
+     * "/test/icon.".
      *
      * @param string $absolutePathWithoutExtension
      *
@@ -109,15 +110,16 @@ class IconUtility
                 return $fileExtension;
             }
         }
+
         return false;
     }
 
     /**
-     * Return the right relative path
+     * Return the right relative path.
      *
      * @param string $extensionKey
      * @param string $path
-     * @param bool $extSyntax
+     * @param bool   $extSyntax
      *
      * @return string
      */
@@ -127,6 +129,7 @@ class IconUtility
         if ($extSyntax) {
             return $extSyntaxPath;
         }
+
         return PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($extSyntaxPath));
     }
 }

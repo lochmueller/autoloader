@@ -1,7 +1,8 @@
 <?php
 /**
- * JsonServer
+ * JsonServer.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;
@@ -13,13 +14,14 @@ use TYPO3\CMS\Frontend\Utility\EidUtility;
 use Zend\Json\Server\Request;
 
 /**
- * JsonServer
+ * JsonServer.
  */
 class JsonServer
 {
     /**
      * @param $namespace
      * @param $method
+     *
      * @return array
      */
     public static function getNamespaceAndMethod($namespace, $method)
@@ -33,13 +35,14 @@ class JsonServer
 
         return [
             $namespace,
-            $method
+            $method,
         ];
     }
 
     /**
      * @param $namespace
      * @param $singleJsonRequest
+     *
      * @throws \Exception
      */
     public static function handleRequest($namespace, $singleJsonRequest)
@@ -51,7 +54,7 @@ class JsonServer
         list($namespace, $method) = self::getNamespaceAndMethod($namespace, $methodRaw);
         $singleJsonRequest['method'] = $method;
 
-        $server = new JsonServerService($namespace, (boolean) GeneralUtility::_GP('smd'));
+        $server = new JsonServerService($namespace, (bool) GeneralUtility::_GP('smd'));
 
         $request = new Request();
         $request->setOptions($singleJsonRequest);
@@ -60,7 +63,7 @@ class JsonServer
     }
 
     /**
-     * Boostrap of Typo3 for eID environment
+     * Boostrap of Typo3 for eID environment.
      */
     public static function initEnvironment()
     {

@@ -1,9 +1,9 @@
 <?php
 /**
- * Handling of the language files
+ * Handling of the language files.
  *
- * @author  Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
@@ -12,28 +12,27 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Handling of the language files
+ * Handling of the language files.
  */
 class LanguageHandler extends LanguageStore
 {
-
     /**
-     * Cache the created labels
+     * Cache the created labels.
      *
      * @var array
      */
     protected static $createdLabelCache = [];
 
     /**
-     * handler the adding of files
+     * handler the adding of files.
      *
-     * @param string $key key in the localization file
+     * @param string $key                  key in the localization file
      * @param string $extensionName
-     * @param string $default default value of the label
-     * @param array $arguments arguments are being passed over to vsprintf
+     * @param string $default              default value of the label
+     * @param array  $arguments            arguments are being passed over to vsprintf
      * @param string $overrideLanguageBase
      *
-     * @return NULL|string
+     * @return null|string
      */
     public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
@@ -64,10 +63,11 @@ class LanguageHandler extends LanguageStore
     }
 
     /**
-     * Get the best language writer
+     * Get the best language writer.
      *
      * @param string $extensionKey
      * @param string $overrideLanguageBase
+     *
      * @return AbstractLocalizationWriter
      */
     protected function getBestLanguageWriter($extensionKey, $overrideLanguageBase = null)
@@ -89,6 +89,7 @@ class LanguageHandler extends LanguageStore
             }
             $services[] = $service;
         }
+
         return $services[0];
     }
 }

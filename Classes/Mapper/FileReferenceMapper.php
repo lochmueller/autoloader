@@ -1,22 +1,21 @@
 <?php
 /**
- * Map FileReference
+ * Map FileReference.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Map FileReference
+ * Map FileReference.
  */
 class FileReferenceMapper implements MapperInterface
 {
-
     /**
-     * Check if the current mapper can handle the given type
+     * Check if the current mapper can handle the given type.
      *
      * @param string $type
      *
@@ -30,7 +29,7 @@ class FileReferenceMapper implements MapperInterface
     }
 
     /**
-     * Get the TCA configuration for the current type
+     * Get the TCA configuration for the current type.
      *
      * @param string $fieldName
      * @param bool   $overWriteLabel
@@ -41,13 +40,13 @@ class FileReferenceMapper implements MapperInterface
     {
         return [
             'exclude' => 1,
-            'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
-            'config'  => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, ['maxitems' => 1]),
+            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'config' => ExtensionManagementUtility::getFileFieldTCAConfig($fieldName, ['maxitems' => 1]),
         ];
     }
 
     /**
-     * Get the database definition for the current mapper
+     * Get the database definition for the current mapper.
      *
      * @return string
      */

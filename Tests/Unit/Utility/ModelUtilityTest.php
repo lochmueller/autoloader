@@ -5,7 +5,7 @@ namespace HDNET\Autoloader\Tests\Unit\Utility;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- * ModelUtilityTest
+ * ModelUtilityTest.
  */
 class ModelUtilityTest extends UnitTestCase
 {

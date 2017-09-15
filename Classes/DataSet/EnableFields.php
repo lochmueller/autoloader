@@ -1,21 +1,20 @@
 <?php
 /**
- * DataSet information for enableFields
+ * DataSet information for enableFields.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
 
 /**
- * DataSet information for enableFields
+ * DataSet information for enableFields.
  */
 class EnableFields implements DataSetInterface
 {
-
     /**
-     * Get TCA information
+     * Get TCA information.
      *
      * @param string $tableName
      *
@@ -42,7 +41,7 @@ class EnableFields implements DataSetInterface
                         'behaviour' => [
                             'allowLanguageSynchronization' => true,
                         ],
-                    ]
+                    ],
                 ],
                 'hidden' => [
                     'exclude' => 1,
@@ -58,10 +57,10 @@ class EnableFields implements DataSetInterface
                         'type' => 'input',
                         'renderType' => 'inputDateTime',
                         'eval' => 'datetime',
-                        'default' => 0
+                        'default' => 0,
                     ],
                     'l10n_mode' => 'exclude',
-                    'l10n_display' => 'defaultAsReadonly'
+                    'l10n_display' => 'defaultAsReadonly',
                 ],
                 'endtime' => [
                     'exclude' => true,
@@ -72,19 +71,20 @@ class EnableFields implements DataSetInterface
                         'eval' => 'datetime',
                         'default' => 0,
                         'range' => [
-                            'upper' => mktime(0, 0, 0, 1, 1, 2038)
-                        ]
+                            'upper' => mktime(0, 0, 0, 1, 1, 2038),
+                        ],
                     ],
                     'l10n_mode' => 'exclude',
-                    'l10n_display' => 'defaultAsReadonly'
+                    'l10n_display' => 'defaultAsReadonly',
                 ],
             ],
         ];
+
         return $tca;
     }
 
     /**
-     * Get database sql information
+     * Get database sql information.
      *
      * @param string $tableName
      *
@@ -102,7 +102,7 @@ class EnableFields implements DataSetInterface
     }
 
     /**
-     * Get database sql key information
+     * Get database sql key information.
      *
      * @return array
      */

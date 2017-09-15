@@ -1,9 +1,9 @@
 <?php
 /**
- * Reflection helper
+ * Reflection helper.
  *
- * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -11,11 +11,10 @@ use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
- * Reflection helper
+ * Reflection helper.
  */
 class ReflectionUtility
 {
-
     /**
      * Create a new class reflection. Do not use the makeInstance or objectManager
      * because the reflection API is also used in front of the caching framework.
@@ -30,7 +29,7 @@ class ReflectionUtility
     }
 
     /**
-     * Check if the given class is instantiable
+     * Check if the given class is instantiable.
      *
      * @param string $className
      *
@@ -43,7 +42,7 @@ class ReflectionUtility
     }
 
     /**
-     * Get the name of the parent class
+     * Get the name of the parent class.
      *
      * @param string $className
      *
@@ -57,7 +56,7 @@ class ReflectionUtility
     }
 
     /**
-     * Get all properties that are tagged with the given tag
+     * Get all properties that are tagged with the given tag.
      *
      * @param string $className
      * @param string $tag
@@ -74,11 +73,12 @@ class ReflectionUtility
                 $properties[] = $property;
             }
         }
+
         return $properties;
     }
 
     /**
-     * Get all public methods of the given class
+     * Get all public methods of the given class.
      *
      * @param string $className
      *
@@ -92,7 +92,7 @@ class ReflectionUtility
 
     /**
      * Get first class tag information.
-     * The trimmed value if the tag exists and FALSE if the tag do not exists
+     * The trimmed value if the tag exists and FALSE if the tag do not exists.
      *
      * @param string $className
      * @param string $tag
@@ -109,18 +109,19 @@ class ReflectionUtility
         if (is_array($values)) {
             return trim($values[0]);
         }
+
         return false;
     }
 
     /**
-     * Get the tag configuration from this method and respect multiple line and space configuration
+     * Get the tag configuration from this method and respect multiple line and space configuration.
      *
      * @param MethodReflection|ClassReflection $reflectionObject
-     * @param array $tagNames
+     * @param array                            $tagNames
      *
      * @return array
      */
-    public static function getTagConfiguration($reflectionObject, array $tagNames):array
+    public static function getTagConfiguration($reflectionObject, array $tagNames): array
     {
         $tags = $reflectionObject->getTagsValues();
         $configuration = [];
@@ -136,11 +137,12 @@ class ReflectionUtility
                 );
             }
         }
+
         return $configuration;
     }
 
     /**
-     * Get properties of the given class, that are als declared in the given class
+     * Get properties of the given class, that are als declared in the given class.
      *
      * @param string $className
      *
@@ -158,6 +160,7 @@ class ReflectionUtility
                 $properties[] = $property->getName();
             }
         }
+
         return $properties;
     }
 }
