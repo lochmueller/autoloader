@@ -319,7 +319,7 @@ class SmartObjectInformationService
         $classReflection = ReflectionUtility::createReflectionClass($modelClassName);
         if ($classReflection->isTaggedWith('key')) {
             $additionalKeys = $classReflection->getTagValues('key');
-            array_walk($additionalKeys, function(&$item) { 
+            array_walk($additionalKeys, function (&$item) { 
                 $item = 'KEY ' . $item;
             });
             $fields = array_merge($fields, $additionalKeys);
