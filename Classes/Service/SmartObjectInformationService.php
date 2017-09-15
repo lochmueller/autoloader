@@ -314,15 +314,17 @@ class SmartObjectInformationService
         // default keys
         $fields[] = 'PRIMARY KEY (uid)';
         $fields[] = 'KEY parent (pid)';
-        
+
         // add custom keys set by @key annotations
         $classReflection = ReflectionUtility::createReflectionClass($modelClassName);
         if ($classReflection->isTaggedWith('key')) {
             $additionalKeys = $classReflection->getTagValues('key');
-            array_walk($additionalKeys, function(&$item) { $item = 'KEY ' . $item;});
+            array_walk($additionalKeys, function(&$item) { 
+                $item = 'KEY ' . $item;
+            });
             $fields = array_merge($fields, $additionalKeys);
         }
-        
+
         // add data set keys
         $fields = array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
 
