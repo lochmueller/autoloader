@@ -43,8 +43,6 @@ class BackendLayoutProvider implements DataProviderInterface
      *
      * @param DataProviderContext     $dataProviderContext
      * @param BackendLayoutCollection $backendLayoutCollection
-     *
-     * @return void
      */
     public function addBackendLayouts(DataProviderContext $dataProviderContext, BackendLayoutCollection $backendLayoutCollection)
     {

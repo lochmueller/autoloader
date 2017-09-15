@@ -120,7 +120,7 @@ class ReflectionUtility
      *
      * @return array
      */
-    public static function getTagConfiguration($reflectionObject, array $tagNames)
+    public static function getTagConfiguration($reflectionObject, array $tagNames):array
     {
         $tags = $reflectionObject->getTagsValues();
         $configuration = [];

@@ -4,10 +4,12 @@
  *
  * @author Tim Lochmüller
  */
+
 namespace HDNET\Autoloader\Hooks;
 
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\Bootstrap;
@@ -28,8 +30,6 @@ class ClearCache implements ClearCacheActionsHookInterface
      *
      * @param array $cacheActions
      * @param array $optionValues
-     *
-     * @return void
      */
     public function manipulateCacheActions(&$cacheActions, &$optionValues)
     {
@@ -41,11 +41,29 @@ class ClearCache implements ClearCacheActionsHookInterface
             'id' => 'autoloader',
             'title' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.title',
             'description' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.description',
-            'href' => BackendUtility::getAjaxUrl('autoloader::clearCache'),
+            'href' => $this->getAjaxUri(),
             'iconIdentifier' => 'extension-autoloader',
         ];
 
         $cacheActions[] = $action;
+    }
+
+    /**
+     * Get Ajax URI
+     *
+     * @return string
+     */
+    protected function getAjaxUri(): string
+    {
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        try {
+            $routeIdentifier = 'ajax_autoloader::clearCache';
+            $uri = $uriBuilder->buildUriFromRoute($routeIdentifier);
+        } catch (RouteNotFoundException $e) {
+            return '';
+        }
+        return (string)$uri;
     }
 
     /**

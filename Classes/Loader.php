@@ -114,8 +114,6 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      * @param array  $implementations
-     *
-     * @return void
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
@@ -130,8 +128,6 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      * @param array  $implementations
-     *
-     * @return void
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
@@ -146,8 +142,6 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      * @param array  $implementations
-     *
-     * @return void
      */
     public function loadExtTables($vendorName, $extensionKey, array $implementations = [])
     {
@@ -174,8 +168,6 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      * @param array  $implementations
-     *
-     * @return void
      */
     public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = [])
     {

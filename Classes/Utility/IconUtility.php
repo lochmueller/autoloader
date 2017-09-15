@@ -123,9 +123,10 @@ class IconUtility
      */
     protected static function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
     {
+        $extSyntaxPath = 'EXT:' . $extensionKey . '/' . $path;
         if ($extSyntax) {
-            return 'EXT:' . $extensionKey . '/' . $path;
+            return $extSyntaxPath;
         }
-        return ExtensionManagementUtility::extRelPath($extensionKey) . $path;
+        return PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($extSyntaxPath));
     }
 }

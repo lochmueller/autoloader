@@ -45,8 +45,6 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -58,8 +56,6 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

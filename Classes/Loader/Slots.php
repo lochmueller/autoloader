@@ -103,8 +103,6 @@ class Slots implements LoaderInterface
      *
      * @param Loader $autoLoader
      * @param array $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
@@ -115,8 +113,6 @@ class Slots implements LoaderInterface
      *
      * @param Loader $autoLoader
      * @param array $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

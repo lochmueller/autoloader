@@ -40,8 +40,6 @@ interface LoaderInterface extends SingletonInterface
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation);
 
@@ -50,8 +48,6 @@ interface LoaderInterface extends SingletonInterface
      *
      * @param Loader $loader
      * @param array  $loaderInformation
-     *
-     * @return void
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation);
 }

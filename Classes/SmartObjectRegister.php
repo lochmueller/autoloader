@@ -23,8 +23,6 @@ class SmartObjectRegister
      * Add a model to the register
      *
      * @param $modelName
-     *
-     * @return void
      */
     public static function register($modelName)
     {

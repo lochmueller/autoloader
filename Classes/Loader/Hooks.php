@@ -62,9 +62,13 @@ class Hooks implements LoaderInterface
             foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
-                if (count($tagConfiguration['hook'])) {
+                if (count($tagConfiguration['hook']) > 0) {
+                    $hookLocations = array_map(function($hook){
+                        return trim($hook, " \t\n\r\0\x0B|");
+                    }, $tagConfiguration['hook']);
+
                     $hooks[] = [
-                        'locations' => trim($tagConfiguration['hook'], " \t\n\r\0\x0B|"),
+                        'locations' => $hookLocations,
                         'configuration' => $hookClass . '->' . $methodReflection->getName(),
                     ];
                 }

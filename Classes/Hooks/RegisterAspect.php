@@ -30,8 +30,6 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     /**
      * Function which may process data created / registered by extTables
      * scripts (f.e. modifying TCA data of all extensions)
-     *
-     * @return void
      */
     public function processData()
     {
@@ -65,8 +63,6 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
 
     /**
      * Load the xclass template and cache it in a local property
-     *
-     * @return void
      */
     protected function loadXclassTemplate()
     {

@@ -41,8 +41,6 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 
     /**
      * flush the l10n caches
-     *
-     * @return void
      */
     protected function clearCache()
     {

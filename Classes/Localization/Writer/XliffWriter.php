@@ -53,8 +53,7 @@ class XliffWriter extends AbstractLocalizationWriter
      * @param string $extensionKey
      * @param string $key
      * @param string $default
-     *
-     * @return void
+     * @return bool|void
      */
     public function addLabel($extensionKey, $key, $default)
     {

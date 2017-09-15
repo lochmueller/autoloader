@@ -29,8 +29,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
      * @param string         $headerContent Header content
      * @param string         $itemContent   Item content
      * @param array          $row           Record row of tt_content
-     *
-     * @return void
      */
     public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
     {
