@@ -3,7 +3,6 @@
  * Loading eID.
  *
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

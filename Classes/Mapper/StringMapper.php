@@ -3,7 +3,6 @@
  * Map String.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

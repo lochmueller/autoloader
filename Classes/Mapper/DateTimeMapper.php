@@ -3,7 +3,6 @@
  * Map DateTime.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

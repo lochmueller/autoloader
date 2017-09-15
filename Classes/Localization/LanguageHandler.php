@@ -3,7 +3,6 @@
  * Handling of the language files.
  *
  */
-
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;

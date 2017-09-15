@@ -3,7 +3,6 @@
  * Map float/double.
  *
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

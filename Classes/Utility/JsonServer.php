@@ -2,7 +2,6 @@
 /**
  * JsonServer.
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;

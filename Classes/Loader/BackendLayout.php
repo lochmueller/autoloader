@@ -3,7 +3,6 @@
  * BackendLayout.
  *
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Hooks\BackendLayoutProvider;

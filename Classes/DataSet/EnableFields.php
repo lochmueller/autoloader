@@ -3,7 +3,6 @@
  * DataSet information for enableFields.
  *
  */
-
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;

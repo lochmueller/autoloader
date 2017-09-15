@@ -3,7 +3,6 @@
  * Utility functions for the Autoloader.
  *
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;

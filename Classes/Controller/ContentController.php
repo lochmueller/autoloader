@@ -3,7 +3,6 @@
  * Content Controller.
  *
  */
-
 namespace HDNET\Autoloader\Controller;
 
 use HDNET\Autoloader\Utility\ClassNamingUtility;

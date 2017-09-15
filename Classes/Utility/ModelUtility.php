@@ -3,7 +3,6 @@
  * Utility to interact with the Model.
  *
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Persistence\ExcludeIdentityMapDataMapper;

@@ -3,7 +3,6 @@
  * Icon helper.
  *
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
