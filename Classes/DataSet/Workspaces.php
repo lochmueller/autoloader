@@ -23,11 +23,9 @@ class Workspaces implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        $isModernTca = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('8.0');
         $tca = [
             'ctrl' => [
-                'versioningWS' => $isModernTca ? true : 2,
-                'versioning_followPages' => true,
+                'versioningWS' => true,
                 'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
                 'origUid' => 't3_origuid',
             ],
@@ -42,9 +40,6 @@ class Workspaces implements DataSetInterface
                 ],
             ],
         ];
-        if ($isModernTca) {
-            unset($tca['ctrl']['versioning_followPages']);
-        }
 
         return $tca;
     }
