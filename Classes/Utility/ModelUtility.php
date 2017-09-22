@@ -155,7 +155,7 @@ class ModelUtility
         $query->matching($query->equals('uid', $data['uid']));
 
         if ($backendSelection) {
-            $_GET['L'] = (int) $data['sys_language_uid'];
+            GeneralUtility::_GETset((int) $data['sys_language_uid'], 'L');
             GeneralUtility::makeInstance(Session::class)->destroy();
 
             if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
@@ -171,7 +171,7 @@ class ModelUtility
             $dataMapper = $objectManager->get(ExcludeIdentityMapDataMapper::class);
             $objects = $dataMapper->map($modelName, $rows);
             $selection = current($objects);
-            $_GET['L'] = 0;
+            GeneralUtility::_GETset(0, 'L');
 
             return $selection;
         }
