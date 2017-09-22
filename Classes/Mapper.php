@@ -101,7 +101,7 @@ class Mapper implements SingletonInterface
                 return $mapper;
             }
         }
-        throw new \Exception('No valid mapper for the given type found: ' . $type, 123712631);
+        throw new Exception('No valid mapper for the given type found: ' . $type, 123712631);
     }
 
     /**
