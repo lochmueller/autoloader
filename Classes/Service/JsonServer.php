@@ -6,6 +6,7 @@
  */
 namespace HDNET\Autoloader\Service;
 
+use HDNET\Autoloader\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -66,7 +67,7 @@ class JsonServer
     public function handle($request)
     {
         if (!class_exists(Server::class)) {
-            throw new \Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
+            throw new Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
         }
 
         header('Content-Type: application/json');

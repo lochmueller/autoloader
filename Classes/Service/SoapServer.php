@@ -5,6 +5,7 @@
  */
 namespace HDNET\Autoloader\Service;
 
+use HDNET\Autoloader\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use WSDL\WSDLCreator;
@@ -100,7 +101,7 @@ class SoapServer
     protected function renderWsdl()
     {
         if (!class_exists(WSDLCreator::class)) {
-            throw new \Exception('If you want to use the SOAP server, please add \'"piotrooo/wsdl-creator": "1.4.2"\' to your root composer.json file.');
+            throw new Exception('If you want to use the SOAP server, please add \'"piotrooo/wsdl-creator": "1.4.2"\' to your root composer.json file.');
         }
 
         $uriParts = parse_url($this->getServiceUri());
