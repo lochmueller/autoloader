@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Xclass.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -31,7 +31,7 @@ class Xclass implements LoaderInterface
     public function prepareLoader(Loader $loader, $type)
     {
         $return = [];
-        if ($type === LoaderInterface::EXT_TABLES) {
+        if (LoaderInterface::EXT_TABLES === $type) {
             return $return;
         }
         $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';

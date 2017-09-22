@@ -3,6 +3,7 @@
 /**
  * StaticInfoTablesMapper.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -35,7 +36,7 @@ class StaticInfoTablesMapper implements MapperInterface
     {
         $this->lastClass = strtolower($type);
 
-        return !(strpos($this->lastClass, self::CLASS_BASE) === false);
+        return !(false === strpos($this->lastClass, self::CLASS_BASE));
     }
 
     /**

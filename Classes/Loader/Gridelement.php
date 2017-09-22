@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Gridelements.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -45,7 +45,7 @@ class Gridelement implements LoaderInterface
             $extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
             $translationKey = 'grid.' . $pathInfo['filename'];
-            if ($type === LoaderInterface::EXT_TABLES) {
+            if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
             }
 

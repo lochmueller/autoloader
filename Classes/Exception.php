@@ -1,8 +1,8 @@
 <?php
 /**
  * Exception.
- *
  */
+
 namespace HDNET\Autoloader;
 
 /**

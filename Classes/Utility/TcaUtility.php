@@ -3,16 +3,14 @@
  * TcaUtility.php.
  *
  * General file information
- *
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
 
 /**
  * A basic TCA manipulation utility class.
- *
  */
 class TcaUtility
 {

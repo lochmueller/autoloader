@@ -1,8 +1,8 @@
 <?php
 /**
  * Mapper for variables types to TCA and DB information.
- *
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;

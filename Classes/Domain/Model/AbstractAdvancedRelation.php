@@ -1,8 +1,8 @@
 <?php
 /**
  * Advanced relation model.
- *
  */
+
 namespace HDNET\Autoloader\Domain\Model;
 
 /**

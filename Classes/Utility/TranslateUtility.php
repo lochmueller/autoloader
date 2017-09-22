@@ -1,8 +1,8 @@
 <?php
 /**
  * TranslateUtility.
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -60,7 +60,7 @@ class TranslateUtility
             $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
-        if (TYPO3_MODE === 'BE' && self::getLll($key, $extensionKey) === null) {
+        if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey)) {
             $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
             if (isset($GLOBALS['LANG'])) {
                 self::assureLabel($key, $extensionKey, $key);

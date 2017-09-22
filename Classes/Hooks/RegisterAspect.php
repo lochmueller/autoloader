@@ -1,8 +1,8 @@
 <?php
 /**
  * Register the aspect files and create the Xclass.
- *
  */
+
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -141,7 +141,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
             foreach ($config['arguments'] as $arguments) {
                 $type = '';
                 $reference = '';
-                if ($arguments['typeHint'] !== null || $arguments['typeHint'] !== '') {
+                if (null !== $arguments['typeHint'] || '' !== $arguments['typeHint']) {
                     $type = $arguments['typeHint'] . ' ';
                 }
                 if ($arguments['reference']) {
@@ -243,9 +243,8 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     protected function getXclassShortname($xClassName)
     {
         $classNameArray = explode('\\', $xClassName);
-        $shortName = array_pop($classNameArray);
 
-        return $shortName;
+        return array_pop($classNameArray);
     }
 
     /**

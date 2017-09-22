@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Plugins.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -86,7 +86,7 @@ class Plugins implements LoaderInterface
      */
     protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
     {
-        $first = strpos($pluginKey, '!') !== false;
+        $first = false !== strpos($pluginKey, '!');
         $pluginKey = trim($pluginKey, '!');
 
         if (!isset($pluginInformation[$pluginKey])) {

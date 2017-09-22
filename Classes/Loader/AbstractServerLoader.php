@@ -1,15 +1,12 @@
 <?php
 /**
  * Loading AbstractServerLoader.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\Utility\ClassNamingUtility;
-use HDNET\Autoloader\Utility\FileUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Loading AbstractServerLoader.
@@ -17,7 +14,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 abstract class AbstractServerLoader implements LoaderInterface
 {
     /**
-     * Server name
+     * Server name.
      *
      * @var string
      */

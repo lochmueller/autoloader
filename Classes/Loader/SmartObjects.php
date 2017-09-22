@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading SmartObjects.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

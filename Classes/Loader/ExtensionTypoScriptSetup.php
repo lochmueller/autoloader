@@ -1,8 +1,8 @@
 <?php
 /**
  * ExtensionTypoScriptSetup.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -87,13 +87,13 @@ class ExtensionTypoScriptSetup implements LoaderInterface
             $table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
             $recordType = (string) ReflectionUtility::getFirstTagValue($className, 'recordType');
             $parentClass = (string) ReflectionUtility::getFirstTagValue($className, 'parentClass');
-            if ($table !== '') {
+            if ('' !== $table) {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
             }
-            if ($recordType !== '') {
+            if ('' !== $recordType) {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.recordType = ' . $recordType;
             }
-            if ($parentClass !== '') {
+            if ('' !== $parentClass) {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
             }
         }

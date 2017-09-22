@@ -1,8 +1,8 @@
 <?php
 /**
  * Central Loader object.
- *
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;

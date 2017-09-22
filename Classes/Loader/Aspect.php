@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Aspect.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Autoload\TempClassLoader;

@@ -1,8 +1,8 @@
 <?php
 /**
  * DataSet information for languages.
- *
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
@@ -21,7 +21,7 @@ class Language implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        $tca = [
+        return [
             'ctrl' => [
                 'languageField' => 'sys_language_uid',
                 'transOrigPointerField' => 'l10n_parent',
@@ -73,8 +73,6 @@ class Language implements DataSetInterface
                 'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
             ],
         ];
-
-        return $tca;
     }
 
     /**

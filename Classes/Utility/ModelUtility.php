@@ -1,8 +1,8 @@
 <?php
 /**
  * Utility to interact with the Model.
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Persistence\ExcludeIdentityMapDataMapper;
@@ -28,7 +28,7 @@ class ModelUtility
     {
         $reflectionName = self::getTableNameByModelReflectionAnnotation($modelClassName);
 
-        return $reflectionName !== '' ? $reflectionName : self::getTableNameByModelName($modelClassName);
+        return '' !== $reflectionName ? $reflectionName : self::getTableNameByModelName($modelClassName);
     }
 
     /**
@@ -56,10 +56,10 @@ class ModelUtility
     public static function getTableNameByModelName($className)
     {
         $className = ltrim($className, '\\');
-        if (strpos($className, '\\') !== false) {
+        if (false !== strpos($className, '\\')) {
             $classNameParts = explode('\\', $className);
             // Skip vendor and product name for core classes
-            if (strpos($className, 'TYPO3\\CMS\\') === 0) {
+            if (0 === strpos($className, 'TYPO3\\CMS\\')) {
                 $classPartsToSkip = 2;
             } else {
                 $classPartsToSkip = 1;

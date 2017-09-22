@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Slots.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -87,7 +87,7 @@ class Slots implements LoaderInterface
     {
         krsort($array);
         $result = [];
-        foreach ($array as $priority => $slots) {
+        foreach ($array as $slots) {
             foreach ($slots as $slot) {
                 $result[] = $slot;
             }

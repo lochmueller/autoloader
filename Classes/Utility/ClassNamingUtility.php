@@ -1,8 +1,8 @@
 <?php
 /**
  * ClassNamingUtility.php.
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -27,8 +27,8 @@ class ClassNamingUtility
      */
     public static function explodeObjectModelName($modelName)
     {
-        if (strpos($modelName, '\\') !== false) {
-            if (substr($modelName, 0, 9) === 'TYPO3\\CMS') {
+        if (false !== strpos($modelName, '\\')) {
+            if ('TYPO3\\CMS' === substr($modelName, 0, 9)) {
                 $extensionName = '^(?P<vendorName>[^\\\\]+\\\[^\\\\]+)\\\(?P<extensionName>[^\\\\]+)';
             } else {
                 $extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';

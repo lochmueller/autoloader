@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Slots.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

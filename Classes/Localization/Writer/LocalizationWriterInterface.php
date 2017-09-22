@@ -1,8 +1,8 @@
 <?php
 /**
  * Interface for L10N file writers.
- *
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 /**

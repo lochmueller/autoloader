@@ -1,8 +1,8 @@
 <?php
 /**
  * DataSet information for enableFields.
- *
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
@@ -21,7 +21,7 @@ class EnableFields implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        $tca = [
+        return [
             'ctrl' => [
                 'enablecolumns' => [
                     'disabled' => 'hidden',
@@ -78,8 +78,6 @@ class EnableFields implements DataSetInterface
                 ],
             ],
         ];
-
-        return $tca;
     }
 
     /**

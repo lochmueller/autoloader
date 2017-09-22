@@ -1,8 +1,8 @@
 <?php
 /**
  * Mapper Interface.
- *
  */
+
 namespace HDNET\Autoloader;
 
 /**

@@ -1,7 +1,6 @@
 <?php
 /**
  * Loading JsonServer.
- *
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -17,7 +16,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class JsonServer extends AbstractServerLoader
 {
     /**
-     * Server name
+     * Server name.
      *
      * @var string
      */
@@ -29,7 +28,7 @@ class JsonServer extends AbstractServerLoader
      * There is no file monitoring for this cache.
      *
      * @param Loader $autoLoader
-     * @param int $type
+     * @param int    $type
      *
      * @return array
      */

@@ -2,8 +2,8 @@
 
 /**
  * Json server handling.
- *
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Exception;
@@ -44,8 +44,6 @@ class JsonServer
      *
      * @param string $server
      * @param bool   $smd
-     *
-     * @todo move to hook logic
      */
     public function __construct($server, $smd)
     {

@@ -1,8 +1,8 @@
 <?php
 /**
  * SmartObjectInformationService.php.
- *
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\DataSet;
@@ -45,7 +45,7 @@ class SmartObjectInformationService
 
         // disable complete table generation
         // for extending existing tables
-        if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName) !== '') {
+        if ('' !== ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
             return $this->generateSqlQuery($tableName, $custom);
         }
 
@@ -113,7 +113,7 @@ class SmartObjectInformationService
         $searchFields = [];
         $customFields = $this->getCustomModelFieldTca($modelClassName, $searchFields);
 
-        if ($reflectionTableName !== '') {
+        if ('' !== $reflectionTableName) {
             $customConfiguration = [
                 'columns' => $customFields,
             ];
@@ -200,7 +200,7 @@ class SmartObjectInformationService
         $fieldInformation = $this->getCustomModelFields($modelClassName);
         $fields = [];
         foreach ($fieldInformation as $info) {
-            if ($info['db'] === '') {
+            if ('' === $info['db']) {
                 $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
             } else {
                 try {

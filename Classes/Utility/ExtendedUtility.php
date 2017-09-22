@@ -1,8 +1,8 @@
 <?php
 /**
  * Utility functions for the Autoloader.
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -46,7 +46,7 @@ class ExtendedUtility
         $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
         /** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
         static $manager = null;
-        if ($manager === null) {
+        if (null === $manager) {
             $manager = self::create(PersistenceManagerInterface::class);
         }
 

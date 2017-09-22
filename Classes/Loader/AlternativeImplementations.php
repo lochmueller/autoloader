@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading AlternativeImplementations.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

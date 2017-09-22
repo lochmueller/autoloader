@@ -1,8 +1,8 @@
 <?php
 /**
  * Abstraction of the Writer.
- *
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;

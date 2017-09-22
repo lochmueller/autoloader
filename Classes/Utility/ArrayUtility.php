@@ -1,8 +1,8 @@
 <?php
 /**
  * Arrays utility.
- *
  */
+
 namespace HDNET\Autoloader\Utility;
 
 /**
@@ -22,7 +22,7 @@ class ArrayUtility
     {
         $separator = '|';
         foreach ($data as $name => $value) {
-            if (strpos($name, $separator) === false) {
+            if (false === strpos($name, $separator)) {
                 $array[$name] = $value;
             } else {
                 $keys = explode($separator, $name);

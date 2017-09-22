@@ -1,8 +1,8 @@
 <?php
 /**
  * BackendLayout.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Hooks\BackendLayoutProvider;
@@ -42,7 +42,7 @@ class BackendLayout implements LoaderInterface
             $extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
             $translationKey = 'backendLayout.' . $pathInfo['basename'];
-            if ($type === LoaderInterface::EXT_TABLES) {
+            if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
             }
             $backendLayouts[] = [

@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading Slots.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -63,7 +63,7 @@ class ContentObjects implements LoaderInterface
             $noHeader = $this->isTaggedWithNoHeader($className);
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
-            if ($type === LoaderInterface::EXT_TABLES) {
+            if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
                 TranslateUtility::assureLabel(
                     'wizard.' . $key . '.description',
@@ -83,7 +83,7 @@ class ContentObjects implements LoaderInterface
                             GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
                             $fieldConfiguration
                         );
-                        if ($search !== false) {
+                        if (false !== $search) {
                             $richTextFields[] = $fieldConfiguration[$search];
                         }
                     }
@@ -221,7 +221,7 @@ class ContentObjects implements LoaderInterface
      */
     protected function getDefaultTcaFields($noHeader, $configuration = null)
     {
-        if ($configuration === null) {
+        if (null === $configuration) {
             $configuration = $this->wrapDefaultTcaConfiguration('', $noHeader);
         }
         $defaultFields = [];
@@ -231,7 +231,7 @@ class ContentObjects implements LoaderInterface
             $fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, true);
             if (in_array($fieldConfiguration[0], $existingFields)) {
                 $defaultFields[] = $fieldConfiguration[0];
-            } elseif ($fieldConfiguration[0] == '--palette--') {
+            } elseif ('--palette--' == $fieldConfiguration[0]) {
                 $paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
                 if (is_string($paletteConfiguration)) {
                     $defaultFields = array_merge(
@@ -319,7 +319,7 @@ class ContentObjects implements LoaderInterface
 
             /** @var IconRegistry $iconRegistry */
             $provider = BitmapIconProvider::class;
-            if (substr(strtolower($config['iconExt']), -3) === 'svg') {
+            if ('svg' === substr(strtolower($config['iconExt']), -3)) {
                 $provider = SvgIconProvider::class;
             }
             $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);

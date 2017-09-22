@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading CommandController.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -32,7 +32,7 @@ class CommandController implements LoaderInterface
         $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
         $controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
         foreach ($controllers as $controller) {
-            if ($controller === 'AbstractCommandController') {
+            if ('AbstractCommandController' === $controller) {
                 continue;
             }
 

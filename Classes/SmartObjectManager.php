@@ -1,8 +1,8 @@
 <?php
 /**
  * Management for Smart Objects.
- *
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
@@ -91,7 +91,7 @@ class SmartObjectManager implements SingletonInterface
             $basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
 
             $tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
-            if ($tableName !== '') {
+            if ('' !== $tableName) {
                 $tcaFileName = $basePath . 'Overrides/' . $tableName . '.php';
                 $template = $overrideTemplate;
             } else {

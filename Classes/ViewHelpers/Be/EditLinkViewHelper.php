@@ -1,8 +1,8 @@
 <?php
 /**
  * Edit link for the backend.
- *
  */
+
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;

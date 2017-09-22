@@ -1,8 +1,8 @@
 <?php
 /**
  * Simple relation model.
- *
  */
+
 namespace HDNET\Autoloader\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;

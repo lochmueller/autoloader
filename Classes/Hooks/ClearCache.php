@@ -1,8 +1,8 @@
 <?php
 /**
  * Clear Cache hook for the Backend.
- *
  */
+
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;

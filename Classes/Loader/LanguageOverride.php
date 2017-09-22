@@ -1,8 +1,8 @@
 <?php
 /**
  * Loading LanguageOverride.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -29,7 +29,7 @@ class LanguageOverride implements LoaderInterface
     public function prepareLoader(Loader $autoLoader, $type)
     {
         $languageOverride = [];
-        if ($type === LoaderInterface::EXT_TABLES) {
+        if (LoaderInterface::EXT_TABLES === $type) {
             return $languageOverride;
         }
 
@@ -50,7 +50,7 @@ class LanguageOverride implements LoaderInterface
             // language
             $language = 'default';
             $fileParts = GeneralUtility::trimExplode('.', PathUtility::basename($file), true);
-            if (strlen($fileParts[0]) === 2) {
+            if (2 === strlen($fileParts[0])) {
                 $language = $fileParts[0];
                 unset($fileParts[0]);
                 $parts[count($parts) - 1] = implode('.', $fileParts);

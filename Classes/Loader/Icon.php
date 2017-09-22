@@ -1,8 +1,8 @@
 <?php
 /**
  * Icon loader.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -59,7 +59,7 @@ class Icon implements LoaderInterface
 
         foreach ($files as $path) {
             $provider = BitmapIconProvider::class;
-            if (substr(strtolower($path), -3) === 'svg') {
+            if ('svg' === substr(strtolower($path), -3)) {
                 $provider = SvgIconProvider::class;
             }
             $relativePath = str_replace($extensionPath, '', $path);

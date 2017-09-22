@@ -1,8 +1,8 @@
 <?php
 /**
  * Handling of the language files.
- *
  */
+
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
@@ -41,11 +41,11 @@ class LanguageHandler extends LanguageStore
         }
         $value = LocalizationUtility::translate($key, $extensionName, $arguments);
 
-        if ($value !== null) {
+        if (null !== $value) {
             return $value;
         }
 
-        if ($default === null || $default === '') {
+        if (null === $default || '' === $default) {
             $default = $extensionName . ' ==> LLL:' . $key;
         }
 
@@ -80,7 +80,7 @@ class LanguageHandler extends LanguageStore
 
             /** @var AbstractLocalizationWriter $service */
             $service = GeneralUtility::makeInstance($serviceName);
-            if ($overrideLanguageBase !== null) {
+            if (null !== $overrideLanguageBase) {
                 $service->setLanguageBaseName($overrideLanguageBase);
             }
             if (is_file($service->getAbsoluteFilename($extensionKey))) {

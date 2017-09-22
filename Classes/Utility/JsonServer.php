@@ -2,6 +2,7 @@
 /**
  * JsonServer.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;
@@ -25,7 +26,7 @@ class JsonServer
      */
     public static function getNamespaceAndMethod($namespace, $method)
     {
-        if (strpos($method, '.') !== false) {
+        if (false !== strpos($method, '.')) {
             $namespace = substr($method, 0, strrpos($method, '.'));
             $method = substr($method, strrpos($method, '.') + 1);
         }

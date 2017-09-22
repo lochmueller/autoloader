@@ -1,8 +1,8 @@
 <?php
 /**
  * Central DataSet object.
- *
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ArrayUtility;

@@ -1,8 +1,8 @@
 <?php
 /**
  * Xliff writer.
- *
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -69,7 +69,7 @@ class XliffWriter extends AbstractLocalizationWriter
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (strpos($content, ' id="' . $key . '"') !== false || trim($content) === '') {
+        if (false !== strpos($content, ' id="' . $key . '"') || '' === trim($content)) {
             return;
         }
         $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';

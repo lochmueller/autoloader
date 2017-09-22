@@ -1,8 +1,8 @@
 <?php
 /**
  * DataSet information for workspaces.
- *
  */
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
@@ -21,7 +21,7 @@ class Workspaces implements DataSetInterface
      */
     public function getTca($tableName)
     {
-        $tca = [
+        return [
             'ctrl' => [
                 'versioningWS' => true,
                 'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
@@ -38,8 +38,6 @@ class Workspaces implements DataSetInterface
                 ],
             ],
         ];
-
-        return $tca;
     }
 
     /**

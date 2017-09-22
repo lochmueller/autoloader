@@ -1,8 +1,8 @@
 <?php
 /**
  * TempClassAutoloader.php.
- *
  */
+
 namespace HDNET\Autoloader\Autoload;
 
 use HDNET\Autoloader\SingletonInterface;
@@ -61,7 +61,7 @@ class TempClassLoader implements SingletonInterface
     {
         $className = ltrim($className, '\\');
 
-        if (strpos($className, static::$namespace) !== false) {
+        if (false !== strpos($className, static::$namespace)) {
             $optimizedClassName = str_replace('\\', '', $className);
             $cacheIdentifier = 'XCLASS_' . $optimizedClassName;
 

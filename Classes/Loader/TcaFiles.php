@@ -1,8 +1,8 @@
 <?php
 /**
  * Create the TCA files.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -26,7 +26,7 @@ class TcaFiles implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        if ($type !== LoaderInterface::EXT_TABLES) {
+        if (LoaderInterface::EXT_TABLES !== $type) {
             return [];
         }
 

@@ -1,8 +1,8 @@
 <?php
 /**
  * Soap server handling.
- *
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Exception;
@@ -41,8 +41,6 @@ class SoapServer
      *
      * @param string $server
      * @param bool   $wsdl
-     *
-     * @todo move to hook logic
      */
     public function __construct($server, $wsdl)
     {

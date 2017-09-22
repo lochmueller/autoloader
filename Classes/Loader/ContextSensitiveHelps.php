@@ -1,8 +1,8 @@
 <?php
 /**
  * ContextSensitiveHelp (CSH) based on smart objects.
- *
  */
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -32,7 +32,7 @@ class ContextSensitiveHelps implements LoaderInterface
      */
     public function prepareLoader(Loader $loader, $type)
     {
-        if ($type !== LoaderInterface::EXT_TABLES) {
+        if (LoaderInterface::EXT_TABLES !== $type) {
             return [];
         }
         $modelInformation = $this->findTableAndModelInformationForExtension($loader->getExtensionKey());
@@ -45,7 +45,7 @@ class ContextSensitiveHelps implements LoaderInterface
                 $information['table'],
                 $information['properties']
             );
-            if ($path !== null) {
+            if (null !== $path) {
                 $loaderInformation[$table] = $path;
             }
         }
@@ -66,16 +66,14 @@ class ContextSensitiveHelps implements LoaderInterface
         $register = SmartObjectRegister::getRegister();
         foreach ($register as $class) {
             $parts = ClassNamingUtility::explodeObjectModelName($class);
-            if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey) {
-                if (ModelUtility::getTableNameByModelReflectionAnnotation($class) === '') {
-                    $modelInformation = SmartObjectInformationService::getInstance()
-                        ->getCustomModelFieldTca($class);
+            if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey && '' === ModelUtility::getTableNameByModelReflectionAnnotation($class)) {
+                $modelInformation = SmartObjectInformationService::getInstance()
+                    ->getCustomModelFieldTca($class);
 
-                    $information[] = [
-                        'table' => ModelUtility::getTableNameByModelName($class),
-                        'properties' => array_keys($modelInformation),
-                    ];
-                }
+                $information[] = [
+                    'table' => ModelUtility::getTableNameByModelName($class),
+                    'properties' => array_keys($modelInformation),
+                ];
             }
         }
 
