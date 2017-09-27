@@ -3,7 +3,6 @@
  * Exclude the IdentityMap in the regular data map for backend selection
  * We need on object in different languages and the IdentityMap do not respect that!
  */
-
 namespace HDNET\Autoloader\Persistence;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;

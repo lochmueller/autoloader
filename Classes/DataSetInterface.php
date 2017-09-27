@@ -2,7 +2,6 @@
 /**
  * data set interface.
  */
-
 namespace HDNET\Autoloader;
 
 /**

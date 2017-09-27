@@ -2,14 +2,11 @@
 /**
  * Utility to interact with the Model.
  */
-
 namespace HDNET\Autoloader\Utility;
 
-use HDNET\Autoloader\Persistence\ExcludeIdentityMapDataMapper;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**

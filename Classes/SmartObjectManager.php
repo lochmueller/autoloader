@@ -2,7 +2,6 @@
 /**
  * Management for Smart Objects.
  */
-
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;

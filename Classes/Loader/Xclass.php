@@ -2,7 +2,6 @@
 /**
  * Loading Xclass.
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

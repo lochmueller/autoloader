@@ -4,7 +4,6 @@
  *
  * General file information
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;

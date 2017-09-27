@@ -2,7 +2,6 @@
 /**
  * Loading JsonServer.
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

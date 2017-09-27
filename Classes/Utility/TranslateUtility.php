@@ -2,7 +2,6 @@
 /**
  * TranslateUtility.
  */
-
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;

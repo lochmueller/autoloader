@@ -2,7 +2,6 @@
 /**
  * General loading interface.
  */
-
 namespace HDNET\Autoloader;
 
 /**
