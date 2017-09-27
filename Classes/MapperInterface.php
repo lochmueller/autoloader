@@ -2,7 +2,6 @@
 /**
  * Mapper Interface.
  */
-
 namespace HDNET\Autoloader;
 
 /**

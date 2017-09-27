@@ -2,7 +2,6 @@
 /**
  * Local singleton interface to reduce dependencies.
  */
-
 namespace HDNET\Autoloader;
 
 /**

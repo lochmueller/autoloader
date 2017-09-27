@@ -2,7 +2,6 @@
 /**
  * Loading CommandController.
  */
-
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

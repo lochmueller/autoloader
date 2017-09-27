@@ -2,7 +2,6 @@
 /**
  * Add the smart object SQL string.
  */
-
 namespace HDNET\Autoloader\Slots;
 
 use HDNET\Autoloader\SmartObjectManager;

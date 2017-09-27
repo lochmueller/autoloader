@@ -2,7 +2,6 @@
 /**
  * Register for Smart Objects.
  */
-
 namespace HDNET\Autoloader;
 
 /**

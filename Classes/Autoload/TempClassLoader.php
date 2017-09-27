@@ -2,7 +2,6 @@
 /**
  * TempClassAutoloader.php.
  */
-
 namespace HDNET\Autoloader\Autoload;
 
 use HDNET\Autoloader\SingletonInterface;

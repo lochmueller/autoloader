@@ -2,7 +2,6 @@
 /**
  * Exception.
  */
-
 namespace HDNET\Autoloader;
 
 /**

@@ -2,7 +2,6 @@
 /**
  * Soap server handling.
  */
-
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Exception;

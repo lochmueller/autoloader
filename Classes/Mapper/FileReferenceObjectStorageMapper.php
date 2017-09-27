@@ -2,7 +2,6 @@
 /**
  * Map FileReferenceObjectStorage.
  */
-
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;

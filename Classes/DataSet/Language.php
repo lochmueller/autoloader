@@ -2,7 +2,6 @@
 /**
  * DataSet information for languages.
  */
-
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
