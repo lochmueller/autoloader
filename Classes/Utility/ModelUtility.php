@@ -138,44 +138,39 @@ class ModelUtility
      *
      * @param string $modelName
      * @param array  $data
-     * @param bool   $backendSelection
      *
      * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity|object
      */
-    public static function getModel($modelName, $data, $backendSelection = false)
+    public static function getModel($modelName, $data)
     {
+        // Base query
         $query = ExtendedUtility::getQuery($modelName);
         $settings = $query->getQuerySettings();
-        if (!$backendSelection) {
-            $settings->setIgnoreEnableFields($backendSelection);
-        }
         $settings->setRespectStoragePage(false);
         $settings->setRespectSysLanguage(false);
-
         $query->matching($query->equals('uid', $data['uid']));
 
-        if ($backendSelection) {
-            GeneralUtility::_GETset((int) $data['sys_language_uid'], 'L');
+        if (TYPO3_MODE === 'BE') {
             GeneralUtility::makeInstance(Session::class)->destroy();
 
-            if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
-                $settings->setLanguageOverlayMode(false);
-                $settings->setLanguageMode(false);
-                $settings->setRespectSysLanguage(true);
-                $settings->setLanguageUid($data['sys_language_uid']);
+            if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
+                GeneralUtility::_GETset((int)$data['sys_language_uid'], 'L');
+                $settings->setIgnoreEnableFields(true);
+
+                if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
+                    $settings->setLanguageOverlayMode(false);
+                    $settings->setLanguageMode(null);
+                    $settings->setRespectSysLanguage(true);
+                    $settings->setLanguageUid((int)$data['sys_language_uid']);
+                }
+                $object = $query->execute()->getFirst();
+
+                GeneralUtility::_GETset(0, 'L');
+                return $object;
             }
-
-            $rows = $query->execute(true);
-            $objectManager = new ObjectManager();
-            /** @var ExcludeIdentityMapDataMapper $dataMapper */
-            $dataMapper = $objectManager->get(ExcludeIdentityMapDataMapper::class);
-            $objects = $dataMapper->map($modelName, $rows);
-            $selection = current($objects);
-            GeneralUtility::_GETset(0, 'L');
-
-            return $selection;
         }
 
+        $query->matching($query->equals('uid', $data['uid']));
         return $query->execute()
             ->getFirst();
     }
