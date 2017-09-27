@@ -149,10 +149,10 @@ class ModelUtility
 
         if (TYPO3_MODE === 'BE') {
             GeneralUtility::makeInstance(Session::class)->destroy();
+            $settings->setIgnoreEnableFields(true);
 
             if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
                 GeneralUtility::_GETset((int)$data['sys_language_uid'], 'L');
-                $settings->setIgnoreEnableFields(true);
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
