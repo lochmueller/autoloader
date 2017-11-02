@@ -47,11 +47,11 @@ class SmartObjectManager implements SingletonInterface
      */
     public static function isSmartObjectClass($className)
     {
-        $riskAutoLoader = [
-            'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
-            'autoload',
-        ];
-        $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
+        // $riskAutoLoader = [
+        //     'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
+        //     'autoload',
+        // ];
+        // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
         if (!class_exists($className)) {
             $return = false;
@@ -60,9 +60,9 @@ class SmartObjectManager implements SingletonInterface
             $return = !(bool) (!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db'));
         }
 
-        if ($registerAutoLoader) {
-            spl_autoload_register($riskAutoLoader, true, true);
-        }
+        // if ($registerAutoLoader) {
+        //     spl_autoload_register($riskAutoLoader, true, true);
+        // }
 
         return $return;
     }
