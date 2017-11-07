@@ -199,7 +199,11 @@ class Loader implements SingletonInterface
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
             if (!isset($objectCache[$autoLoaderObjectName])) {
-                $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+                if(class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+                } else {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
+                }
             }
             $objects[] = $objectCache[$autoLoaderObjectName];
         }
@@ -225,10 +229,11 @@ class Loader implements SingletonInterface
         foreach ($this->implementations as $className) {
             if (in_array($className, $objectNames)) {
                 $names[] = $className;
+                unset($objectNames[array_search($className, $objectNames)]);
             }
         }
 
-        return $names;
+        return array_merge($names, $objectNames);
     }
 
     /**
