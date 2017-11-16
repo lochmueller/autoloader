@@ -59,7 +59,6 @@ class Language implements DataSetInterface
                         ],
                         'foreign_table' => $tableName,
                         'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
-                        'showIconTable' => false,
                     ],
                 ],
                 'l10n_diffsource' => [
