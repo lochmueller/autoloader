@@ -34,7 +34,7 @@ class ContentController extends ActionController
         $view = ExtendedUtility::create(StandaloneView::class);
         $context = $view->getRenderingContext();
         $context->setControllerName('Content');
-        $context->setControllerAction($this->settings['contentElement'] . '/Test');
+        $context->setControllerAction($this->settings['contentElement']);
         $view->setRenderingContext($context);
 
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
