@@ -2,14 +2,15 @@
 /**
  * Content Controller.
  */
+
 namespace HDNET\Autoloader\Controller;
 
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Content Controller.
@@ -29,20 +30,27 @@ class ContentController extends ActionController
         $targetObject = ClassNamingUtility::getFqnByPath($vendorName, $extensionKey, 'Domain/Model/Content/' . $name);
         $model = ModelUtility::getModel($targetObject, $data);
 
-        $view = $this->createStandaloneView();
+        /** @var StandaloneView $view */
+        $view = ExtendedUtility::create(StandaloneView::class);
+        $context = $view->getRenderingContext();
+        $context->setControllerName('Content');
+        $context->setControllerAction($this->settings['contentElement'] . '/Test');
+        $view->setRenderingContext($context);
 
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $viewConfiguration = $configuration['view'];
 
-        if (isset($viewConfiguration['file'])) {
-            $view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName($viewConfiguration['file']));
-        }
-        if (isset($viewConfiguration['layoutRootPaths'])) {
-            $view->setLayoutRootPaths($viewConfiguration['layoutRootPaths']);
-        }
-        if (isset($viewConfiguration['partialRootPaths'])) {
-            $view->setPartialRootPaths($viewConfiguration['partialRootPaths']);
-        }
+        $layoutRootPaths = is_array($viewConfiguration['layoutRootPaths']) ? $viewConfiguration['layoutRootPaths'] : [];
+        $layoutRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Layouts/';
+        $view->setLayoutRootPaths($layoutRootPaths);
+
+        $partialRootPaths = is_array($viewConfiguration['partialRootPaths']) ? $viewConfiguration['partialRootPaths'] : [];
+        $partialRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Partials/';
+        $view->setPartialRootPaths($partialRootPaths);
+
+        $templateRootPaths = is_array($viewConfiguration['templateRootPaths']) ? $viewConfiguration['templateRootPaths'] : [];
+        $templateRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Templates/';
+        $view->setTemplateRootPaths($templateRootPaths);
 
         $view->assignMultiple([
             'data' => $data,
@@ -51,20 +59,5 @@ class ContentController extends ActionController
         ]);
 
         return $view->render();
-    }
-
-    /**
-     * Create a StandaloneView for the ContentObject.
-     *
-     * @return \TYPO3\CMS\Fluid\View\StandaloneView
-     */
-    protected function createStandaloneView()
-    {
-        $extensionKey = $this->settings['extensionKey'];
-        $name = $this->settings['contentElement'];
-
-        $templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
-
-        return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
     }
 }
