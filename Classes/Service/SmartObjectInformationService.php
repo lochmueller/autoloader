@@ -69,9 +69,15 @@ class SmartObjectInformationService
         $customFields = [];
         foreach ($customFieldInfo as $info) {
             $key = $tableName . '.' . $info['name'];
+
+            if($this->useTableNameFileBase()) {
+                // Without prefix !
+                $key = $info['name'];
+            }
+
             try {
-                TranslateUtility::assureLabel($key, $extensionName, $info['name']);
-                $label = TranslateUtility::getLllOrHelpMessage($key, $extensionName);
+                TranslateUtility::assureLabel($key, $extensionName, $info['name'], null, $tableName);
+                $label = TranslateUtility::getLllOrHelpMessage($key, $extensionName, $tableName);
             } catch (\Exception $ex) {
                 $label = $info['name'];
             }
@@ -93,6 +99,17 @@ class SmartObjectInformationService
         }
 
         return $customFields;
+    }
+
+    /**
+     * Check if table name file base is used
+     *
+     * @return bool
+     */
+    protected function useTableNameFileBase()
+    {
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
@@ -134,7 +151,7 @@ class SmartObjectInformationService
             $labelField = $fields[0];
         }
         try {
-            TranslateUtility::assureLabel($tableName, $extensionName);
+            TranslateUtility::assureLabel($tableName, $extensionName, null, null, $tableName);
         } catch (\Exception $ex) {
             // Do not handle the error of the assureLabel method
         }
@@ -348,6 +365,6 @@ class SmartObjectInformationService
      */
     protected function getTcaTitle($tableName, $extensionName)
     {
-        return TranslateUtility::getLllOrHelpMessage($tableName, $extensionName);
+        return TranslateUtility::getLllOrHelpMessage($tableName, $extensionName, $tableName);
     }
 }

@@ -63,11 +63,13 @@ class ContentObjects implements LoaderInterface
 
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if (LoaderInterface::EXT_TABLES === $type) {
-                TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)');
+                TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)', null, 'tt_content');
                 TranslateUtility::assureLabel(
                     'wizard.' . $key . '.description',
                     $loader->getExtensionKey(),
-                    $key . ' (Description)'
+                    $key . ' (Description)',
+                    null,
+                    'tt_content'
                 );
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
                 $defaultFields = $this->getDefaultTcaFields($noHeader, null);
@@ -267,7 +269,9 @@ class ContentObjects implements LoaderInterface
         $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
             TranslateUtility::getLllString(
                 'tt_content.' . $loader->getExtensionKey() . '.header',
-                $loader->getExtensionKey()
+                $loader->getExtensionKey(),
+                null,
+                'tt_content'
             ),
             '--div--',
         ];
@@ -277,9 +281,10 @@ class ContentObjects implements LoaderInterface
             $typeKey = $loader->getExtensionKey() . '_' . $e;
 
             ExtensionManagementUtility::addPlugin([
-                TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey()),
+                TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey(),
+                    'tt_content'),
                 $typeKey,
-                $config['iconExt'],
+                $config['iconExt']
             ], 'CType');
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {

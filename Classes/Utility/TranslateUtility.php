@@ -22,20 +22,21 @@ class TranslateUtility
      *
      * @see LocalizationUtility::translate
      *
-     * @param string $key           key in the localization file
+     * @param string $key key in the localization file
      * @param string $extensionName
-     * @param string $default       default value of the label
-     * @param array  $arguments     arguments are being passed over to vsprintf
+     * @param string $default default value of the label
+     * @param array $arguments arguments are being passed over to vsprintf
+     * @param string $tableName
      *
      * @return string
      */
-    public static function assureLabel($key, $extensionName, $default = null, $arguments = null)
+    public static function assureLabel($key, $extensionName, $default = null, $arguments = null, $tableName = null)
     {
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] as $classConfig) {
                 $className = GeneralUtility::getUserObj($classConfig);
                 if (is_object($className) && method_exists($className, 'assureLabel')) {
-                    $className->assureLabel($key, $extensionName, $default, $arguments);
+                    $className->assureLabel($key, $extensionName, $default, $arguments, $tableName);
                 }
             }
         }
@@ -48,21 +49,22 @@ class TranslateUtility
      *
      * @param string $key
      * @param string $extensionKey
+     * @param string $tableName
      *
      * @return string
      */
-    public static function getLllOrHelpMessage($key, $extensionKey)
+    public static function getLllOrHelpMessage($key, $extensionKey, $tableName = null)
     {
-        $lllString = self::getLllString($key, $extensionKey);
+        $lllString = self::getLllString($key, $extensionKey, null, $tableName);
         if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG'])) {
             // init for backend
             $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
-        if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey)) {
+        if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey, $tableName)) {
             $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
             if (isset($GLOBALS['LANG'])) {
-                self::assureLabel($key, $extensionKey, $key);
+                self::assureLabel($key, $extensionKey, $key, null, $tableName);
             }
         }
 
@@ -72,14 +74,21 @@ class TranslateUtility
     /**
      * Get the correct LLL string for the given key and extension.
      *
-     * @param        $key
+     * @param string $key
      * @param        $extensionKey
      * @param string $file
+     * @param string $tableName
      *
      * @return string
      */
-    public static function getLllString($key, $extensionKey, $file = 'locallang.xlf')
+    public static function getLllString($key, $extensionKey, $file = null, $tableName = null)
     {
+        if($file === null) {
+            $file = 'locallang.xlf';
+        }
+        if(self::useTableNameFileBase() && $tableName !== null) {
+            $file = $tableName . '.xlf';
+        }
         return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
     }
 
@@ -88,13 +97,25 @@ class TranslateUtility
      *
      * @param string $key
      * @param string $extensionKey
+     * @param string $tableName
      *
      * @return string
      */
-    public static function getLll($key, $extensionKey)
+    public static function getLll($key, $extensionKey, $tableName = null)
     {
-        $file = self::getLllString($key, $extensionKey);
-
+        $file = self::getLllString($key, $extensionKey, null, $tableName);
         return LocalizationUtility::translate($file, $extensionKey);
+    }
+
+
+    /**
+     * Check if table name file base is used
+     *
+     * @return bool
+     */
+    static protected function useTableNameFileBase()
+    {
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

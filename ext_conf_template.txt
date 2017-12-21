@@ -1,2 +1,8 @@
 # cat=basic/enable; type=boolean; label=Enable autoloader clear cache in production:In the default configuration of the autoloader the clear cache button in the backend is only activated in all Non-Productino context for admins. If you enable this option you can also delete the cache in Production context.
 enableAutoloaderClearCacheInProduction = 0
+
+# cat=basic/enable; type=boolean; label=Enable language files on table base:The autoloader create language files on table base for better sepration of labels in the Language folder
+enableLanguageFileOnTableBase = 0
+
+
+
