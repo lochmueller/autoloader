@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Central Loader object.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 

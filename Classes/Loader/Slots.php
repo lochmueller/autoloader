@@ -81,6 +81,8 @@ class Slots implements LoaderInterface
     }
 
     /**
+     * Flatten slots by prio.
+     *
      * @param array $array
      *
      * @return array

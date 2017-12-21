@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Json server handling.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Service;
 

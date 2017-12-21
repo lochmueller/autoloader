@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Reflection helper.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 

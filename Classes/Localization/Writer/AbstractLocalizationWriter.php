@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Abstraction of the Writer.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 

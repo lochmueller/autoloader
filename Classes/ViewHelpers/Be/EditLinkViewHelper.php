@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Edit link for the backend.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\ViewHelpers\Be;
 

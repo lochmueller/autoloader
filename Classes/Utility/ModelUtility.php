@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Utility to interact with the Model.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 

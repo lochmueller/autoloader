@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Icon helper.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 

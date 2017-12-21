@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Map float/double.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Mapper;
 

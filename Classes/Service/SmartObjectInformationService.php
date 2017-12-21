@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * SmartObjectInformationService.php.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Service;
 
@@ -362,6 +362,8 @@ class SmartObjectInformationService
     }
 
     /**
+     * Get TCA title
+     *
      * @param string $tableName
      * @param string $extensionName
      *

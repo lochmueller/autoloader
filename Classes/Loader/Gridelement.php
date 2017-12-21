@@ -92,6 +92,8 @@ class Gridelement implements LoaderInterface
     }
 
     /**
+     * Get the Page TS config for the grid.
+     *
      * @param $id
      * @param $label
      * @param $config

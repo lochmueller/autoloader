@@ -387,8 +387,8 @@ tt_content.key.field = CType';
     /**
      * Get the fields that are in the default configuration.
      *
-     * @param null|string $configuration
      * @param bool        $noHeader
+     * @param null|string $configuration
      *
      * @return array
      */

@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * StaticInfoTablesMapper.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Mapper;
 
@@ -22,6 +22,8 @@ class StaticInfoTablesMapper implements MapperInterface
     const CLASS_BASE = 'sjbr\\staticinfotables\\domain\\model\\';
 
     /**
+     * Last class name.
+     *
      * @var string
      */
     protected $lastClass;

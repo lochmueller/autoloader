@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * JsonServer.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -21,6 +21,8 @@ use Zend\Json\Server\Request;
 class JsonServer
 {
     /**
+     * Get namespace and method
+     *
      * @param $namespace
      * @param $method
      *
@@ -42,6 +44,8 @@ class JsonServer
     }
 
     /**
+     * Handle the JSON request
+     * 
      * @param $namespace
      * @param $singleJsonRequest
      *

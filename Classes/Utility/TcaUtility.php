@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types=1);
 /**
  * TcaUtility.php.
  *
  * General file information
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 

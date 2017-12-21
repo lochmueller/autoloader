@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
 /**
  * Map DateTime.
  */
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Mapper;
 
