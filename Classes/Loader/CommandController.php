@@ -28,7 +28,7 @@ class CommandController implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
         $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';

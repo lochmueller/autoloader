@@ -31,7 +31,7 @@ class Gridelement implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $grids = [];
         if (!ExtensionManagementUtility::isLoaded('gridelements')) {

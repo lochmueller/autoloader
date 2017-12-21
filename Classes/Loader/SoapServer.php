@@ -29,21 +29,21 @@ class SoapServer extends AbstractServerLoader
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
      *
-     * @param Loader $autoLoader
+     * @param Loader $loader
      * @param int    $type
      *
      * @return array
      */
-    public function prepareLoader(Loader $autoLoader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
-        $servicePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Service/Soap/';
+        $servicePath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Service/Soap/';
         $serviceClasses = FileUtility::getBaseFilesRecursivelyInDir($servicePath, 'php');
 
         $info = [];
         foreach ($serviceClasses as $service) {
             $serviceClass = ClassNamingUtility::getFqnByPath(
-                $autoLoader->getVendorName(),
-                $autoLoader->getExtensionKey(),
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
                 'Service/Soap/' . $service
             );
             $info[\lcfirst($service)] = $serviceClass;

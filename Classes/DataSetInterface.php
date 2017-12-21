@@ -19,7 +19,7 @@ interface DataSetInterface extends SingletonInterface
      *
      * @return array
      */
-    public function getTca($tableName);
+    public function getTca(string $tableName): array;
 
     /**
      * Get database sql information.
@@ -28,12 +28,12 @@ interface DataSetInterface extends SingletonInterface
      *
      * @return array
      */
-    public function getDatabaseSql($tableName);
+    public function getDatabaseSql(string $tableName): array;
 
     /**
      * Get database sql key information.
      *
      * @return array
      */
-    public function getDatabaseSqlKey();
+    public function getDatabaseSqlKey(): array;
 }

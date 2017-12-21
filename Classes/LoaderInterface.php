@@ -33,7 +33,7 @@ interface LoaderInterface extends SingletonInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type);
+    public function prepareLoader(Loader $loader, int $type): array;
 
     /**
      * Run the loading process for the ext_tables.php file.

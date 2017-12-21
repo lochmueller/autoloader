@@ -27,7 +27,7 @@ class FluidNamespace implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $loaderInformation = [];
         $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/ViewHelpers/';

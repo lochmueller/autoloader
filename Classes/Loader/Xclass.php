@@ -30,7 +30,7 @@ class Xclass implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $return = [];
         if (LoaderInterface::EXT_TABLES === $type) {

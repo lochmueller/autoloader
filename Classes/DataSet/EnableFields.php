@@ -21,7 +21,7 @@ class EnableFields implements DataSetInterface
      *
      * @return array
      */
-    public function getTca($tableName)
+    public function getTca(string $tableName): array
     {
         return [
             'ctrl' => [
@@ -89,7 +89,7 @@ class EnableFields implements DataSetInterface
      *
      * @return array
      */
-    public function getDatabaseSql($tableName)
+    public function getDatabaseSql(string $tableName): array
     {
         return [
             'hidden tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
@@ -105,7 +105,7 @@ class EnableFields implements DataSetInterface
      *
      * @return array
      */
-    public function getDatabaseSqlKey()
+    public function getDatabaseSqlKey(): array
     {
         return [];
     }

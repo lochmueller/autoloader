@@ -30,7 +30,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         // We don't have to prepare anything if the extension has no smart objects
         if (!$this->extensionHasSmartObjects($loader->getExtensionKey())) {

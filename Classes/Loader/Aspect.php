@@ -33,7 +33,7 @@ class Aspect implements LoaderInterface
      *
      * @return array $loaderInformation
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $aspects = [];
         $aspectPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Aspect/';

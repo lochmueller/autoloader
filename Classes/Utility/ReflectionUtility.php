@@ -100,7 +100,7 @@ class ReflectionUtility
      *
      * @return string|bool
      */
-    public static function getFirstTagValue($className, $tag)
+    public static function getFirstTagValue(string $className, string $tag)
     {
         $classReflection = self::createReflectionClass($className);
         if (!$classReflection->isTaggedWith($tag)) {
@@ -108,7 +108,7 @@ class ReflectionUtility
         }
         $values = $classReflection->getTagValues($tag);
         if (\is_array($values)) {
-            return \trim($values[0]);
+            return \trim((string) $values[0]);
         }
 
         return false;

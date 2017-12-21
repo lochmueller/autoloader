@@ -21,7 +21,7 @@ class Workspaces implements DataSetInterface
      *
      * @return array
      */
-    public function getTca($tableName)
+    public function getTca(string $tableName): array
     {
         return [
             'ctrl' => [
@@ -51,7 +51,7 @@ class Workspaces implements DataSetInterface
      *
      * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html
      */
-    public function getDatabaseSql($tableName)
+    public function getDatabaseSql(string $tableName): array
     {
         return [
             't3ver_oid int(11) DEFAULT \'0\' NOT NULL',
@@ -72,7 +72,7 @@ class Workspaces implements DataSetInterface
      *
      * @return array
      */
-    public function getDatabaseSqlKey()
+    public function getDatabaseSqlKey(): array
     {
         return [
             'KEY t3ver_oid (t3ver_oid,t3ver_wsid)',

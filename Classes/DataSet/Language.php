@@ -21,7 +21,7 @@ class Language implements DataSetInterface
      *
      * @return array
      */
-    public function getTca($tableName)
+    public function getTca(string $tableName): array
     {
         return [
             'ctrl' => [
@@ -83,7 +83,7 @@ class Language implements DataSetInterface
      *
      * @return array
      */
-    public function getDatabaseSql($tableName)
+    public function getDatabaseSql(string $tableName): array
     {
         return [
             'sys_language_uid int(11) DEFAULT \'0\' NOT NULL',
@@ -97,7 +97,7 @@ class Language implements DataSetInterface
      *
      * @return array
      */
-    public function getDatabaseSqlKey()
+    public function getDatabaseSqlKey(): array
     {
         return [
             'KEY language (l10n_parent,sys_language_uid)',

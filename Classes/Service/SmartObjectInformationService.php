@@ -259,7 +259,7 @@ class SmartObjectInformationService
      *
      * @return array
      */
-    protected function getCustomModelFields($modelClassName)
+    protected function getCustomModelFields(string $modelClassName): array
     {
         $properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
         $fields = [];
@@ -274,8 +274,8 @@ class SmartObjectInformationService
             $dbInformation = $property->getTagValues('db');
             $fields[] = [
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                'db' => \trim($dbInformation[0]),
-                'var' => \trim($var),
+                'db' => \trim((string) $dbInformation[0]),
+                'var' => \trim((string) $var),
                 'rte' => (bool) $property->isTaggedWith('enableRichText'),
             ];
         }
@@ -362,7 +362,7 @@ class SmartObjectInformationService
     }
 
     /**
-     * Get TCA title
+     * Get TCA title.
      *
      * @param string $tableName
      * @param string $extensionName

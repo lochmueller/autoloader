@@ -24,24 +24,24 @@ class TypeConverter implements LoaderInterface
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
      *
-     * @param Loader $autoLoader
+     * @param Loader $loader
      * @param int    $type
      *
      * @return array
      */
-    public function prepareLoader(Loader $autoLoader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $classes = [];
-        $converterPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
+        $converterPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
 
         foreach ($converterClasses as $converterClass) {
             $converterClass = ClassNamingUtility::getFqnByPath(
-                $autoLoader->getVendorName(),
-                $autoLoader->getExtensionKey(),
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
                 'Property/TypeConverter/' . $converterClass
             );
-            if ($autoLoader->isInstantiableClass($converterClass)) {
+            if ($loader->isInstantiableClass($converterClass)) {
                 $classes[] = $converterClass;
             }
         }

@@ -27,7 +27,7 @@ class ExtensionId implements LoaderInterface
      *
      * @return array
      */
-    public function prepareLoader(Loader $loader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $scripts = [];
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Php/eID/';

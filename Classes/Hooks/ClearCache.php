@@ -94,7 +94,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      *
      * @return bool
      */
-    protected function isAlwaysActivated()
+    protected function isAlwaysActivated(): bool
     {
         $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
@@ -106,7 +106,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      *
      * @return bool
      */
-    protected function isProduction()
+    protected function isProduction(): bool
     {
         return GeneralUtility::getApplicationContext()
             ->isProduction();
@@ -117,7 +117,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      *
      * @return bool
      */
-    protected function isAdmin()
+    protected function isAdmin(): bool
     {
         return \is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
                 ->isAdmin();

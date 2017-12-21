@@ -28,25 +28,25 @@ class Slots implements LoaderInterface
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
      *
-     * @param Loader $autoLoader
+     * @param Loader $loader
      * @param int    $type
      *
      * @return array
      */
-    public function prepareLoader(Loader $autoLoader, $type)
+    public function prepareLoader(Loader $loader, int $type): array
     {
         $slots = [];
-        $slotPath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Classes/Slots/';
+        $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
 
         foreach ($slotClasses as $slot) {
             $slotClass = ClassNamingUtility::getFqnByPath(
-                $autoLoader->getVendorName(),
-                $autoLoader->getExtensionKey(),
+                $loader->getVendorName(),
+                $loader->getExtensionKey(),
                 'Slots/' . $slot
             );
 
-            if (!$autoLoader->isInstantiableClass($slotClass)) {
+            if (!$loader->isInstantiableClass($slotClass)) {
                 continue;
             }
 
