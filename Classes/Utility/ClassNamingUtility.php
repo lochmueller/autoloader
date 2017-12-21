@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * ClassNamingUtility.php.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -26,8 +29,8 @@ class ClassNamingUtility
      */
     public static function explodeObjectModelName($modelName)
     {
-        if (false !== strpos($modelName, '\\')) {
-            if ('TYPO3\\CMS' === substr($modelName, 0, 9)) {
+        if (false !== \mb_strpos($modelName, '\\')) {
+            if ('TYPO3\\CMS' === \mb_substr($modelName, 0, 9)) {
                 $extensionName = '^(?P<vendorName>[^\\\\]+\\\[^\\\\]+)\\\(?P<extensionName>[^\\\\]+)';
             } else {
                 $extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
@@ -37,7 +40,7 @@ class ClassNamingUtility
             $regEx = '/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z0-9_]+)/ix';
         }
 
-        preg_match($regEx, $modelName, $matches);
+        \preg_match($regEx, $modelName, $matches);
         if (empty($matches)) {
             throw new Exception('Could not determine extension key for: ' . $modelName, 140657775);
         }
@@ -54,8 +57,8 @@ class ClassNamingUtility
      */
     public static function getExtensionKeyByModel($modelClassName)
     {
-        if (is_object($modelClassName)) {
-            $modelClassName = get_class($modelClassName);
+        if (\is_object($modelClassName)) {
+            $modelClassName = \get_class($modelClassName);
         }
         $matches = self::explodeObjectModelName($modelClassName);
 
@@ -73,10 +76,10 @@ class ClassNamingUtility
      */
     public static function getFqnByPath($vendorName, $extensionKey, $path)
     {
-        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace(
+        return $vendorName . '\\' . \ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . \str_replace(
             '/',
             '\\',
-            ltrim($path, '/')
+            \ltrim($path, '/')
         );
     }
 }

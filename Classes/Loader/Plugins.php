@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Plugins.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -46,15 +49,15 @@ class Plugins implements LoaderInterface
                 continue;
             }
 
-            $controllerKey = str_replace('/', '\\', $controller);
-            $controllerKey = str_replace('Controller', '', $controllerKey);
+            $controllerKey = \str_replace('/', '\\', $controller);
+            $controllerKey = \str_replace('Controller', '', $controllerKey);
 
             $methods = ReflectionUtility::getPublicMethods($controllerName);
             foreach ($methods as $method) {
                 /** @var $method \TYPO3\CMS\Extbase\Reflection\MethodReflection */
                 if ($method->isTaggedWith('plugin')) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', implode(' ', $method->getTagValues('plugin')), true);
-                    $actionName = str_replace('Action', '', $method->getName());
+                    $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $method->getTagValues('plugin')), true);
+                    $actionName = \str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
                         $pluginInformation = $this->addPluginInformation(
@@ -73,6 +76,34 @@ class Plugins implements LoaderInterface
     }
 
     /**
+     * Run the loading process for the ext_tables.php file.
+     *
+     * @param Loader $loader
+     * @param array  $loaderInformation
+     */
+    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    {
+        foreach (\array_keys($loaderInformation) as $key) {
+            $label = TranslateUtility::getLllOrHelpMessage('plugin.' . $key, $loader->getExtensionKey());
+            ExtensionUtility::registerPlugin($loader->getExtensionKey(), $key, $label);
+        }
+    }
+
+    /**
+     * Run the loading process for the ext_localconf.php file.
+     *
+     * @param Loader $loader
+     * @param array  $loaderInformation
+     */
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    {
+        $prefix = $loader->getVendorName() . '.' . $loader->getExtensionKey();
+        foreach ($loaderInformation as $key => $information) {
+            ExtensionUtility::configurePlugin($prefix, $key, $information['cache'], $information['noCache']);
+        }
+    }
+
+    /**
      * Add the given plugin information to the plugin information array.
      *
      * @param array  $pluginInformation
@@ -85,8 +116,8 @@ class Plugins implements LoaderInterface
      */
     protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
     {
-        $first = false !== strpos($pluginKey, '!');
-        $pluginKey = trim($pluginKey, '!');
+        $first = false !== \mb_strpos($pluginKey, '!');
+        $pluginKey = \trim($pluginKey, '!');
 
         if (!isset($pluginInformation[$pluginKey])) {
             $pluginInformation[$pluginKey] = [
@@ -106,47 +137,19 @@ class Plugins implements LoaderInterface
             }
             $actions = GeneralUtility::trimExplode(',', $pluginInformation[$pluginKey][$part][$controllerKey], true);
             if ($first) {
-                array_unshift($actions, $actionName);
+                \array_unshift($actions, $actionName);
                 $targetController = [
                     $controllerKey => $pluginInformation[$pluginKey][$part][$controllerKey],
                 ];
                 unset($pluginInformation[$pluginKey][$part][$controllerKey]);
-                $pluginInformation[$pluginKey][$part] = array_merge($targetController, $pluginInformation[$pluginKey][$part]);
+                $pluginInformation[$pluginKey][$part] = \array_merge($targetController, $pluginInformation[$pluginKey][$part]);
             } else {
                 $actions[] = $actionName;
             }
 
-            $pluginInformation[$pluginKey][$part][$controllerKey] = implode(',', $actions);
+            $pluginInformation[$pluginKey][$part][$controllerKey] = \implode(',', $actions);
         }
 
         return $pluginInformation;
-    }
-
-    /**
-     * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
-     */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
-    {
-        foreach (array_keys($loaderInformation) as $key) {
-            $label = TranslateUtility::getLllOrHelpMessage('plugin.' . $key, $loader->getExtensionKey());
-            ExtensionUtility::registerPlugin($loader->getExtensionKey(), $key, $label);
-        }
-    }
-
-    /**
-     * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
-     */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
-    {
-        $prefix = $loader->getVendorName() . '.' . $loader->getExtensionKey();
-        foreach ($loaderInformation as $key => $information) {
-            ExtensionUtility::configurePlugin($prefix, $key, $information['cache'], $information['noCache']);
-        }
     }
 }

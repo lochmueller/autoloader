@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Utility functions for the Autoloader.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -24,10 +27,10 @@ class ExtendedUtility
      */
     public static function create($className)
     {
-        $arguments = func_get_args();
+        $arguments = \func_get_args();
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        return call_user_func_array([
+        return \call_user_func_array([
             $objManager,
             'get',
         ], $arguments);
@@ -42,7 +45,7 @@ class ExtendedUtility
      */
     public static function getQuery($objectName)
     {
-        $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
+        $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
         /** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {
@@ -83,7 +86,7 @@ class ExtendedUtility
      */
     public static function log($message)
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
+        if (!\is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = $message;
@@ -110,9 +113,9 @@ class ExtendedUtility
      */
     public static function addHook($location, $configuration)
     {
-        $location = explode('|', $location);
-        array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
-        ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
+        $location = \explode('|', $location);
+        \array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
+        ArrayUtility::setNodes([\implode('|', $location) => $configuration], $GLOBALS);
     }
 
     /**

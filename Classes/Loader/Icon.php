@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Icon loader.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -31,48 +34,11 @@ class Icon implements LoaderInterface
     public function prepareLoader(Loader $loader, $type)
     {
         $icons = [];
-        if (!class_exists(IconRegistry::class)) {
+        if (!\class_exists(IconRegistry::class)) {
             return $icons;
         }
 
-        return array_merge($this->getIconsByPath($loader, 'Resources/Public/Icon/'), $this->getIconsByPath($loader, 'Resources/Public/Icons/'));
-    }
-
-    /**
-     * Get the icons.
-     *
-     * @param Loader $loader
-     * @param string $relPath
-     *
-     * @return array
-     */
-    protected function getIconsByPath(Loader $loader, $relPath)
-    {
-        $icons = [];
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $relPath;
-        $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
-        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 99);
-        if (!count($files)) {
-            return $icons;
-        }
-
-        foreach ($files as $path) {
-            $provider = BitmapIconProvider::class;
-            if ('svg' === substr(strtolower($path), -3)) {
-                $provider = SvgIconProvider::class;
-            }
-            $relativePath = str_replace($extensionPath, '', $path);
-            $iconPath = str_replace($relPath, '', $relativePath);
-
-            $pathElements = PathUtility::pathinfo(strtolower(str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
-            $icons[] = [
-                'provider' => $provider,
-                'path' => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
-                'identifier' => str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
-            ];
-        }
-
-        return $icons;
+        return \array_merge($this->getIconsByPath($loader, 'Resources/Public/Icon/'), $this->getIconsByPath($loader, 'Resources/Public/Icons/'));
     }
 
     /**
@@ -83,7 +49,6 @@ class Icon implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -106,7 +71,42 @@ class Icon implements LoaderInterface
         foreach ($loaderInformation as $config) {
             $iconRegistry->registerIcon($config['identifier'], $config['provider'], ['source' => $config['path']]);
         }
+    }
 
-        return null;
+    /**
+     * Get the icons.
+     *
+     * @param Loader $loader
+     * @param string $relPath
+     *
+     * @return array
+     */
+    protected function getIconsByPath(Loader $loader, $relPath)
+    {
+        $icons = [];
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $relPath;
+        $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
+        $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 99);
+        if (!\count($files)) {
+            return $icons;
+        }
+
+        foreach ($files as $path) {
+            $provider = BitmapIconProvider::class;
+            if ('svg' === \mb_substr(\mb_strtolower($path), -3)) {
+                $provider = SvgIconProvider::class;
+            }
+            $relativePath = \str_replace($extensionPath, '', $path);
+            $iconPath = \str_replace($relPath, '', $relativePath);
+
+            $pathElements = PathUtility::pathinfo(\mb_strtolower(\str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
+            $icons[] = [
+                'provider' => $provider,
+                'path' => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
+                'identifier' => \str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
+            ];
+        }
+
+        return $icons;
     }
 }

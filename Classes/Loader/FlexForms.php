@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading FlexForms.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -34,7 +37,7 @@ class FlexForms implements LoaderInterface
         $extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath, 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $pluginSignature = strtolower($extensionName . '_' . $fileKey);
+            $pluginSignature = \mb_strtolower($extensionName . '_' . $fileKey);
             $flexForms[] = [
                 'pluginSignature' => $pluginSignature,
                 'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
@@ -44,7 +47,7 @@ class FlexForms implements LoaderInterface
         // Content
         $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath . 'Content/', 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $contentSignature = strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
+            $contentSignature = \mb_strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
             $flexForms[] = [
                 'contentSignature' => $contentSignature,
                 'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
@@ -69,14 +72,12 @@ class FlexForms implements LoaderInterface
                 ExtensionManagementUtility::addPiFlexFormValue($info['pluginSignature'], $info['path']);
             } elseif (isset($info['contentSignature'])) {
                 $fields = GeneralUtility::trimExplode(',', $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem']);
-                if (!in_array('pi_flexform', $fields)) {
+                if (!\in_array('pi_flexform', $fields, true)) {
                     $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'] .= ',pi_flexform';
                 }
                 ExtensionManagementUtility::addPiFlexFormValue('*', $info['path'], $info['contentSignature']);
             }
         }
-
-        return null;
     }
 
     /**

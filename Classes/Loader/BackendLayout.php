@@ -1,7 +1,10 @@
 <?php
+
 /**
  * BackendLayout.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Hooks\BackendLayoutProvider;

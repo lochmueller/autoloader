@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Utility to interact with the Model.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
@@ -52,20 +55,20 @@ class ModelUtility
      */
     public static function getTableNameByModelName($className)
     {
-        $className = ltrim($className, '\\');
-        if (false !== strpos($className, '\\')) {
-            $classNameParts = explode('\\', $className);
+        $className = \ltrim($className, '\\');
+        if (false !== \mb_strpos($className, '\\')) {
+            $classNameParts = \explode('\\', $className);
             // Skip vendor and product name for core classes
-            if (0 === strpos($className, 'TYPO3\\CMS\\')) {
+            if (0 === \mb_strpos($className, 'TYPO3\\CMS\\')) {
                 $classPartsToSkip = 2;
             } else {
                 $classPartsToSkip = 1;
             }
-            $classNameParts = array_slice($classNameParts, $classPartsToSkip);
-            $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
-            $tableName = 'tx_' . str_replace('\\', '_', strtolower(implode('_', $classNameParts)));
+            $classNameParts = \array_slice($classNameParts, $classPartsToSkip);
+            $classNameParts = \explode('\\', \implode('\\', $classNameParts), 4);
+            $tableName = 'tx_' . \str_replace('\\', '_', \mb_strtolower(\implode('_', $classNameParts)));
         } else {
-            $tableName = strtolower($className);
+            $tableName = \mb_strtolower($className);
         }
 
         return $tableName;
@@ -151,23 +154,25 @@ class ModelUtility
             GeneralUtility::makeInstance(Session::class)->destroy();
             $settings->setIgnoreEnableFields(true);
 
-            if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
-                GeneralUtility::_GETset((int)$data['sys_language_uid'], 'L');
+            if (isset($data['sys_language_uid']) && (int) $data['sys_language_uid'] > 0) {
+                GeneralUtility::_GETset((int) $data['sys_language_uid'], 'L');
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
                     $settings->setLanguageMode(null);
                     $settings->setRespectSysLanguage(true);
-                    $settings->setLanguageUid((int)$data['sys_language_uid']);
+                    $settings->setLanguageUid((int) $data['sys_language_uid']);
                 }
                 $object = $query->execute()->getFirst();
 
                 GeneralUtility::_GETset(0, 'L');
+
                 return $object;
             }
         }
 
         $query->matching($query->equals('uid', $data['uid']));
+
         return $query->execute()
             ->getFirst();
     }

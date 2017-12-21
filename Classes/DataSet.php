@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Central DataSet object.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ArrayUtility;
@@ -34,7 +37,7 @@ class DataSet implements SingletonInterface
     {
         $return = $this->implementations;
         foreach ($return as $key => $value) {
-            if (in_array($value, $list)) {
+            if (\in_array($value, $list, true)) {
                 unset($return[$key]);
             }
         }
@@ -51,7 +54,7 @@ class DataSet implements SingletonInterface
      */
     public function getNoneAndIncludeList(array $list)
     {
-        return array_diff($this->implementations, $this->getAllAndExcludeList($list));
+        return \array_diff($this->implementations, $this->getAllAndExcludeList($list));
     }
 
     /**
@@ -89,7 +92,7 @@ class DataSet implements SingletonInterface
         $return = [];
         foreach ($dataSetObjects as $object) {
             /** @var $object DataSetInterface */
-            $return = array_merge($return, $object->getDatabaseSql($table));
+            $return = \array_merge($return, $object->getDatabaseSql($table));
         }
 
         return $return;
@@ -109,7 +112,7 @@ class DataSet implements SingletonInterface
         $return = [];
         foreach ($dataSetObjects as $object) {
             /** @var $object DataSetInterface */
-            $return = array_merge($return, $object->getDatabaseSqlKey());
+            $return = \array_merge($return, $object->getDatabaseSqlKey());
         }
 
         return $return;

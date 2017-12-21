@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map FileReferenceObjectStorage.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -21,9 +24,9 @@ class FileReferenceObjectStorageMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower(trim($type, '\\')), [
+        return \in_array(\mb_strtolower(\trim($type, '\\')), [
             'typo3\\cms\\extbase\\persistence\\objectstorage<\\typo3\\cms\\extbase\\domain\\model\\filereference>',
-        ]);
+        ], true);
     }
 
     /**

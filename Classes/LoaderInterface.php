@@ -1,7 +1,10 @@
 <?php
+
 /**
  * General loading interface.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 /**

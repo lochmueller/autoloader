@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Tca UserFunctions.
  */
+
 namespace HDNET\Autoloader\UserFunctions;
 
 /**

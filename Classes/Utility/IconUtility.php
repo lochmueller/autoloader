@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Icon helper.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
@@ -26,8 +29,8 @@ class IconUtility
      */
     public static function addTcaTypeIcon($table, $type, $icon)
     {
-        $fullIconPath = substr(PathUtility::getAbsoluteWebPath($icon), 1);
-        if (StringUtility::endsWith(strtolower($fullIconPath), 'svg')) {
+        $fullIconPath = \mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
+        if (StringUtility::endsWith(\mb_strtolower($fullIconPath), 'svg')) {
             $iconProviderClass = SvgIconProvider::class;
         } else {
             $iconProviderClass = BitmapIconProvider::class;
@@ -71,7 +74,7 @@ class IconUtility
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
         $extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-        $modelName = str_replace('\\', '/', $modelInformation['modelName']);
+        $modelName = \str_replace('\\', '/', $modelInformation['modelName']);
 
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
@@ -104,7 +107,7 @@ class IconUtility
             'jpg',
         ];
         foreach ($fileExtensions as $fileExtension) {
-            if (is_file($absolutePathWithoutExtension . $fileExtension)) {
+            if (\is_file($absolutePathWithoutExtension . $fileExtension)) {
                 return $fileExtension;
             }
         }

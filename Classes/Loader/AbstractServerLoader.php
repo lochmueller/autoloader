@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading AbstractServerLoader.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -30,8 +33,6 @@ abstract class AbstractServerLoader implements LoaderInterface
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER'][$this->serverName][$key] = $class;
         }
-
-        return null;
     }
 
     /**
@@ -45,7 +46,5 @@ abstract class AbstractServerLoader implements LoaderInterface
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER'][$this->serverName][$key] = $class;
         }
-
-        return null;
     }
 }

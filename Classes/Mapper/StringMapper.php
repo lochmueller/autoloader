@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map String.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -20,9 +23,9 @@ class StringMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), [
+        return \in_array(\mb_strtolower($type), [
             'string',
-        ]);
+        ], true);
     }
 
     /**

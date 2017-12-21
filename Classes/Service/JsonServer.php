@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
 /**
  * Json server handling.
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Exception;
@@ -63,12 +65,12 @@ class JsonServer
      */
     public function handle($request)
     {
-        if (!class_exists(Server::class)) {
+        if (!\class_exists(Server::class)) {
             throw new Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
         }
 
-        header('Content-Type: application/json');
-        if (!class_exists($this->serverClass)) {
+        \header('Content-Type: application/json');
+        if (!\class_exists($this->serverClass)) {
             $server = new Server();
             echo $server->fault(
                 'No valid server class name for the given server key: "' . $this->serverKey . '"',
@@ -127,7 +129,7 @@ class JsonServer
     protected function getServiceUri()
     {
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
-        $parts = parse_url($uri);
+        $parts = \parse_url($uri);
         $parts['query'] = 'eID=JsonServer&server=' . $this->serverKey;
 
         return HttpUtility::buildUrl($parts);

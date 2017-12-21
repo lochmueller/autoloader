@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Abstraction of the Writer.
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -30,11 +33,31 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     public function createFileIfNotExists($extensionKey)
     {
         $fileName = $this->getAbsoluteFilename($extensionKey);
-        if (is_file($fileName)) {
+        if (\is_file($fileName)) {
             return true;
         }
 
         return FileUtility::writeFileAndCreateFolder($fileName, $this->getBaseFileContent($extensionKey));
+    }
+
+    /**
+     * Get language base name.
+     *
+     * @return string
+     */
+    public function getLanguageBaseName()
+    {
+        return $this->languageBaseName;
+    }
+
+    /**
+     * Set language base name.
+     *
+     * @param string $languageBaseName
+     */
+    public function setLanguageBaseName($languageBaseName)
+    {
+        $this->languageBaseName = $languageBaseName;
     }
 
     /**
@@ -61,26 +84,6 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     }
 
     /**
-     * Get language base name.
-     *
-     * @return string
-     */
-    public function getLanguageBaseName()
-    {
-        return $this->languageBaseName;
-    }
-
-    /**
-     * Set language base name.
-     *
-     * @param string $languageBaseName
-     */
-    public function setLanguageBaseName($languageBaseName)
-    {
-        $this->languageBaseName = $languageBaseName;
-    }
-
-    /**
      * Wrap CDATA.
      *
      * @param string $content
@@ -89,7 +92,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
      */
     protected function wrapCdata($content)
     {
-        if (htmlentities($content, ENT_NOQUOTES) !== $content) {
+        if (\htmlentities($content, ENT_NOQUOTES) !== $content) {
             $content = '<![CDATA[' . $content . ']]>';
         }
 

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading JsonServer.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -44,9 +47,9 @@ class JsonServer extends AbstractServerLoader
                 'Service/Json/' . $service
             );
 
-            $legacyServiceName = lcfirst($service);
-            if (array_key_exists($legacyServiceName, $info)) {
-                trigger_error('Service "' . $service . '" already defined in: ' . $info[$legacyServiceName] . '!"', E_USER_NOTICE);
+            $legacyServiceName = \lcfirst($service);
+            if (\array_key_exists($legacyServiceName, $info)) {
+                \trigger_error('Service "' . $service . '" already defined in: ' . $info[$legacyServiceName] . '!"', E_USER_NOTICE);
             }
             $info[$legacyServiceName] = $serviceClass;
 

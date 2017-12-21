@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Hooks.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -48,7 +51,7 @@ class Hooks implements LoaderInterface
 
             // add class hook
             $tagConfiguration = ReflectionUtility::getTagConfiguration($classReflection, ['hook']);
-            if (count($tagConfiguration['hook'])) {
+            if (\count($tagConfiguration['hook'])) {
                 $hooks[] = [
                     'locations' => $tagConfiguration['hook'],
                     'configuration' => $hookClass,
@@ -59,9 +62,9 @@ class Hooks implements LoaderInterface
             foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
                 $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
-                if (count($tagConfiguration['hook']) > 0) {
-                    $hookLocations = array_map(function ($hook) {
-                        return trim($hook, " \t\n\r\0\x0B|");
+                if (\count($tagConfiguration['hook']) > 0) {
+                    $hookLocations = \array_map(function ($hook) {
+                        return \trim($hook, " \t\n\r\0\x0B|");
                     }, $tagConfiguration['hook']);
 
                     $hooks[] = [
@@ -83,7 +86,6 @@ class Hooks implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -99,7 +101,5 @@ class Hooks implements LoaderInterface
         foreach ($loaderInformation as $hook) {
             ExtendedUtility::addHooks($hook['locations'], $hook['configuration']);
         }
-
-        return null;
     }
 }

@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * JsonServer.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\JsonServer as JsonServerService;
@@ -25,12 +28,12 @@ class JsonServer
      */
     public static function getNamespaceAndMethod($namespace, $method)
     {
-        if (false !== strpos($method, '.')) {
-            $namespace = substr($method, 0, strrpos($method, '.'));
-            $method = substr($method, strrpos($method, '.') + 1);
+        if (false !== \mb_strpos($method, '.')) {
+            $namespace = \mb_substr($method, 0, \mb_strrpos($method, '.'));
+            $method = \mb_substr($method, \mb_strrpos($method, '.') + 1);
         }
 
-        $namespace = str_replace('.', '/', $namespace);
+        $namespace = \str_replace('.', '/', $namespace);
 
         return [
             $namespace,
@@ -46,7 +49,7 @@ class JsonServer
      */
     public static function handleRequest($namespace, $singleJsonRequest)
     {
-        if (!class_exists(Request::class)) {
+        if (!\class_exists(Request::class)) {
             throw new \Exception('If you want to use the JSON server, please add \'"zendframework/zend-http": "2.*", "zendframework/zend-server": "2.*", "zendframework/zend-json": "2.*"\' to your root composer.json file.');
         }
         $methodRaw = $singleJsonRequest['method'];

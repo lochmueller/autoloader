@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading CommandController.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -58,7 +61,6 @@ class CommandController implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -72,7 +74,5 @@ class CommandController implements LoaderInterface
         foreach ($loaderInformation as $className) {
             $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = $className;
         }
-
-        return null;
     }
 }

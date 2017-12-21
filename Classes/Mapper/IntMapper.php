@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map int.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -20,10 +23,10 @@ class IntMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), [
+        return \in_array(\mb_strtolower($type), [
             'int',
             'integer',
-        ]);
+        ], true);
     }
 
     /**

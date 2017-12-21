@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Advanced relation model.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Domain\Model;
 
 /**

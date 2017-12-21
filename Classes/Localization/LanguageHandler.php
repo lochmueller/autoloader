@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Handling of the language files.
  */
+
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
@@ -52,7 +55,7 @@ class LanguageHandler extends LanguageStore
         $handler->createFileIfNotExists($extensionName);
 
         $labelCacheKey = $extensionName . '|' . $key;
-        if (!in_array($labelCacheKey, self::$createdLabelCache)) {
+        if (!\in_array($labelCacheKey, self::$createdLabelCache, true)) {
             $handler->addLabel($extensionName, $key, $default);
             self::$createdLabelCache[] = $labelCacheKey;
         }
@@ -82,7 +85,7 @@ class LanguageHandler extends LanguageStore
             if (null !== $overrideLanguageBase) {
                 $service->setLanguageBaseName($overrideLanguageBase);
             }
-            if (is_file($service->getAbsoluteFilename($extensionKey))) {
+            if (\is_file($service->getAbsoluteFilename($extensionKey))) {
                 return $service;
             }
             $services[] = $service;

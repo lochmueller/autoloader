@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Edit link for the backend.
  */
+
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;

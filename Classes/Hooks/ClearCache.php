@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Clear Cache hook for the Backend.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
@@ -45,25 +48,6 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
-     * Get Ajax URI.
-     *
-     * @return string
-     */
-    protected function getAjaxUri(): string
-    {
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        try {
-            $routeIdentifier = 'ajax_autoloader::clearCache';
-            $uri = $uriBuilder->buildUriFromRoute($routeIdentifier);
-        } catch (RouteNotFoundException $e) {
-            return '';
-        }
-
-        return (string) $uri;
-    }
-
-    /**
      * clear Cache ajax handler.
      *
      * @param array              $ajaxParams
@@ -87,13 +71,32 @@ class ClearCache implements ClearCacheActionsHookInterface
     }
 
     /**
+     * Get Ajax URI.
+     *
+     * @return string
+     */
+    protected function getAjaxUri(): string
+    {
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        try {
+            $routeIdentifier = 'ajax_autoloader::clearCache';
+            $uri = $uriBuilder->buildUriFromRoute($routeIdentifier);
+        } catch (RouteNotFoundException $e) {
+            return '';
+        }
+
+        return (string) $uri;
+    }
+
+    /**
      * Return if the clear cache element is als visible in production.
      *
      * @return bool
      */
     protected function isAlwaysActivated()
     {
-        $configuration = unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
         return isset($configuration['enableAutoloaderClearCacheInProduction']) ? (bool) $configuration['enableAutoloaderClearCacheInProduction'] : false;
     }
@@ -116,7 +119,7 @@ class ClearCache implements ClearCacheActionsHookInterface
      */
     protected function isAdmin()
     {
-        return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
+        return \is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
                 ->isAdmin();
     }
 

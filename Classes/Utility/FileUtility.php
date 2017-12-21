@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * FileUtility.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -26,10 +29,10 @@ class FileUtility
     public static function writeFileAndCreateFolder($absoluteFileName, $content)
     {
         $dir = PathUtility::dirname($absoluteFileName) . '/';
-        if (!is_dir($dir)) {
+        if (!\is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
         }
-        if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
+        if (\is_file($absoluteFileName) && !\is_writable($absoluteFileName)) {
             throw new Exception(
                 'The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
                 234627835
@@ -68,28 +71,6 @@ class FileUtility
     }
 
     /**
-     * Get file information in the given folder.
-     *
-     * @param string $dirPath
-     * @param string $fileExtension
-     * @param int    $informationType
-     *
-     * @return array
-     */
-    protected static function getFileInformationInDir($dirPath, $fileExtension, $informationType)
-    {
-        if (!is_dir($dirPath)) {
-            return [];
-        }
-        $files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
-        foreach ($files as $key => $file) {
-            $files[$key] = PathUtility::pathinfo($file, $informationType);
-        }
-
-        return array_values($files);
-    }
-
-    /**
      * Get all base file names in the given directory with the given file extension
      * Check also if the directory exists. If you scan the dir recursively you get
      * also the folder name. The filename is also "basename" only.
@@ -102,7 +83,7 @@ class FileUtility
      */
     public static function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
     {
-        if (!is_dir($dirPath)) {
+        if (!\is_dir($dirPath)) {
             return [];
         }
         $recursively = $recursively ? 99 : 0;
@@ -113,6 +94,28 @@ class FileUtility
         }
         $files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
 
-        return array_values($files);
+        return \array_values($files);
+    }
+
+    /**
+     * Get file information in the given folder.
+     *
+     * @param string $dirPath
+     * @param string $fileExtension
+     * @param int    $informationType
+     *
+     * @return array
+     */
+    protected static function getFileInformationInDir($dirPath, $fileExtension, $informationType)
+    {
+        if (!\is_dir($dirPath)) {
+            return [];
+        }
+        $files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
+        foreach ($files as $key => $file) {
+            $files[$key] = PathUtility::pathinfo($file, $informationType);
+        }
+
+        return \array_values($files);
     }
 }

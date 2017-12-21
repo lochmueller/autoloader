@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Central Loader object.
  */
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -152,8 +155,8 @@ class Loader implements SingletonInterface
         $information = $this->prepareAutoLoaderObjects($autoLoaderObjects, LoaderInterface::EXT_TABLES);
         foreach ($autoLoaderObjects as $object) {
             /** @var LoaderInterface $object */
-            $informationArray = $information[get_class($object)];
-            if (is_array($informationArray)) {
+            $informationArray = $information[\get_class($object)];
+            if (\is_array($informationArray)) {
                 $object->loadExtensionTables($this, $informationArray);
             }
         }
@@ -178,116 +181,11 @@ class Loader implements SingletonInterface
         $information = $this->prepareAutoLoaderObjects($autoLoaderObjects, LoaderInterface::EXT_LOCAL_CONFIGURATION);
         foreach ($autoLoaderObjects as $object) {
             /** @var LoaderInterface $object */
-            $informationArray = $information[get_class($object)];
-            if (is_array($informationArray)) {
+            $informationArray = $information[\get_class($object)];
+            if (\is_array($informationArray)) {
                 $object->loadExtensionConfiguration($this, $informationArray);
             }
         }
-    }
-
-    /**
-     * Build the Autoloader objects.
-     *
-     * @param array $objectNames
-     *
-     * @return array
-     */
-    protected function buildAutoLoaderObjects(array $objectNames = [])
-    {
-        static $objectCache = [];
-        $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
-        $objects = [];
-        foreach ($objectNames as $autoLoaderObjectName) {
-            if (!isset($objectCache[$autoLoaderObjectName])) {
-                if (class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
-                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
-                } else {
-                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
-                }
-            }
-            $objects[] = $objectCache[$autoLoaderObjectName];
-        }
-
-        return $objects;
-    }
-
-    /**
-     * Get the Autoloader Names in the right order.
-     *
-     * @param array $objectNames
-     *
-     * @return array
-     */
-    protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
-    {
-        if (empty($objectNames)) {
-            return $this->implementations;
-        }
-
-        // sort
-        $names = [];
-        foreach ($this->implementations as $className) {
-            if (in_array($className, $objectNames)) {
-                $names[] = $className;
-                unset($objectNames[array_search($className, $objectNames)]);
-            }
-        }
-
-        return array_merge($names, $objectNames);
-    }
-
-    /**
-     * Prepare the autoLoader information.
-     *
-     * @param array $objects
-     * @param int   $type
-     *
-     * @return array
-     */
-    protected function prepareAutoLoaderObjects(array $objects, $type)
-    {
-        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(serialize($objects)) . '_' . $type;
-
-        /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-        $cache = $this->getCacheManager()
-            ->getCache('autoloader');
-        if ($cache->has($cacheIdentifier)) {
-            return $cache->requireOnce($cacheIdentifier);
-        }
-
-        $return = $this->buildLoaderInformation($objects, $type);
-        $cache->set($cacheIdentifier, 'return ' . var_export($return, true) . ';');
-
-        return $return;
-    }
-
-    /**
-     * Build the loader information.
-     *
-     * @param $objects
-     * @param $type
-     *
-     * @return array
-     */
-    protected function buildLoaderInformation($objects, $type)
-    {
-        $return = [];
-        foreach ($objects as $object) {
-            /* @var LoaderInterface $object */
-            $return[get_class($object)] = $object->prepareLoader($this, $type);
-        }
-
-        return $return;
-    }
-
-    /**
-     * Get the cache manager.
-     *
-     * @return \TYPO3\CMS\Core\Cache\CacheManager
-     */
-    protected function getCacheManager()
-    {
-        return GeneralUtility::makeInstance(CacheManager::class);
     }
 
     /**
@@ -321,5 +219,110 @@ class Loader implements SingletonInterface
     public function isInstantiableClass($class)
     {
         return ReflectionUtility::isInstantiable($class);
+    }
+
+    /**
+     * Build the Autoloader objects.
+     *
+     * @param array $objectNames
+     *
+     * @return array
+     */
+    protected function buildAutoLoaderObjects(array $objectNames = [])
+    {
+        static $objectCache = [];
+        $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
+        $objects = [];
+        foreach ($objectNames as $autoLoaderObjectName) {
+            if (!isset($objectCache[$autoLoaderObjectName])) {
+                if (\class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+                } else {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
+                }
+            }
+            $objects[] = $objectCache[$autoLoaderObjectName];
+        }
+
+        return $objects;
+    }
+
+    /**
+     * Get the Autoloader Names in the right order.
+     *
+     * @param array $objectNames
+     *
+     * @return array
+     */
+    protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
+    {
+        if (empty($objectNames)) {
+            return $this->implementations;
+        }
+
+        // sort
+        $names = [];
+        foreach ($this->implementations as $className) {
+            if (\in_array($className, $objectNames, true)) {
+                $names[] = $className;
+                unset($objectNames[\array_search($className, $objectNames, true)]);
+            }
+        }
+
+        return \array_merge($names, $objectNames);
+    }
+
+    /**
+     * Prepare the autoLoader information.
+     *
+     * @param array $objects
+     * @param int   $type
+     *
+     * @return array
+     */
+    protected function prepareAutoLoaderObjects(array $objects, $type)
+    {
+        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(\serialize($objects)) . '_' . $type;
+
+        /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
+        $cache = $this->getCacheManager()
+            ->getCache('autoloader');
+        if ($cache->has($cacheIdentifier)) {
+            return $cache->requireOnce($cacheIdentifier);
+        }
+
+        $return = $this->buildLoaderInformation($objects, $type);
+        $cache->set($cacheIdentifier, 'return ' . \var_export($return, true) . ';');
+
+        return $return;
+    }
+
+    /**
+     * Build the loader information.
+     *
+     * @param $objects
+     * @param $type
+     *
+     * @return array
+     */
+    protected function buildLoaderInformation($objects, $type)
+    {
+        $return = [];
+        foreach ($objects as $object) {
+            /* @var LoaderInterface $object */
+            $return[\get_class($object)] = $object->prepareLoader($this, $type);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get the cache manager.
+     *
+     * @return \TYPO3\CMS\Core\Cache\CacheManager
+     */
+    protected function getCacheManager()
+    {
+        return GeneralUtility::makeInstance(CacheManager::class);
     }
 }

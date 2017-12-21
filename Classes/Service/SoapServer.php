@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Soap server handling.
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Exception;
@@ -55,8 +58,8 @@ class SoapServer
      */
     public function handle()
     {
-        header('Content-Type: text/xml');
-        if (!class_exists($this->serverClass)) {
+        \header('Content-Type: text/xml');
+        if (!\class_exists($this->serverClass)) {
             $server = new \SoapServer(null, [
                 'uri' => $this->getServiceUri(),
             ]);
@@ -97,12 +100,12 @@ class SoapServer
      */
     protected function renderWsdl()
     {
-        if (!class_exists(WSDLCreator::class)) {
+        if (!\class_exists(WSDLCreator::class)) {
             throw new Exception('If you want to use the SOAP server, please add \'"piotrooo/wsdl-creator": "1.4.2"\' to your root composer.json file.');
         }
 
-        $uriParts = parse_url($this->getServiceUri());
-        if (!is_array($uriParts)) {
+        $uriParts = \parse_url($this->getServiceUri());
+        if (!\is_array($uriParts)) {
             return;
         }
         unset($uriParts['query']);
@@ -119,7 +122,7 @@ class SoapServer
     protected function getServiceUri()
     {
         $uri = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
-        $parts = (array) parse_url($uri);
+        $parts = (array) \parse_url($uri);
         $parts['query'] = 'eID=SoapServer&amp;server=' . $this->serverKey;
 
         return HttpUtility::buildUrl($parts);

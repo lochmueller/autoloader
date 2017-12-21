@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Arrays utility.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 /**
@@ -21,14 +24,14 @@ class ArrayUtility
     {
         $separator = '|';
         foreach ($data as $name => $value) {
-            if (false === strpos($name, $separator)) {
+            if (false === \mb_strpos($name, $separator)) {
                 $array[$name] = $value;
             } else {
-                $keys = explode($separator, $name);
+                $keys = \explode($separator, $name);
                 $optTree = &$array;
-                while (($key = array_shift($keys))) {
+                while (($key = \array_shift($keys))) {
                     if ($keys) {
-                        if (!isset($optTree[$key]) || !is_array($optTree[$key])) {
+                        if (!isset($optTree[$key]) || !\is_array($optTree[$key])) {
                             $optTree[$key] = [];
                         }
                         $optTree = &$optTree[$key];
@@ -53,7 +56,7 @@ class ArrayUtility
         $merged = $array1;
 
         foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+            if (\is_array($value) && isset($merged[$key]) && \is_array($merged[$key])) {
                 $merged[$key] = self::mergeRecursiveDistinct($merged[$key], $value);
             } else {
                 $merged[$key] = $value;

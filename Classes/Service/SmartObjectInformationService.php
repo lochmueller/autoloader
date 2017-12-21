@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * SmartObjectInformationService.php.
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\DataSet;
@@ -70,7 +73,7 @@ class SmartObjectInformationService
         foreach ($customFieldInfo as $info) {
             $key = $tableName . '.' . $info['name'];
 
-            if($this->useTableNameFileBase()) {
+            if ($this->useTableNameFileBase()) {
                 // Without prefix !
                 $key = $info['name'];
             }
@@ -84,7 +87,7 @@ class SmartObjectInformationService
 
             /** @var Mapper $mapper */
             $mapper = ExtendedUtility::create(Mapper::class);
-            $field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name'], $label);
+            $field = $mapper->getTcaConfiguration(\trim($info['var'], '\\'), $info['name'], $label);
 
             // RTE
             if ($info['rte']) {
@@ -99,17 +102,6 @@ class SmartObjectInformationService
         }
 
         return $customFields;
-    }
-
-    /**
-     * Check if table name file base is used
-     *
-     * @return bool
-     */
-    protected function useTableNameFileBase()
-    {
-        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
@@ -133,7 +125,7 @@ class SmartObjectInformationService
             $customConfiguration = [
                 'columns' => $customFields,
             ];
-            $base = is_array($GLOBALS['TCA'][$reflectionTableName]) ? $GLOBALS['TCA'][$reflectionTableName] : [];
+            $base = \is_array($GLOBALS['TCA'][$reflectionTableName]) ? $GLOBALS['TCA'][$reflectionTableName] : [];
 
             return ArrayUtility::mergeRecursiveDistinct($base, $customConfiguration);
         }
@@ -145,9 +137,9 @@ class SmartObjectInformationService
         $baseTca = $dataSet->getTcaInformation($dataImplementations, $tableName);
 
         // title
-        $fields = array_keys($customFields);
+        $fields = \array_keys($customFields);
         $labelField = 'title';
-        if (!in_array($labelField, $fields)) {
+        if (!\in_array($labelField, $fields, true)) {
             $labelField = $fields[0];
         }
         try {
@@ -155,23 +147,23 @@ class SmartObjectInformationService
         } catch (\Exception $ex) {
             // Do not handle the error of the assureLabel method
         }
-        if (!is_array($baseTca['columns'])) {
+        if (!\is_array($baseTca['columns'])) {
             $baseTca['columns'] = [];
         }
         $baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
 
         // items
         $showitem = $fields;
-        if (!in_array('language', $excludes)) {
+        if (!\in_array('language', $excludes, true)) {
             $showitem[] = '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language';
         }
 
-        if (!in_array('workspaces', $excludes)) {
+        if (!\in_array('workspaces', $excludes, true)) {
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
 
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
-        if (!in_array('enableFields', $excludes)) {
+        if (!\in_array('enableFields', $excludes, true)) {
             $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
             $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
         }
@@ -187,14 +179,14 @@ class SmartObjectInformationService
                 'dividers2tabs' => true,
                 'sortby' => 'sorting',
                 'delete' => 'deleted',
-                'searchFields' => implode(',', $searchFields),
+                'searchFields' => \implode(',', $searchFields),
                 'iconfile' => IconUtility::getByModelName($modelClassName, true),
             ],
             'interface' => [
-                'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
+                'showRecordFieldList' => \implode(',', \array_keys($baseTca['columns'])),
             ],
             'types' => [
-                '1' => ['showitem' => implode(',', $showitem)],
+                '1' => ['showitem' => \implode(',', $showitem)],
             ],
             'palettes' => [
                 'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
@@ -202,6 +194,18 @@ class SmartObjectInformationService
         ];
 
         return ArrayUtility::mergeRecursiveDistinct($baseTca, $overrideTca);
+    }
+
+    /**
+     * Check if table name file base is used.
+     *
+     * @return bool
+     */
+    protected function useTableNameFileBase()
+    {
+        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
@@ -270,8 +274,8 @@ class SmartObjectInformationService
             $dbInformation = $property->getTagValues('db');
             $fields[] = [
                 'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                'db' => trim($dbInformation[0]),
-                'var' => trim($var),
+                'db' => \trim($dbInformation[0]),
+                'var' => \trim($var),
                 'rte' => (bool) $property->isTaggedWith('enableRichText'),
             ];
         }
@@ -293,7 +297,7 @@ class SmartObjectInformationService
             return '';
         }
 
-        return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
+        return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . \implode(',' . LF, $fields) . LF . ');' . LF;
     }
 
     /**
@@ -325,7 +329,7 @@ class SmartObjectInformationService
         $dataImplementations = $dataSet->getAllAndExcludeList($excludes);
 
         // add data set fields
-        $fields = array_merge($fields, $dataSet->getDatabaseSqlInformation($dataImplementations, $tableName));
+        $fields = \array_merge($fields, $dataSet->getDatabaseSqlInformation($dataImplementations, $tableName));
 
         // default keys
         $fields[] = 'PRIMARY KEY (uid)';
@@ -335,14 +339,14 @@ class SmartObjectInformationService
         $classReflection = ReflectionUtility::createReflectionClass($modelClassName);
         if ($classReflection->isTaggedWith('key')) {
             $additionalKeys = $classReflection->getTagValues('key');
-            array_walk($additionalKeys, function (&$item) {
+            \array_walk($additionalKeys, function (&$item) {
                 $item = 'KEY ' . $item;
             });
-            $fields = array_merge($fields, $additionalKeys);
+            $fields = \array_merge($fields, $additionalKeys);
         }
 
         // add data set keys
-        $fields = array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
+        $fields = \array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
 
         return $this->generateSqlQuery($tableName, $fields);
     }

@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Xliff writer.
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 use HDNET\Autoloader\Utility\FileUtility;
@@ -24,7 +27,7 @@ class XliffWriter extends AbstractLocalizationWriter
     {
         return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="' . date('c') . '" product-name="' . $extensionKey . '">
+	<file source-language="en" datatype="plaintext" original="messages" date="' . \date('c') . '" product-name="' . $extensionKey . '">
 		<header/>
 		<body>
 		</body>
@@ -56,23 +59,23 @@ class XliffWriter extends AbstractLocalizationWriter
     public function addLabel($extensionKey, $key, $default)
     {
         // Exclude
-        if (!strlen($default)) {
+        if (!\mb_strlen($default)) {
             return;
         }
-        if (!strlen($key)) {
+        if (!\mb_strlen($key)) {
             return;
         }
-        if (!strlen($extensionKey)) {
+        if (!\mb_strlen($extensionKey)) {
             return;
         }
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (false !== strpos($content, ' id="' . $key . '"') || '' === trim($content)) {
+        if (false !== \mb_strpos($content, ' id="' . $key . '"') || '' === \trim($content)) {
             return;
         }
         $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';
-        $content = str_replace('<body>', $replace, $content);
+        $content = \str_replace('<body>', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();
     }

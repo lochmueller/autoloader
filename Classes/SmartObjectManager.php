@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Management for Smart Objects.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
@@ -32,7 +35,7 @@ class SmartObjectManager implements SingletonInterface
             $output[] = $informationService->getDatabaseInformation($modelName);
         }
 
-        return implode(LF, $output);
+        return \implode(LF, $output);
     }
 
     /**
@@ -53,7 +56,7 @@ class SmartObjectManager implements SingletonInterface
         // ];
         // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
-        if (!class_exists($className)) {
+        if (!\class_exists($className)) {
             $return = false;
         } else {
             $classReflection = ReflectionUtility::createReflectionClass($className);
@@ -99,14 +102,14 @@ class SmartObjectManager implements SingletonInterface
                 $template = $defaultTemplate;
             }
 
-            if (!is_file($tcaFileName)) {
+            if (!\is_file($tcaFileName)) {
                 $replace = [
-                    '\\' . trim($model) . '::class',
+                    '\\' . \trim($model) . '::class',
                     $tableName,
                     $extensionKey,
                 ];
 
-                $content = str_replace($search, $replace, $template);
+                $content = \str_replace($search, $replace, $template);
                 FileUtility::writeFileAndCreateFolder($tcaFileName, $content);
             }
         }

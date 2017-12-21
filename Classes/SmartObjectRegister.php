@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Register for Smart Objects.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 /**
@@ -23,7 +26,7 @@ class SmartObjectRegister
      */
     public static function register($modelName)
     {
-        if (!in_array($modelName, self::$smartObjectRegistry)) {
+        if (!\in_array($modelName, self::$smartObjectRegistry, true)) {
             self::$smartObjectRegistry[] = $modelName;
         }
     }

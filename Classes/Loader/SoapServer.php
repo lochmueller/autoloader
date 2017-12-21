@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading SoapServer.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -43,7 +46,7 @@ class SoapServer extends AbstractServerLoader
                 $autoLoader->getExtensionKey(),
                 'Service/Soap/' . $service
             );
-            $info[lcfirst($service)] = $serviceClass;
+            $info[\lcfirst($service)] = $serviceClass;
         }
 
         return $info;

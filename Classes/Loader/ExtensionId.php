@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading eID.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -48,7 +51,6 @@ class ExtensionId implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -64,7 +66,5 @@ class ExtensionId implements LoaderInterface
         foreach ($loaderInformation as $elements) {
             $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include'][$elements['name']] = $elements['path'];
         }
-
-        return null;
     }
 }

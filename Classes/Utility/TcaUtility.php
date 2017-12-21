@@ -1,9 +1,12 @@
 <?php
+
+declare(strict_types=1);
 /**
  * TcaUtility.php.
  *
  * General file information
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Exception;
@@ -26,13 +29,13 @@ class TcaUtility
      */
     public static function insertTabDividerBefore(&$base, $columnName, $tabTitle)
     {
-        if (!is_array($base)) {
+        if (!\is_array($base)) {
             throw new Exception('A proper TCA configuration is needed!', 17823492);
         }
 
         $divider = '--div--;' . $tabTitle . ',';
         foreach ($base['types'] as $key => $layout) {
-            $tempShowitem = explode($columnName, $layout['showitem']);
+            $tempShowitem = \explode($columnName, $layout['showitem']);
             $showItem = $tempShowitem[0] . $divider . $columnName . $tempShowitem[1];
             $base['types'][$key]['showitem'] = $showItem;
         }

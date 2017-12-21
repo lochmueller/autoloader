@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading AlternativeImplementations.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -62,7 +65,6 @@ class AlternativeImplementations implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -78,7 +80,5 @@ class AlternativeImplementations implements LoaderInterface
         foreach ($loaderInformation as $classInformation) {
             $objectManager->registerImplementation($classInformation['originalName'], $classInformation['alternativeClassName']);
         }
-
-        return null;
     }
 }

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading SmartObjects.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -31,7 +34,7 @@ class SmartObjects implements LoaderInterface
     {
         $configuration = [];
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/';
-        if (!is_dir($modelPath)) {
+        if (!\is_dir($modelPath)) {
             return $configuration;
         }
 
@@ -61,8 +64,6 @@ class SmartObjects implements LoaderInterface
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
         $this->addClassesToSmartRegister($loaderInformation);
-
-        return null;
     }
 
     /**
@@ -74,8 +75,6 @@ class SmartObjects implements LoaderInterface
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
         $this->addClassesToSmartRegister($loaderInformation);
-
-        return null;
     }
 
     /**

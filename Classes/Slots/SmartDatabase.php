@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Add the smart object SQL string.
  */
+
 namespace HDNET\Autoloader\Slots;
 
 use HDNET\Autoloader\SmartObjectManager;

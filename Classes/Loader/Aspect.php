@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Aspect.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Autoload\TempClassLoader;
@@ -60,8 +63,8 @@ class Aspect implements LoaderInterface
                             continue;
                         }
 
-                        $aspectClassName = trim($aspectClass, '\\');
-                        $aspectJoinPoint = trim($tagConfiguration['aspectJoinPoint'][$key]);
+                        $aspectClassName = \trim($aspectClass, '\\');
+                        $aspectJoinPoint = \trim($tagConfiguration['aspectJoinPoint'][$key]);
 
                         // check only if class exists
                         if (!$loader->isInstantiableClass($aspectClassName)) {
@@ -78,7 +81,7 @@ class Aspect implements LoaderInterface
                             'aspectMethodName' => $methodReflection->getName(),
                             'aspectJoinPoint' => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
-                            'aspectAdvice' => trim($tagConfiguration['aspectAdvice'][$key]),
+                            'aspectAdvice' => \trim($tagConfiguration['aspectAdvice'][$key]),
                         ];
                     }
                 }
@@ -89,6 +92,30 @@ class Aspect implements LoaderInterface
         }
 
         return $aspects;
+    }
+
+    /**
+     * Run the loading process for the ext_tables.php file.
+     *
+     * @param Loader $loader
+     * @param array  $loaderInformation
+     */
+    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    {
+    }
+
+    /**
+     * Run the loading process for the ext_localconf.php file.
+     *
+     * @param Loader $loader
+     * @param array  $loaderInformation
+     */
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    {
+        if (!empty($loaderInformation)) {
+            TempClassLoader::registerAutoloader();
+            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'][] = $loaderInformation;
+        }
     }
 
     /**
@@ -121,32 +148,5 @@ class Aspect implements LoaderInterface
         }
 
         return $arguments;
-    }
-
-    /**
-     * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
-     */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
-    {
-        return null;
-    }
-
-    /**
-     * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
-     */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
-    {
-        if (!empty($loaderInformation)) {
-            TempClassLoader::registerAutoloader();
-            $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'][] = $loaderInformation;
-        }
-
-        return null;
     }
 }

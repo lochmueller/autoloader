@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Xclass.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -63,7 +66,6 @@ class Xclass implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -77,7 +79,5 @@ class Xclass implements LoaderInterface
         foreach ($loaderInformation as $xclass) {
             ExtendedUtility::addXclass($xclass['source'], $xclass['target']);
         }
-
-        return null;
     }
 }

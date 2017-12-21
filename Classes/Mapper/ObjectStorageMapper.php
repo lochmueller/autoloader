@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map general ObjectStorage.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -20,7 +23,7 @@ class ObjectStorageMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return false !== stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage');
+        return false !== \mb_stristr(\trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage');
     }
 
     /**

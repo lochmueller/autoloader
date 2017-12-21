@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Register the aspect files and create the Xclass.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -32,7 +35,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     {
         $aspectCollection = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'];
 
-        if (!is_array($aspectCollection)) {
+        if (!\is_array($aspectCollection)) {
             return;
         }
 
@@ -52,7 +55,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
             if (!$cache->has($cacheIdentifier)) {
                 $code = $this->generateXclassCode($xClassName, $xClass, self::$xclassTemplate);
                 // !! ;) !! in the xclass-template ist a <?php string for better development
-                $code = str_replace('<?php', '', $code);
+                $code = \str_replace('<?php', '', $code);
                 $cache->set($cacheIdentifier, $code);
             }
         }
@@ -82,8 +85,8 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     {
         $shortName = $this->getXclassShortname($xClassName);
 
-        $xclassTemplate = str_replace('__classname__', $shortName, $xclassTemplate);
-        $xclassTemplate = str_replace('__extendedClass__', '\\' . $xClassName, $xclassTemplate);
+        $xclassTemplate = \str_replace('__classname__', $shortName, $xclassTemplate);
+        $xclassTemplate = \str_replace('__extendedClass__', '\\' . $xClassName, $xclassTemplate);
 
         $beforeConfiguration = [];
         $replaceConfiguration = [];
@@ -112,10 +115,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
             $this->mergeConfigurationArrayForCode($replaceConfiguration),
             $this->mergeConfigurationArrayForCode($afterConfiguration),
             $this->mergeConfigurationArrayForCode($throwConfiguration),
-            implode("\n", $joinPointMethods),
+            \implode("\n", $joinPointMethods),
         ];
 
-        return str_replace($search, $replace, $xclassTemplate);
+        return \str_replace($search, $replace, $xclassTemplate);
     }
 
     /**
@@ -135,7 +138,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $code[] = 'public function ' . $joinPoint . '(';
 
         // arguments
-        if (is_array($config['arguments']) && count($config['arguments']) > 0) {
+        if (\is_array($config['arguments']) && \count($config['arguments']) > 0) {
             $args = [];
             foreach ($config['arguments'] as $arguments) {
                 $type = '';
@@ -150,18 +153,18 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
                 $argumentBlock[] = $reference . '$' . $arguments['name'];
             }
 
-            $code[] = implode(',', $args);
+            $code[] = \implode(',', $args);
         }
 
         $code[] = ') {';
 
         $code[] = '$args = array(';
-        $code[] = "\t" . implode(', ', $argumentBlock);
+        $code[] = "\t" . \implode(', ', $argumentBlock);
         $code[] = ');';
         $code[] = 'return $this->aspectLogic(\'' . $joinPoint . '\', $args);';
         $code[] = '}';
 
-        return implode("\n", $code);
+        return \implode("\n", $code);
     }
 
     /**
@@ -199,7 +202,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         }
         $code[] = '),';
 
-        return implode(LF, $code);
+        return \implode(LF, $code);
     }
 
     /**
@@ -213,10 +216,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     {
         $code = [];
         $code[] = 'array(';
-        $code[] = implode("\n", $configuration);
+        $code[] = \implode("\n", $configuration);
         $code[] = ')';
 
-        return implode(LF, $code);
+        return \implode(LF, $code);
     }
 
     /**
@@ -241,9 +244,9 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
      */
     protected function getXclassShortname($xClassName)
     {
-        $classNameArray = explode('\\', $xClassName);
+        $classNameArray = \explode('\\', $xClassName);
 
-        return array_pop($classNameArray);
+        return \array_pop($classNameArray);
     }
 
     /**
@@ -257,7 +260,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
     {
         $shortName = $this->getXclassShortname($xClassName);
 
-        return 'XCLASS_' . str_replace('\\', '', 'HDNET\\Autoloader\\Xclass\\' . $shortName);
+        return 'XCLASS_' . \str_replace('\\', '', 'HDNET\\Autoloader\\Xclass\\' . $shortName);
     }
 
     /**
@@ -272,16 +275,16 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface
         $xClasses = [];
         foreach ($aspectCollection as $aspects) {
             foreach ($aspects as $aspect) {
-                if (!array_key_exists($aspect['aspectClassName'], $xClasses)) {
+                if (!\array_key_exists($aspect['aspectClassName'], $xClasses)) {
                     $xClasses[$aspect['aspectClassName']] = [];
                 }
 
-                if (!array_key_exists($aspect['aspectJoinPoint'], $xClasses[$aspect['aspectClassName']])) {
+                if (!\array_key_exists($aspect['aspectJoinPoint'], $xClasses[$aspect['aspectClassName']])) {
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']] = [];
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]['arguments'] = $aspect['aspectJoinPointArguments'];
                 }
 
-                if (!array_key_exists(
+                if (!\array_key_exists(
                     $aspect['aspectAdvice'],
                     $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]
                 )

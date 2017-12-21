@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Simple relation model.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;

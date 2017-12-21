@@ -1,7 +1,10 @@
 <?php
+
 /**
  * ExtensionTypoScriptSetup.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -67,7 +70,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     protected function addTypoScript(array $loaderInformation)
     {
         if (!empty($loaderInformation)) {
-            ExtensionManagementUtility::addTypoScriptSetup(LF . implode(LF, $loaderInformation) . LF);
+            ExtensionManagementUtility::addTypoScriptSetup(LF . \implode(LF, $loaderInformation) . LF);
         }
     }
 

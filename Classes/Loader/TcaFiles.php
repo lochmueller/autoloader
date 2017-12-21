@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Create the TCA files.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -43,7 +46,6 @@ class TcaFiles implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 
     /**
@@ -54,6 +56,5 @@ class TcaFiles implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
-        return null;
     }
 }

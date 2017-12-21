@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading LanguageOverride.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -33,31 +36,31 @@ class LanguageOverride implements LoaderInterface
         }
 
         $languageOverridePath = ExtensionManagementUtility::extPath($autoLoader->getExtensionKey()) . 'Resources/Private/Language/Overrides/';
-        if (!is_dir($languageOverridePath)) {
+        if (!\is_dir($languageOverridePath)) {
             return $languageOverride;
         }
 
         $files = GeneralUtility::getAllFilesAndFoldersInPath([], $languageOverridePath, 'xlf,php,xml', false, 99);
 
         foreach ($files as $file) {
-            $file = str_replace($languageOverridePath, '', $file);
+            $file = \str_replace($languageOverridePath, '', $file);
             $parts = GeneralUtility::trimExplode('/', $file, true);
             $extension = GeneralUtility::camelCaseToLowerCaseUnderscored($parts[0]);
             unset($parts[0]);
-            $parts = array_values($parts);
+            $parts = \array_values($parts);
 
             // language
             $language = 'default';
             $fileParts = GeneralUtility::trimExplode('.', PathUtility::basename($file), true);
-            if (2 === strlen($fileParts[0])) {
+            if (2 === \mb_strlen($fileParts[0])) {
                 $language = $fileParts[0];
                 unset($fileParts[0]);
-                $parts[count($parts) - 1] = implode('.', $fileParts);
+                $parts[\count($parts) - 1] = \implode('.', $fileParts);
             }
 
             $languageOverride[] = [
                 'language' => $language,
-                'original' => 'EXT:' . $extension . '/' . implode('/', $parts),
+                'original' => 'EXT:' . $extension . '/' . \implode('/', $parts),
                 'override' => 'EXT:' . $autoLoader->getExtensionKey() . '/Resources/Private/Language/Overrides/' . $file,
             ];
         }

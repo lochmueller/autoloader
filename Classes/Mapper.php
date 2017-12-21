@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Mapper for variables types to TCA and DB information.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -110,7 +113,7 @@ class Mapper implements SingletonInterface
      */
     protected function getMappers()
     {
-        $mapper = array_merge($this->customMapper, $this->getInternalMapperClasses());
+        $mapper = \array_merge($this->customMapper, $this->getInternalMapperClasses());
         foreach ($mapper as $key => $className) {
             $mapper[$key] = ExtendedUtility::create($className);
         }

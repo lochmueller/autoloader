@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map general Models.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -21,7 +24,7 @@ class ModelMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        if (!class_exists($type)) {
+        if (!\class_exists($type)) {
             return false;
         }
         try {

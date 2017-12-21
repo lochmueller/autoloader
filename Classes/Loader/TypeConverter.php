@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading TypeConverter.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;

@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Reflection helper.
  */
+
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -104,8 +107,8 @@ class ReflectionUtility
             return false;
         }
         $values = $classReflection->getTagValues($tag);
-        if (is_array($values)) {
-            return trim($values[0]);
+        if (\is_array($values)) {
+            return \trim($values[0]);
         }
 
         return false;
@@ -125,11 +128,11 @@ class ReflectionUtility
         $configuration = [];
         foreach ($tagNames as $tagName) {
             $configuration[$tagName] = [];
-            if (!is_array($tags[$tagName])) {
+            if (!\is_array($tags[$tagName])) {
                 continue;
             }
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = array_merge(
+                $configuration[$tagName] = \array_merge(
                     $configuration[$tagName],
                     GeneralUtility::trimExplode(' ', $c, true)
                 );

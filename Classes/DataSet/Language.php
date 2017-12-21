@@ -1,7 +1,10 @@
 <?php
+
 /**
  * DataSet information for languages.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;

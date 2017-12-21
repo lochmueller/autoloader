@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Exception.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader;
 
 /**

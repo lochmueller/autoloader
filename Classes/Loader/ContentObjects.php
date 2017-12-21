@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Slots.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -73,16 +76,16 @@ class ContentObjects implements LoaderInterface
                 );
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
                 $defaultFields = $this->getDefaultTcaFields($noHeader, null);
-                $fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
+                $fieldConfiguration = \array_diff($fieldConfiguration, $defaultFields);
 
                 // RTE manipulation
                 $classReflection = ReflectionUtility::createReflectionClass($className);
                 foreach ($classReflection->getProperties() as $property) {
                     /** @var $property PropertyReflection */
                     if ($property->isTaggedWith('enableRichText')) {
-                        $search = array_search(
+                        $search = \array_search(
                             GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                            $fieldConfiguration
+                            $fieldConfiguration, true
                         );
                         if (false !== $search) {
                             $richTextFields[] = $fieldConfiguration[$search];
@@ -92,7 +95,7 @@ class ContentObjects implements LoaderInterface
             }
 
             $entry = [
-                'fieldConfiguration' => implode(',', $fieldConfiguration),
+                'fieldConfiguration' => \implode(',', $fieldConfiguration),
                 'richTextFields' => $richTextFields,
                 'modelClass' => $className,
                 'model' => $model,
@@ -112,141 +115,6 @@ class ContentObjects implements LoaderInterface
     }
 
     /**
-     * Check if the class is tagged with noHeader.
-     *
-     * @param $class
-     *
-     * @return bool
-     */
-    protected function isTaggedWithNoHeader($class)
-    {
-        $classReflection = ReflectionUtility::createReflectionClass($class);
-
-        return $classReflection->isTaggedWith('noHeader');
-    }
-
-    /**
-     * Check if the templates are exist and create a dummy, if there
-     * is no valid template.
-     *
-     * @param array  $loaderInformation
-     * @param Loader $loader
-     */
-    protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
-    {
-        if (empty($loaderInformation)) {
-            return;
-        }
-        $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
-        $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
-        if (!file_exists($frontendLayout)) {
-            $this->writeContentTemplateToTarget('FrontendLayout', $frontendLayout);
-        }
-        $backendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/ContentBackend.html');
-        if (!file_exists($backendLayout)) {
-            $this->writeContentTemplateToTarget('BackendLayout', $backendLayout);
-        }
-
-        foreach ($loaderInformation as $configuration) {
-            $templatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . '.html';
-            $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
-            if (!is_file($absoluteTemplatePath)) {
-                $beTemplatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . 'Backend.html';
-                $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
-
-                $this->writeContentTemplateToTarget('Frontend', $absoluteTemplatePath);
-                $this->writeContentTemplateToTarget('Backend', $absoluteBeTemplatePath);
-            }
-        }
-    }
-
-    /**
-     * Write the given content object template to the target path.
-     *
-     * @param string $name
-     * @param string $absoluteTargetPath
-     */
-    protected function writeContentTemplateToTarget($name, $absoluteTargetPath)
-    {
-        $template = GeneralUtility::getUrl(ExtensionManagementUtility::extPath(
-            'autoloader',
-            'Resources/Private/Templates/ContentObjects/' . $name . '.html'
-        ));
-        FileUtility::writeFileAndCreateFolder($absoluteTargetPath, $template);
-    }
-
-    /**
-     * Same as getClassProperties, but the fields are in LowerCaseUnderscored.
-     *
-     * @param $className
-     *
-     * @return array
-     */
-    protected function getClassPropertiesInLowerCaseUnderscored($className)
-    {
-        return array_map(function ($value) {
-            return GeneralUtility::camelCaseToLowerCaseUnderscored($value);
-        }, ReflectionUtility::getDeclaringProperties($className));
-    }
-
-    /**
-     * Wrap the given field configuration in the CE default TCA fields.
-     *
-     * @param string $configuration
-     * @param bool   $noHeader
-     *
-     * @return string
-     */
-    protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
-    {
-        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
-        $configuration = trim($configuration) ? trim($configuration) . ',' : '';
-
-        return '--palette--;' . $languagePrefix . ':palette.general;general,
-    ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
-    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
-    ' . $configuration . '
-    --div--;' . $languagePrefix . ':tabs.access,
-    --palette--;' . $languagePrefix . ':palette.visibility;visibility,
-    --palette--;' . $languagePrefix . ':palette.access;access,
-    --div--;' . $languagePrefix . ':tabs.extended';
-    }
-
-    /**
-     * Get the fields that are in the default configuration.
-     *
-     * @param null|string $configuration
-     * @param bool        $noHeader
-     *
-     * @return array
-     */
-    protected function getDefaultTcaFields($noHeader, $configuration = null)
-    {
-        if (null === $configuration) {
-            $configuration = $this->wrapDefaultTcaConfiguration('', $noHeader);
-        }
-        $defaultFields = [];
-        $existingFields = array_keys($GLOBALS['TCA']['tt_content']['columns']);
-        $parts = GeneralUtility::trimExplode(',', $configuration, true);
-        foreach ($parts as $fieldConfiguration) {
-            $fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, true);
-            if (in_array($fieldConfiguration[0], $existingFields)) {
-                $defaultFields[] = $fieldConfiguration[0];
-            } elseif ('--palette--' == $fieldConfiguration[0]) {
-                $paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
-                if (is_string($paletteConfiguration)) {
-                    $defaultFields = array_merge(
-                        $defaultFields,
-                        $this->getDefaultTcaFields($noHeader, $paletteConfiguration)
-                    );
-                }
-            }
-        }
-
-        return $defaultFields;
-    }
-
-    /**
      * Run the loading process for the ext_tables.php file.
      *
      * @param Loader $loader
@@ -255,7 +123,7 @@ class ContentObjects implements LoaderInterface
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
         if (empty($loaderInformation)) {
-            return null;
+            return;
         }
         $createWizardHeader = [];
         $predefinedWizards = [
@@ -284,7 +152,7 @@ class ContentObjects implements LoaderInterface
                 TranslateUtility::getLllOrHelpMessage('content.element.' . $e, $loader->getExtensionKey(),
                     'tt_content'),
                 $typeKey,
-                $config['iconExt']
+                $config['iconExt'],
             ], 'CType');
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
@@ -301,7 +169,7 @@ class ContentObjects implements LoaderInterface
             }
 
             // RTE
-            if (isset($config['richTextFields']) && is_array($config['richTextFields']) && $config['richTextFields']) {
+            if (isset($config['richTextFields']) && \is_array($config['richTextFields']) && $config['richTextFields']) {
                 foreach ($config['richTextFields'] as $field) {
                     $conf = [
                         'config' => [
@@ -317,13 +185,13 @@ class ContentObjects implements LoaderInterface
             IconUtility::addTcaTypeIcon('tt_content', $typeKey, $config['icon']);
 
             $tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
-            if (!in_array($tabName, $predefinedWizards) && !in_array($tabName, $createWizardHeader)) {
+            if (!\in_array($tabName, $predefinedWizards, true) && !\in_array($tabName, $createWizardHeader, true)) {
                 $createWizardHeader[] = $tabName;
             }
 
             /** @var IconRegistry $iconRegistry */
             $provider = BitmapIconProvider::class;
-            if ('svg' === substr(strtolower($config['iconExt']), -3)) {
+            if ('svg' === \mb_substr(\mb_strtolower($config['iconExt']), -3)) {
                 $provider = SvgIconProvider::class;
             }
             $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
@@ -361,8 +229,6 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
 }');
             }
         }
-
-        return null;
     }
 
     /**
@@ -374,7 +240,7 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
         if (empty($loaderInformation)) {
-            return null;
+            return;
         }
         static $loadPlugin = true;
         $csc = ExtensionManagementUtility::isLoaded('css_styled_content');
@@ -415,7 +281,140 @@ tt_content.key.field = CType';
         } else {
             ExtensionManagementUtility::addTypoScriptSetup($typoScript);
         }
+    }
 
-        return null;
+    /**
+     * Check if the class is tagged with noHeader.
+     *
+     * @param $class
+     *
+     * @return bool
+     */
+    protected function isTaggedWithNoHeader($class)
+    {
+        $classReflection = ReflectionUtility::createReflectionClass($class);
+
+        return $classReflection->isTaggedWith('noHeader');
+    }
+
+    /**
+     * Check if the templates are exist and create a dummy, if there
+     * is no valid template.
+     *
+     * @param array  $loaderInformation
+     * @param Loader $loader
+     */
+    protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
+    {
+        if (empty($loaderInformation)) {
+            return;
+        }
+        $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
+        $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
+        if (!\file_exists($frontendLayout)) {
+            $this->writeContentTemplateToTarget('FrontendLayout', $frontendLayout);
+        }
+        $backendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/ContentBackend.html');
+        if (!\file_exists($backendLayout)) {
+            $this->writeContentTemplateToTarget('BackendLayout', $backendLayout);
+        }
+
+        foreach ($loaderInformation as $configuration) {
+            $templatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . '.html';
+            $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
+            if (!\is_file($absoluteTemplatePath)) {
+                $beTemplatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . 'Backend.html';
+                $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
+
+                $this->writeContentTemplateToTarget('Frontend', $absoluteTemplatePath);
+                $this->writeContentTemplateToTarget('Backend', $absoluteBeTemplatePath);
+            }
+        }
+    }
+
+    /**
+     * Write the given content object template to the target path.
+     *
+     * @param string $name
+     * @param string $absoluteTargetPath
+     */
+    protected function writeContentTemplateToTarget($name, $absoluteTargetPath)
+    {
+        $template = GeneralUtility::getUrl(ExtensionManagementUtility::extPath(
+            'autoloader',
+            'Resources/Private/Templates/ContentObjects/' . $name . '.html'
+        ));
+        FileUtility::writeFileAndCreateFolder($absoluteTargetPath, $template);
+    }
+
+    /**
+     * Same as getClassProperties, but the fields are in LowerCaseUnderscored.
+     *
+     * @param $className
+     *
+     * @return array
+     */
+    protected function getClassPropertiesInLowerCaseUnderscored($className)
+    {
+        return \array_map(function ($value) {
+            return GeneralUtility::camelCaseToLowerCaseUnderscored($value);
+        }, ReflectionUtility::getDeclaringProperties($className));
+    }
+
+    /**
+     * Wrap the given field configuration in the CE default TCA fields.
+     *
+     * @param string $configuration
+     * @param bool   $noHeader
+     *
+     * @return string
+     */
+    protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
+    {
+        $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
+        $configuration = \trim($configuration) ? \trim($configuration) . ',' : '';
+
+        return '--palette--;' . $languagePrefix . ':palette.general;general,
+    ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
+    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
+    ' . $configuration . '
+    --div--;' . $languagePrefix . ':tabs.access,
+    --palette--;' . $languagePrefix . ':palette.visibility;visibility,
+    --palette--;' . $languagePrefix . ':palette.access;access,
+    --div--;' . $languagePrefix . ':tabs.extended';
+    }
+
+    /**
+     * Get the fields that are in the default configuration.
+     *
+     * @param null|string $configuration
+     * @param bool        $noHeader
+     *
+     * @return array
+     */
+    protected function getDefaultTcaFields($noHeader, $configuration = null)
+    {
+        if (null === $configuration) {
+            $configuration = $this->wrapDefaultTcaConfiguration('', $noHeader);
+        }
+        $defaultFields = [];
+        $existingFields = \array_keys($GLOBALS['TCA']['tt_content']['columns']);
+        $parts = GeneralUtility::trimExplode(',', $configuration, true);
+        foreach ($parts as $fieldConfiguration) {
+            $fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, true);
+            if (\in_array($fieldConfiguration[0], $existingFields, true)) {
+                $defaultFields[] = $fieldConfiguration[0];
+            } elseif ('--palette--' === $fieldConfiguration[0]) {
+                $paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
+                if (\is_string($paletteConfiguration)) {
+                    $defaultFields = \array_merge(
+                        $defaultFields,
+                        $this->getDefaultTcaFields($noHeader, $paletteConfiguration)
+                    );
+                }
+            }
+        }
+
+        return $defaultFields;
     }
 }

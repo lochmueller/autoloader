@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Map Array.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -20,9 +23,9 @@ class ArrayMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return in_array(strtolower($type), [
+        return \in_array(\mb_strtolower($type), [
             'array',
-        ]);
+        ], true);
     }
 
     /**

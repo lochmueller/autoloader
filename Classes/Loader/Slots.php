@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Loading Slots.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
@@ -63,7 +66,7 @@ class Slots implements LoaderInterface
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
-                        'signalClassName' => trim($signalClass, '\\'),
+                        'signalClassName' => \trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName' => $methodReflection->getName(),
@@ -84,7 +87,7 @@ class Slots implements LoaderInterface
      */
     public function flattenSlotsByPriority(array $array)
     {
-        krsort($array);
+        \krsort($array);
         $result = [];
         foreach ($array as $slots) {
             foreach ($slots as $slot) {

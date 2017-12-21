@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface for L10N file writers.
  */
+
 namespace HDNET\Autoloader\Localization\Writer;
 
 /**

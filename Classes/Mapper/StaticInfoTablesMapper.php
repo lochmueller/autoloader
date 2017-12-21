@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
 /**
  * StaticInfoTablesMapper.
  */
+
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
@@ -33,9 +35,9 @@ class StaticInfoTablesMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        $this->lastClass = strtolower($type);
+        $this->lastClass = \mb_strtolower($type);
 
-        return !(false === strpos($this->lastClass, self::CLASS_BASE));
+        return !(false === \mb_strpos($this->lastClass, self::CLASS_BASE));
     }
 
     /**
@@ -48,7 +50,7 @@ class StaticInfoTablesMapper implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        $withoutNameSpace = str_replace(self::CLASS_BASE, '', $this->lastClass);
+        $withoutNameSpace = \str_replace(self::CLASS_BASE, '', $this->lastClass);
 
         switch ($withoutNameSpace) {
             case 'country':

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Custom Backend Preview for Elements like Content Objects.
  */
+declare(strict_types=1);
+
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
@@ -55,7 +58,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         }
 
         // Workarround for wrong FrontendUserGroup Restriction in TYPO3 8.x
-        if (TYPO3_MODE === 'BE' && !is_object($GLOBALS['TSFE'])) {
+        if (TYPO3_MODE === 'BE' && !\is_object($GLOBALS['TSFE'])) {
             $GLOBALS['TSFE'] = new \stdClass();
             $GLOBALS['TSFE']->gr_list = '';
         }
@@ -93,7 +96,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 
         $beTemplatePath = GeneralUtility::getFileAbsFileName($config['backendTemplatePath']);
 
-        return is_file($beTemplatePath);
+        return \is_file($beTemplatePath);
     }
 
     /**
