@@ -378,6 +378,9 @@ tt_content.key.field = CType';
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
     ' . $configuration . '
+    --div--;' . $languagePrefix . ':tabs.appearance,
+    --palette--;;frames,
+    --palette--;;appearanceLinks,
     --div--;' . $languagePrefix . ':tabs.access,
     --palette--;' . $languagePrefix . ':palette.visibility;visibility,
     --palette--;' . $languagePrefix . ':palette.access;access,
