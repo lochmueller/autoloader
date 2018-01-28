@@ -9,10 +9,12 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Service\NameMapperService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\IconUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
@@ -356,10 +358,14 @@ tt_content.key.field = CType';
      */
     protected function getClassPropertiesInLowerCaseUnderscored($className)
     {
-        return \array_map(function ($value) {
-            return GeneralUtility::camelCaseToLowerCaseUnderscored($value);
+        $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
+        $tableName = ModelUtility::getTableName($className);
+        return \array_map(function ($value) use ($nameMapperService, $tableName) {
+            return $nameMapperService->getDatabaseFieldName($tableName, $value);
         }, ReflectionUtility::getDeclaringProperties($className));
     }
+
+
 
     /**
      * Wrap the given field configuration in the CE default TCA fields.
