@@ -47,7 +47,7 @@
     "typo3-ter/autoloader": "self.version"
   },
   "homepage": "https://github.com/lochmueller/autoloader",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "support": {
     "issues": "https://github.com/lochmueller/autoloader/issues"
   },
