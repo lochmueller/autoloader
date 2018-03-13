@@ -2,7 +2,6 @@
 /**
  * Map property names to DB field values
  */
-
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -89,5 +88,4 @@ class NameMapperService
         }
         return GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
     }
-
 }
