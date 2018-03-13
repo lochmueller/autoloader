@@ -24,42 +24,46 @@ class ContentController extends ActionController
      */
     public function indexAction()
     {
-        $extensionKey = $this->settings['extensionKey'];
-        $vendorName = $this->settings['vendorName'];
-        $name = $this->settings['contentElement'];
-        $data = $this->configurationManager->getContentObject()->data;
+        try {
+            $extensionKey = $this->settings['extensionKey'];
+            $vendorName = $this->settings['vendorName'];
+            $name = $this->settings['contentElement'];
+            $data = $this->configurationManager->getContentObject()->data;
 
-        $targetObject = ClassNamingUtility::getFqnByPath($vendorName, $extensionKey, 'Domain/Model/Content/' . $name);
-        $model = ModelUtility::getModel($targetObject, $data);
+            $targetObject = ClassNamingUtility::getFqnByPath($vendorName, $extensionKey, 'Domain/Model/Content/' . $name);
+            $model = ModelUtility::getModel($targetObject, $data);
 
-        /** @var StandaloneView $view */
-        $view = ExtendedUtility::create(StandaloneView::class);
-        $context = $view->getRenderingContext();
-        $context->setControllerName('Content');
-        $context->setControllerAction($this->settings['contentElement']);
-        $view->setRenderingContext($context);
+            /** @var StandaloneView $view */
+            $view = ExtendedUtility::create(StandaloneView::class);
+            $context = $view->getRenderingContext();
+            $context->setControllerName('Content');
+            $context->setControllerAction($this->settings['contentElement']);
+            $view->setRenderingContext($context);
 
-        $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $viewConfiguration = $configuration['view'];
+            $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $viewConfiguration = $configuration['view'];
 
-        $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths']) ? $viewConfiguration['layoutRootPaths'] : [];
-        $layoutRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Layouts/';
-        $view->setLayoutRootPaths($layoutRootPaths);
+            $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths']) ? $viewConfiguration['layoutRootPaths'] : [];
+            $layoutRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Layouts/';
+            $view->setLayoutRootPaths($layoutRootPaths);
 
-        $partialRootPaths = \is_array($viewConfiguration['partialRootPaths']) ? $viewConfiguration['partialRootPaths'] : [];
-        $partialRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Partials/';
-        $view->setPartialRootPaths($partialRootPaths);
+            $partialRootPaths = \is_array($viewConfiguration['partialRootPaths']) ? $viewConfiguration['partialRootPaths'] : [];
+            $partialRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Partials/';
+            $view->setPartialRootPaths($partialRootPaths);
 
-        $templateRootPaths = \is_array($viewConfiguration['templateRootPaths']) ? $viewConfiguration['templateRootPaths'] : [];
-        $templateRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Templates/';
-        $view->setTemplateRootPaths($templateRootPaths);
+            $templateRootPaths = \is_array($viewConfiguration['templateRootPaths']) ? $viewConfiguration['templateRootPaths'] : [];
+            $templateRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Templates/';
+            $view->setTemplateRootPaths($templateRootPaths);
 
-        $view->assignMultiple([
-            'data' => $data,
-            'object' => $model,
-            'settings' => $this->settings,
-        ]);
+            $view->assignMultiple([
+                'data' => $data,
+                'object' => $model,
+                'settings' => $this->settings,
+            ]);
 
-        return $view->render();
+            $content = $view->render();
+        } catch(\Exception $ex){
+            return 'Exception in content rendering: ' . $ex->getMessage();
+        }
     }
 }
