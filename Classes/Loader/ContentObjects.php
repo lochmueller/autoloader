@@ -382,6 +382,7 @@ tt_content.key.field = CType';
 
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
+    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language,
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
     ' . $configuration . '
     --div--;' . $languagePrefix . ':tabs.appearance,
