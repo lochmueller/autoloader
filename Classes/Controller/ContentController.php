@@ -61,7 +61,7 @@ class ContentController extends ActionController
                 'settings' => $this->settings,
             ]);
 
-            $content = $view->render();
+            return $view->render();
         } catch (\Exception $ex) {
             return 'Exception in content rendering: ' . $ex->getMessage();
         }
