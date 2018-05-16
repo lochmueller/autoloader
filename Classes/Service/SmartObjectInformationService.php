@@ -164,8 +164,9 @@ class SmartObjectInformationService
         }
 
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
+        $languagePrefixCore = 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf';
         if (!\in_array('enableFields', $excludes, true)) {
-            $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.access';
+            $showitem[] = '--div--;' . $languagePrefixCore . ':access';
             $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
         }
         $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';

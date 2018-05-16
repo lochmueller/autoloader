@@ -390,10 +390,10 @@ tt_content.key.field = CType';
     --palette--;;appearanceLinks,
     --div--;' . $languagePrefixCore . ':language,
     --palette--;;language,
-    --div--;' . $languagePrefixCore . ':tabs.access,
+    --div--;' . $languagePrefixCore . ':access,
     --palette--;;hidden,
     --palette--;' . $languagePrefix . ':palette.access;access,
-    --div--;' . $languagePrefixCore . ':tabs.extended';
+    --div--;' . $languagePrefixCore . ':extended';
     }
 
     /**
