@@ -378,20 +378,22 @@ tt_content.key.field = CType';
     protected function wrapDefaultTcaConfiguration($configuration, $noHeader = false)
     {
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
+        $languagePrefixCore = 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf';
         $configuration = \trim($configuration) ? \trim($configuration) . ',' : '';
 
         return '--palette--;' . $languagePrefix . ':palette.general;general,
     ' . ($noHeader ? '' : '--palette--;' . $languagePrefix . ':palette.header;header,') . '
-    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language,
     --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:contentData,
     ' . $configuration . '
     --div--;' . $languagePrefix . ':tabs.appearance,
     --palette--;;frames,
     --palette--;;appearanceLinks,
-    --div--;' . $languagePrefix . ':tabs.access,
-    --palette--;' . $languagePrefix . ':palette.visibility;visibility,
+    --div--;' . $languagePrefixCore . ':language,
+    --palette--;;language,
+    --div--;' . $languagePrefixCore . ':tabs.access,
+    --palette--;;hidden,
     --palette--;' . $languagePrefix . ':palette.access;access,
-    --div--;' . $languagePrefix . ':tabs.extended';
+    --div--;' . $languagePrefixCore . ':tabs.extended';
     }
 
     /**
