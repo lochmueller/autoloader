@@ -7,8 +7,9 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -128,18 +129,33 @@ class ExtendedUtility
      */
     public static function createExtensionStandaloneView($extensionKey, $templatePath)
     {
-        $siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
         $templatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
         $view = self::create(StandaloneView::class);
         $view->setTemplatePathAndFilename($templatePath);
 
-        $partialPath = $siteRelPath . 'Resources/Private/Partials/';
-        $layoutPath = $siteRelPath . 'Resources/Private/Layouts/';
+        // Get configuration
+        $objectManager = new ObjectManager();
+        /** @var ConfigurationManager $configurationManager */
+        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $configuration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $viewConfiguration = [];
+        if (isset($configuration['module.']['tx_autoloader.']['view.'])) {
+            $viewConfiguration = $configuration['module.']['tx_autoloader.']['view.'];
+        }
 
-        $view->setPartialRootPaths([GeneralUtility::getFileAbsFileName($partialPath)]);
-        $view->setLayoutRootPaths([GeneralUtility::getFileAbsFileName($layoutPath)]);
+        $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths.']) ? $viewConfiguration['layoutRootPaths.'] : [];
+        if (!isset($layoutRootPaths[5])) {
+            $layoutRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Layouts/';
+        }
+        $view->setLayoutRootPaths($layoutRootPaths);
+
+        $partialRootPaths = \is_array($viewConfiguration['partialRootPaths.']) ? $viewConfiguration['partialRootPaths.'] : [];
+        if (!isset($partialRootPaths[5])) {
+            $partialRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Partials/';
+        }
+        $view->setPartialRootPaths($partialRootPaths);
 
         return $view;
     }
