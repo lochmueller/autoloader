@@ -44,15 +44,21 @@ class ContentController extends ActionController
             $viewConfiguration = $configuration['view'];
 
             $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths']) ? $viewConfiguration['layoutRootPaths'] : [];
-            $layoutRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Layouts/';
+            if (!isset($layoutRootPaths[5])) {
+                $layoutRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Layouts/';
+            }
             $view->setLayoutRootPaths($layoutRootPaths);
 
             $partialRootPaths = \is_array($viewConfiguration['partialRootPaths']) ? $viewConfiguration['partialRootPaths'] : [];
-            $partialRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Partials/';
+            if (!isset($partialRootPaths[5])) {
+                $partialRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Partials/';
+            }
             $view->setPartialRootPaths($partialRootPaths);
 
             $templateRootPaths = \is_array($viewConfiguration['templateRootPaths']) ? $viewConfiguration['templateRootPaths'] : [];
-            $templateRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Templates/';
+            if (!isset($templateRootPaths[5])) {
+                $templateRootPaths[5] = 'EXT:' . $this->settings['extensionKey'] . '/Resources/Private/Templates/';
+            }
             $view->setTemplateRootPaths($templateRootPaths);
 
             $view->assignMultiple([
