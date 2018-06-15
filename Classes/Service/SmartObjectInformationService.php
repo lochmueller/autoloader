@@ -23,7 +23,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SmartObjectInformationService
 {
-
     /**
      * Get a instance of this object.
      *
@@ -172,25 +171,25 @@ class SmartObjectInformationService
         $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
-            'ctrl'      => [
-                'title'         => $this->getTcaTitle($tableName, $extensionName),
-                'label'         => $labelField,
-                'tstamp'        => 'tstamp',
-                'crdate'        => 'crdate',
-                'cruser_id'     => 'cruser_id',
+            'ctrl' => [
+                'title' => $this->getTcaTitle($tableName, $extensionName),
+                'label' => $labelField,
+                'tstamp' => 'tstamp',
+                'crdate' => 'crdate',
+                'cruser_id' => 'cruser_id',
                 'dividers2tabs' => true,
-                'sortby'        => 'sorting',
-                'delete'        => 'deleted',
-                'searchFields'  => \implode(',', $searchFields),
-                'iconfile'      => IconUtility::getByModelName($modelClassName, true),
+                'sortby' => 'sorting',
+                'delete' => 'deleted',
+                'searchFields' => \implode(',', $searchFields),
+                'iconfile' => IconUtility::getByModelName($modelClassName, true),
             ],
             'interface' => [
                 'showRecordFieldList' => \implode(',', \array_keys($baseTca['columns'])),
             ],
-            'types'     => [
+            'types' => [
                 '1' => ['showitem' => \implode(',', $showitem)],
             ],
-            'palettes'  => [
+            'palettes' => [
                 'access' => ['showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'],
             ],
         ];
@@ -205,9 +204,9 @@ class SmartObjectInformationService
      */
     protected function useTableNameFileBase()
     {
-        $configuration = \unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
@@ -278,10 +277,10 @@ class SmartObjectInformationService
             $dbInformation = $property->getTagValues('db');
             $fields[] = [
                 'property' => $property->getName(),
-                'name'     => $nameMapperService->getDatabaseFieldName($tableName, $property->getName()),
-                'db'       => \trim((string)$dbInformation[0]),
-                'var'      => \trim((string)$var),
-                'rte'      => (bool)$property->isTaggedWith('enableRichText'),
+                'name' => $nameMapperService->getDatabaseFieldName($tableName, $property->getName()),
+                'db' => \trim((string) $dbInformation[0]),
+                'var' => \trim((string) $var),
+                'rte' => (bool) $property->isTaggedWith('enableRichText'),
             ];
         }
 

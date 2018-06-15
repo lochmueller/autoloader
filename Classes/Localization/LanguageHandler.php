@@ -33,7 +33,7 @@ class LanguageHandler extends LanguageStore
      * @param array  $arguments            arguments are being passed over to vsprintf
      * @param string $overrideLanguageBase
      *
-     * @return null|string
+     * @return string|null
      */
     public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {

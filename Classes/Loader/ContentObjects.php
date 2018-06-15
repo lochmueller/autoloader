@@ -360,12 +360,11 @@ tt_content.key.field = CType';
     {
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $tableName = ModelUtility::getTableName($className);
+
         return \array_map(function ($value) use ($nameMapperService, $tableName) {
             return $nameMapperService->getDatabaseFieldName($tableName, $value);
         }, ReflectionUtility::getDeclaringProperties($className));
     }
-
-
 
     /**
      * Wrap the given field configuration in the CE default TCA fields.
@@ -400,7 +399,7 @@ tt_content.key.field = CType';
      * Get the fields that are in the default configuration.
      *
      * @param bool        $noHeader
-     * @param null|string $configuration
+     * @param string|null $configuration
      *
      * @return array
      */

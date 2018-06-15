@@ -1,25 +1,27 @@
 <?php
+
+declare(strict_types=1);
 /**
- * Map property names to DB field values
+ * Map property names to DB field values.
  */
+
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Map property names to DB field values
+ * Map property names to DB field values.
  */
 class NameMapperService
 {
-
     /**
      * Core fields that are stored as camel case in the DB
-     * So the field is mapped directly
+     * So the field is mapped directly.
      *
      * @var array
      */
     protected $coreCamelCaseField = [
-        'tt_content'   => [
+        'tt_content' => [
             'CType',
             'rowDescription',
             'spaceBefore',
@@ -33,25 +35,25 @@ class NameMapperService
             'basedOn',
             'includeStaticAfterBasedOn',
         ],
-        'sys_domain'   => [
+        'sys_domain' => [
             'redirectHttpStatusCode',
             'redirectTo',
             'domainName',
         ],
-        'fe_users'     => [
+        'fe_users' => [
             'lockToDomain',
             'TSconfig',
         ],
-        'fe_groups'    => [
+        'fe_groups' => [
             'lockToDomain',
             'TSconfig',
         ],
-        'be_groups'    => [
+        'be_groups' => [
             'groupMods',
             'lockToDomain',
             'TSconfig',
         ],
-        'be_users'     => [
+        'be_users' => [
             'realName',
             'userMods',
             'lockToDomain',
@@ -60,21 +62,21 @@ class NameMapperService
             'lastlogin',
             'createdByAction',
         ],
-        'pages'        => [
+        'pages' => [
             'TSconfig',
             'lastUpdated',
             'newUntil',
             'SYS_LASTCHANGED',
             'extendToSubpages',
         ],
-        'sys_log'      => [
+        'sys_log' => [
             'NEWid',
             'IP',
         ],
     ];
 
     /**
-     * Get the right DB representation and respect camelCase field of the core
+     * Get the right DB representation and respect camelCase field of the core.
      *
      * @param string $tableName
      * @param string $propertyName
@@ -83,9 +85,10 @@ class NameMapperService
      */
     public function getDatabaseFieldName(string $tableName, string $propertyName): string
     {
-        if (isset($this->coreCamelCaseField[$tableName]) && in_array($propertyName, $this->coreCamelCaseField[$tableName])) {
+        if (isset($this->coreCamelCaseField[$tableName]) && \in_array($propertyName, $this->coreCamelCaseField[$tableName], true)) {
             return $propertyName;
         }
+
         return GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
     }
 }
