@@ -4,7 +4,6 @@ declare(strict_types=1);
 /**
  * Map property names to DB field values.
  */
-
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
