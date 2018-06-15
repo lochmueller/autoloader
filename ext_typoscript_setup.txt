@@ -2,19 +2,19 @@ plugin.tx_autoloader {
     view {
         templateRootPaths {
             #5 = SET VIA AUTOLOADER
-            10 = EXT:autoloader/Resources/Private/Templates/
+            #10 = EXT:autoloader/Resources/Private/Templates/
             #xx = custom paths by external configuration
         }
 
         partialRootPaths {
             #5 = SET VIA AUTOLOADER
-            10 = EXT:autoloader/Resources/Private/Partials/
+            #10 = EXT:autoloader/Resources/Private/Partials/
             #xx = custom paths by external configuration
         }
 
         layoutRootPaths {
             #5 = SET VIA AUTOLOADER
-            10 = EXT:autoloader/Resources/Private/Layouts/
+            #10 = EXT:autoloader/Resources/Private/Layouts/
             #xx = custom paths by external configuration
         }
     }
