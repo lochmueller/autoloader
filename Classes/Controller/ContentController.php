@@ -10,9 +10,11 @@ namespace HDNET\Autoloader\Controller;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 
 /**
  * Content Controller.
@@ -41,6 +43,17 @@ class ContentController extends ActionController
             $view->setRenderingContext($context);
 
             $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+
+            // add dataprocessors
+            $contentDataProcessor = GeneralUtility::makeInstance(ContentDataProcessor::class);
+            $variables = $contentDataProcessor->process(
+                $this->configurationManager->getContentObject(),
+                ['dataProcessing.' => $this->settings['dataProcessing']],
+                ['data' => $data]
+            );
+            $variables['settings'] = $this->settings;
+            $variables['object'] = $model;
+
             $viewConfiguration = $configuration['view'];
 
             $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths']) ? $viewConfiguration['layoutRootPaths'] : [];
@@ -61,11 +74,9 @@ class ContentController extends ActionController
             }
             $view->setTemplateRootPaths($templateRootPaths);
 
-            $view->assignMultiple([
-                'data' => $data,
-                'object' => $model,
-                'settings' => $this->settings,
-            ]);
+            $view->assignMultiple(
+                $variables
+            );
 
             return $view->render();
         } catch (\Exception $ex) {
