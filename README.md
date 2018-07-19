@@ -101,3 +101,5 @@ class Test extends AbstractEntity {
 Documentation
 -------------
 * [Online Documentation](http://docs.typo3.org/typo3cms/extensions/autoloader/)
+
+Test
