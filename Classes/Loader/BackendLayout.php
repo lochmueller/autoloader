@@ -36,7 +36,7 @@ class BackendLayout implements LoaderInterface
     {
         $backendLayouts = [];
         $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/BackendLayouts/';
-        $backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt');
+        $backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt,typoscript');
 
         foreach ($backendLayoutFiles as $file) {
             $pathInfo = PathUtility::pathinfo($file);
