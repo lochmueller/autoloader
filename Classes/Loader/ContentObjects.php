@@ -151,7 +151,7 @@ class ContentObjects implements LoaderInterface
                     'tt_content'),
                 $typeKey,
                 $config['iconExt'],
-            ], 'CType');
+            ], 'CType', $loader->getExtensionKey());
 
             if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
                 $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration(
@@ -290,9 +290,7 @@ tt_content.key.field = CType';
      */
     protected function isTaggedWithNoHeader($class)
     {
-        $classReflection = ReflectionUtility::createReflectionClass($class);
-
-        return $classReflection->isTaggedWith('noHeader');
+        return false !== ReflectionUtility::getFirstTagValue($class, 'noHeader');
     }
 
     /**

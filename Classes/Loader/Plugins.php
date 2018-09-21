@@ -52,12 +52,13 @@ class Plugins implements LoaderInterface
             $controllerKey = \str_replace('/', '\\', $controller);
             $controllerKey = \str_replace('Controller', '', $controllerKey);
 
-            $methods = ReflectionUtility::getPublicMethods($controllerName);
-            foreach ($methods as $method) {
-                /** @var $method \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                if ($method->isTaggedWith('plugin')) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $method->getTagValues('plugin')), true);
-                    $actionName = \str_replace('Action', '', $method->getName());
+            $methods = ReflectionUtility::getPublicMethodNames($controllerName);
+            foreach ($methods as $methodName) {
+                $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin', 'noCache']);
+                if (!empty($configuration['plugin'])) {
+
+                    $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $configuration['plugin']), true);
+                    $actionName = \str_replace('Action', '', $methodName);
 
                     foreach ($pluginKeys as $pluginKey) {
                         $pluginInformation = $this->addPluginInformation(
@@ -65,7 +66,7 @@ class Plugins implements LoaderInterface
                             $pluginKey,
                             $controllerKey,
                             $actionName,
-                            $method->isTaggedWith('noCache')
+                            !empty($configuration['noCache'])
                         );
                     }
                 }

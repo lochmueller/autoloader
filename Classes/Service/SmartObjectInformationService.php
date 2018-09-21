@@ -262,25 +262,23 @@ class SmartObjectInformationService
      */
     protected function getCustomModelFields(string $modelClassName): array
     {
-        $properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
+        $properties = ReflectionUtility::getPropertyNames($modelClassName);
         $tableName = ModelUtility::getTableName($modelClassName);
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $fields = [];
-        foreach ($properties as $property) {
-            /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
+        foreach ($properties as $propertyName) {
+            $configuration = ReflectionUtility::getTagConfigurationForProperty($modelClassName, $propertyName, ['db', 'var']);
             $var = '';
-            if ($property->isTaggedWith('var')) {
-                $var = $property->getTagValues('var');
-                $var = $var[0];
+            if (!empty($configuration['var'])) {
+                $var = $configuration['var'][0];
             }
 
-            $dbInformation = $property->getTagValues('db');
             $fields[] = [
-                'property' => $property->getName(),
-                'name' => $nameMapperService->getDatabaseFieldName($tableName, $property->getName()),
-                'db' => \trim((string) $dbInformation[0]),
+                'property' => $propertyName,
+                'name' => $nameMapperService->getDatabaseFieldName($tableName, $propertyName),
+                'db' => \trim((string) $configuration['db'][0]),
                 'var' => \trim((string) $var),
-                'rte' => (bool) $property->isTaggedWith('enableRichText'),
+                'rte' => (bool) !empty($configuration['enableRichText'][0]),
             ];
         }
 

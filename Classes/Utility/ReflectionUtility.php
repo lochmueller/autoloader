@@ -60,6 +60,10 @@ class ReflectionUtility
      */
     public static function getParentClassName($className)
     {
+        if(self::is9orHigher()) {
+            $reflectionClass = new \ReflectionClass($className);
+            return $reflectionClass->getParentClass()->getName();
+        }
         return self::createReflectionClass($className)
             ->getParentClass()
             ->getName();
@@ -97,16 +101,15 @@ class ReflectionUtility
      */
     public static function getPropertyNamesTaggedWith($className, $tag):array
     {
-        $classReflection = self::createReflectionClass($className);
-        $properties = [];
-        foreach ($classReflection->getProperties() as $property) {
-            /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
-            if ($property->isTaggedWith($tag)) {
-                $properties[] = $property->getName();
+        $properties = self::getPropertyNames($className);
+        $return = [];
+        foreach ($properties as $property) {
+            $config = self::getTagConfigurationForProperty($className, $property, [$tag]);
+            if(!empty($config[$tag])) {
+                $return[] = $property;
             }
         }
-
-        return $properties;
+        return $return;
     }
 
     /**
@@ -133,11 +136,17 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
-        $classReflection = self::createReflectionClass($className);
-        if (!$classReflection->isTaggedWith($tag)) {
-            return false;
+        if(self::is9orHigher()) {
+            $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $values = $reflectionService->getClassTagValues($className, $tag);
+        } else {
+            $classReflection = self::createReflectionClass($className);
+            if (!$classReflection->isTaggedWith($tag)) {
+                return false;
+            }
+            $values = $classReflection->getTagValues($tag);
         }
-        $values = $classReflection->getTagValues($tag);
+
         if (\is_array($values)) {
             return \trim((string) $values[0]);
         }
@@ -177,7 +186,7 @@ class ReflectionUtility
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
-     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param string $className
      * @param array                            $tagNames
      *
      * @return array
@@ -186,6 +195,7 @@ class ReflectionUtility
     {
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
+
         $configuration = [];
         foreach ($tagNames as $tagName) {
             $configuration[$tagName] = [];
@@ -233,8 +243,49 @@ class ReflectionUtility
 
         return $configuration;
     }
+    /**
+     * Get the tag configuration from this method and respect multiple line and space configuration.
+     *
+     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param array                            $tagNames
+     *
+     * @return array
+     */
+    public static function getTagConfigurationForProperty($className, $property, array $tagNames): array
+    {
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
+
+        $configuration = [];
+        foreach ($tagNames as $tagName) {
+            $configuration[$tagName] = [];
+            if (!\is_array($tags[$tagName])) {
+                continue;
+            }
+            foreach ($tags[$tagName] as $c) {
+                $configuration[$tagName] = \array_merge(
+                    $configuration[$tagName],
+                    GeneralUtility::trimExplode(' ', $c, true)
+                );
+            }
+        }
+
+        return $configuration;
+    }
 
 
+
+    /**
+     * Get public method names
+     *
+     * @param string $className
+     * @return array
+     */
+    public static function getPropertyNames(string $className): array
+    {
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        return array_keys($reflectionService->getClassSchema($className)->getProperties());
+    }
 
     /**
      * Get public method names
@@ -273,18 +324,13 @@ class ReflectionUtility
      */
     public static function getDeclaringProperties($className)
     {
-        $properties = [];
-        $classReflection = self::createReflectionClass($className);
-        foreach ($classReflection->getProperties() as $property) {
-            /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
-            if ($property->getDeclaringClass()
-                    ->getName() === $classReflection->getName()
-            ) {
-                $properties[] = $property->getName();
-            }
-        }
-
-        return $properties;
+        $classReflection = new \ReflectionClass($className);
+        $own = array_filter($classReflection->getProperties(), function ($property) use ($className) {
+            return $property->class == $className;
+        });
+        return array_map(function($item){
+            return $item->name;
+        }, $own);
     }
 
     /**

@@ -57,11 +57,16 @@ class SmartObjectManager implements SingletonInterface
         // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
         if (!\class_exists($className)) {
-            $return = false;
-        } else {
-            $classReflection = ReflectionUtility::createReflectionClass($className);
-            $return = !(bool) (!ReflectionUtility::isInstantiable($className) || !$classReflection->isTaggedWith('db'));
+            return false;
         }
+
+        if (!ReflectionUtility::isInstantiable($className)) {
+            return false;
+        }
+
+
+        $return = ReflectionUtility::getFirstTagValue($className, 'db') !== false;
+
 
         // if ($registerAutoLoader) {
         //     spl_autoload_register($riskAutoLoader, true, true);
