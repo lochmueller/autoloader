@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Loading Slots.
@@ -50,11 +51,10 @@ class Slots implements LoaderInterface
                 continue;
             }
 
-            $methods = ReflectionUtility::getPublicMethods($slotClass);
-            foreach ($methods as $methodReflection) {
-                /** @var MethodReflection $methodReflection */
-                $tagConfiguration = ReflectionUtility::getTagConfiguration(
-                    $methodReflection,
+            $methods = ReflectionUtility::getPublicMethodNames($slotClass);
+            foreach ($methods as $methodName) {
+                $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod($slotClass,
+                    $methodName,
                     ['signalClass', 'signalName', 'signalPriority']
                 );
                 foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
@@ -69,7 +69,7 @@ class Slots implements LoaderInterface
                         'signalClassName' => \trim($signalClass, '\\'),
                         'signalName' => $tagConfiguration['signalName'][$key],
                         'slotClassNameOrObject' => $slotClass,
-                        'slotMethodName' => $methodReflection->getName(),
+                        'slotMethodName' => $methodName,
                     ];
                 }
             }

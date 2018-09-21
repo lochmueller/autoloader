@@ -47,10 +47,8 @@ class Hooks implements LoaderInterface
                 continue;
             }
 
-            $classReflection = ReflectionUtility::createReflectionClass($hookClass);
-
             // add class hook
-            $tagConfiguration = ReflectionUtility::getTagConfiguration($classReflection, ['hook']);
+            $tagConfiguration = ReflectionUtility::getTagConfigurationForClass($hookClass, ['hook']);
             if (\count($tagConfiguration['hook'])) {
                 $hooks[] = [
                     'locations' => $tagConfiguration['hook'],
@@ -58,11 +56,9 @@ class Hooks implements LoaderInterface
                 ];
             }
 
-            // @todo getPublicMethodNames
             // add method hooks
-            foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
-                /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                $tagConfiguration = ReflectionUtility::getTagConfiguration($methodReflection, ['hook']);
+            foreach (ReflectionUtility::getPublicMethodNames($hookClass) as $methodName) {
+                $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod($hookClass, $methodName, ['hook']);
                 if (\count($tagConfiguration['hook']) > 0) {
                     $hookLocations = \array_map(function ($hook) {
                         return \trim($hook, " \t\n\r\0\x0B|");
@@ -70,7 +66,7 @@ class Hooks implements LoaderInterface
 
                     $hooks[] = [
                         'locations' => $hookLocations,
-                        'configuration' => $hookClass . '->' . $methodReflection->getName(),
+                        'configuration' => $hookClass . '->' . $methodName,
                     ];
                 }
             }

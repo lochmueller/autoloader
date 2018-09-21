@@ -51,11 +51,9 @@ class Aspect implements LoaderInterface
             }
 
             try {
-                $methods = ReflectionUtility::getPublicMethods($aspectClass);
-                foreach ($methods as $methodReflection) {
-                    /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-                    $tagConfiguration = ReflectionUtility::getTagConfiguration(
-                        $methodReflection,
+                $methods = ReflectionUtility::getPublicMethodNames($aspectClass);
+                foreach ($methods as $methodName) {
+                    $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod($aspectClass, $methodName,
                         ['aspectClass', 'aspectJoinPoint', 'aspectAdvice']
                     );
                     foreach ($tagConfiguration['aspectClass'] as $key => $aspectClass) {
@@ -78,7 +76,7 @@ class Aspect implements LoaderInterface
 
                         $aspects[] = [
                             'aspectClassName' => $aspectClassName,
-                            'aspectMethodName' => $methodReflection->getName(),
+                            'aspectMethodName' => $methodName,
                             'aspectJoinPoint' => $aspectJoinPoint,
                             'aspectJoinPointArguments' => $aspectJpArguments,
                             'aspectAdvice' => \trim($tagConfiguration['aspectAdvice'][$key]),

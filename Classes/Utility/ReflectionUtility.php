@@ -7,9 +7,13 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Hooks\ClearCache;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
+use TYPO3\CMS\Extbase\Reflection\ReflectionService;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Reflection helper.
@@ -36,9 +40,14 @@ class ReflectionUtility
      *
      * @return bool
      */
-    public static function isInstantiable($className)
+    public static function isInstantiable($className):bool
     {
-        return self::createReflectionClass($className)
+        if(self::is9orHigher()) {
+            $reflectionClass = new \ReflectionClass($className);
+            return (bool)$reflectionClass->isInstantiable();
+        }
+
+        return (bool)self::createReflectionClass($className)
             ->isInstantiable();
     }
 
@@ -164,17 +173,93 @@ class ReflectionUtility
         return $configuration;
     }
 
+
+    /**
+     * Get the tag configuration from this method and respect multiple line and space configuration.
+     *
+     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param array                            $tagNames
+     *
+     * @return array
+     */
+    public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
+    {
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $tags = $reflectionService->getMethodTagsValues($className, $methodName);
+        $configuration = [];
+        foreach ($tagNames as $tagName) {
+            $configuration[$tagName] = [];
+            if (!\is_array($tags[$tagName])) {
+                continue;
+            }
+            foreach ($tags[$tagName] as $c) {
+                $configuration[$tagName] = \array_merge(
+                    $configuration[$tagName],
+                    GeneralUtility::trimExplode(' ', $c, true)
+                );
+            }
+        }
+
+        return $configuration;
+    }
+
+
+    /**
+     * Get the tag configuration from this method and respect multiple line and space configuration.
+     *
+     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param array                            $tagNames
+     *
+     * @return array
+     */
+    public static function getTagConfigurationForClass($className, array $tagNames): array
+    {
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $tags = $reflectionService->getClassTagsValues($className);
+
+        $configuration = [];
+        foreach ($tagNames as $tagName) {
+            $configuration[$tagName] = [];
+            if (!\is_array($tags[$tagName])) {
+                continue;
+            }
+            foreach ($tags[$tagName] as $c) {
+                $configuration[$tagName] = \array_merge(
+                    $configuration[$tagName],
+                    GeneralUtility::trimExplode(' ', $c, true)
+                );
+            }
+        }
+
+        return $configuration;
+    }
+
+
+
     /**
      * Get public method names
      *
      * @param string $className
      * @return array
      */
-    public static function getPublicMethodNames(string $className):array{
-        $methods = self::getPublicMethods($className);
+    public static function getPublicMethodNames(string $className): array
+    {
         $methodNames = [];
-        foreach ($methods as $method) {
-            $methodNames[] = $method->getName();
+
+        if (self::is9orHigher()) {
+            $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $schema = $reflectionService->getClassSchema($className);
+            $methods = $schema->getMethods();
+            foreach ($methods as $key => $method) {
+                if ($method['public']) {
+                    $methodNames[] = $key;
+                }
+            }
+        } else {
+            $methods = self::getPublicMethods($className);
+            foreach ($methods as $method) {
+                $methodNames[] = $method->getName();
+            }
         }
         return $methodNames;
     }
@@ -200,5 +285,15 @@ class ReflectionUtility
         }
 
         return $properties;
+    }
+
+    /**
+     * Is 9 or higher
+     *
+     * @return bool
+     */
+    public static function is9orHigher(): bool
+    {
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
     }
 }

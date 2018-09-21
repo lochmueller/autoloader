@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\ClassLoadingInformation;
-use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -51,9 +50,9 @@ class ClearCache implements ClearCacheActionsHookInterface
      * clear Cache ajax handler.
      *
      * @param array              $ajaxParams
-     * @param AjaxRequestHandler $ajaxObj
+     * @param $ajaxObj
      */
-    public function clear($ajaxParams, AjaxRequestHandler $ajaxObj)
+    public function clear($ajaxParams, $ajaxObj)
     {
         if (!$this->isAdmin() || (!$this->isAlwaysActivated() && $this->isProduction())) {
             return;
