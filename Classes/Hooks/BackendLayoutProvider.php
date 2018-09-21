@@ -66,6 +66,7 @@ class BackendLayoutProvider implements DataProviderInterface
                 return $this->createBackendLayout($info);
             }
         }
+        return null;
     }
 
     /**

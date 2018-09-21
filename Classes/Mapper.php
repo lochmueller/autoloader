@@ -53,7 +53,7 @@ class Mapper implements SingletonInterface
     {
         try {
             $mapper = $this->getMapperByType($type);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             // always return a valid mapper
             $mapper = $this->getMapperByType('String');
         }
