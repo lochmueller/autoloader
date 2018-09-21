@@ -30,7 +30,7 @@
 	],
 	"require": {
 		"php": ">=7.0.0",
-		"typo3/cms-core": "~8.7.0||~9.3.0||dev-master"
+		"typo3/cms-core": "~8.7.0||~9.4.0||~9.5.0||dev-master"
 	},
 	"suggest": {
 		"zendframework/zend-http": "2.* - Need for JSON Server support",
