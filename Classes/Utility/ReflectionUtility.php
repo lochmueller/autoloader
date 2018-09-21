@@ -79,6 +79,28 @@ class ReflectionUtility
     }
 
     /**
+     * Get all properties that are tagged with the given tag.
+     *
+     * @param string $className
+     * @param string $tag
+     *
+     * @return array
+     */
+    public static function getPropertyNamesTaggedWith($className, $tag):array
+    {
+        $classReflection = self::createReflectionClass($className);
+        $properties = [];
+        foreach ($classReflection->getProperties() as $property) {
+            /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
+            if ($property->isTaggedWith($tag)) {
+                $properties[] = $property->getName();
+            }
+        }
+
+        return $properties;
+    }
+
+    /**
      * Get all public methods of the given class.
      *
      * @param string $className
@@ -140,6 +162,21 @@ class ReflectionUtility
         }
 
         return $configuration;
+    }
+
+    /**
+     * Get public method names
+     *
+     * @param string $className
+     * @return array
+     */
+    public static function getPublicMethodNames(string $className):array{
+        $methods = self::getPublicMethods($className);
+        $methodNames = [];
+        foreach ($methods as $method) {
+            $methodNames[] = $method->getName();
+        }
+        return $methodNames;
     }
 
     /**

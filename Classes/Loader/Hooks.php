@@ -58,6 +58,7 @@ class Hooks implements LoaderInterface
                 ];
             }
 
+            // @todo getPublicMethodNames
             // add method hooks
             foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
                 /** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */

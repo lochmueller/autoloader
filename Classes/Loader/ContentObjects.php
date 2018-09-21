@@ -22,7 +22,6 @@ use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -81,17 +80,14 @@ class ContentObjects implements LoaderInterface
                 $fieldConfiguration = \array_diff($fieldConfiguration, $defaultFields);
 
                 // RTE manipulation
-                $classReflection = ReflectionUtility::createReflectionClass($className);
-                foreach ($classReflection->getProperties() as $property) {
-                    /** @var $property PropertyReflection */
-                    if ($property->isTaggedWith('enableRichText')) {
-                        $search = \array_search(
-                            GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-                            $fieldConfiguration, true
-                        );
-                        if (false !== $search) {
-                            $richTextFields[] = $fieldConfiguration[$search];
-                        }
+                $properties = ReflectionUtility::getPropertyNamesTaggedWith($className, 'enableRichText');
+                foreach ($properties as $property) {
+                    $search = \array_search(
+                        GeneralUtility::camelCaseToLowerCaseUnderscored($property),
+                        $fieldConfiguration, true
+                    );
+                    if (false !== $search) {
+                        $richTextFields[] = $fieldConfiguration[$search];
                     }
                 }
             }
