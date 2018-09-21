@@ -25,4 +25,3 @@ Autoloader: Speed up Extension Development
    Introduction/Index
    Loader/Index
    TechnicalInformation/Index
-   Example/Index

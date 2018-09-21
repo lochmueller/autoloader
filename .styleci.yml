@@ -32,6 +32,4 @@ finder:
   not-path:
     - ".Build"
     - "Documentation"
-    - "Resources/Private/Examples"
-
 

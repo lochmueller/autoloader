@@ -3,7 +3,6 @@ filter:
         - 'Documentation/*'
         - 'Tests/*'
         - 'Resources/Private/Contrib/*'
-        - 'Resources/Private/Examples/*'
     paths:
         - 'Classes/*'
 tools:

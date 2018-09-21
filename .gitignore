@@ -3,11 +3,3 @@
 composer.lock
 /.idea/
 /.php_cs.cache
-/Resources/Private/Examples/autoloader_contentobject/Resources/Private/Layouts/
-/Resources/Private/Examples/autoloader_contentobject/Configuration/
-/Resources/Private/Examples/autoloader_smartobject/Resources/
-/Resources/Private/Examples/autoloader_smartobject/Configuration/
-/Resources/Private/Examples/autoloader_csh/Configuration/
-/Resources/Private/Examples/autoloader_csh/Resources/
-/Resources/Private/Examples/autoloader_contentobject/Resources/Private/Templates/Content/Teaser.html
-/Resources/Private/Examples/autoloader_contentobject/Resources/Private/Templates/Content/TeaserBackend.html

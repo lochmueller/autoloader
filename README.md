@@ -13,16 +13,8 @@ Autoloader: Swiss Knife for Developers
 
 Working Examples
 ------
-See how simple it is and how the Autoloader works.
-
-* First: install Autoloader
-* Second: execute autoloader/Resources/Private/Shell/LinkExampleExtensions.sh
-```bash
-cd typo3conf/ext/
-bash autoloader/Resources/Private/Shell/LinkExampleExtensions.sh
-```
-* Third: install in your TYPO3 Extension-Manager the example extensions one-by-one.
-* Fourth: explore!
+We drop the examples in EXT:autoloader.
+Please check other extensions tht use autoloader as example (EXT:calendarize)
 
 Example for a SmartObject (Only one of the features)
 ------

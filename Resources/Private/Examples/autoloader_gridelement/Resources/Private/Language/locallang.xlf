@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2015-12-17T19:44:42+00:00" product-name="autoloader_gridelement">
-		<header/>
-		<body>
-			<trans-unit id="grid.TestGrid"><source><![CDATA[TestGrid]]></source></trans-unit>
-		</body>
-	</file>
-</xliff>
