@@ -5,14 +5,12 @@
  * @category Extension
  * @author   Tim Lochmüller
  */
-
-
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
 $is9orHigher = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger('9.0');
-if($is9orHigher) {
+if ($is9orHigher) {
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('signalClass');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('signalName');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('noHeader');
