@@ -25,6 +25,7 @@ class ReflectionUtility
      * @param string $className
      *
      * @return ClassReflection
+     * @deprecated
      */
     public static function createReflectionClass($className)
     {
@@ -75,28 +76,6 @@ class ReflectionUtility
      *
      * @return array
      */
-    public static function getPropertiesTaggedWith($className, $tag)
-    {
-        $classReflection = self::createReflectionClass($className);
-        $properties = [];
-        foreach ($classReflection->getProperties() as $property) {
-            /** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
-            if ($property->isTaggedWith($tag)) {
-                $properties[] = $property;
-            }
-        }
-
-        return $properties;
-    }
-
-    /**
-     * Get all properties that are tagged with the given tag.
-     *
-     * @param string $className
-     * @param string $tag
-     *
-     * @return array
-     */
     public static function getPropertyNamesTaggedWith($className, $tag):array
     {
         $properties = self::getPropertyNames($className);
@@ -108,19 +87,6 @@ class ReflectionUtility
             }
         }
         return $return;
-    }
-
-    /**
-     * Get all public methods of the given class.
-     *
-     * @param string $className
-     *
-     * @return MethodReflection[]
-     */
-    public static function getPublicMethods($className)
-    {
-        return self::createReflectionClass($className)
-            ->getMethods(\ReflectionMethod::IS_PUBLIC);
     }
 
     /**
@@ -150,34 +116,6 @@ class ReflectionUtility
         }
 
         return false;
-    }
-
-    /**
-     * Get the tag configuration from this method and respect multiple line and space configuration.
-     *
-     * @param MethodReflection|ClassReflection $reflectionObject
-     * @param array                            $tagNames
-     *
-     * @return array
-     */
-    public static function getTagConfiguration($reflectionObject, array $tagNames): array
-    {
-        $tags = $reflectionObject->getTagsValues();
-        $configuration = [];
-        foreach ($tagNames as $tagName) {
-            $configuration[$tagName] = [];
-            if (!\is_array($tags[$tagName])) {
-                continue;
-            }
-            foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = \array_merge(
-                    $configuration[$tagName],
-                    GeneralUtility::trimExplode(' ', $c, true)
-                );
-            }
-        }
-
-        return $configuration;
     }
 
     /**
@@ -306,11 +244,13 @@ class ReflectionUtility
                     $methodNames[] = $key;
                 }
             }
-        } else {
-            $methods = self::getPublicMethods($className);
-            foreach ($methods as $method) {
-                $methodNames[] = $method->getName();
-            }
+            return $methodNames;
+        }
+
+        $methods = self::createReflectionClass($className)
+            ->getMethods(\ReflectionMethod::IS_PUBLIC);
+        foreach ($methods as $method) {
+            $methodNames[] = $method->getName();
         }
         return $methodNames;
     }

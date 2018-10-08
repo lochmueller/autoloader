@@ -338,9 +338,9 @@ class SmartObjectInformationService
         $fields[] = 'KEY parent (pid)';
 
         // add custom keys set by @key annotations
-        $classReflection = ReflectionUtility::createReflectionClass($modelClassName);
-        if ($classReflection->isTaggedWith('key')) {
-            $additionalKeys = $classReflection->getTagValues('key');
+        $reflectionConfiguration = ReflectionUtility::getTagConfigurationForClass($modelClassName, ['key']);
+        if (!empty($reflectionConfiguration['key'])) {
+            $additionalKeys = $reflectionConfiguration['key'];
             \array_walk($additionalKeys, function (&$item) {
                 $item = 'KEY ' . $item;
             });
