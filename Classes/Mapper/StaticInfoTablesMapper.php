@@ -10,6 +10,7 @@ namespace HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\MapperInterface;
 use SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor;
 use SJBR\StaticInfoTables\Hook\Backend\Form\Wizard\SuggestReceiver;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * StaticInfoTablesMapper.
@@ -37,6 +38,10 @@ class StaticInfoTablesMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
+        if(!ExtensionManagementUtility::isLoaded('static_info_tables')){
+            return false;
+        }
+
         $this->lastClass = \mb_strtolower($type);
 
         return !(false === \mb_strpos($this->lastClass, self::CLASS_BASE));
