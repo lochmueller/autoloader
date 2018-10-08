@@ -15,9 +15,6 @@ $is9orHigher = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumbe
 if($is9orHigher) {
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('signalClass');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('signalName');
-    \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('aspectClass');
-    \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('aspectJoinPoint');
-    \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('aspectAdvice');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('noHeader');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('wizardTab');
     \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName('db');

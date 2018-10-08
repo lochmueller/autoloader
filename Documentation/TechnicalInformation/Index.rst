@@ -6,4 +6,3 @@ Technical Information
 	Structure
 	LocalizationStrings
 	SmartObjectManagement
-	AspectHandling

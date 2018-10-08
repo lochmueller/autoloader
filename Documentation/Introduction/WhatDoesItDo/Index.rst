@@ -7,7 +7,6 @@ Loader
 """"""
 
 - :ref:`alternative-implementations`
-- :ref:`aspect`
 - :ref:`command-controller`
 - :ref:`content-objects`
 - :ref:`extension-id`

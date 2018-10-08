@@ -15,7 +15,6 @@ use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**

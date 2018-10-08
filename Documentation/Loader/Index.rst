@@ -6,7 +6,6 @@ Here we describe the different implemented Loader.
 .. toctree::
 
 	AlternativeImplementations
-	Aspect
 	CommandController
 	ContentObjects
 	ContextSensitiveHelps

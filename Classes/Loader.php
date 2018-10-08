@@ -28,7 +28,6 @@ class Loader implements SingletonInterface
         // class replacement
         'Xclass',
         'AlternativeImplementations',
-        'Aspect',
         // additional functions
         'Hooks',
         'Slots',
