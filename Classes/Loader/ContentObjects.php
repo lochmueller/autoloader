@@ -305,13 +305,14 @@ tt_content.key.field = CType';
         if (empty($loaderInformation)) {
             return;
         }
-        $siteRelPathPrivate = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/';
+
+        $siteRelPathPrivate = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/';
         $frontendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/Content.html');
-        if (!\file_exists($frontendLayout)) {
+        if (!\is_file($frontendLayout)) {
             $this->writeContentTemplateToTarget('FrontendLayout', $frontendLayout);
         }
         $backendLayout = GeneralUtility::getFileAbsFileName($siteRelPathPrivate . 'Layouts/ContentBackend.html');
-        if (!\file_exists($backendLayout)) {
+        if (!\is_file($backendLayout)) {
             $this->writeContentTemplateToTarget('BackendLayout', $backendLayout);
         }
 

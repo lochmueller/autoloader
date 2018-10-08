@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -16,6 +17,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class EditLinkViewHelper extends AbstractViewHelper
 {
+
     /**
      * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper.
      *
@@ -51,9 +53,33 @@ class EditLinkViewHelper extends AbstractViewHelper
     {
         $urlParameter = [
             'edit[tt_content][' . $data['uid'] . ']' => 'edit',
-            'returnUrl' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
+            'returnUrl'                              => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
 
-        return '<a href="' . BackendUtility::getModuleUrl('record_edit', $urlParameter) . '">' . $this->renderChildren() . '</a>';
+        return '<a href="' . $this->getModuleUrl('record_edit', $urlParameter) . '">' . $this->renderChildren() . '</a>';
+    }
+
+    /**
+     * getModuleUrl
+     *
+     * @param string $moduleName
+     * @param array  $urlParameters
+     *
+     * @return string
+     */
+    protected function getModuleUrl(string $moduleName, array $urlParameters)
+    {
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        try {
+            if (!method_exists($uriBuilder, 'buildUriFromRoute')) {
+                throw new \Exception('No method', 1238);
+            }
+            $uri = $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
+        } catch (\Exception $ex) {
+            // old TYPO3
+            $uri = BackendUtility::getModuleUrl('record_edit', $urlParameters);
+        }
+        return (string)$uri;
     }
 }
