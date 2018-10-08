@@ -7,13 +7,11 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
-use HDNET\Autoloader\Hooks\ClearCache;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Reflection helper.
@@ -182,12 +180,12 @@ class ReflectionUtility
         return $configuration;
     }
 
-
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
      * @param string $className
-     * @param array                            $tagNames
+     * @param        $methodName
+     * @param array  $tagNames
      *
      * @return array
      */
@@ -217,12 +215,12 @@ class ReflectionUtility
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
-     * @param MethodReflection|ClassReflection $reflectionObject
+     * @param string $className
      * @param array                            $tagNames
      *
      * @return array
      */
-    public static function getTagConfigurationForClass($className, array $tagNames): array
+    public static function getTagConfigurationForClass(string $className, array $tagNames): array
     {
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $tags = $reflectionService->getClassTagsValues($className);
@@ -243,15 +241,17 @@ class ReflectionUtility
 
         return $configuration;
     }
+
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
-     * @param MethodReflection|ClassReflection $reflectionObject
-     * @param array                            $tagNames
+     * @param string $className
+     * @param string $property
+     * @param array  $tagNames
      *
      * @return array
      */
-    public static function getTagConfigurationForProperty($className, $property, array $tagNames): array
+    public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
