@@ -4,10 +4,10 @@
 
 ---
 conf.py:
-  copyright: 2014
+  copyright: 2018
   project: Autoloader
-  version: 6.2
-  release: 4.0.0
+  version: 6.0
+  release: 6.0.0
   highlight_language: php
   latex_documents:
   - - Index
