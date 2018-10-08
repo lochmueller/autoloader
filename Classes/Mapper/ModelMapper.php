@@ -29,11 +29,12 @@ class ModelMapper implements MapperInterface
         }
         try {
             $reflection = new \ReflectionClass($type);
-            while($reflection = $reflection->getParentClass()) {
-                if($reflection->getName() === AbstractEntity::class) {
+            while ($reflection = $reflection->getParentClass()) {
+                if (AbstractEntity::class === $reflection->getName()) {
                     return true;
                 }
             }
+
             return false;
         } catch (\Exception $exception) {
             return false;

@@ -56,7 +56,6 @@ class Plugins implements LoaderInterface
             foreach ($methods as $methodName) {
                 $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin', 'noCache']);
                 if (!empty($configuration['plugin'])) {
-
                     $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $configuration['plugin']), true);
                     $actionName = \str_replace('Action', '', $methodName);
 

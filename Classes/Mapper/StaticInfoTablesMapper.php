@@ -38,7 +38,7 @@ class StaticInfoTablesMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        if(!ExtensionManagementUtility::isLoaded('static_info_tables')){
+        if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
             return false;
         }
 

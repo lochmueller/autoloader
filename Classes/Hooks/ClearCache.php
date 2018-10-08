@@ -51,7 +51,7 @@ class ClearCache implements ClearCacheActionsHookInterface
     /**
      * clear Cache ajax handler.
      *
-     * @param array              $ajaxParams
+     * @param array $ajaxParams
      * @param $ajaxObj
      */
     public function clear($ajaxParams, $ajaxObj)
@@ -66,7 +66,7 @@ class ClearCache implements ClearCacheActionsHookInterface
             ->flush();
 
         $composerClassLoading = true;
-        if(VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version()) >= 9000000){
+        if (VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version()) >= 9000000) {
             // TYPO3 >= 9.0.0
             $composerClassLoading = Environment::isComposerMode();
         } else {

@@ -10,7 +10,6 @@ namespace HDNET\Autoloader\Utility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
-use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 /**
@@ -25,6 +24,7 @@ class ReflectionUtility
      * @param string $className
      *
      * @return ClassReflection
+     *
      * @deprecated
      */
     public static function createReflectionClass($className)
@@ -39,14 +39,15 @@ class ReflectionUtility
      *
      * @return bool
      */
-    public static function isInstantiable($className):bool
+    public static function isInstantiable($className): bool
     {
-        if(self::is9orHigher()) {
+        if (self::is9orHigher()) {
             $reflectionClass = new \ReflectionClass($className);
-            return (bool)$reflectionClass->isInstantiable();
+
+            return (bool) $reflectionClass->isInstantiable();
         }
 
-        return (bool)self::createReflectionClass($className)
+        return (bool) self::createReflectionClass($className)
             ->isInstantiable();
     }
 
@@ -59,10 +60,12 @@ class ReflectionUtility
      */
     public static function getParentClassName($className)
     {
-        if(self::is9orHigher()) {
+        if (self::is9orHigher()) {
             $reflectionClass = new \ReflectionClass($className);
+
             return $reflectionClass->getParentClass()->getName();
         }
+
         return self::createReflectionClass($className)
             ->getParentClass()
             ->getName();
@@ -76,16 +79,17 @@ class ReflectionUtility
      *
      * @return array
      */
-    public static function getPropertyNamesTaggedWith($className, $tag):array
+    public static function getPropertyNamesTaggedWith($className, $tag): array
     {
         $properties = self::getPropertyNames($className);
         $return = [];
         foreach ($properties as $property) {
             $config = self::getTagConfigurationForProperty($className, $property, [$tag]);
-            if(!empty($config[$tag])) {
+            if (!empty($config[$tag])) {
                 $return[] = $property;
             }
         }
+
         return $return;
     }
 
@@ -100,7 +104,7 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
-        if(self::is9orHigher()) {
+        if (self::is9orHigher()) {
             $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
             $values = $reflectionService->getClassTagValues($className, $tag);
         } else {
@@ -149,12 +153,11 @@ class ReflectionUtility
         return $configuration;
     }
 
-
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
      * @param string $className
-     * @param array                            $tagNames
+     * @param array  $tagNames
      *
      * @return array
      */
@@ -211,24 +214,25 @@ class ReflectionUtility
         return $configuration;
     }
 
-
-
     /**
-     * Get public method names
+     * Get public method names.
      *
      * @param string $className
+     *
      * @return array
      */
     public static function getPropertyNames(string $className): array
     {
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
-        return array_keys($reflectionService->getClassSchema($className)->getProperties());
+
+        return \array_keys($reflectionService->getClassSchema($className)->getProperties());
     }
 
     /**
-     * Get public method names
+     * Get public method names.
      *
      * @param string $className
+     *
      * @return array
      */
     public static function getPublicMethodNames(string $className): array
@@ -244,6 +248,7 @@ class ReflectionUtility
                     $methodNames[] = $key;
                 }
             }
+
             return $methodNames;
         }
 
@@ -252,6 +257,7 @@ class ReflectionUtility
         foreach ($methods as $method) {
             $methodNames[] = $method->getName();
         }
+
         return $methodNames;
     }
 
@@ -265,16 +271,17 @@ class ReflectionUtility
     public static function getDeclaringProperties($className)
     {
         $classReflection = new \ReflectionClass($className);
-        $own = array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return $property->class == $className;
+        $own = \array_filter($classReflection->getProperties(), function ($property) use ($className) {
+            return $property->class === $className;
         });
-        return array_map(function($item){
+
+        return \array_map(function ($item) {
             return $item->name;
         }, $own);
     }
 
     /**
-     * Is 9 or higher
+     * Is 9 or higher.
      *
      * @return bool
      */

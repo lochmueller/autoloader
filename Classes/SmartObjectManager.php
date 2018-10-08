@@ -64,9 +64,7 @@ class SmartObjectManager implements SingletonInterface
             return false;
         }
 
-
-        $return = ReflectionUtility::getFirstTagValue($className, 'db') !== false;
-
+        $return = false !== ReflectionUtility::getFirstTagValue($className, 'db');
 
         // if ($registerAutoLoader) {
         //     spl_autoload_register($riskAutoLoader, true, true);

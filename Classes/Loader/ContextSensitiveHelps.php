@@ -133,6 +133,5 @@ class ContextSensitiveHelps implements LoaderInterface
                 return $path;
             }
         }
-        return null;
     }
 }
