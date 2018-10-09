@@ -237,8 +237,8 @@ class ReflectionUtility
      * @param string $className
      * @param string $tag
      *
-     * @return array
      * @throws \ReflectionException
+     * @return array
      */
     public static function getPropertiesTaggedWith(string $className, string $tag): array
     {
@@ -250,7 +250,6 @@ class ReflectionUtility
             if (strpos($prop->getDocComment(), '@' . $tag) !== false) {
                 $result[] = $prop->getName();
             }
-
         }
         return $result;
     }
