@@ -105,6 +105,11 @@ class ReflectionUtility
     public static function getFirstTagValue(string $className, string $tag)
     {
         if (self::is9orHigher()) {
+            $rc = new \ReflectionClass($className);
+            if (strpos($rc->getDocComment(), '@' . $tag) === false) {
+                return false;
+            }
+
             $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
             $values = $reflectionService->getClassTagValues($className, $tag);
         } else {
@@ -226,6 +231,28 @@ class ReflectionUtility
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
 
         return \array_keys($reflectionService->getClassSchema($className)->getProperties());
+    }
+
+    /**
+     * @param string $className
+     * @param string $tag
+     *
+     * @return array
+     * @throws \ReflectionException
+     */
+    public static function getPropertiesTaggedWith(string $className, string $tag): array
+    {
+        $classReflection = new \ReflectionClass($className);
+        $props = $classReflection->getProperties();
+        $result = [];
+        foreach ($props as $prop) {
+            /** @var $prop \ReflectionProperty */
+            if (strpos($prop->getDocComment(), '@' . $tag) !== false) {
+                $result[] = $prop->getName();
+            }
+
+        }
+        return $result;
     }
 
     /**

@@ -262,7 +262,7 @@ class SmartObjectInformationService
      */
     protected function getCustomModelFields(string $modelClassName): array
     {
-        $properties = ReflectionUtility::getPropertyNames($modelClassName);
+        $properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
         $tableName = ModelUtility::getTableName($modelClassName);
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $fields = [];
