@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -96,6 +97,7 @@ class ModelUtility
      */
     public static function getTcaInformation($modelClassName)
     {
+        Loader::allowNonDoctrineAnnotations();
         $informationService = SmartObjectInformationService::getInstance();
 
         return $informationService->getTcaInformation($modelClassName);

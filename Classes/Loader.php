@@ -118,7 +118,7 @@ class Loader implements SingletonInterface
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
-        self::checkDoctrineAnnotations();
+        self::allowNonDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
@@ -133,16 +133,16 @@ class Loader implements SingletonInterface
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
-        self::checkDoctrineAnnotations();
+        self::allowNonDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }
 
     /**
-     * Add Doctrine annotations
+     * Allow non Doctrine annotations
      */
-    protected static function checkDoctrineAnnotations()
+    public static function allowNonDoctrineAnnotations()
     {
         static $done = false;
         if ($done) {
