@@ -80,7 +80,7 @@ class ContentObjects implements LoaderInterface
                 $fieldConfiguration = \array_diff($fieldConfiguration, $defaultFields);
 
                 // RTE manipulation
-                $properties = ReflectionUtility::getPropertyNamesTaggedWith($className, 'enableRichText');
+                $properties = ReflectionUtility::getPropertiesTaggedWith($className, 'enableRichText');
                 foreach ($properties as $property) {
                     $search = \array_search(
                         GeneralUtility::camelCaseToLowerCaseUnderscored($property),

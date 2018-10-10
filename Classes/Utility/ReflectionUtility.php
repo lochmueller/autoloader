@@ -72,28 +72,6 @@ class ReflectionUtility
     }
 
     /**
-     * Get all properties that are tagged with the given tag.
-     *
-     * @param string $className
-     * @param string $tag
-     *
-     * @return array
-     */
-    public static function getPropertyNamesTaggedWith($className, $tag): array
-    {
-        $properties = self::getPropertyNames($className);
-        $return = [];
-        foreach ($properties as $property) {
-            $config = self::getTagConfigurationForProperty($className, $property, [$tag]);
-            if (!empty($config[$tag])) {
-                $return[] = $property;
-            }
-        }
-
-        return $return;
-    }
-
-    /**
      * Get first class tag information.
      * The trimmed value if the tag exists and FALSE if the tag do not exists.
      *
@@ -294,15 +272,15 @@ class ReflectionUtility
      *
      * @return array
      */
-    public static function getDeclaringProperties($className)
+    public static function getDeclaringProperties(string $className)
     {
         $classReflection = new \ReflectionClass($className);
         $own = \array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return $property->class === $className;
+            return trim((string)$property->class, '\\') === trim($className, '\\');
         });
 
         return \array_map(function ($item) {
-            return $item->name;
+            return (string)$item->name;
         }, $own);
     }
 
