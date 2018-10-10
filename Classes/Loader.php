@@ -7,12 +7,14 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Central Loader object.
@@ -116,6 +118,7 @@ class Loader implements SingletonInterface
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
+        self::checkDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
@@ -130,9 +133,38 @@ class Loader implements SingletonInterface
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
+        self::checkDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
+    }
+
+    /**
+     * Add Doctrine annotations
+     */
+    protected static function checkDoctrineAnnotations()
+    {
+        static $done = false;
+        if ($done) {
+            return;
+        }
+        $done = true;
+        $is9orHigher = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
+        if ($is9orHigher) {
+            AnnotationReader::addGlobalIgnoredName('signalClass');
+            AnnotationReader::addGlobalIgnoredName('signalName');
+            AnnotationReader::addGlobalIgnoredName('noHeader');
+            AnnotationReader::addGlobalIgnoredName('wizardTab');
+            AnnotationReader::addGlobalIgnoredName('db');
+            AnnotationReader::addGlobalIgnoredName('recordType');
+            AnnotationReader::addGlobalIgnoredName('parentClass');
+            AnnotationReader::addGlobalIgnoredName('hook');
+            AnnotationReader::addGlobalIgnoredName('plugin');
+            AnnotationReader::addGlobalIgnoredName('noCache');
+            AnnotationReader::addGlobalIgnoredName('enableRichText');
+            AnnotationReader::addGlobalIgnoredName('parentClass');
+            AnnotationReader::addGlobalIgnoredName('smartExclude');
+        }
     }
 
     /**
