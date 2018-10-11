@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
@@ -88,7 +89,7 @@ class ReflectionUtility
                 return false;
             }
 
-            $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $reflectionService = self::getReflectionService();
             $values = $reflectionService->getClassTagValues($className, $tag);
         } else {
             $classReflection = self::createReflectionClass($className);
@@ -116,7 +117,7 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
-        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $reflectionService = self::getReflectionService();
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
 
         $configuration = [];
@@ -146,7 +147,7 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForClass(string $className, array $tagNames): array
     {
-        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $reflectionService = self::getReflectionService();
         $tags = $reflectionService->getClassTagsValues($className);
 
         $configuration = [];
@@ -177,7 +178,7 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
-        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $reflectionService = self::getReflectionService();
         $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
 
         $configuration = [];
@@ -203,7 +204,7 @@ class ReflectionUtility
      */
     public static function getPropertyNames(string $className): array
     {
-        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $reflectionService = self::getReflectionService();
 
         return \array_keys($reflectionService->getClassSchema($className)->getProperties());
     }
@@ -241,7 +242,7 @@ class ReflectionUtility
         $methodNames = [];
 
         if (self::is9orHigher()) {
-            $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $reflectionService = self::getReflectionService();
             $schema = $reflectionService->getClassSchema($className);
             $methods = $schema->getMethods();
             foreach ($methods as $key => $method) {
@@ -289,5 +290,16 @@ class ReflectionUtility
     public static function is9orHigher(): bool
     {
         return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
+    }
+
+    /**
+     * Create reflection service
+     *
+     * @return ReflectionService
+     */
+    protected static function getReflectionService()
+    {
+        $objectManager = new ObjectManager();
+        return $objectManager->get(ReflectionService::class);
     }
 }
