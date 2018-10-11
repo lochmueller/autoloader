@@ -94,6 +94,7 @@ class SmartObjectInformationService
                 $field['config']['type'] = 'text';
                 $field['config']['enableRichtext'] = '1';
                 $field['config']['richtextConfiguration'] = 'default';
+                $field['config']['softref'] = 'typolink_tag,email[subst],url';
                 $field['defaultExtras'] = 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
             }
 
