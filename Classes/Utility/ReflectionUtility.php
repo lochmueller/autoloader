@@ -182,15 +182,12 @@ class ReflectionUtility
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
-            $configuration[$tagName] = [];
             if (!\is_array($tags[$tagName])) {
                 continue;
             }
+            $configuration[$tagName] = '';
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = \array_merge(
-                    $configuration[$tagName],
-                    GeneralUtility::trimExplode(' ', $c, true)
-                );
+                $configuration[$tagName] = trim($configuration[$tagName] . ' ' . $c);
             }
         }
 
