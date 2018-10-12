@@ -36,7 +36,7 @@ class EnableFields implements DataSetInterface
                 'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
                 'editlock' => [
                     'exclude' => 1,
-                    'label' => 'LLL:EXT:lang/locallang_tca.xlf:editlock',
+                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:editlock',
                     'config' => [
                         'type' => 'check',
                         'behaviour' => [
@@ -46,14 +46,14 @@ class EnableFields implements DataSetInterface
                 ],
                 'hidden' => [
                     'exclude' => 1,
-                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
                     'config' => [
                         'type' => 'check',
                     ],
                 ],
                 'starttime' => [
                     'exclude' => true,
-                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
                     'config' => [
                         'type' => 'input',
                         'renderType' => 'inputDateTime',
@@ -65,7 +65,7 @@ class EnableFields implements DataSetInterface
                 ],
                 'endtime' => [
                     'exclude' => true,
-                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
                     'config' => [
                         'type' => 'input',
                         'renderType' => 'inputDateTime',
