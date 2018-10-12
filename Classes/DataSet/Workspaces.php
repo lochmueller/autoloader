@@ -31,7 +31,7 @@ class Workspaces implements DataSetInterface
             ],
             'columns' => [
                 't3ver_label' => [
-                    'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
                     'config' => [
                         'type' => 'input',
                         'size' => 30,
