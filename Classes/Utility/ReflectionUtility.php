@@ -179,7 +179,11 @@ class ReflectionUtility
     public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
         $reflectionService = self::getReflectionService();
-        $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
+        if (self::is9orHigher()) {
+            $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
+        } else {
+            $tags = $reflectionService->getPropertyTagsValues($className, $property);
+        }
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
