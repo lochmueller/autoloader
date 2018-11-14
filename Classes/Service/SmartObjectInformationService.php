@@ -231,7 +231,7 @@ class SmartObjectInformationService
                     // Do not handle the getDatabaseMappingByVarType by db, Fallback is the var call
                 }
             }
-            $fields[] = $info['name'] . ' ' . $info['db'];
+            $fields[] = '`' . $info['name'] . '` ' . $info['db'];
         }
 
         return $fields;
