@@ -42,16 +42,23 @@ class EditLinkViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('data', 'array', 'Row of the content element', true, []);
+    }
+
+    /**
      * Render a edit link for the backend preview.
-     *
-     * @param array $data Row of the content element
      *
      * @return string
      */
-    public function render(array $data)
+    public function render()
     {
         $urlParameter = [
-            'edit[tt_content][' . $data['uid'] . ']' => 'edit',
+            'edit[tt_content][' . $this->arguments['data']['uid'] . ']' => 'edit',
             'returnUrl' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
 
