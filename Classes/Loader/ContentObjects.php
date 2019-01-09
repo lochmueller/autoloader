@@ -404,7 +404,8 @@ tt_content.key.field = CType';
             $configuration = $this->wrapDefaultTcaConfiguration('', $noHeader);
         }
         $defaultFields = [];
-        $existingFields = \array_keys($GLOBALS['TCA']['tt_content']['columns']);
+        // Note: TCA could be missing in install tool checks, so cast the TCA to array
+        $existingFields = \array_keys((array) $GLOBALS['TCA']['tt_content']['columns']);
         $parts = GeneralUtility::trimExplode(',', $configuration, true);
         foreach ($parts as $fieldConfiguration) {
             $fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, true);
