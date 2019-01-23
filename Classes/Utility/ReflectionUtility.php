@@ -310,7 +310,7 @@ class ReflectionUtility
     /**
      * Check if the method is tagged with the given tag (no value checked)
      *
-     * @param string $controllerName
+     * @param string $className
      * @param string $methodName
      * @param string $tagName
      * @return bool
@@ -320,5 +320,19 @@ class ReflectionUtility
         $reflectionService = self::getReflectionService();
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
         return array_key_exists($tagName, $tags);
+    }
+
+    /**
+     * Check if the property is tagged with the given tag (no value checked)
+     *
+     * @param string $className
+     * @param string $propertyName
+     * @param string $tagName
+     * @return bool
+     */
+    public static function isPropertyTaggedWith($className, $propertyName, $tagName): bool
+    {
+        $properties = self::getPropertiesTaggedWith($className, $tagName);
+        return in_array($propertyName, $properties);
     }
 }

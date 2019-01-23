@@ -267,9 +267,8 @@ class SmartObjectInformationService
         $tableName = ModelUtility::getTableName($modelClassName);
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $fields = [];
-        $enableRichText = 'enablerichtext'; // Note the field is lower case, because of the reflection service
         foreach ($properties as $propertyName) {
-            $configuration = ReflectionUtility::getTagConfigurationForProperty($modelClassName, $propertyName, ['db', 'var', $enableRichText]);
+            $configuration = ReflectionUtility::getTagConfigurationForProperty($modelClassName, $propertyName, ['db', 'var']);
             $var = '';
             if (!empty($configuration['var'])) {
                 $var = $configuration['var'];
@@ -280,7 +279,7 @@ class SmartObjectInformationService
                 'name' => $nameMapperService->getDatabaseFieldName($tableName, $propertyName),
                 'db' => \trim((string) $configuration['db']),
                 'var' => \trim((string) $var),
-                'rte' => $configuration[$enableRichText] === '',
+                'rte' => ReflectionUtility::isPropertyTaggedWith($modelClassName, $propertyName, 'enableRichText'),
             ];
         }
 
