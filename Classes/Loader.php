@@ -140,7 +140,7 @@ class Loader implements SingletonInterface
     }
 
     /**
-     * Allow non Doctrine annotations
+     * Allow non Doctrine annotations.
      */
     public static function allowNonDoctrineAnnotations()
     {

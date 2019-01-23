@@ -42,7 +42,7 @@ class EditLinkViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

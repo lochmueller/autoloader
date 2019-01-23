@@ -85,7 +85,7 @@ class ReflectionUtility
     {
         if (self::is9orHigher()) {
             $rc = new \ReflectionClass($className);
-            if (strpos($rc->getDocComment(), '@' . $tag) === false) {
+            if (false === \mb_strpos($rc->getDocComment(), '@' . $tag)) {
                 return false;
             }
 
@@ -111,7 +111,7 @@ class ReflectionUtility
      *
      * @param string $className
      * @param        $methodName
-     * @param array $tagNames
+     * @param array  $tagNames
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class ReflectionUtility
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
      * @param string $className
-     * @param array $tagNames
+     * @param array  $tagNames
      *
      * @return array
      */
@@ -172,7 +172,7 @@ class ReflectionUtility
      *
      * @param string $className
      * @param string $property
-     * @param array $tagNames
+     * @param array  $tagNames
      *
      * @return array
      */
@@ -192,7 +192,7 @@ class ReflectionUtility
             }
             $configuration[$tagName] = '';
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = trim($configuration[$tagName] . ' ' . $c);
+                $configuration[$tagName] = \trim($configuration[$tagName] . ' ' . $c);
             }
         }
 
@@ -218,6 +218,7 @@ class ReflectionUtility
      * @param string $tag
      *
      * @throws \ReflectionException
+     *
      * @return array
      */
     public static function getPropertiesTaggedWith(string $className, string $tag): array
@@ -227,10 +228,11 @@ class ReflectionUtility
         $result = [];
         foreach ($props as $prop) {
             /** @var $prop \ReflectionProperty */
-            if (strpos($prop->getDocComment(), '@' . $tag) !== false) {
+            if (false !== \mb_strpos($prop->getDocComment(), '@' . $tag)) {
                 $result[] = $prop->getName();
             }
         }
+
         return $result;
     }
 
@@ -278,7 +280,7 @@ class ReflectionUtility
     {
         $classReflection = new \ReflectionClass($className);
         $own = \array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return trim((string) $property->class, '\\') === trim($className, '\\');
+            return \trim((string) $property->class, '\\') === \trim($className, '\\');
         });
 
         return \array_map(function ($item) {
@@ -297,42 +299,47 @@ class ReflectionUtility
     }
 
     /**
-     * Create reflection service
-     *
-     * @return ReflectionService
-     */
-    protected static function getReflectionService()
-    {
-        $objectManager = new ObjectManager();
-        return $objectManager->get(ReflectionService::class);
-    }
-
-    /**
-     * Check if the method is tagged with the given tag (no value checked)
+     * Check if the method is tagged with the given tag (no value checked).
      *
      * @param string $className
      * @param string $methodName
      * @param string $tagName
+     *
      * @return bool
      */
     public static function isMethodTaggedWith($className, $methodName, $tagName): bool
     {
         $reflectionService = self::getReflectionService();
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
-        return array_key_exists($tagName, $tags);
+
+        return \array_key_exists($tagName, $tags);
     }
 
     /**
-     * Check if the property is tagged with the given tag (no value checked)
+     * Check if the property is tagged with the given tag (no value checked).
      *
      * @param string $className
      * @param string $propertyName
      * @param string $tagName
+     *
      * @return bool
      */
     public static function isPropertyTaggedWith($className, $propertyName, $tagName): bool
     {
         $properties = self::getPropertiesTaggedWith($className, $tagName);
-        return in_array($propertyName, $properties);
+
+        return \in_array($propertyName, $properties, true);
+    }
+
+    /**
+     * Create reflection service.
+     *
+     * @return ReflectionService
+     */
+    protected static function getReflectionService()
+    {
+        $objectManager = new ObjectManager();
+
+        return $objectManager->get(ReflectionService::class);
     }
 }
