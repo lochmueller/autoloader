@@ -111,7 +111,7 @@ class ReflectionUtility
      *
      * @param string $className
      * @param        $methodName
-     * @param array  $tagNames
+     * @param array $tagNames
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class ReflectionUtility
      * Get the tag configuration from this method and respect multiple line and space configuration.
      *
      * @param string $className
-     * @param array  $tagNames
+     * @param array $tagNames
      *
      * @return array
      */
@@ -172,7 +172,7 @@ class ReflectionUtility
      *
      * @param string $className
      * @param string $property
-     * @param array  $tagNames
+     * @param array $tagNames
      *
      * @return array
      */
@@ -278,11 +278,11 @@ class ReflectionUtility
     {
         $classReflection = new \ReflectionClass($className);
         $own = \array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return trim((string)$property->class, '\\') === trim($className, '\\');
+            return trim((string) $property->class, '\\') === trim($className, '\\');
         });
 
         return \array_map(function ($item) {
-            return (string)$item->name;
+            return (string) $item->name;
         }, $own);
     }
 
@@ -305,5 +305,20 @@ class ReflectionUtility
     {
         $objectManager = new ObjectManager();
         return $objectManager->get(ReflectionService::class);
+    }
+
+    /**
+     * Check if the method is tagged with the given tag (no value checked)
+     *
+     * @param string $controllerName
+     * @param string $methodName
+     * @param string $tagName
+     * @return bool
+     */
+    public static function isMethodTaggedWith($className, $methodName, $tagName): bool
+    {
+        $reflectionService = self::getReflectionService();
+        $tags = $reflectionService->getMethodTagsValues($className, $methodName);
+        return array_key_exists($tagName, $tags);
     }
 }

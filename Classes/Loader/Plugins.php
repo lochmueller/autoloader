@@ -54,7 +54,7 @@ class Plugins implements LoaderInterface
 
             $methods = ReflectionUtility::getPublicMethodNames($controllerName);
             foreach ($methods as $methodName) {
-                $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin', 'noCache']);
+                $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin']);
                 if (!empty($configuration['plugin'])) {
                     $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $configuration['plugin']), true);
                     $actionName = \str_replace('Action', '', $methodName);
@@ -65,7 +65,7 @@ class Plugins implements LoaderInterface
                             $pluginKey,
                             $controllerKey,
                             $actionName,
-                            !empty($configuration['noCache'])
+                            ReflectionUtility::isMethodTaggedWith($controllerName, $methodName, 'noCache')
                         );
                     }
                 }
