@@ -11,6 +11,7 @@ use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -63,6 +64,13 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
             $GLOBALS['TSFE']->gr_list = '';
         }
 
+        $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
+        $cache = GeneralUtility::makeInstance(CacheManager::class)
+            ->getCache('cache_pagesection');
+        if ($cache->has($cacheIdentifier)) {
+            return $cache->get($cacheIdentifier);
+        }
+
         $ctype = $row['CType'];
         /** @var array $config */
         $config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
@@ -74,8 +82,9 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
             'data' => $row,
             'object' => $model,
         ]);
-
-        return $view->render();
+        $output = $view->render();
+        $cache->set($cacheIdentifier, $output);
+        return $output;
     }
 
     /**
