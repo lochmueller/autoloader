@@ -78,12 +78,10 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
-
         if (self::is9orHigher()) {
-
             $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
             $values = $reflectionService->getClassTagValues($className, $tag);
-            if($values === false) {
+            if ($values === false) {
                 return false;
             }
         } else {
@@ -112,7 +110,6 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
-
         $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
 
@@ -305,7 +302,6 @@ class ReflectionUtility
      */
     public static function isMethodTaggedWith($className, $methodName, $tagName): bool
     {
-
         $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
 
