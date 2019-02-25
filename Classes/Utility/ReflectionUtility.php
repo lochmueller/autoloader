@@ -114,7 +114,7 @@ class ReflectionUtility
     {
 
         $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-        $tags = $reflectionService->getMethodTagsValues($className, $methodName);
+        $tags = $reflectionService->getMethodTagValues($className, $methodName);
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
@@ -307,7 +307,7 @@ class ReflectionUtility
     {
 
         $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-        $tags = $reflectionService->getMethodTagsValues($className, $methodName);
+        $tags = $reflectionService->getMethodTagValues($className, $methodName);
 
         return \array_key_exists($tagName, $tags);
     }
