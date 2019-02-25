@@ -42,14 +42,9 @@ class ReflectionUtility
      */
     public static function isInstantiable($className): bool
     {
-        if (self::is9orHigher()) {
-            $reflectionClass = new \ReflectionClass($className);
+        $reflectionClass = new \ReflectionClass($className);
 
-            return (bool) $reflectionClass->isInstantiable();
-        }
-
-        return (bool) self::createReflectionClass($className)
-            ->isInstantiable();
+        return (bool) $reflectionClass->isInstantiable();
     }
 
     /**
@@ -83,14 +78,14 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
+
         if (self::is9orHigher()) {
-            $rc = new \ReflectionClass($className);
-            if (false === \mb_strpos($rc->getDocComment(), '@' . $tag)) {
+
+            $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
+            $values = $reflectionService->getClassTagValues($className, $tag);
+            if($values === false) {
                 return false;
             }
-
-            $reflectionService = self::getReflectionService();
-            $values = $reflectionService->getClassTagValues($className, $tag);
         } else {
             $classReflection = self::createReflectionClass($className);
             if (!$classReflection->isTaggedWith($tag)) {
@@ -117,7 +112,8 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
-        $reflectionService = self::getReflectionService();
+
+        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
 
         $configuration = [];
@@ -309,7 +305,8 @@ class ReflectionUtility
      */
     public static function isMethodTaggedWith($className, $methodName, $tagName): bool
     {
-        $reflectionService = self::getReflectionService();
+
+        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
         $tags = $reflectionService->getMethodTagsValues($className, $methodName);
 
         return \array_key_exists($tagName, $tags);
