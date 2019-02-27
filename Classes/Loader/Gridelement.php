@@ -39,7 +39,7 @@ class Gridelement implements LoaderInterface
         }
 
         $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Grids/';
-        $files = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt');
+        $files = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt,typoscript');
 
         foreach ($files as $file) {
             $pathInfo = PathUtility::pathinfo($file);
