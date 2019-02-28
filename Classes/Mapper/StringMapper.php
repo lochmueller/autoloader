@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 
 /**
  * Map String.
@@ -38,6 +39,22 @@ class StringMapper implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
+        if (ReflectionUtility::is9orHigher() && $fieldName === 'slug') {
+            return [
+                'exclude' => 1,
+                'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+                'config' => [
+                    'type' => 'slug',
+                    'prependSlash' => true,
+                    'generatorOptions' => [
+                        'fields' => [], // 'title'
+                        'prefixParentPageSlug' => true,
+                    ],
+                    'fallbackCharacter' => '-',
+                    'eval' => 'uniqueInSite',
+                ],
+            ];
+        }
         return [
             'exclude' => 1,
             'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
