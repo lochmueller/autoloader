@@ -47,20 +47,23 @@ class Gridelement implements LoaderInterface
             $extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
             $translationKey = 'grid.' . $pathInfo['filename'];
+            $translationKeyDescription = $translationKey . '.description';
             if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
+                TranslateUtility::assureLabel($translationKeyDescription, $loader->getExtensionKey(), $pathInfo['filename'] . ' description ');
             }
 
             $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Grids/' . $file;
             $icon = $extension ? $iconPath . $extension : false;
             $label = TranslateUtility::getLllString($translationKey, $loader->getExtensionKey());
+            $description = TranslateUtility::getLllString($translationKeyDescription, $loader->getExtensionKey());
             $content = GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
 
             $flexForm = 'EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Grids/' . $pathInfo['filename'] . '.xml';
             $flexFormFile = GeneralUtility::getFileAbsFileName($flexForm);
             $flexFormContent = \is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
 
-            $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, $flexFormContent);
+            $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, $flexFormContent, $description);
         }
 
         return $grids;
@@ -99,16 +102,18 @@ class Gridelement implements LoaderInterface
      * @param $config
      * @param $icon
      * @param $flexForm
+     * @param $description
      *
      * @return string
      */
-    protected function getPageTsConfig($id, $label, $config, $icon, $flexForm)
+    protected function getPageTsConfig($id, $label, $config, $icon, $flexForm, $description)
     {
         $lines = [];
         $lines[] = 'tx_gridelements.setup {';
         $lines[] = $id . ' {';
 
         $lines[] = 'title = ' . $label;
+        $lines[] = 'description = ' . $description;
         if ($icon) {
             $lines[] = 'icon = ' . $icon;
         }
