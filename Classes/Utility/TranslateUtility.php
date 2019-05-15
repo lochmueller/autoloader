@@ -118,6 +118,11 @@ class TranslateUtility
     {
         $file = self::getLllString($key, $extensionKey, null, $tableName);
 
+        if (\defined('TYPO3_REQUESTTYPE') && TYPO3_REQUESTTYPE === 16) {
+            // Do not call the translation workflow in install tool
+            return $file;
+        }
+
         return LocalizationUtility::translate($file, $extensionKey);
     }
 
