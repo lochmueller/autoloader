@@ -55,7 +55,7 @@ class ReflectionService
     public function getMethodTagValues(string $className, string $methodName)
     {
         try {
-            if($this->is9orHigher()) {
+            if ($this->is9orHigher()) {
                 $coreReflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
                 $classSchema = $coreReflectionService->getClassSchema($className);
                 return $classSchema->getMethod($methodName)['tags'] ?? [];
