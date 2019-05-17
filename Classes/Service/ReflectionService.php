@@ -5,10 +5,14 @@
  */
 namespace HDNET\Autoloader\Service;
 
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * ReflectionService
+ *
+ * For TYPO3 9 and higher
  */
 class ReflectionService
 {
@@ -51,11 +55,27 @@ class ReflectionService
     public function getMethodTagValues(string $className, string $methodName)
     {
         try {
-            $coreReflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
-            $classSchema = $coreReflectionService->getClassSchema($className);
-            return $classSchema->getMethod($methodName)['tags'] ?? [];
+            if($this->is9orHigher()) {
+                $coreReflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
+                $classSchema = $coreReflectionService->getClassSchema($className);
+                return $classSchema->getMethod($methodName)['tags'] ?? [];
+            } else {
+                $classReflection = ReflectionUtility::createReflectionClass($className);
+                $methodReflection = $classReflection->getMethod($methodName);
+                return $methodReflection->getTagsValues();
+            }
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Is 9 or higher.
+     *
+     * @return bool
+     */
+    public function is9orHigher(): bool
+    {
+        return VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getCurrentTypo3Version()) >= VersionNumberUtility::convertVersionNumberToInteger('9.0.0');
     }
 }
