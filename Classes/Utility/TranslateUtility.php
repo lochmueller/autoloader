@@ -122,6 +122,10 @@ class TranslateUtility
             // Do not call the translation workflow in install tool
             return $file;
         }
+        if (GeneralUtility::getApplicationContext()->isTesting()) {
+            // Do not call translation workflow in testinng
+            return $file;
+        }
 
         return LocalizationUtility::translate($file, $extensionKey);
     }
