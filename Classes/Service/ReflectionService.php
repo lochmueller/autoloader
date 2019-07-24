@@ -3,7 +3,6 @@
 /**
  * ReflectionService.
  */
-
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
