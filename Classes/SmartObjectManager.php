@@ -56,6 +56,11 @@ class SmartObjectManager implements SingletonInterface
         // ];
         // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
+        $smartObjectClassLoadingIgnorePattern = self::getSmartObjectClassLoadingIgnorePattern();
+        if ('' !== \trim($smartObjectClassLoadingIgnorePattern) && \preg_match($smartObjectClassLoadingIgnorePattern, $className)) {
+            return false;
+        }
+
         if (!\class_exists($className)) {
             return false;
         }
@@ -116,5 +121,17 @@ class SmartObjectManager implements SingletonInterface
                 FileUtility::writeFileAndCreateFolder($tcaFileName, $content);
             }
         }
+    }
+
+    /**
+     * Get ignore pattern.
+     *
+     * @return string
+     */
+    protected static function getSmartObjectClassLoadingIgnorePattern()
+    {
+        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+
+        return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string) $configuration['smartObjectClassLoadingIgnorePattern'] : '';
     }
 }

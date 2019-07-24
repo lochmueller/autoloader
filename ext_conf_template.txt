@@ -4,5 +4,5 @@ enableAutoloaderClearCacheInProduction = 0
 # cat=basic/enable; type=boolean; label=Enable language files on table base:The autoloader create language files on table base for better sepration of labels in the Language folder
 enableLanguageFileOnTableBase = 0
 
-
-
+# cat=basic/enable; type=string; label=Smart object class loading ignore pattern: The autoload load the classes of the Model folder. This create same problems related to News class loading. With this pattern you can prevent the loading of special Models in autoloader
+smartObjectClassLoadingIgnorePattern =
