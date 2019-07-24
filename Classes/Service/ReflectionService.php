@@ -1,8 +1,9 @@
 <?php
 
 /**
- * ReflectionService
+ * ReflectionService.
  */
+
 namespace HDNET\Autoloader\Service;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -10,20 +11,20 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
- * ReflectionService
+ * ReflectionService.
  *
  * For TYPO3 9 and higher
  */
 class ReflectionService
 {
-
     /**
      * Get the tag value
      * - Array (if the tag exist)
-     * - false (if the tag do not exists)
+     * - false (if the tag do not exists).
      *
      * @param string $className
      * @param string $tag
+     *
      * @return array|bool
      */
     public function getClassTagValues(string $className, string $tag)
@@ -33,7 +34,7 @@ class ReflectionService
             $classSchema = $coreReflectionService->getClassSchema($className);
             $tags = $classSchema->getTags();
 
-            if (!array_key_exists($tag, $tags)) {
+            if (!\array_key_exists($tag, $tags)) {
                 return false;
             }
 
@@ -46,10 +47,11 @@ class ReflectionService
     /**
      * Get method tag values
      * - Array
-     * - False (if there are any problems)
+     * - False (if there are any problems).
      *
      * @param string $className
      * @param string $methodName
+     *
      * @return array|bool
      */
     public function getMethodTagValues(string $className, string $methodName)
@@ -58,12 +60,13 @@ class ReflectionService
             if ($this->is9orHigher()) {
                 $coreReflectionService = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
                 $classSchema = $coreReflectionService->getClassSchema($className);
+
                 return $classSchema->getMethod($methodName)['tags'] ?? [];
-            } else {
-                $classReflection = ReflectionUtility::createReflectionClass($className);
-                $methodReflection = $classReflection->getMethod($methodName);
-                return $methodReflection->getTagsValues();
             }
+            $classReflection = ReflectionUtility::createReflectionClass($className);
+            $methodReflection = $classReflection->getMethod($methodName);
+
+            return $methodReflection->getTagsValues();
         } catch (\Exception $e) {
             return false;
         }

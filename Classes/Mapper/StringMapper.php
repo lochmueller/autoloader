@@ -39,7 +39,7 @@ class StringMapper implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        if (ReflectionUtility::is9orHigher() && $fieldName === 'slug') {
+        if (ReflectionUtility::is9orHigher() && 'slug' === $fieldName) {
             return [
                 'exclude' => 1,
                 'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
@@ -55,6 +55,7 @@ class StringMapper implements MapperInterface
                 ],
             ];
         }
+
         return [
             'exclude' => 1,
             'label' => $overWriteLabel ? $overWriteLabel : $fieldName,

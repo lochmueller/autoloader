@@ -81,7 +81,7 @@ class ReflectionUtility
         if (self::is9orHigher()) {
             $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
             $values = $reflectionService->getClassTagValues($className, $tag);
-            if ($values === false) {
+            if (false === $values) {
                 return false;
             }
         } else {

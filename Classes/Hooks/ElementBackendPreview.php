@@ -84,6 +84,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         ]);
         $output = $view->render();
         $cache->set($cacheIdentifier, $output);
+
         return $output;
     }
 
