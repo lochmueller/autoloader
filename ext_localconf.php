@@ -32,3 +32,6 @@ $registry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core
 $registry->registerIcon('extension-autoloader', \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class, [
     'source' => 'EXT:autoloader/Resources/Public/Icons/Extension.svg',
 ]);
+$registry->registerIcon('extension-autoloader-clearcache', \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class, [
+    'source' => 'EXT:autoloader/Resources/Public/Icons/ClearCache.svg',
+]);
