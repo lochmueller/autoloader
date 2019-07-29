@@ -29,6 +29,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = [
 
 
 $registry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-$registry->registerIcon('extension-autoloader', \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class, [
-    'source' => \TYPO3\CMS\Core\Utility\PathUtility::getAbsoluteWebPath(\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName('EXT:autoloader/ext_icon.png')),
+$registry->registerIcon('extension-autoloader', \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class, [
+    'source' => 'EXT:autoloader/Resources/Public/Icons/Extension.svg',
 ]);
