@@ -56,7 +56,7 @@ class IconUtility
         if ($fileExtension) {
             return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.' . $fileExtension, $extSyntax);
         } else {
-            $fileExtension = self::getIconFileExtension( ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.');
+            $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.');
             if ($fileExtension) {
                 return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
             }
