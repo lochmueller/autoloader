@@ -42,7 +42,7 @@ class ClearCache implements ClearCacheActionsHookInterface
             'title' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.title',
             'description' => 'LLL:EXT:autoloader/Resources/Private/Language/locallang.xlf:cache.description',
             'href' => $this->getAjaxUri(),
-            'iconIdentifier' => 'extension-autoloader',
+            'iconIdentifier' => 'extension-autoloader-clearcache',
         ];
 
         $cacheActions[] = $action;
