@@ -153,7 +153,7 @@ class ContentObjects implements LoaderInterface
                 $config['iconExt'],
             ], 'CType', $loader->getExtensionKey());
 
-            if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
+            if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem']) || empty($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
                 $baseTcaConfiguration = $this->wrapDefaultTcaConfiguration(
                     $config['fieldConfiguration'],
                     (bool) $config['noHeader']
