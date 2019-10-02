@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 
 /**
  * Map String.
@@ -39,7 +38,7 @@ class StringMapper implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        if (ReflectionUtility::is9orHigher() && 'slug' === $fieldName) {
+        if ('slug' === $fieldName) {
             return [
                 'exclude' => 1,
                 'label' => $overWriteLabel ? $overWriteLabel : $fieldName,

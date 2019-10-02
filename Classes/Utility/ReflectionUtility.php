@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
@@ -56,15 +55,9 @@ class ReflectionUtility
      */
     public static function getParentClassName($className)
     {
-        if (self::is9orHigher()) {
-            $reflectionClass = new \ReflectionClass($className);
+        $reflectionClass = new \ReflectionClass($className);
 
-            return $reflectionClass->getParentClass()->getName();
-        }
-
-        return self::createReflectionClass($className)
-            ->getParentClass()
-            ->getName();
+        return $reflectionClass->getParentClass()->getName();
     }
 
     /**
@@ -78,18 +71,10 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
-        if (self::is9orHigher()) {
-            $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-            $values = $reflectionService->getClassTagValues($className, $tag);
-            if (false === $values) {
-                return false;
-            }
-        } else {
-            $classReflection = self::createReflectionClass($className);
-            if (!$classReflection->isTaggedWith($tag)) {
-                return false;
-            }
-            $values = $classReflection->getTagValues($tag);
+        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
+        $values = $reflectionService->getClassTagValues($className, $tag);
+        if (false === $values) {
+            return false;
         }
 
         if (\is_array($values)) {
@@ -172,11 +157,8 @@ class ReflectionUtility
     public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
         $reflectionService = self::getReflectionService();
-        if (self::is9orHigher()) {
-            $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
-        } else {
-            $tags = $reflectionService->getPropertyTagsValues($className, $property);
-        }
+
+        $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
@@ -240,23 +222,13 @@ class ReflectionUtility
     {
         $methodNames = [];
 
-        if (self::is9orHigher()) {
-            $reflectionService = self::getReflectionService();
-            $schema = $reflectionService->getClassSchema($className);
-            $methods = $schema->getMethods();
-            foreach ($methods as $key => $method) {
-                if ($method['public']) {
-                    $methodNames[] = $key;
-                }
+        $reflectionService = self::getReflectionService();
+        $schema = $reflectionService->getClassSchema($className);
+        $methods = $schema->getMethods();
+        foreach ($methods as $key => $method) {
+            if ($method['public']) {
+                $methodNames[] = $key;
             }
-
-            return $methodNames;
-        }
-
-        $methods = self::createReflectionClass($className)
-            ->getMethods(\ReflectionMethod::IS_PUBLIC);
-        foreach ($methods as $method) {
-            $methodNames[] = $method->getName();
         }
 
         return $methodNames;
@@ -279,16 +251,6 @@ class ReflectionUtility
         return \array_map(function ($item) {
             return (string) $item->name;
         }, $own);
-    }
-
-    /**
-     * Is 9 or higher.
-     *
-     * @return bool
-     */
-    public static function is9orHigher(): bool
-    {
-        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
     }
 
     /**

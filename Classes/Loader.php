@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Central Loader object.
@@ -149,22 +148,19 @@ class Loader implements SingletonInterface
             return;
         }
         $done = true;
-        $is9orHigher = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
-        if ($is9orHigher) {
-            AnnotationReader::addGlobalIgnoredName('signalClass');
-            AnnotationReader::addGlobalIgnoredName('signalName');
-            AnnotationReader::addGlobalIgnoredName('noHeader');
-            AnnotationReader::addGlobalIgnoredName('wizardTab');
-            AnnotationReader::addGlobalIgnoredName('db');
-            AnnotationReader::addGlobalIgnoredName('recordType');
-            AnnotationReader::addGlobalIgnoredName('parentClass');
-            AnnotationReader::addGlobalIgnoredName('hook');
-            AnnotationReader::addGlobalIgnoredName('plugin');
-            AnnotationReader::addGlobalIgnoredName('noCache');
-            AnnotationReader::addGlobalIgnoredName('enableRichText');
-            AnnotationReader::addGlobalIgnoredName('parentClass');
-            AnnotationReader::addGlobalIgnoredName('smartExclude');
-        }
+        AnnotationReader::addGlobalIgnoredName('signalClass');
+        AnnotationReader::addGlobalIgnoredName('signalName');
+        AnnotationReader::addGlobalIgnoredName('noHeader');
+        AnnotationReader::addGlobalIgnoredName('wizardTab');
+        AnnotationReader::addGlobalIgnoredName('db');
+        AnnotationReader::addGlobalIgnoredName('recordType');
+        AnnotationReader::addGlobalIgnoredName('parentClass');
+        AnnotationReader::addGlobalIgnoredName('hook');
+        AnnotationReader::addGlobalIgnoredName('plugin');
+        AnnotationReader::addGlobalIgnoredName('noCache');
+        AnnotationReader::addGlobalIgnoredName('enableRichText');
+        AnnotationReader::addGlobalIgnoredName('parentClass');
+        AnnotationReader::addGlobalIgnoredName('smartExclude');
     }
 
     /**
