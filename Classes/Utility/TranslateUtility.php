@@ -8,9 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * TranslateUtility.
@@ -66,11 +64,7 @@ class TranslateUtility
     {
         $lllString = self::getLllString($key, $extensionKey, null, $tableName);
         if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG'])) {
-            // init for backend
-
-            $version9orHigher = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_branch) >= VersionNumberUtility::convertVersionNumberToInteger('9.0');
-
-            $GLOBALS['LANG'] = GeneralUtility::makeInstance($version9orHigher ? \TYPO3\CMS\Core\Localization\LanguageService::class : LanguageService::class);
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
         if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey, $tableName)) {

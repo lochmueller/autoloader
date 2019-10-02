@@ -12,11 +12,9 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\ClassLoadingInformation;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Clear Cache hook for the Backend.
@@ -65,14 +63,7 @@ class ClearCache implements ClearCacheActionsHookInterface
         $cacheManager->getCache('autoloader')
             ->flush();
 
-        $composerClassLoading = true;
-        if (VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version()) >= 9000000) {
-            // TYPO3 >= 9.0.0
-            $composerClassLoading = Environment::isComposerMode();
-        } else {
-            // TYPO3 < 9.0.0
-            $composerClassLoading = Bootstrap::usesComposerClassLoading();
-        }
+        $composerClassLoading = Environment::isComposerMode();
 
         // Dump new class loading information
         if (!$composerClassLoading) {
