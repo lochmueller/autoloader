@@ -46,8 +46,6 @@ class Loader implements SingletonInterface
         'ExtensionId',
         'TypeConverter',
         'BackendLayout',
-        'SoapServer',
-        'JsonServer',
         'LanguageOverride',
         'Icon',
         'Gridelement',

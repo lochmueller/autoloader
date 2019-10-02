@@ -13,7 +13,6 @@ if (!defined('TYPO3_MODE')) {
     'Hooks',
     'Slots',
     'StaticTyposcript',
-    'ExtensionId',
 ]);
 
 

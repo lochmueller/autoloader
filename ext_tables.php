@@ -13,7 +13,6 @@ if (!defined('TYPO3_MODE')) {
     'Hooks',
     'Slots',
     'StaticTyposcript',
-    'ExtensionId',
 ]);
 
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['lang']['writer'] = [
