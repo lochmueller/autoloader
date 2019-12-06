@@ -36,8 +36,6 @@ class ReflectionUtility
      * Check if the given class is instantiable.
      *
      * @param string $className
-     *
-     * @return bool
      */
     public static function isInstantiable($className): bool
     {
@@ -64,9 +62,6 @@ class ReflectionUtility
      * Get first class tag information.
      * The trimmed value if the tag exists and FALSE if the tag do not exists.
      *
-     * @param string $className
-     * @param string $tag
-     *
      * @return string|bool
      */
     public static function getFirstTagValue(string $className, string $tag)
@@ -89,9 +84,6 @@ class ReflectionUtility
      *
      * @param string $className
      * @param        $methodName
-     * @param array  $tagNames
-     *
-     * @return array
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
@@ -117,11 +109,6 @@ class ReflectionUtility
 
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
-     *
-     * @param string $className
-     * @param array  $tagNames
-     *
-     * @return array
      */
     public static function getTagConfigurationForClass(string $className, array $tagNames): array
     {
@@ -147,12 +134,6 @@ class ReflectionUtility
 
     /**
      * Get the tag configuration from this method and respect multiple line and space configuration.
-     *
-     * @param string $className
-     * @param string $property
-     * @param array  $tagNames
-     *
-     * @return array
      */
     public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
@@ -176,10 +157,6 @@ class ReflectionUtility
 
     /**
      * Get public method names.
-     *
-     * @param string $className
-     *
-     * @return array
      */
     public static function getPropertyNames(string $className): array
     {
@@ -189,12 +166,7 @@ class ReflectionUtility
     }
 
     /**
-     * @param string $className
-     * @param string $tag
-     *
      * @throws \ReflectionException
-     *
-     * @return array
      */
     public static function getPropertiesTaggedWith(string $className, string $tag): array
     {
@@ -213,10 +185,6 @@ class ReflectionUtility
 
     /**
      * Get public method names.
-     *
-     * @param string $className
-     *
-     * @return array
      */
     public static function getPublicMethodNames(string $className): array
     {
@@ -236,8 +204,6 @@ class ReflectionUtility
 
     /**
      * Get properties of the given class, that are als declared in the given class.
-     *
-     * @param string $className
      *
      * @return array
      */
@@ -259,8 +225,6 @@ class ReflectionUtility
      * @param string $className
      * @param string $methodName
      * @param string $tagName
-     *
-     * @return bool
      */
     public static function isMethodTaggedWith($className, $methodName, $tagName): bool
     {
@@ -276,8 +240,6 @@ class ReflectionUtility
      * @param string $className
      * @param string $propertyName
      * @param string $tagName
-     *
-     * @return bool
      */
     public static function isPropertyTaggedWith($className, $propertyName, $tagName): bool
     {

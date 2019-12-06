@@ -77,11 +77,6 @@ class NameMapperService
 
     /**
      * Get the right DB representation and respect camelCase field of the core.
-     *
-     * @param string $tableName
-     * @param string $propertyName
-     *
-     * @return string
      */
     public function getDatabaseFieldName(string $tableName, string $propertyName): string
     {

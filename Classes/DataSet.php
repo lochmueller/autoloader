@@ -29,8 +29,6 @@ class DataSet implements SingletonInterface
     /**
      * Get all implementations and exclude the given list.
      *
-     * @param array $list
-     *
      * @return array
      */
     public function getAllAndExcludeList(array $list)
@@ -47,8 +45,6 @@ class DataSet implements SingletonInterface
 
     /**
      * Get none implementations and include the given list.
-     *
-     * @param array $list
      *
      * @return array
      */
@@ -81,8 +77,7 @@ class DataSet implements SingletonInterface
     /**
      * Get the SQL information of the given data sets.
      *
-     * @param array $implementations
-     * @param       $table
+     * @param $table
      *
      * @return array
      */
@@ -120,8 +115,6 @@ class DataSet implements SingletonInterface
 
     /**
      * Create the data set objects.
-     *
-     * @param array $implementations
      *
      * @return array
      */

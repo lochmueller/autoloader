@@ -73,8 +73,6 @@ class ClearCache implements ClearCacheActionsHookInterface
 
     /**
      * Get Ajax URI.
-     *
-     * @return string
      */
     protected function getAjaxUri(): string
     {
@@ -92,8 +90,6 @@ class ClearCache implements ClearCacheActionsHookInterface
 
     /**
      * Return if the clear cache element is als visible in production.
-     *
-     * @return bool
      */
     protected function isAlwaysActivated(): bool
     {
@@ -104,8 +100,6 @@ class ClearCache implements ClearCacheActionsHookInterface
 
     /**
      * Return TRUE if the current instance is in production mode.
-     *
-     * @return bool
      */
     protected function isProduction(): bool
     {
@@ -115,8 +109,6 @@ class ClearCache implements ClearCacheActionsHookInterface
 
     /**
      * Check if the user is a admin.
-     *
-     * @return bool
      */
     protected function isAdmin(): bool
     {

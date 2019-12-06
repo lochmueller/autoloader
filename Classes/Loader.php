@@ -111,7 +111,6 @@ class Loader implements SingletonInterface
      *
      * @param string $vendorName
      * @param string $extensionKey
-     * @param array  $implementations
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
@@ -126,7 +125,6 @@ class Loader implements SingletonInterface
      *
      * @param string $vendorName
      * @param string $extensionKey
-     * @param array  $implementations
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
@@ -166,7 +164,6 @@ class Loader implements SingletonInterface
      *
      * @param string $vendorName
      * @param string $extensionKey
-     * @param array  $implementations
      */
     public function loadExtTables($vendorName, $extensionKey, array $implementations = [])
     {
@@ -192,7 +189,6 @@ class Loader implements SingletonInterface
      *
      * @param string $vendorName
      * @param string $extensionKey
-     * @param array  $implementations
      */
     public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
@@ -249,8 +245,6 @@ class Loader implements SingletonInterface
     /**
      * Build the Autoloader objects.
      *
-     * @param array $objectNames
-     *
      * @return array
      */
     protected function buildAutoLoaderObjects(array $objectNames = [])
@@ -275,8 +269,6 @@ class Loader implements SingletonInterface
     /**
      * Get the Autoloader Names in the right order.
      *
-     * @param array $objectNames
-     *
      * @return array
      */
     protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
@@ -300,8 +292,7 @@ class Loader implements SingletonInterface
     /**
      * Prepare the autoLoader information.
      *
-     * @param array $objects
-     * @param int   $type
+     * @param int $type
      *
      * @return array
      */

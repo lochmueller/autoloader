@@ -256,10 +256,6 @@ class SmartObjectInformationService
 
     /**
      * Get custom database information for the given model.
-     *
-     * @param string $modelClassName
-     *
-     * @return array
      */
     protected function getCustomModelFields(string $modelClassName): array
     {
@@ -290,7 +286,6 @@ class SmartObjectInformationService
      * Generate SQL Query.
      *
      * @param string $tableName
-     * @param array  $fields
      *
      * @return string
      */
@@ -308,7 +303,6 @@ class SmartObjectInformationService
      *
      * @param string $modelClassName
      * @param string $tableName
-     * @param array  $custom
      *
      * @return string
      */

@@ -31,11 +31,6 @@ class ContentObjects implements LoaderInterface
 {
     /**
      * Prepare the content object loader.
-     *
-     * @param Loader $loader
-     * @param int    $type
-     *
-     * @return array
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -114,9 +109,6 @@ class ContentObjects implements LoaderInterface
 
     /**
      * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -231,9 +223,6 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
 
     /**
      * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {
@@ -296,9 +285,6 @@ tt_content.key.field = CType';
     /**
      * Check if the templates are exist and create a dummy, if there
      * is no valid template.
-     *
-     * @param array  $loaderInformation
-     * @param Loader $loader
      */
     protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader)
     {

@@ -33,10 +33,7 @@ class FileUtility
             GeneralUtility::mkdir_deep($dir);
         }
         if (\is_file($absoluteFileName) && !\is_writable($absoluteFileName)) {
-            throw new Exception(
-                'The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!',
-                234627835
-            );
+            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!', 234627835);
         }
 
         return GeneralUtility::writeFile($absoluteFileName, $content);

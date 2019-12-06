@@ -67,9 +67,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
     /**
      * getModuleUrl.
      *
-     * @param string $moduleName
-     * @param array  $urlParameters
-     *
      * @return string
      */
     protected function getModuleUrl(string $moduleName, array $urlParameters)

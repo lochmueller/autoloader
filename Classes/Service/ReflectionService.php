@@ -22,9 +22,6 @@ class ReflectionService
      * - Array (if the tag exist)
      * - false (if the tag do not exists).
      *
-     * @param string $className
-     * @param string $tag
-     *
      * @return array|bool
      */
     public function getClassTagValues(string $className, string $tag)
@@ -48,9 +45,6 @@ class ReflectionService
      * Get method tag values
      * - Array
      * - False (if there are any problems).
-     *
-     * @param string $className
-     * @param string $methodName
      *
      * @return array|bool
      */

@@ -16,10 +16,6 @@ class EnableFields implements DataSetInterface
 {
     /**
      * Get TCA information.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
     public function getTca(string $tableName): array
     {
@@ -84,10 +80,6 @@ class EnableFields implements DataSetInterface
 
     /**
      * Get database sql information.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
     public function getDatabaseSql(string $tableName): array
     {
@@ -102,8 +94,6 @@ class EnableFields implements DataSetInterface
 
     /**
      * Get database sql key information.
-     *
-     * @return array
      */
     public function getDatabaseSqlKey(): array
     {

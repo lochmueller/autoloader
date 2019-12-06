@@ -112,8 +112,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     /**
      * Check if the the Element is registered by the ContenObject-Autoloader.
      *
-     * @param array $row
-     *
      * @return bool
      */
     public function isAutoloaderContenobject(array $row)

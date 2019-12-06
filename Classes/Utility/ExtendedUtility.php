@@ -96,7 +96,6 @@ class ExtendedUtility
     /**
      * Add a hooks.
      *
-     * @param array  $locations
      * @param string $configuration
      */
     public static function addHooks(array $locations, $configuration)

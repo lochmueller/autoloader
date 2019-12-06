@@ -20,8 +20,6 @@ class SmartDatabase
      * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
      * @signalName tablesDefinitionIsBeingBuilt
      *
-     * @param array $sqlString
-     *
      * @return array
      */
     public function loadSmartObjectTables(array $sqlString)
@@ -37,7 +35,6 @@ class SmartDatabase
      * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
      * @signalName tablesDefinitionIsBeingBuilt
      *
-     * @param array  $sqlString
      * @param string $extensionKey
      *
      * @return array

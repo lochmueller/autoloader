@@ -26,11 +26,6 @@ class BackendLayout implements LoaderInterface
      * Get all the complex data and information for the loader.
      * This return value will be cached and stored in the core_cache of TYPO3.
      * There is no file monitoring for this cache.
-     *
-     * @param Loader $loader
-     * @param int    $type
-     *
-     * @return array
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -61,9 +56,6 @@ class BackendLayout implements LoaderInterface
 
     /**
      * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation)
     {
@@ -71,9 +63,6 @@ class BackendLayout implements LoaderInterface
 
     /**
      * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $loader
-     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
     {

@@ -23,11 +23,6 @@ class TypeConverter implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
-     *
-     * @param Loader $loader
-     * @param int    $type
-     *
-     * @return array
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -51,9 +46,6 @@ class TypeConverter implements LoaderInterface
 
     /**
      * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $autoLoader
-     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
@@ -61,9 +53,6 @@ class TypeConverter implements LoaderInterface
 
     /**
      * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $autoLoader
-     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

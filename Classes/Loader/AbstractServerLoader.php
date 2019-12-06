@@ -24,9 +24,6 @@ abstract class AbstractServerLoader implements LoaderInterface
 
     /**
      * Run the loading process for the ext_tables.php file.
-     *
-     * @param Loader $autoLoader
-     * @param array  $loaderInformation
      */
     public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
     {
@@ -37,9 +34,6 @@ abstract class AbstractServerLoader implements LoaderInterface
 
     /**
      * Run the loading process for the ext_localconf.php file.
-     *
-     * @param Loader $autoLoader
-     * @param array  $loaderInformation
      */
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
     {

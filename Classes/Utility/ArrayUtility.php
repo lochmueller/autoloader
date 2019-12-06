@@ -15,9 +15,6 @@ class ArrayUtility
     /**
      * Set a node in the array.
      *
-     * @param array $data
-     * @param array $array
-     *
      * @see http://www.php.net/manual/de/function.array-walk-recursive.php#106340
      */
     public static function setNodes(array $data, array &$array)
@@ -45,9 +42,6 @@ class ArrayUtility
 
     /**
      * Merge the Array Smart.
-     *
-     * @param array $array1
-     * @param array $array2
      *
      * @return array
      */
