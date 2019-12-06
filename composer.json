@@ -62,6 +62,9 @@
 	"scripts": {
 		"tool:php-cs-fixer": [
 			"php-cs-fixer fix --config .phpcs"
+		],
+		"test": [
+			"phpunit -c Tests/Unit/Build/UnitTests.xml"
 		]
 	}
 }

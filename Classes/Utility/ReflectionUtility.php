@@ -9,7 +9,6 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 /**
@@ -17,21 +16,6 @@ use TYPO3\CMS\Extbase\Reflection\ReflectionService;
  */
 class ReflectionUtility
 {
-    /**
-     * Create a new class reflection. Do not use the makeInstance or objectManager
-     * because the reflection API is also used in front of the caching framework.
-     *
-     * @param string $className
-     *
-     * @return ClassReflection
-     *
-     * @deprecated
-     */
-    public static function createReflectionClass($className)
-    {
-        return new ClassReflection($className);
-    }
-
     /**
      * Check if the given class is instantiable.
      *
@@ -56,6 +40,33 @@ class ReflectionUtility
         $reflectionClass = new \ReflectionClass($className);
 
         return $reflectionClass->getParentClass()->getName();
+    }
+
+    /**
+     * Check if the first class is found in the Hierarchy of the second.
+     */
+    public static function isClassInOtherClassHierarchy(string $searchClass, string $checkedClass): bool
+    {
+        $searchClass = \trim($searchClass, '\\');
+        if (!\class_exists($searchClass)) {
+            return false;
+        }
+        $checked = \trim($checkedClass, '\\');
+        try {
+            if ($searchClass === $checked) {
+                return true;
+            }
+            $reflection = new \ReflectionClass($searchClass);
+            while ($reflection = $reflection->getParentClass()) {
+                if ($checked === \trim($reflection->getName(), '\\')) {
+                    return true;
+                }
+            }
+
+            return false;
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 
     /**

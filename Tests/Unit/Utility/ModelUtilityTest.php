@@ -2,12 +2,12 @@
 
 namespace HDNET\Autoloader\Tests\Unit\Utility;
 
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use HDNET\Autoloader\Tests\Unit\AbstractTest;
 
 /**
  * ModelUtilityTest.
  */
-class ModelUtilityTest extends UnitTestCase
+class ModelUtilityTest extends AbstractTest
 {
     /**
      * @test

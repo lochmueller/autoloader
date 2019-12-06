@@ -3,12 +3,12 @@
 namespace HDNET\Autoloader\Tests\Unit\Loader;
 
 use HDNET\Autoloader\Loader\Slots;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use HDNET\Autoloader\Tests\Unit\AbstractTest;
 
 /**
  * SlotTest.
  */
-class SlotTest extends UnitTestCase
+class SlotTest extends AbstractTest
 {
     /**
      * @test

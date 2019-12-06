@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -24,26 +25,7 @@ class ModelMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        $type = \trim($type, '\\');
-        if (!\class_exists($type)) {
-            return false;
-        }
-        $abstractEntity = \trim(AbstractEntity::class, '\\');
-        try {
-            if ($type === $abstractEntity) {
-                return true;
-            }
-            $reflection = new \ReflectionClass($type);
-            while ($reflection = $reflection->getParentClass()) {
-                if ($abstractEntity === \trim($reflection->getName(), '\\')) {
-                    return true;
-                }
-            }
-
-            return false;
-        } catch (\Exception $exception) {
-            return false;
-        }
+        return ReflectionUtility::isClassInOtherClassHierarchy($type, AbstractEntity::class);
     }
 
     /**
