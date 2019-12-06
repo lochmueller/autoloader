@@ -7,9 +7,7 @@ use HDNET\Autoloader\Loader\AbstractServerLoader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Tests\Unit\AbstractTest;
 use HDNET\Autoloader\Utility\ReflectionUtility;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Fluid\Core\Parser\InterceptorInterface;
 
 /**
  * ReflectionUtilityTest.
