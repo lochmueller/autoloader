@@ -5,7 +5,6 @@ declare(strict_types=1);
 /**
  * ReflectionService.
  */
-
 namespace HDNET\Autoloader\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
