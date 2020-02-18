@@ -1,8 +1,10 @@
 # EXT:autoloader
 
-[![Build Status](https://travis-ci.org/lochmueller/autoloader.svg?branch=master)](https://travis-ci.org/lochmueller/autoloader)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lochmueller/autoloader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lochmueller/autoloader/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/lochmueller/autoloader/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lochmueller/autoloader/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/lochmueller/autoloader/v/stable)](https://packagist.org/packages/lochmueller/autoloader)
+[![Total Downloads](https://poser.pugx.org/lochmueller/autoloader/downloads)](https://packagist.org/packages/lochmueller/autoloader)
+[![License](https://poser.pugx.org/lochmueller/autoloader/license)](https://packagist.org/packages/lochmueller/autoloader)
+[![TYPO3](https://img.shields.io/badge/TYPO3-9-orange.svg)](https://typo3.org/)
+[![TYPO3](https://img.shields.io/badge/TYPO3-10-orange.svg)](https://typo3.org/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lochmueller/autoloader.svg)](http://isitmaintained.com/project/lochmueller/autoloader "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/lochmueller/autoloader.svg)](http://isitmaintained.com/project/lochmueller/autoloader "Percentage of issues still open")
 
