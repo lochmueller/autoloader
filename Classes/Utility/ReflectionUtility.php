@@ -186,7 +186,7 @@ class ReflectionUtility
         $result = [];
         foreach ($props as $prop) {
             /** @var $prop \ReflectionProperty */
-            if (false !== \mb_strpos($prop->getDocComment(), '@' . $tag)) {
+            if (false !== \mb_strpos((string)$prop->getDocComment(), '@' . $tag)) {
                 $result[] = $prop->getName();
             }
         }
