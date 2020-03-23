@@ -11,7 +11,6 @@ if (!defined('TYPO3_MODE')) {
 
 \HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader', [
     'Hooks',
-    'Slots',
     'StaticTyposcript',
 ]);
 

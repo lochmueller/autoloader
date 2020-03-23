@@ -13,7 +13,6 @@ if (!defined('TYPO3_MODE')) {
 
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'autoloader', [
     'Hooks',
-    'Slots',
     'StaticTyposcript',
 ]);
 

@@ -24,10 +24,8 @@ class SmartObjectManager implements SingletonInterface
 {
     /**
      * Return the SQL String for all registered smart objects.
-     *
-     * @return string
      */
-    public static function getSmartObjectRegisterSql()
+    public static function getSmartObjectRegisterSql(): array
     {
         $informationService = SmartObjectInformationService::getInstance();
         $register = SmartObjectRegister::getRegister();
@@ -37,7 +35,7 @@ class SmartObjectManager implements SingletonInterface
             $output[] = $informationService->getDatabaseInformation($modelName);
         }
 
-        return implode(LF, $output);
+        return $output;
     }
 
     /**

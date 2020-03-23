@@ -1,0 +1,7 @@
+services:
+  HDNET\Autoloader\Listener\DatabaseListener:
+    tags:
+      - name: event.listener
+        identifier: 'autoloader/databaseListener'
+        method: 'triggerEvent'
+        event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
