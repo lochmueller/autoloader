@@ -30,7 +30,7 @@
 	],
 	"require": {
 		"php": ">=7.2.0",
-		"typo3/cms-core": "^10.4||^10.5"
+		"typo3/cms-core": "^10.3||^10.4||^10.5"
 	},
 	"replace": {
 		"typo3-ter/autoloader": "self.version"
