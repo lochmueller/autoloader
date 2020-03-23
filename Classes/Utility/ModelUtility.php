@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
@@ -41,7 +43,15 @@ class ModelUtility
      */
     public static function getTableNameByModelReflectionAnnotation($modelClassName)
     {
-        return (string) ReflectionUtility::getFirstTagValue($modelClassName, 'db');
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+        /** @var DatabaseTable $classAnnotation */
+        $classAnnotation = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseTable::class);
+
+        if($classAnnotation === null) {
+            return '';
+        }
+        return (string)$classAnnotation->tableName;
     }
 
     /**
@@ -97,7 +107,6 @@ class ModelUtility
      */
     public static function getTcaInformation($modelClassName)
     {
-        Loader::allowNonDoctrineAnnotations();
         $informationService = SmartObjectInformationService::getInstance();
 
         return $informationService->getTcaInformation($modelClassName);

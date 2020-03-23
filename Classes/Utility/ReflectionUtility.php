@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Reflection\ClassSchema;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 /**
@@ -77,8 +78,7 @@ class ReflectionUtility
      */
     public static function getFirstTagValue(string $className, string $tag)
     {
-        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-        $values = $reflectionService->getClassTagValues($className, $tag);
+        $values = self::getClassTagValues($className, $tag);
         if (false === $values) {
             return false;
         }
@@ -98,8 +98,8 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
-        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-        $tags = $reflectionService->getMethodTagValues($className, $methodName);
+
+        $tags = self::getMethodTagValues($className, $methodName);
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
@@ -123,8 +123,12 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForClass(string $className, array $tagNames): array
     {
-        $reflectionService = self::getReflectionService();
-        $tags = $reflectionService->getClassTagsValues($className);
+#        $classSchema = new ClassSchema($className);
+
+        // @todo
+
+        #       $reflectionService = $objectManager->get(ReflectionService::class);
+        $tags = []; // $reflectionService->getClassTagsValues($className);
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
@@ -148,9 +152,10 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForProperty(string $className, string $property, array $tagNames): array
     {
-        $reflectionService = self::getReflectionService();
+        $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $classSchema = $coreReflectionService->getClassSchema($className);
 
-        $tags = $reflectionService->getClassSchema($className)->getProperty($property)['tags'];
+        $tags = $classSchema->getProperty($property)['tags'];
 
         $configuration = [];
         foreach ($tagNames as $tagName) {
@@ -167,13 +172,56 @@ class ReflectionUtility
     }
 
     /**
+     * Get the tag value
+     * - Array (if the tag exist)
+     * - false (if the tag do not exists).
+     *
+     * @return array|bool
+     */
+    static public function getClassTagValues(string $className, string $tag)
+    {
+        try {
+            $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $classSchema = $coreReflectionService->getClassSchema($className);
+            $tags = $classSchema->getTags();
+
+            if (!\array_key_exists($tag, $tags)) {
+                return false;
+            }
+
+            return $tags[$tag] ?? [];
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get method tag values
+     * - Array
+     * - False (if there are any problems).
+     *
+     * @return array|bool
+     */
+    static public function getMethodTagValues(string $className, string $methodName)
+    {
+        try {
+            $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+            $classSchema = $coreReflectionService->getClassSchema($className);
+
+            return $classSchema->getMethod($methodName)['tags'] ?? [];
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Get public method names.
      */
     public static function getPropertyNames(string $className): array
     {
-        $reflectionService = self::getReflectionService();
-
-        return \array_keys($reflectionService->getClassSchema($className)->getProperties());
+        $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $classSchema = $coreReflectionService->getClassSchema($className);
+        return \array_keys($classSchema->getProperties());
     }
 
     /**
@@ -186,7 +234,7 @@ class ReflectionUtility
         $result = [];
         foreach ($props as $prop) {
             /** @var $prop \ReflectionProperty */
-            if (false !== \mb_strpos((string)$prop->getDocComment(), '@' . $tag)) {
+            if (false !== \mb_strpos((string) $prop->getDocComment(), '@' . $tag)) {
                 $result[] = $prop->getName();
             }
         }
@@ -201,11 +249,12 @@ class ReflectionUtility
     {
         $methodNames = [];
 
-        $reflectionService = self::getReflectionService();
-        $schema = $reflectionService->getClassSchema($className);
-        $methods = $schema->getMethods();
+        $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
+        $classSchema = $coreReflectionService->getClassSchema($className);
+        $methods = $classSchema->getMethods();
         foreach ($methods as $key => $method) {
-            if ($method['public']) {
+            /** @var $method ClassSchema\Method */
+            if ($method->isPublic()) {
                 $methodNames[] = $key;
             }
         }
@@ -239,8 +288,7 @@ class ReflectionUtility
      */
     public static function isMethodTaggedWith($className, $methodName, $tagName): bool
     {
-        $reflectionService = GeneralUtility::makeInstance(\HDNET\Autoloader\Service\ReflectionService::class);
-        $tags = $reflectionService->getMethodTagValues($className, $methodName);
+        $tags = self::getMethodTagValues($className, $methodName);
 
         return \array_key_exists($tagName, $tags);
     }
@@ -257,17 +305,5 @@ class ReflectionUtility
         $properties = self::getPropertiesTaggedWith($className, $tagName);
 
         return \in_array($propertyName, $properties, true);
-    }
-
-    /**
-     * Create reflection service.
-     *
-     * @return ReflectionService
-     */
-    protected static function getReflectionService()
-    {
-        $objectManager = new ObjectManager();
-
-        return $objectManager->get(ReflectionService::class);
     }
 }

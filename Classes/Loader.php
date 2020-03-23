@@ -8,11 +8,14 @@ declare(strict_types=1);
 namespace HDNET\Autoloader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use HDNET\Autoloader\Cache\AutoloaderFileBackend;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Configuration\ConfigurationManager;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -67,46 +70,6 @@ class Loader implements SingletonInterface
     protected $vendorName;
 
     /**
-     * Set to tro, if there is no valid autoloader cache.
-     *
-     * @var bool
-     */
-    protected $disableFirstCall = false;
-
-    /**
-     * Default cache configuration.
-     *
-     * @var array
-     */
-    protected $cacheConfiguration = [
-        'backend' => SimpleFileBackend::class,
-        'frontend' => PhpFrontend::class,
-        'groups' => [
-            'system',
-        ],
-        'options' => [
-            'defaultLifetime' => 0,
-        ],
-    ];
-
-    /**
-     * Build up the object.
-     * If there is no valid cache in the LocalConfiguration add one.
-     */
-    public function __construct()
-    {
-        if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {
-            /** @var \TYPO3\CMS\Core\Configuration\ConfigurationManager $configurationManager */
-            $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-            $configurationManager->setLocalConfigurationValueByPath(
-                'SYS/caching/cacheConfigurations/autoloader',
-                $this->cacheConfiguration
-            );
-            $this->disableFirstCall = true;
-        }
-    }
-
-    /**
      * Call this method in the ext_tables.php file.
      *
      * @param string $vendorName
@@ -114,7 +77,6 @@ class Loader implements SingletonInterface
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = [])
     {
-        self::allowNonDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
@@ -128,35 +90,9 @@ class Loader implements SingletonInterface
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
-        self::allowNonDoctrineAnnotations();
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
-    }
-
-    /**
-     * Allow non Doctrine annotations.
-     */
-    public static function allowNonDoctrineAnnotations()
-    {
-        static $done = false;
-        if ($done) {
-            return;
-        }
-        $done = true;
-        AnnotationReader::addGlobalIgnoredName('signalClass');
-        AnnotationReader::addGlobalIgnoredName('signalName');
-        AnnotationReader::addGlobalIgnoredName('noHeader');
-        AnnotationReader::addGlobalIgnoredName('wizardTab');
-        AnnotationReader::addGlobalIgnoredName('db');
-        AnnotationReader::addGlobalIgnoredName('recordType');
-        AnnotationReader::addGlobalIgnoredName('parentClass');
-        AnnotationReader::addGlobalIgnoredName('hook');
-        AnnotationReader::addGlobalIgnoredName('plugin');
-        AnnotationReader::addGlobalIgnoredName('noCache');
-        AnnotationReader::addGlobalIgnoredName('enableRichText');
-        AnnotationReader::addGlobalIgnoredName('parentClass');
-        AnnotationReader::addGlobalIgnoredName('smartExclude');
     }
 
     /**
@@ -167,9 +103,6 @@ class Loader implements SingletonInterface
      */
     public function loadExtTables($vendorName, $extensionKey, array $implementations = [])
     {
-        if ($this->disableFirstCall) {
-            return;
-        }
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
 
@@ -192,9 +125,6 @@ class Loader implements SingletonInterface
      */
     public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = [])
     {
-        if ($this->disableFirstCall) {
-            return;
-        }
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
 
@@ -300,15 +230,15 @@ class Loader implements SingletonInterface
     {
         $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(\serialize($objects)) . '_' . $type;
 
-        /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-        $cache = $this->getCacheManager()
-            ->getCache('autoloader');
-        if ($cache->has($cacheIdentifier)) {
-            return $cache->requireOnce($cacheIdentifier);
+        // Do not use Caching Framework here
+        /** @var AutoloaderFileBackend $cacheBackend */
+        $cacheBackend = GeneralUtility::makeInstance(AutoloaderFileBackend::class, null);
+        if ($cacheBackend->has($cacheIdentifier)) {
+            return $cacheBackend->get($cacheIdentifier);
         }
 
         $return = $this->buildLoaderInformation($objects, $type);
-        $cache->set($cacheIdentifier, 'return ' . \var_export($return, true) . ';');
+        $cacheBackend->set($cacheIdentifier, $return);
 
         return $return;
     }
@@ -330,15 +260,5 @@ class Loader implements SingletonInterface
         }
 
         return $return;
-    }
-
-    /**
-     * Get the cache manager.
-     *
-     * @return \TYPO3\CMS\Core\Cache\CacheManager
-     */
-    protected function getCacheManager()
-    {
-        return GeneralUtility::makeInstance(CacheManager::class);
     }
 }
