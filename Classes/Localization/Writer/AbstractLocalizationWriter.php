@@ -3,7 +3,7 @@
 /**
  * Abstraction of the Writer.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 
@@ -33,7 +33,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     public function createFileIfNotExists($extensionKey)
     {
         $fileName = $this->getAbsoluteFilename($extensionKey);
-        if (\is_file($fileName)) {
+        if (is_file($fileName)) {
             return true;
         }
 
@@ -55,7 +55,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
      *
      * @param string $languageBaseName
      */
-    public function setLanguageBaseName($languageBaseName)
+    public function setLanguageBaseName($languageBaseName): void
     {
         $this->languageBaseName = $languageBaseName;
     }
@@ -63,7 +63,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     /**
      * flush the l10n caches.
      */
-    protected function clearCache()
+    protected function clearCache(): void
     {
         $caches = [
             't3lib_l10n',
@@ -92,7 +92,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
      */
     protected function wrapCdata($content)
     {
-        if (\htmlentities($content, ENT_NOQUOTES) !== $content) {
+        if (htmlentities($content, ENT_NOQUOTES) !== $content) {
             $content = '<![CDATA[' . $content . ']]>';
         }
 

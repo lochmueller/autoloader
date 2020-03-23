@@ -3,7 +3,7 @@
 /**
  * handler to create the labels.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
@@ -26,7 +26,7 @@ class Localization
      * @param array  $arguments     arguments are being passed over to vsprintf
      * @param string $tableName     The tablename of the given table (null, in non table context)
      */
-    public function assureLabel($key, $extensionName, &$default, $arguments, $tableName)
+    public function assureLabel($key, $extensionName, &$default, $arguments, $tableName): void
     {
         $overrideBaseName = null;
         if ($this->useTableNameFileBase()) {
@@ -45,8 +45,8 @@ class Localization
      */
     protected function useTableNameFileBase()
     {
-        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

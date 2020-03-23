@@ -3,7 +3,7 @@
 /**
  * Loading AlternativeImplementations.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -55,14 +55,14 @@ class AlternativeImplementations implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         /** @var Container $objectManager */
         $objectManager = GeneralUtility::makeInstance(Container::class);

@@ -3,7 +3,7 @@
 /**
  * Loading Xclass.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -56,14 +56,14 @@ class Xclass implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $xclass) {
             ExtendedUtility::addXclass($xclass['source'], $xclass['target']);

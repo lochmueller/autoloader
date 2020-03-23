@@ -3,7 +3,7 @@
 /**
  * Icon helper.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -27,10 +27,10 @@ class IconUtility
      * @param string $type
      * @param string $icon
      */
-    public static function addTcaTypeIcon($table, $type, $icon)
+    public static function addTcaTypeIcon($table, $type, $icon): void
     {
-        $fullIconPath = \mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
-        if (StringUtility::endsWith(\mb_strtolower($fullIconPath), 'svg')) {
+        $fullIconPath = mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
+        if (StringUtility::endsWith(mb_strtolower($fullIconPath), 'svg')) {
             $iconProviderClass = SvgIconProvider::class;
         } else {
             $iconProviderClass = BitmapIconProvider::class;
@@ -77,7 +77,7 @@ class IconUtility
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
         $extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-        $modelName = \str_replace('\\', '/', $modelInformation['modelName']);
+        $modelName = str_replace('\\', '/', $modelInformation['modelName']);
 
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
@@ -110,7 +110,7 @@ class IconUtility
             'jpg',
         ];
         foreach ($fileExtensions as $fileExtension) {
-            if (\is_file($absolutePathWithoutExtension . $fileExtension)) {
+            if (is_file($absolutePathWithoutExtension . $fileExtension)) {
                 return $fileExtension;
             }
         }

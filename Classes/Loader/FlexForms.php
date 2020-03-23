@@ -3,7 +3,7 @@
 /**
  * Loading FlexForms.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -32,7 +32,7 @@ class FlexForms implements LoaderInterface
         $extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath, 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $pluginSignature = \mb_strtolower($extensionName . '_' . $fileKey);
+            $pluginSignature = mb_strtolower($extensionName . '_' . $fileKey);
             $flexForms[] = [
                 'pluginSignature' => $pluginSignature,
                 'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
@@ -42,7 +42,7 @@ class FlexForms implements LoaderInterface
         // Content
         $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath . 'Content/', 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $contentSignature = \mb_strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
+            $contentSignature = mb_strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
             $flexForms[] = [
                 'contentSignature' => $contentSignature,
                 'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
@@ -55,7 +55,7 @@ class FlexForms implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $info) {
             if (isset($info['pluginSignature'])) {
@@ -75,7 +75,7 @@ class FlexForms implements LoaderInterface
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
     }
 }

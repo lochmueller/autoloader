@@ -3,7 +3,7 @@
 /**
  * Loading Hooks.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -54,8 +54,8 @@ class Hooks implements LoaderInterface
             foreach (ReflectionUtility::getPublicMethodNames($hookClass) as $methodName) {
                 $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod($hookClass, $methodName, ['hook']);
                 if (\count($tagConfiguration['hook']) > 0) {
-                    $hookLocations = \array_map(function ($hook) {
-                        return \trim($hook, " \t\n\r\0\x0B|");
+                    $hookLocations = array_map(function ($hook) {
+                        return trim($hook, " \t\n\r\0\x0B|");
                     }, $tagConfiguration['hook']);
 
                     $hooks[] = [
@@ -72,7 +72,7 @@ class Hooks implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
@@ -81,7 +81,7 @@ class Hooks implements LoaderInterface
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $hook) {
             ExtendedUtility::addHooks($hook['locations'], $hook['configuration']);

@@ -3,7 +3,7 @@
 /**
  * TempClassAutoloader.php.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Autoload;
 
@@ -51,7 +51,7 @@ class TempClassLoader implements SingletonInterface
 
         self::$isRegistered = true;
 
-        return \spl_autoload_register(static::$className . '::autoload', true, true);
+        return spl_autoload_register(static::$className . '::autoload', true, true);
     }
 
     /**
@@ -59,17 +59,18 @@ class TempClassLoader implements SingletonInterface
      *
      * @param string $className Class name
      */
-    public static function autoload($className)
+    public static function autoload($className): void
     {
-        $className = \ltrim($className, '\\');
+        $className = ltrim($className, '\\');
 
-        if (false !== \mb_strpos($className, static::$namespace)) {
-            $optimizedClassName = \str_replace('\\', '', $className);
+        if (false !== mb_strpos($className, static::$namespace)) {
+            $optimizedClassName = str_replace('\\', '', $className);
             $cacheIdentifier = 'XCLASS_' . $optimizedClassName;
 
-            /** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
+            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
             $cache = GeneralUtility::makeInstance(CacheManager::class)
-                ->getCache('autoloader');
+                ->getCache('autoloader')
+            ;
             if ($cache->has($cacheIdentifier)) {
                 $cache->requireOnce($cacheIdentifier);
             }

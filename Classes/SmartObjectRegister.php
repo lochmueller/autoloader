@@ -3,7 +3,7 @@
 /**
  * Register for Smart Objects.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
@@ -24,7 +24,7 @@ class SmartObjectRegister
      *
      * @param $modelName
      */
-    public static function register($modelName)
+    public static function register($modelName): void
     {
         if (!\in_array($modelName, self::$smartObjectRegistry, true)) {
             self::$smartObjectRegistry[] = $modelName;

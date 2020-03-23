@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Annotation;
@@ -9,15 +10,12 @@ namespace HDNET\Autoloader\Annotation;
  */
 class Hook
 {
-
-
     /**
      * @var string
      */
     public $argumentName;
 
     /**
-     * @param array $values
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

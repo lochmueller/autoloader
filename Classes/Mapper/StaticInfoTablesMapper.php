@@ -3,7 +3,7 @@
 /**
  * StaticInfoTablesMapper.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Mapper;
 
@@ -42,9 +42,9 @@ class StaticInfoTablesMapper implements MapperInterface
             return false;
         }
 
-        $this->lastClass = \mb_strtolower($type);
+        $this->lastClass = mb_strtolower($type);
 
-        return !(false === \mb_strpos($this->lastClass, self::CLASS_BASE));
+        return !(false === mb_strpos($this->lastClass, self::CLASS_BASE));
     }
 
     /**
@@ -57,29 +57,39 @@ class StaticInfoTablesMapper implements MapperInterface
      */
     public function getTcaConfiguration($fieldName, $overWriteLabel = false)
     {
-        $withoutNameSpace = \str_replace(self::CLASS_BASE, '', $this->lastClass);
+        $withoutNameSpace = str_replace(self::CLASS_BASE, '', $this->lastClass);
 
         switch ($withoutNameSpace) {
             case 'country':
                 $table = 'static_countries';
                 $itemsProcFunc = 'translateCountriesSelector';
+
                 break;
+
             case 'countryzone':
                 $table = 'static_country_zones';
                 $itemsProcFunc = 'translateCountryZonesSelector';
+
                 break;
+
             case 'currency':
                 $table = 'static_currencies';
                 $itemsProcFunc = 'translateCurrenciesSelector';
+
                 break;
+
             case 'language':
                 $table = 'static_languages';
                 $itemsProcFunc = 'translateLanguagesSelector';
+
                 break;
+
             case 'territory':
                 $table = 'static_territories';
                 $itemsProcFunc = 'translateTerritoriesSelector';
+
                 break;
+
             default:
                 return [];
         }

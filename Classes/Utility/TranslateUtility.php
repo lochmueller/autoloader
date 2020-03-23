@@ -3,7 +3,7 @@
 /**
  * TranslateUtility.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -36,19 +36,19 @@ class TranslateUtility
     {
         if (\is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] as $classConfig) {
-                if (\class_exists($classConfig)) {
+                if (class_exists($classConfig)) {
                     $object = GeneralUtility::makeInstance($classConfig);
                 } else {
                     // deprecated (!!!)
                     $object = GeneralUtility::getUserObj($classConfig);
                 }
-                if (\is_object($object) && \method_exists($object, 'assureLabel')) {
+                if (\is_object($object) && method_exists($object, 'assureLabel')) {
                     $object->assureLabel($key, $extensionName, $default, $arguments, $tableName);
                 }
             }
         }
 
-        return (string) $default;
+        return (string)$default;
     }
 
     /**
@@ -131,8 +131,8 @@ class TranslateUtility
      */
     protected static function useTableNameFileBase()
     {
-        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

@@ -3,7 +3,7 @@
 /**
  * Loading TypeConverter.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -47,14 +47,14 @@ class TypeConverter implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
+    public function loadExtensionTables(Loader $autoLoader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $class) {
             ExtensionUtility::registerTypeConverter($class);

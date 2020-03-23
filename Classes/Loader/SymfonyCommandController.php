@@ -3,7 +3,7 @@
 /**
  * SymfonyCommandController.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -31,7 +31,7 @@ class SymfonyCommandController implements LoaderInterface
         $classNames = [];
         $commandConfigurationFile = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/Commands.php';
 
-        if (\is_file($commandConfigurationFile)) {
+        if (is_file($commandConfigurationFile)) {
             return [];
         }
 
@@ -47,8 +47,8 @@ class SymfonyCommandController implements LoaderInterface
                 continue;
             }
 
-            if (\is_subclass_of($className, \Symfony\Component\Console\Command\Command::class)) {
-                $classNames[\lcfirst($controller)] = $className;
+            if (is_subclass_of($className, \Symfony\Component\Console\Command\Command::class)) {
+                $classNames[lcfirst($controller)] = $className;
             }
         }
 
@@ -76,14 +76,14 @@ return ' . ArrayUtility::arrayExport($configuration) . ';';
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
     }
 }

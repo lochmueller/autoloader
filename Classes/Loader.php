@@ -3,19 +3,12 @@
 /**
  * Central Loader object.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use HDNET\Autoloader\Cache\AutoloaderFileBackend;
 use HDNET\Autoloader\Utility\ReflectionUtility;
-use TYPO3\CMS\Core\Cache\Backend\SimpleFileBackend;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
-use TYPO3\CMS\Core\Configuration\ConfigurationManager;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -75,7 +68,7 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      */
-    public static function extTables($vendorName, $extensionKey, array $implementations = [])
+    public static function extTables($vendorName, $extensionKey, array $implementations = []): void
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
@@ -88,7 +81,7 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      */
-    public static function extLocalconf($vendorName, $extensionKey, array $implementations = [])
+    public static function extLocalconf($vendorName, $extensionKey, array $implementations = []): void
     {
         /** @var \HDNET\Autoloader\Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
@@ -101,7 +94,7 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      */
-    public function loadExtTables($vendorName, $extensionKey, array $implementations = [])
+    public function loadExtTables($vendorName, $extensionKey, array $implementations = []): void
     {
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
@@ -123,7 +116,7 @@ class Loader implements SingletonInterface
      * @param string $vendorName
      * @param string $extensionKey
      */
-    public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = [])
+    public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = []): void
     {
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
@@ -184,7 +177,7 @@ class Loader implements SingletonInterface
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
             if (!isset($objectCache[$autoLoaderObjectName])) {
-                if (\class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
+                if (class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
                     $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
                 } else {
                     $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
@@ -212,11 +205,11 @@ class Loader implements SingletonInterface
         foreach ($this->implementations as $className) {
             if (\in_array($className, $objectNames, true)) {
                 $names[] = $className;
-                unset($objectNames[\array_search($className, $objectNames, true)]);
+                unset($objectNames[array_search($className, $objectNames, true)]);
             }
         }
 
-        return \array_merge($names, $objectNames);
+        return array_merge($names, $objectNames);
     }
 
     /**
@@ -228,7 +221,7 @@ class Loader implements SingletonInterface
      */
     protected function prepareAutoLoaderObjects(array $objects, $type)
     {
-        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(\serialize($objects)) . '_' . $type;
+        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(serialize($objects)) . '_' . $type;
 
         // Do not use Caching Framework here
         /** @var AutoloaderFileBackend $cacheBackend */
@@ -255,7 +248,7 @@ class Loader implements SingletonInterface
     {
         $return = [];
         foreach ($objects as $object) {
-            /* @var LoaderInterface $object */
+            // @var LoaderInterface $object
             $return[\get_class($object)] = $object->prepareLoader($this, $type);
         }
 

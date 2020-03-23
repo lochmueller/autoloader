@@ -3,7 +3,7 @@
 /**
  * Icon loader.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -29,17 +29,17 @@ class Icon implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $icons = [];
-        if (!\class_exists(IconRegistry::class)) {
+        if (!class_exists(IconRegistry::class)) {
             return $icons;
         }
 
-        return \array_merge($this->getIconsByPath($loader, 'Resources/Public/Icon/'), $this->getIconsByPath($loader, 'Resources/Public/Icons/'));
+        return array_merge($this->getIconsByPath($loader, 'Resources/Public/Icon/'), $this->getIconsByPath($loader, 'Resources/Public/Icons/'));
     }
 
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
@@ -48,7 +48,7 @@ class Icon implements LoaderInterface
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         if (empty($loaderInformation)) {
             return;
@@ -81,17 +81,17 @@ class Icon implements LoaderInterface
 
         foreach ($files as $path) {
             $provider = BitmapIconProvider::class;
-            if ('svg' === \mb_substr(\mb_strtolower($path), -3)) {
+            if ('svg' === mb_substr(mb_strtolower($path), -3)) {
                 $provider = SvgIconProvider::class;
             }
-            $relativePath = \str_replace($extensionPath, '', $path);
-            $iconPath = \str_replace($relPath, '', $relativePath);
+            $relativePath = str_replace($extensionPath, '', $path);
+            $iconPath = str_replace($relPath, '', $relativePath);
 
-            $pathElements = PathUtility::pathinfo(\mb_strtolower(\str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
+            $pathElements = PathUtility::pathinfo(mb_strtolower(str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
             $icons[] = [
                 'provider' => $provider,
                 'path' => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
-                'identifier' => \str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
+                'identifier' => str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
             ];
         }
 

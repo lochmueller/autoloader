@@ -3,7 +3,7 @@
 /**
  * Loading Gridelements.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -56,7 +56,7 @@ class Gridelement implements LoaderInterface
 
             $flexForm = 'EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Grids/' . $pathInfo['filename'] . '.xml';
             $flexFormFile = GeneralUtility::getFileAbsFileName($flexForm);
-            $flexFormContent = \is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
+            $flexFormContent = is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
 
             $grids[] = $this->getPageTsConfig($pathInfo['filename'], $label, $content, $icon, $flexFormContent, $description);
         }
@@ -67,20 +67,20 @@ class Gridelement implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         if (empty($loaderInformation)) {
             return;
         }
 
-        ExtensionManagementUtility::addPageTSConfig(\implode("\n", $loaderInformation));
+        ExtensionManagementUtility::addPageTSConfig(implode("\n", $loaderInformation));
     }
 
     /**
@@ -116,6 +116,6 @@ class Gridelement implements LoaderInterface
         $lines[] = '}';
         $lines[] = '}';
 
-        return \implode("\n", $lines);
+        return implode("\n", $lines);
     }
 }

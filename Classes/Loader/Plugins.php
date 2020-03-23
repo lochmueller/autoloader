@@ -3,7 +3,7 @@
 /**
  * Loading Plugins.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -44,15 +44,15 @@ class Plugins implements LoaderInterface
                 continue;
             }
 
-            $controllerKey = \str_replace('/', '\\', $controller);
-            $controllerKey = \str_replace('Controller', '', $controllerKey);
+            $controllerKey = str_replace('/', '\\', $controller);
+            $controllerKey = str_replace('Controller', '', $controllerKey);
 
             $methods = ReflectionUtility::getPublicMethodNames($controllerName);
             foreach ($methods as $methodName) {
                 $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin']);
                 if (!empty($configuration['plugin'])) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', \implode(' ', $configuration['plugin']), true);
-                    $actionName = \str_replace('Action', '', $methodName);
+                    $pluginKeys = GeneralUtility::trimExplode(' ', implode(' ', $configuration['plugin']), true);
+                    $actionName = str_replace('Action', '', $methodName);
 
                     foreach ($pluginKeys as $pluginKey) {
                         $pluginInformation = $this->addPluginInformation(
@@ -73,9 +73,9 @@ class Plugins implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
-        foreach (\array_keys($loaderInformation) as $key) {
+        foreach (array_keys($loaderInformation) as $key) {
             $label = TranslateUtility::getLllOrHelpMessage('plugin.' . $key, $loader->getExtensionKey());
             ExtensionUtility::registerPlugin($loader->getExtensionKey(), $key, $label);
         }
@@ -84,7 +84,7 @@ class Plugins implements LoaderInterface
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         $prefix = $loader->getVendorName() . '.' . $loader->getExtensionKey();
         foreach ($loaderInformation as $key => $information) {
@@ -104,8 +104,8 @@ class Plugins implements LoaderInterface
      */
     protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
     {
-        $first = false !== \mb_strpos($pluginKey, '!');
-        $pluginKey = \trim($pluginKey, '!');
+        $first = false !== mb_strpos($pluginKey, '!');
+        $pluginKey = trim($pluginKey, '!');
 
         if (!isset($pluginInformation[$pluginKey])) {
             $pluginInformation[$pluginKey] = [
@@ -125,17 +125,17 @@ class Plugins implements LoaderInterface
             }
             $actions = GeneralUtility::trimExplode(',', $pluginInformation[$pluginKey][$part][$controllerKey], true);
             if ($first) {
-                \array_unshift($actions, $actionName);
+                array_unshift($actions, $actionName);
                 $targetController = [
                     $controllerKey => $pluginInformation[$pluginKey][$part][$controllerKey],
                 ];
                 unset($pluginInformation[$pluginKey][$part][$controllerKey]);
-                $pluginInformation[$pluginKey][$part] = \array_merge($targetController, $pluginInformation[$pluginKey][$part]);
+                $pluginInformation[$pluginKey][$part] = array_merge($targetController, $pluginInformation[$pluginKey][$part]);
             } else {
                 $actions[] = $actionName;
             }
 
-            $pluginInformation[$pluginKey][$part][$controllerKey] = \implode(',', $actions);
+            $pluginInformation[$pluginKey][$part][$controllerKey] = implode(',', $actions);
         }
 
         return $pluginInformation;

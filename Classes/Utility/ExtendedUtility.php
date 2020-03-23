@@ -3,7 +3,7 @@
 /**
  * Utility functions for the Autoloader.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -85,7 +85,7 @@ class ExtendedUtility
      *
      * @param $message
      */
-    public static function log($message)
+    public static function log($message): void
     {
         if (!\is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = [];
@@ -98,7 +98,7 @@ class ExtendedUtility
      *
      * @param string $configuration
      */
-    public static function addHooks(array $locations, $configuration)
+    public static function addHooks(array $locations, $configuration): void
     {
         foreach ($locations as $location) {
             self::addHook($location, $configuration);
@@ -111,11 +111,11 @@ class ExtendedUtility
      * @param string $location      The location of the hook separated bei pipes
      * @param string $configuration
      */
-    public static function addHook($location, $configuration)
+    public static function addHook($location, $configuration): void
     {
-        $location = \explode('|', $location);
-        \array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
-        ArrayUtility::setNodes([\implode('|', $location) => $configuration], $GLOBALS);
+        $location = explode('|', $location);
+        array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
+        ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
     }
 
     /**

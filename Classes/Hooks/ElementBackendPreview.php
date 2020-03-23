@@ -3,7 +3,7 @@
 /**
  * Custom Backend Preview for Elements like Content Objects.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
@@ -31,7 +31,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
      * @param string         $itemContent   Item content
      * @param array          $row           Record row of tt_content
      */
-    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
+    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
     {
         if (!$this->isAutoloaderContenobject($row)) {
             return;
@@ -66,7 +66,8 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 
         $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
         $cache = GeneralUtility::makeInstance(CacheManager::class)
-            ->getCache('cache_pagesection');
+            ->getCache('cache_pagesection')
+        ;
         if ($cache->has($cacheIdentifier)) {
             return $cache->get($cacheIdentifier);
         }
@@ -106,7 +107,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 
         $beTemplatePath = GeneralUtility::getFileAbsFileName($config['backendTemplatePath']);
 
-        return \is_file($beTemplatePath);
+        return is_file($beTemplatePath);
     }
 
     /**
@@ -118,6 +119,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     {
         $ctype = $row['CType'];
 
-        return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+        return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
     }
 }

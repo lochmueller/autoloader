@@ -3,7 +3,7 @@
 /**
  * Mapper for variables types to TCA and DB information.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
@@ -80,7 +80,7 @@ class Mapper implements SingletonInterface
      *
      * @param string $className
      */
-    public function addCustomMapper($className)
+    public function addCustomMapper($className): void
     {
         $this->customMapper[] = $className;
     }
@@ -98,11 +98,12 @@ class Mapper implements SingletonInterface
     {
         $mappers = $this->getMappers();
         foreach ($mappers as $mapper) {
-            /** @var $mapper MapperInterface */
+            /** @var MapperInterface $mapper */
             if ($mapper->canHandleType($type)) {
                 return $mapper;
             }
         }
+
         throw new Exception('No valid mapper for the given type found: ' . $type, 123712631);
     }
 
@@ -113,7 +114,7 @@ class Mapper implements SingletonInterface
      */
     protected function getMappers()
     {
-        $mapper = \array_merge($this->customMapper, $this->getInternalMapperClasses());
+        $mapper = array_merge($this->customMapper, $this->getInternalMapperClasses());
         foreach ($mapper as $key => $className) {
             $mapper[$key] = ExtendedUtility::create($className);
         }

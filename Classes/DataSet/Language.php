@@ -3,7 +3,7 @@
 /**
  * DataSet information for languages.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\DataSet;
 

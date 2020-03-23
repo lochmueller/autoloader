@@ -3,7 +3,7 @@
 /**
  * ExtensionTypoScriptSetup.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -38,7 +38,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
         $this->addTypoScript($loaderInformation);
     }
@@ -46,7 +46,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         $this->addTypoScript($loaderInformation);
     }
@@ -54,10 +54,10 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     /**
      * Add the given loader information as TypoScript.
      */
-    protected function addTypoScript(array $loaderInformation)
+    protected function addTypoScript(array $loaderInformation): void
     {
         if (!empty($loaderInformation)) {
-            ExtensionManagementUtility::addTypoScriptSetup(LF . \implode(LF, $loaderInformation) . LF);
+            ExtensionManagementUtility::addTypoScriptSetup(LF . implode(LF, $loaderInformation) . LF);
         }
     }
 
@@ -74,8 +74,8 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         $setup = [];
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
             $table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
-            $recordType = (string) ReflectionUtility::getFirstTagValue($className, 'recordType');
-            $parentClass = (string) ReflectionUtility::getFirstTagValue($className, 'parentClass');
+            $recordType = (string)ReflectionUtility::getFirstTagValue($className, 'recordType');
+            $parentClass = (string)ReflectionUtility::getFirstTagValue($className, 'parentClass');
             if ('' !== $table) {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
             }

@@ -3,7 +3,7 @@
 /**
  * Edit link for the backend.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
@@ -43,7 +43,7 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('data', 'array', 'Row of the content element', true, []);
@@ -73,8 +73,9 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
     {
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+
         try {
-            if (!\method_exists($uriBuilder, 'buildUriFromRoute')) {
+            if (!method_exists($uriBuilder, 'buildUriFromRoute')) {
                 throw new \Exception('No method', 1238);
             }
             $uri = $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
@@ -83,6 +84,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
             $uri = BackendUtility::getModuleUrl('record_edit', $urlParameters);
         }
 
-        return (string) $uri;
+        return (string)$uri;
     }
 }

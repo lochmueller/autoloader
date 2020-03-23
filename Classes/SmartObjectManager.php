@@ -3,7 +3,7 @@
 /**
  * Management for Smart Objects.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
@@ -35,7 +35,7 @@ class SmartObjectManager implements SingletonInterface
             $output[] = $informationService->getDatabaseInformation($modelName);
         }
 
-        return \implode(LF, $output);
+        return implode(LF, $output);
     }
 
     /**
@@ -57,11 +57,11 @@ class SmartObjectManager implements SingletonInterface
         // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
 
         $smartObjectClassLoadingIgnorePattern = self::getSmartObjectClassLoadingIgnorePattern();
-        if ('' !== \trim($smartObjectClassLoadingIgnorePattern) && \preg_match($smartObjectClassLoadingIgnorePattern, $className)) {
+        if ('' !== trim($smartObjectClassLoadingIgnorePattern) && preg_match($smartObjectClassLoadingIgnorePattern, $className)) {
             return false;
         }
 
-        if (!\class_exists($className)) {
+        if (!class_exists($className)) {
             return false;
         }
 
@@ -69,20 +69,17 @@ class SmartObjectManager implements SingletonInterface
             return false;
         }
 
-        $return = false !== ReflectionUtility::getFirstTagValue($className, 'db');
-
+        return false !== ReflectionUtility::getFirstTagValue($className, 'db');
         // if ($registerAutoLoader) {
         //     spl_autoload_register($riskAutoLoader, true, true);
         // }
-
-        return $return;
     }
 
     /**
      * Check and create the TCA information
      * disable this for better performance.
      */
-    public static function checkAndCreateTcaInformation()
+    public static function checkAndCreateTcaInformation(): void
     {
         $register = SmartObjectRegister::getRegister();
 
@@ -110,14 +107,14 @@ class SmartObjectManager implements SingletonInterface
                 $template = $defaultTemplate;
             }
 
-            if (!\is_file($tcaFileName)) {
+            if (!is_file($tcaFileName)) {
                 $replace = [
-                    '\\' . \trim($model) . '::class',
+                    '\\' . trim($model) . '::class',
                     $tableName,
                     $extensionKey,
                 ];
 
-                $content = \str_replace($search, $replace, $template);
+                $content = str_replace($search, $replace, $template);
                 FileUtility::writeFileAndCreateFolder($tcaFileName, $content);
             }
         }
@@ -130,8 +127,8 @@ class SmartObjectManager implements SingletonInterface
      */
     protected static function getSmartObjectClassLoadingIgnorePattern()
     {
-        $configuration = \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
 
-        return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string) $configuration['smartObjectClassLoadingIgnorePattern'] : '';
+        return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string)$configuration['smartObjectClassLoadingIgnorePattern'] : '';
     }
 }

@@ -3,7 +3,7 @@
 /**
  * Add backend layouts.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
@@ -31,7 +31,7 @@ class BackendLayoutProvider implements DataProviderInterface
     /**
      * Add one backend layout information.
      */
-    public static function addBackendLayoutInformation(array $backendLayout)
+    public static function addBackendLayoutInformation(array $backendLayout): void
     {
         self::$backendLayoutInformation[] = $backendLayout;
     }
@@ -39,7 +39,7 @@ class BackendLayoutProvider implements DataProviderInterface
     /**
      * Adds backend layouts to the given backend layout collection.
      */
-    public function addBackendLayouts(DataProviderContext $dataProviderContext, BackendLayoutCollection $backendLayoutCollection)
+    public function addBackendLayouts(DataProviderContext $dataProviderContext, BackendLayoutCollection $backendLayoutCollection): void
     {
         foreach (self::$backendLayoutInformation as $info) {
             $backendLayoutCollection->add($this->createBackendLayout($info));
@@ -75,7 +75,7 @@ class BackendLayoutProvider implements DataProviderInterface
         $fileName = GeneralUtility::getFileAbsFileName($info['path']);
         $backendLayout = BackendLayout::create($this->getIdentifier($info), $info['label'], GeneralUtility::getUrl($fileName));
         if ($info['icon']) {
-            $backendLayout->setIconPath(\str_replace(PATH_site, '', $info['icon']));
+            $backendLayout->setIconPath(str_replace(PATH_site, '', $info['icon']));
         }
 
         return $backendLayout;

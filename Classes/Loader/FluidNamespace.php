@@ -3,7 +3,7 @@
 /**
  * FluidNamespace.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -26,7 +26,7 @@ class FluidNamespace implements LoaderInterface
     {
         $loaderInformation = [];
         $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/ViewHelpers/';
-        if (\is_dir($viewHelperFolder)) {
+        if (is_dir($viewHelperFolder)) {
             $extKey = $loader->getExtensionKey();
             $key = GeneralUtility::underscoredToLowerCamelCase($extKey);
             $loaderInformation[$key] = $loader->getVendorName() . '\\' . GeneralUtility::underscoredToUpperCamelCase($extKey) . '\\ViewHelpers';
@@ -38,14 +38,14 @@ class FluidNamespace implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
     }
 
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $key => $namespace) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces'][$key] = [$namespace];

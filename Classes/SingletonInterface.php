@@ -3,7 +3,7 @@
 /**
  * Local singleton interface to reduce dependencies.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 

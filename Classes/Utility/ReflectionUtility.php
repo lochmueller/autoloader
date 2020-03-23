@@ -3,12 +3,11 @@
 /**
  * Reflection helper.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Reflection\ClassSchema;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
@@ -26,7 +25,7 @@ class ReflectionUtility
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        return (bool) $reflectionClass->isInstantiable();
+        return (bool)$reflectionClass->isInstantiable();
     }
 
     /**
@@ -48,18 +47,19 @@ class ReflectionUtility
      */
     public static function isClassInOtherClassHierarchy(string $searchClass, string $checkedClass): bool
     {
-        $searchClass = \trim($searchClass, '\\');
-        if (!\class_exists($searchClass)) {
+        $searchClass = trim($searchClass, '\\');
+        if (!class_exists($searchClass)) {
             return false;
         }
-        $checked = \trim($checkedClass, '\\');
+        $checked = trim($checkedClass, '\\');
+
         try {
             if ($searchClass === $checked) {
                 return true;
             }
             $reflection = new \ReflectionClass($searchClass);
             while ($reflection = $reflection->getParentClass()) {
-                if ($checked === \trim($reflection->getName(), '\\')) {
+                if ($checked === trim($reflection->getName(), '\\')) {
                     return true;
                 }
             }
@@ -84,7 +84,7 @@ class ReflectionUtility
         }
 
         if (\is_array($values)) {
-            return \trim((string) $values[0]);
+            return trim((string)$values[0]);
         }
 
         return false;
@@ -98,7 +98,6 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForMethod($className, $methodName, array $tagNames): array
     {
-
         $tags = self::getMethodTagValues($className, $methodName);
 
         $configuration = [];
@@ -108,7 +107,7 @@ class ReflectionUtility
                 continue;
             }
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = \array_merge(
+                $configuration[$tagName] = array_merge(
                     $configuration[$tagName],
                     GeneralUtility::trimExplode(' ', $c, true)
                 );
@@ -123,11 +122,11 @@ class ReflectionUtility
      */
     public static function getTagConfigurationForClass(string $className, array $tagNames): array
     {
-#        $classSchema = new ClassSchema($className);
+//        $classSchema = new ClassSchema($className);
 
-        // @todo
+        /** @todo */
 
-        #       $reflectionService = $objectManager->get(ReflectionService::class);
+        //       $reflectionService = $objectManager->get(ReflectionService::class);
         $tags = []; // $reflectionService->getClassTagsValues($className);
 
         $configuration = [];
@@ -137,7 +136,7 @@ class ReflectionUtility
                 continue;
             }
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = \array_merge(
+                $configuration[$tagName] = array_merge(
                     $configuration[$tagName],
                     GeneralUtility::trimExplode(' ', $c, true)
                 );
@@ -164,7 +163,7 @@ class ReflectionUtility
             }
             $configuration[$tagName] = '';
             foreach ($tags[$tagName] as $c) {
-                $configuration[$tagName] = \trim($configuration[$tagName] . ' ' . $c);
+                $configuration[$tagName] = trim($configuration[$tagName] . ' ' . $c);
             }
         }
 
@@ -178,7 +177,7 @@ class ReflectionUtility
      *
      * @return array|bool
      */
-    static public function getClassTagValues(string $className, string $tag)
+    public static function getClassTagValues(string $className, string $tag)
     {
         try {
             $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
@@ -202,7 +201,7 @@ class ReflectionUtility
      *
      * @return array|bool
      */
-    static public function getMethodTagValues(string $className, string $methodName)
+    public static function getMethodTagValues(string $className, string $methodName)
     {
         try {
             $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
@@ -221,7 +220,8 @@ class ReflectionUtility
     {
         $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
         $classSchema = $coreReflectionService->getClassSchema($className);
-        return \array_keys($classSchema->getProperties());
+
+        return array_keys($classSchema->getProperties());
     }
 
     /**
@@ -233,8 +233,8 @@ class ReflectionUtility
         $props = $classReflection->getProperties();
         $result = [];
         foreach ($props as $prop) {
-            /** @var $prop \ReflectionProperty */
-            if (false !== \mb_strpos((string) $prop->getDocComment(), '@' . $tag)) {
+            /** @var \ReflectionProperty $prop */
+            if (false !== mb_strpos((string)$prop->getDocComment(), '@' . $tag)) {
                 $result[] = $prop->getName();
             }
         }
@@ -253,7 +253,7 @@ class ReflectionUtility
         $classSchema = $coreReflectionService->getClassSchema($className);
         $methods = $classSchema->getMethods();
         foreach ($methods as $key => $method) {
-            /** @var $method ClassSchema\Method */
+            /** @var ClassSchema\Method $method */
             if ($method->isPublic()) {
                 $methodNames[] = $key;
             }
@@ -270,12 +270,12 @@ class ReflectionUtility
     public static function getDeclaringProperties(string $className)
     {
         $classReflection = new \ReflectionClass($className);
-        $own = \array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return \trim((string) $property->class, '\\') === \trim($className, '\\');
+        $own = array_filter($classReflection->getProperties(), function ($property) use ($className) {
+            return trim((string)$property->class, '\\') === trim($className, '\\');
         });
 
-        return \array_map(function ($item) {
-            return (string) $item->name;
+        return array_map(function ($item) {
+            return (string)$item->name;
         }, $own);
     }
 

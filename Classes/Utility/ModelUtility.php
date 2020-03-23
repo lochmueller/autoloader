@@ -3,13 +3,12 @@
 /**
  * Utility to interact with the Model.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -48,9 +47,10 @@ class ModelUtility
         /** @var DatabaseTable $classAnnotation */
         $classAnnotation = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseTable::class);
 
-        if($classAnnotation === null) {
+        if (null === $classAnnotation) {
             return '';
         }
+
         return (string)$classAnnotation->tableName;
     }
 
@@ -66,20 +66,20 @@ class ModelUtility
      */
     public static function getTableNameByModelName($className)
     {
-        $className = \ltrim($className, '\\');
-        if (false !== \mb_strpos($className, '\\')) {
-            $classNameParts = \explode('\\', $className);
+        $className = ltrim($className, '\\');
+        if (false !== mb_strpos($className, '\\')) {
+            $classNameParts = explode('\\', $className);
             // Skip vendor and product name for core classes
-            if (0 === \mb_strpos($className, 'TYPO3\\CMS\\')) {
+            if (0 === mb_strpos($className, 'TYPO3\\CMS\\')) {
                 $classPartsToSkip = 2;
             } else {
                 $classPartsToSkip = 1;
             }
             $classNameParts = \array_slice($classNameParts, $classPartsToSkip);
-            $classNameParts = \explode('\\', \implode('\\', $classNameParts), 4);
-            $tableName = 'tx_' . \str_replace('\\', '_', \mb_strtolower(\implode('_', $classNameParts)));
+            $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
+            $tableName = 'tx_' . str_replace('\\', '_', mb_strtolower(implode('_', $classNameParts)));
         } else {
-            $tableName = \mb_strtolower($className);
+            $tableName = mb_strtolower($className);
         }
 
         return $tableName;
@@ -95,7 +95,7 @@ class ModelUtility
      */
     public static function getSmartExcludesByModelName($name)
     {
-        return GeneralUtility::trimExplode(',', (string) ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
+        return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
     }
 
     /**
@@ -165,14 +165,14 @@ class ModelUtility
             GeneralUtility::makeInstance(Session::class)->destroy();
             $settings->setIgnoreEnableFields(true);
 
-            if (isset($data['sys_language_uid']) && (int) $data['sys_language_uid'] > 0) {
-                GeneralUtility::_GETset((int) $data['sys_language_uid'], 'L');
+            if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
+                GeneralUtility::_GETset((int)$data['sys_language_uid'], 'L');
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
                     $settings->setLanguageMode(null);
                     $settings->setRespectSysLanguage(true);
-                    $settings->setLanguageUid((int) $data['sys_language_uid']);
+                    $settings->setLanguageUid((int)$data['sys_language_uid']);
                 }
                 $object = $query->execute()->getFirst();
 
@@ -185,6 +185,7 @@ class ModelUtility
         $query->matching($query->equals('uid', $data['uid']));
 
         return $query->execute()
-            ->getFirst();
+            ->getFirst()
+        ;
     }
 }

@@ -3,7 +3,7 @@
 /**
  * Central DataSet object.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
@@ -50,7 +50,7 @@ class DataSet implements SingletonInterface
      */
     public function getNoneAndIncludeList(array $list)
     {
-        return \array_diff($this->implementations, $this->getAllAndExcludeList($list));
+        return array_diff($this->implementations, $this->getAllAndExcludeList($list));
     }
 
     /**
@@ -67,7 +67,7 @@ class DataSet implements SingletonInterface
         $return = [];
         foreach ($dataSetObjects as $object) {
             $loadedTca = $object->getTca($table);
-            /** @var $object DataSetInterface */
+            /** @var DataSetInterface $object */
             $return = ArrayUtility::mergeRecursiveDistinct($return, $loadedTca);
         }
 
@@ -86,8 +86,8 @@ class DataSet implements SingletonInterface
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
         foreach ($dataSetObjects as $object) {
-            /** @var $object DataSetInterface */
-            $return = \array_merge($return, $object->getDatabaseSql($table));
+            /** @var DataSetInterface $object */
+            $return = array_merge($return, $object->getDatabaseSql($table));
         }
 
         return $return;
@@ -106,8 +106,8 @@ class DataSet implements SingletonInterface
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
         foreach ($dataSetObjects as $object) {
-            /** @var $object DataSetInterface */
-            $return = \array_merge($return, $object->getDatabaseSqlKey());
+            /** @var DataSetInterface $object */
+            $return = array_merge($return, $object->getDatabaseSqlKey());
         }
 
         return $return;

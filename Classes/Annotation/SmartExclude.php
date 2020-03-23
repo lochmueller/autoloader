@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Annotation;
 
@@ -9,20 +10,17 @@ namespace HDNET\Autoloader\Annotation;
  */
 class SmartExclude
 {
-
-
     /**
      * @var array
      */
     public $excludes = [];
 
     /**
-     * @param array $values
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (is_array($values['value'])) {
+        if (\is_array($values['value'])) {
             $this->excludes = $values['value'];
         }
     }

@@ -3,7 +3,7 @@
 /**
  * Loading AbstractServerLoader.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -25,7 +25,7 @@ abstract class AbstractServerLoader implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $autoLoader, array $loaderInformation)
+    public function loadExtensionTables(Loader $autoLoader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER'][$this->serverName][$key] = $class;
@@ -35,7 +35,7 @@ abstract class AbstractServerLoader implements LoaderInterface
     /**
      * Run the loading process for the ext_localconf.php file.
      */
-    public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $key => $class) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER'][$this->serverName][$key] = $class;

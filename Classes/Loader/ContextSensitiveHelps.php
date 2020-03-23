@@ -3,7 +3,7 @@
 /**
  * ContextSensitiveHelp (CSH) based on smart objects.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -53,7 +53,7 @@ class ContextSensitiveHelps implements LoaderInterface
     /**
      * Run the loading process for the ext_tables.php file.
      */
-    public function loadExtensionTables(Loader $loader, array $loaderInformation)
+    public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
         foreach ($loaderInformation as $table => $path) {
             ExtensionManagementUtility::addLLrefForTCAdescr($table, $path);
@@ -65,7 +65,7 @@ class ContextSensitiveHelps implements LoaderInterface
      *
      * @internal param \HDNET\Autoloader\Loader $autoLoader
      */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation)
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
     }
 
@@ -84,11 +84,12 @@ class ContextSensitiveHelps implements LoaderInterface
             $parts = ClassNamingUtility::explodeObjectModelName($class);
             if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey && '' === ModelUtility::getTableNameByModelReflectionAnnotation($class)) {
                 $modelInformation = SmartObjectInformationService::getInstance()
-                    ->getCustomModelFieldTca($class);
+                    ->getCustomModelFieldTca($class)
+                ;
 
                 $information[] = [
                     'table' => ModelUtility::getTableNameByModelName($class),
-                    'properties' => \array_keys($modelInformation),
+                    'properties' => array_keys($modelInformation),
                 ];
             }
         }
@@ -117,7 +118,7 @@ class ContextSensitiveHelps implements LoaderInterface
         $checkPath = ['xlf', 'xml'];
         foreach ($checkPath as $extension) {
             $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
-            if (\is_file(GeneralUtility::getFileAbsFileName($path))) {
+            if (is_file(GeneralUtility::getFileAbsFileName($path))) {
                 return $path;
             }
         }

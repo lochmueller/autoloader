@@ -3,7 +3,7 @@
 /**
  * Map property names to DB field values.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Service;
 

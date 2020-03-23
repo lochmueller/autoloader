@@ -3,7 +3,7 @@
 /**
  * Map int.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Mapper;
 
@@ -23,7 +23,7 @@ class IntMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return \in_array(\mb_strtolower($type), [
+        return \in_array(mb_strtolower($type), [
             'int',
             'integer',
         ], true);

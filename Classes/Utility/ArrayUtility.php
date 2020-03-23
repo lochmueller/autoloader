@@ -3,7 +3,7 @@
 /**
  * Arrays utility.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -17,16 +17,16 @@ class ArrayUtility
      *
      * @see http://www.php.net/manual/de/function.array-walk-recursive.php#106340
      */
-    public static function setNodes(array $data, array &$array)
+    public static function setNodes(array $data, array &$array): void
     {
         $separator = '|';
         foreach ($data as $name => $value) {
-            if (false === \mb_strpos($name, $separator)) {
+            if (false === mb_strpos($name, $separator)) {
                 $array[$name] = $value;
             } else {
-                $keys = \explode($separator, $name);
+                $keys = explode($separator, $name);
                 $optTree = &$array;
-                while (($key = \array_shift($keys))) {
+                while (($key = array_shift($keys))) {
                     if ($keys) {
                         if (!isset($optTree[$key]) || !\is_array($optTree[$key])) {
                             $optTree[$key] = [];

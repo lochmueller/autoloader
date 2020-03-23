@@ -3,7 +3,7 @@
 /**
  * Map DateTime.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Mapper;
 
@@ -23,7 +23,7 @@ class DateTimeMapper implements MapperInterface
      */
     public function canHandleType($type)
     {
-        return \in_array(\mb_strtolower(\trim($type, '\\')), [
+        return \in_array(mb_strtolower(trim($type, '\\')), [
             'datetime',
         ], true);
     }

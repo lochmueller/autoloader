@@ -3,7 +3,7 @@
 /**
  * Handling of the language files.
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Localization;
 
@@ -85,7 +85,7 @@ class LanguageHandler extends LanguageStore
             if (null !== $overrideLanguageBase) {
                 $service->setLanguageBaseName($overrideLanguageBase);
             }
-            if (\is_file($service->getAbsoluteFilename($extensionKey))) {
+            if (is_file($service->getAbsoluteFilename($extensionKey))) {
                 return $service;
             }
             $services[] = $service;
