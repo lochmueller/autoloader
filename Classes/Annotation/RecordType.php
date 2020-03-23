@@ -13,7 +13,7 @@ class RecordType
     /**
      * @var string
      */
-    public $argumentName;
+    public $recordType;
 
     /**
      * @throws \InvalidArgumentException
@@ -21,9 +21,12 @@ class RecordType
     public function __construct(array $values)
     {
         if (isset($values['value'])) {
-            $this->argumentName = $values['value'];
-        } elseif (isset($values['argumentName'])) {
-            $this->argumentName = $values['argumentName'];
+            $this->recordType = (string)$values['value'];
         }
+    }
+
+    public function __toString()
+    {
+        return (string)$this->recordType;
     }
 }

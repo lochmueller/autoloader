@@ -243,26 +243,6 @@ class ReflectionUtility
     }
 
     /**
-     * Get public method names.
-     */
-    public static function getPublicMethodNames(string $className): array
-    {
-        $methodNames = [];
-
-        $coreReflectionService = GeneralUtility::makeInstance(ReflectionService::class);
-        $classSchema = $coreReflectionService->getClassSchema($className);
-        $methods = $classSchema->getMethods();
-        foreach ($methods as $key => $method) {
-            /** @var ClassSchema\Method $method */
-            if ($method->isPublic()) {
-                $methodNames[] = $key;
-            }
-        }
-
-        return $methodNames;
-    }
-
-    /**
      * Get properties of the given class, that are als declared in the given class.
      *
      * @return array

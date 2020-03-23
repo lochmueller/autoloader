@@ -7,6 +7,8 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
@@ -50,12 +52,6 @@ class SmartObjectManager implements SingletonInterface
      */
     public static function isSmartObjectClass($className)
     {
-        // $riskAutoLoader = [
-        //     'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
-        //     'autoload',
-        // ];
-        // $registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
-
         $smartObjectClassLoadingIgnorePattern = self::getSmartObjectClassLoadingIgnorePattern();
         if ('' !== trim($smartObjectClassLoadingIgnorePattern) && preg_match($smartObjectClassLoadingIgnorePattern, $className)) {
             return false;
@@ -69,10 +65,12 @@ class SmartObjectManager implements SingletonInterface
             return false;
         }
 
-        return false !== ReflectionUtility::getFirstTagValue($className, 'db');
-        // if ($registerAutoLoader) {
-        //     spl_autoload_register($riskAutoLoader, true, true);
-        // }
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $classNameRef = new \ReflectionClass($className);
+
+        return null !== $annotationReader->getClassAnnotation($classNameRef, DatabaseTable::class);
     }
 
     /**

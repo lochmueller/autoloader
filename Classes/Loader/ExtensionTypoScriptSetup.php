@@ -7,13 +7,16 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\ParentClass;
+use HDNET\Autoloader\Annotation\RecordType;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ExtensionTypoScriptSetup.
@@ -71,11 +74,16 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      */
     private function generateTypoScriptSetup($extensionKey)
     {
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
         $setup = [];
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
-            $table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
-            $recordType = (string)ReflectionUtility::getFirstTagValue($className, 'recordType');
-            $parentClass = (string)ReflectionUtility::getFirstTagValue($className, 'parentClass');
+            $reflectionClass = new \ReflectionClass($className);
+
+            $table = (string)$annotationReader->getClassAnnotation($reflectionClass, DatabaseTable::class);
+            $recordType = (string)$annotationReader->getClassAnnotation($reflectionClass, RecordType::class);
+            $parentClass = (string)$annotationReader->getClassAnnotation($reflectionClass, ParentClass::class);
             if ('' !== $table) {
                 $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
             }

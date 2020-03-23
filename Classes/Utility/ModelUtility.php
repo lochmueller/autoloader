@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Utility;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -88,14 +89,17 @@ class ModelUtility
     /**
      * get the smart exclude values e.g. language, workspace,
      * enableFields from the given model.
-     *
-     * @param string $name
-     *
-     * @return array
      */
-    public static function getSmartExcludesByModelName($name)
+    public static function getSmartExcludesByModelName(string $name): array
     {
-        return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'), true);
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $reflectionClass = new \ReflectionClass($name);
+
+        $smartExcludes = $annotationReader->getClassAnnotation($reflectionClass, SmartExclude::class);
+
+        return null === $smartExcludes ? [] : $smartExcludes->excludes;
     }
 
     /**

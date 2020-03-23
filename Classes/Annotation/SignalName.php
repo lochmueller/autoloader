@@ -6,7 +6,7 @@ namespace HDNET\Autoloader\Annotation;
 
 /**
  * @Annotation
- * @Target({"CLASS"})
+ * @Target({"METHOD"})
  */
 class SignalName
 {

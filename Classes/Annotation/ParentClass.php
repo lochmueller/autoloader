@@ -13,7 +13,7 @@ class ParentClass
     /**
      * @var string
      */
-    public $argumentName;
+    public $parentClass;
 
     /**
      * @throws \InvalidArgumentException
@@ -21,9 +21,12 @@ class ParentClass
     public function __construct(array $values)
     {
         if (isset($values['value'])) {
-            $this->argumentName = $values['value'];
-        } elseif (isset($values['argumentName'])) {
-            $this->argumentName = $values['argumentName'];
+            $this->parentClass = (string)$values['value'];
         }
+    }
+
+    public function __toString()
+    {
+        return (string)$this->parentClass;
     }
 }

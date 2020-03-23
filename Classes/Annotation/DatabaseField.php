@@ -13,17 +13,22 @@ class DatabaseField
     /**
      * @var string
      */
-    public $argumentName;
+    public $type;
+    /**
+     * @var string
+     */
+    public $sql;
 
     /**
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (isset($values['value'])) {
-            $this->argumentName = $values['value'];
-        } elseif (isset($values['argumentName'])) {
-            $this->argumentName = $values['argumentName'];
+        if (isset($values['type'])) {
+            $this->type = $values['type'];
+        }
+        if (isset($values['sql'])) {
+            $this->sql = $values['sql'];
         }
     }
 }

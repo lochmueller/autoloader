@@ -7,13 +7,14 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Localization\LanguageHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * handler to create the labels.
  *
- * @hook TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel
+ * @Hook("TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel")
  */
 class Localization
 {

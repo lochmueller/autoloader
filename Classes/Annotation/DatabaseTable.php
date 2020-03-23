@@ -26,4 +26,9 @@ class DatabaseTable
             $this->argumentName = $values['argumentName'];
         }
     }
+
+    public function __toString()
+    {
+        return (string)$this->tableName;
+    }
 }

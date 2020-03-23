@@ -11,19 +11,19 @@ namespace HDNET\Autoloader\Annotation;
 class Hook
 {
     /**
-     * @var string
+     * @var array
      */
-    public $argumentName;
+    public $locations = [];
 
     /**
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (isset($values['value'])) {
-            $this->argumentName = $values['value'];
-        } elseif (isset($values['argumentName'])) {
-            $this->argumentName = $values['argumentName'];
+        if (\is_string($values['value'])) {
+            $this->locations[] = $values['value'];
+        } elseif (\is_array($values['value'])) {
+            $this->locations = $values['value'];
         }
     }
 }

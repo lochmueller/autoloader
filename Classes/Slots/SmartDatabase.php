@@ -7,6 +7,8 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Slots;
 
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Autoloader\SmartObjectManager;
 
 /**
@@ -17,8 +19,8 @@ class SmartDatabase
     /**
      * Add the smart object SQL string the the signal below.
      *
-     * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
-     * @signalName tablesDefinitionIsBeingBuilt
+     * @SignalClass("\TYPO3\CMS\Install\Service\SqlExpectedSchemaService")
+     * @SignalName("tablesDefinitionIsBeingBuilt")
      *
      * @return array
      */

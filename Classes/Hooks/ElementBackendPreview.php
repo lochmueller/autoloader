@@ -7,6 +7,7 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
@@ -18,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class ElementBackendPreview.
  *
  * @see  \TYPO3\CMS\Backend\View\PageLayoutView::tt_content_drawItem
- * @hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|tt_content_drawItem
+ * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|tt_content_drawItem")
  */
 class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 {

@@ -7,6 +7,9 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Service;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
@@ -260,23 +263,30 @@ class SmartObjectInformationService
      */
     protected function getCustomModelFields(string $modelClassName): array
     {
-        $properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $reflectionClass = new \ReflectionClass($modelClassName);
+        $properties = [];
+        foreach ($reflectionClass->getProperties() as $property) {
+            $propertiesCheck = $annotationReader->getPropertyAnnotation($property, DatabaseField::class);
+            if (null !== $propertiesCheck) {
+                $properties[$property->getName()] = $propertiesCheck;
+            }
+        }
+
         $tableName = ModelUtility::getTableName($modelClassName);
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $fields = [];
-        foreach ($properties as $propertyName) {
-            $configuration = ReflectionUtility::getTagConfigurationForProperty($modelClassName, $propertyName, ['db', 'var']);
-            $var = '';
-            if (!empty($configuration['var'])) {
-                $var = $configuration['var'];
-            }
 
+        foreach ($properties as $name => $annotation) {
+            $var = (string)$annotation->type;
             $fields[] = [
-                'property' => $propertyName,
-                'name' => $nameMapperService->getDatabaseFieldName($tableName, $propertyName),
-                'db' => trim((string)$configuration['db']),
+                'property' => $name,
+                'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
+                'db' => trim((string)$annotation->sql),
                 'var' => trim((string)$var),
-                'rte' => ReflectionUtility::isPropertyTaggedWith($modelClassName, $propertyName, 'enableRichText'),
+                'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
             ];
         }
 

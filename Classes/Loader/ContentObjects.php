@@ -7,6 +7,9 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\EnableRichText;
+use HDNET\Autoloader\Annotation\NoHeader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\NameMapperService;
@@ -74,11 +77,20 @@ class ContentObjects implements LoaderInterface
                 $defaultFields = $this->getDefaultTcaFields($noHeader, null);
                 $fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
 
+                /** @var AnnotationReader $annotationReader */
+                $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+                $reflectionClass = new \ReflectionClass($className);
+
                 // RTE manipulation
-                $properties = ReflectionUtility::getPropertiesTaggedWith($className, 'enableRichText');
-                foreach ($properties as $property) {
+                foreach ($reflectionClass->getProperties() as $property) {
+                    $richTextField = $annotationReader->getPropertyAnnotation($property, EnableRichText::class);
+                    if (null === $richTextField) {
+                        continue;
+                    }
+
                     $search = array_search(
-                        GeneralUtility::camelCaseToLowerCaseUnderscored($property),
+                        GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
                         $fieldConfiguration,
                         true
                     );
@@ -278,12 +290,15 @@ tt_content.key.field = CType';
      * Check if the class is tagged with noHeader.
      *
      * @param $class
-     *
-     * @return bool
      */
-    protected function isTaggedWithNoHeader($class)
+    protected function isTaggedWithNoHeader($class): bool
     {
-        return false !== ReflectionUtility::getFirstTagValue($class, 'noHeader');
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $classNameRef = new \ReflectionClass($class);
+
+        return null !== $annotationReader->getClassAnnotation($classNameRef, NoHeader::class);
     }
 
     /**

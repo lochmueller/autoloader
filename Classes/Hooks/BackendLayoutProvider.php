@@ -7,6 +7,7 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use TYPO3\CMS\Backend\View\BackendLayout\BackendLayout;
 use TYPO3\CMS\Backend\View\BackendLayout\BackendLayoutCollection;
 use TYPO3\CMS\Backend\View\BackendLayout\DataProviderContext;
@@ -17,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Add backend layouts.
  *
  * @see  https://github.com/georgringer/TYPO3.base/blob/master/typo3conf/ext/theme/Classes/View/BackendLayout/FileProvider.php
- * @hook TYPO3_CONF_VARS|SC_OPTIONS|BackendLayoutDataProvider
+ * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|BackendLayoutDataProvider")
  */
 class BackendLayoutProvider implements DataProviderInterface
 {

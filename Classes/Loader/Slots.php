@@ -7,11 +7,14 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
+use HDNET\Autoloader\Annotation\SignalPriority;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -30,6 +33,8 @@ class Slots implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $slots = [];
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
         $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
 
@@ -43,27 +48,19 @@ class Slots implements LoaderInterface
             if (!$loader->isInstantiableClass($slotClass)) {
                 continue;
             }
+            $reflectionClass = new \ReflectionClass($slotClass);
 
-            $methods = ReflectionUtility::getPublicMethodNames($slotClass);
-            foreach ($methods as $methodName) {
-                $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod(
-                    $slotClass,
-                    $methodName,
-                    ['signalClass', 'signalName', 'signalPriority']
-                );
-                foreach ($tagConfiguration['signalClass'] as $key => $signalClass) {
-                    if (!isset($tagConfiguration['signalName'][$key])) {
-                        continue;
-                    }
-
-                    $priority = $tagConfiguration['signalPriority'][$key] ?? 0;
+            foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                $signalClassAnnotation = $annotationReader->getMethodAnnotation($method, SignalClass::class);
+                if (null !== $signalClassAnnotation) {
+                    $priority = (int)$annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
-                        'signalClassName' => trim($signalClass, '\\'),
-                        'signalName' => $tagConfiguration['signalName'][$key],
+                        'signalClassName' => (string)$signalClassAnnotation->argumentName,
+                        'signalName' => (string)$annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
                         'slotClassNameOrObject' => $slotClass,
-                        'slotMethodName' => $methodName,
+                        'slotMethodName' => $method->getName(),
                     ];
                 }
             }

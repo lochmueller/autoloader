@@ -7,13 +7,15 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Loading Hooks.
@@ -31,6 +33,9 @@ class Hooks implements LoaderInterface
         $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
         foreach ($files as $hookFile) {
             $hookClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
@@ -41,26 +46,24 @@ class Hooks implements LoaderInterface
                 continue;
             }
 
+            $reflectionClass = new \ReflectionClass($hookClass);
+
             // add class hook
-            $tagConfiguration = ReflectionUtility::getTagConfigurationForClass($hookClass, ['hook']);
-            if (\count($tagConfiguration['hook'])) {
+            $classHook = $annotationReader->getClassAnnotation($reflectionClass, Hook::class);
+            if (null !== $classHook) {
                 $hooks[] = [
-                    'locations' => $tagConfiguration['hook'],
+                    'locations' => $classHook->locations,
                     'configuration' => $hookClass,
                 ];
             }
 
             // add method hooks
-            foreach (ReflectionUtility::getPublicMethodNames($hookClass) as $methodName) {
-                $tagConfiguration = ReflectionUtility::getTagConfigurationForMethod($hookClass, $methodName, ['hook']);
-                if (\count($tagConfiguration['hook']) > 0) {
-                    $hookLocations = array_map(function ($hook) {
-                        return trim($hook, " \t\n\r\0\x0B|");
-                    }, $tagConfiguration['hook']);
-
+            foreach ($reflectionClass->getMethods() as $method) {
+                $methodHook = $annotationReader->getMethodAnnotation($method, Hook::class);
+                if (null !== $methodHook) {
                     $hooks[] = [
-                        'locations' => $hookLocations,
-                        'configuration' => $hookClass . '->' . $methodName,
+                        'locations' => $classHook->locations,
+                        'configuration' => $hookClass . '->' . $method->getName(),
                     ];
                 }
             }

@@ -7,11 +7,13 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Loader;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\NoCache;
+use HDNET\Autoloader\Annotation\Plugin;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,6 +32,8 @@ class Plugins implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $pluginInformation = [];
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
 
         $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Controller/';
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
@@ -44,15 +48,17 @@ class Plugins implements LoaderInterface
                 continue;
             }
 
+            $reflectionClass = new \ReflectionClass($controllerName);
+
             $controllerKey = str_replace('/', '\\', $controller);
             $controllerKey = str_replace('Controller', '', $controllerKey);
 
-            $methods = ReflectionUtility::getPublicMethodNames($controllerName);
-            foreach ($methods as $methodName) {
-                $configuration = ReflectionUtility::getTagConfigurationForMethod($controllerName, $methodName, ['plugin']);
-                if (!empty($configuration['plugin'])) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', implode(' ', $configuration['plugin']), true);
-                    $actionName = str_replace('Action', '', $methodName);
+            foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                $configuration = $annotationReader->getMethodAnnotation($method, Plugin::class);
+
+                if (null !== $configuration) {
+                    $pluginKeys = GeneralUtility::trimExplode(' ', implode(' ', (string)$configuration), true);
+                    $actionName = str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
                         $pluginInformation = $this->addPluginInformation(
@@ -60,7 +66,7 @@ class Plugins implements LoaderInterface
                             $pluginKey,
                             $controllerKey,
                             $actionName,
-                            ReflectionUtility::isMethodTaggedWith($controllerName, $methodName, 'noCache')
+                            null !== $annotationReader->getMethodAnnotation($method, NoCache::class)
                         );
                     }
                 }

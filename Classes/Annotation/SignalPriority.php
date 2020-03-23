@@ -8,7 +8,7 @@ namespace HDNET\Autoloader\Annotation;
  * @Annotation
  * @Target({"METHOD"})
  */
-class Plugin
+class SignalPriority
 {
     /**
      * @var string
@@ -25,10 +25,5 @@ class Plugin
         } elseif (isset($values['argumentName'])) {
             $this->argumentName = $values['argumentName'];
         }
-    }
-
-    public function __toString()
-    {
-        return (string)$this->argumentName;
     }
 }
