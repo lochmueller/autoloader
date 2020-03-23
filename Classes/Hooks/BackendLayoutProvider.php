@@ -76,7 +76,7 @@ class BackendLayoutProvider implements DataProviderInterface
         $fileName = GeneralUtility::getFileAbsFileName($info['path']);
         $backendLayout = BackendLayout::create($this->getIdentifier($info), $info['label'], GeneralUtility::getUrl($fileName));
         if ($info['icon']) {
-            $backendLayout->setIconPath(str_replace(PATH_site, '', $info['icon']));
+            $backendLayout->setIconPath($info['icon']);
         }
 
         return $backendLayout;
