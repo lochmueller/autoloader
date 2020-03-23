@@ -5,8 +5,6 @@
  * @category Extension
  * @author   Tim Lochmüller
  */
-
-
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
