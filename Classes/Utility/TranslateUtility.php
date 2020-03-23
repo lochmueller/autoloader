@@ -36,12 +36,7 @@ class TranslateUtility
     {
         if (\is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] as $classConfig) {
-                if (class_exists($classConfig)) {
-                    $object = GeneralUtility::makeInstance($classConfig);
-                } else {
-                    // deprecated (!!!)
-                    $object = GeneralUtility::getUserObj($classConfig);
-                }
+                $object = GeneralUtility::makeInstance($classConfig);
                 if (\is_object($object) && method_exists($object, 'assureLabel')) {
                     $object->assureLabel($key, $extensionName, $default, $arguments, $tableName);
                 }

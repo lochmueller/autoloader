@@ -10,6 +10,7 @@ namespace HDNET\Autoloader\Loader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\Annotation\NoHeader;
+use HDNET\Autoloader\Annotation\WizardTab;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\NameMapperService;
@@ -39,6 +40,9 @@ class ContentObjects implements LoaderInterface
     {
         $loaderInformation = [];
 
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
         $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
         $models = FileUtility::getBaseFilesInDir($modelPath, 'php');
         if (!empty($models)) {
@@ -63,6 +67,8 @@ class ContentObjects implements LoaderInterface
             $richTextFields = [];
             $noHeader = $this->isTaggedWithNoHeader($className);
 
+            $reflectionClass = new \ReflectionClass($className);
+
             // create labels in the ext_tables run, to have a valid DatabaseConnection
             if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel('wizard.' . $key, $loader->getExtensionKey(), $key . ' (Title)', null, 'tt_content');
@@ -76,11 +82,6 @@ class ContentObjects implements LoaderInterface
                 $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
                 $defaultFields = $this->getDefaultTcaFields($noHeader, null);
                 $fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
-
-                /** @var AnnotationReader $annotationReader */
-                $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-                $reflectionClass = new \ReflectionClass($className);
 
                 // RTE manipulation
                 foreach ($reflectionClass->getProperties() as $property) {
@@ -108,7 +109,7 @@ class ContentObjects implements LoaderInterface
                 'icon' => IconUtility::getByModelName($className, false),
                 'iconExt' => IconUtility::getByModelName($className, true),
                 'noHeader' => $noHeader,
-                'tabInformation' => ReflectionUtility::getFirstTagValue($className, 'wizardTab'),
+                'tabInformation' => (string)$annotationReader->getClassAnnotation($reflectionClass, WizardTab::class),
             ];
 
             SmartObjectRegister::register($entry['modelClass']);

@@ -13,6 +13,7 @@ use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -66,8 +67,10 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
         }
 
         $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
+
+        /** @var FrontendInterface $cache */
         $cache = GeneralUtility::makeInstance(CacheManager::class)
-            ->getCache('cache_pagesection')
+            ->getCache('pagesection')
         ;
         if ($cache->has($cacheIdentifier)) {
             return $cache->get($cacheIdentifier);

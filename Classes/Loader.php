@@ -248,7 +248,7 @@ class Loader implements SingletonInterface
     {
         $return = [];
         foreach ($objects as $object) {
-            // @var LoaderInterface $object
+            // LoaderInterface
             $return[\get_class($object)] = $object->prepareLoader($this, $type);
         }
 

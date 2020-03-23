@@ -170,7 +170,7 @@ class ModelUtility
             $settings->setIgnoreEnableFields(true);
 
             if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
-                GeneralUtility::_GETset((int)$data['sys_language_uid'], 'L');
+                $_GET['L'] = (int)$data['sys_language_uid'];
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
@@ -179,8 +179,6 @@ class ModelUtility
                     $settings->setLanguageUid((int)$data['sys_language_uid']);
                 }
                 $object = $query->execute()->getFirst();
-
-                GeneralUtility::_GETset(0, 'L');
 
                 return $object;
             }

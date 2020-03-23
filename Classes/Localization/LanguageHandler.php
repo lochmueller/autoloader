@@ -41,6 +41,12 @@ class LanguageHandler extends LanguageStore
         if (empty($GLOBALS['TCA'])) {
             return $default;
         }
+
+        if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG'])) {
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
+            $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
+        }
+
         $value = LocalizationUtility::translate($key, $extensionName, $arguments);
 
         if (null !== $value) {

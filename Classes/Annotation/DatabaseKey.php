@@ -8,25 +8,27 @@ namespace HDNET\Autoloader\Annotation;
  * @Annotation
  * @Target({"CLASS"})
  */
-class WizardTab
+class DatabaseKey
 {
     /**
      * @var string
      */
-    public $config;
+    public $key;
 
     /**
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['value'])) {
-            $this->config = $values['value'];
+        if (isset($values['value'])) {
+            $this->key = $values['value'];
+        } elseif (isset($values['argumentName'])) {
+            $this->key = $values['argumentName'];
         }
     }
 
     public function __toString()
     {
-        return (string)$this->config;
+        return (string)$this->key;
     }
 }

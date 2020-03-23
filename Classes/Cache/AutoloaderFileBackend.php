@@ -62,9 +62,10 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
      */
     public function flush(): void
     {
-        var_dump(Environment::getVarPath());
-
-        exit();
+        $files = glob(Environment::getVarPath() . '/autoloader_*');
+        foreach ($files as $file) {
+            unlink($file);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Service;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseKey;
 use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
@@ -17,7 +18,6 @@ use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
-use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -344,9 +344,11 @@ class SmartObjectInformationService
         $fields[] = 'KEY parent (pid)';
 
         // add custom keys set by @key annotations
-        $reflectionConfiguration = ReflectionUtility::getTagConfigurationForClass($modelClassName, ['key']);
-        if (!empty($reflectionConfiguration['key'])) {
-            $additionalKeys = $reflectionConfiguration['key'];
+
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+        $key = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseKey::class);
+        if (null !== $key) {
+            $additionalKeys = [(string)$key];
             array_walk($additionalKeys, function (&$item): void {
                 $item = 'KEY ' . $item;
             });

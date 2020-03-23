@@ -8,7 +8,6 @@ declare(strict_types = 1);
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -74,16 +73,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
-        try {
-            if (!method_exists($uriBuilder, 'buildUriFromRoute')) {
-                throw new \Exception('No method', 1238);
-            }
-            $uri = $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
-        } catch (\Exception $ex) {
-            // old TYPO3
-            $uri = BackendUtility::getModuleUrl('record_edit', $urlParameters);
-        }
-
-        return (string)$uri;
+        return (string)$uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
     }
 }

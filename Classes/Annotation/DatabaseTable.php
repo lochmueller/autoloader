@@ -20,10 +20,8 @@ class DatabaseTable
      */
     public function __construct(array $values)
     {
-        if (isset($values['value'])) {
-            $this->argumentName = $values['value'];
-        } elseif (isset($values['argumentName'])) {
-            $this->argumentName = $values['argumentName'];
+        if (\is_string($values['value'])) {
+            $this->tableName = $values['value'];
         }
     }
 

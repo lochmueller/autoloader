@@ -57,7 +57,7 @@ class Plugins implements LoaderInterface
                 $configuration = $annotationReader->getMethodAnnotation($method, Plugin::class);
 
                 if (null !== $configuration) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', implode(' ', (string)$configuration), true);
+                    $pluginKeys = GeneralUtility::trimExplode(' ', (string)$configuration, true);
                     $actionName = str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
