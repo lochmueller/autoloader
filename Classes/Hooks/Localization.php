@@ -14,7 +14,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * handler to create the labels.
  *
- * @Hook("TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel")
+ * Disabled for TYPO3 10!!!! Check!!!
+ * -@-H-o-o-k-("TYPO3_CONF_VARS|EXTCONF|autoloader|assureLabel")
  */
 class Localization
 {
