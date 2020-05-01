@@ -48,6 +48,10 @@ Example for a SmartObject (Only one of the features)
 `Test.php`
 ```php
 namespace vendorName\extensionKey\Domain\Model;
+
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Create a test-table for this model with this annotation.
@@ -59,7 +63,7 @@ class Test extends AbstractEntity {
 	 * A basic field
 	 *
 	 * @var string
-	 * @db
+	 * @DatabaseField(type="string")
 	 */
 	protected $textField;
 
@@ -67,7 +71,7 @@ class Test extends AbstractEntity {
 	 * A boolean field
 	 *
 	 * @var bool
-	 * @db
+	 * @DatabaseField(type="bool")
 	 */
 	protected $boolField;
 
@@ -75,7 +79,7 @@ class Test extends AbstractEntity {
 	 * File example
 	 *
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-	 * @db
+	 * @DatabaseField(type="string")
 	 */
 	protected $file;
 
@@ -83,7 +87,7 @@ class Test extends AbstractEntity {
 	 * Custom (variable that has a custom DB type)
 	 *
 	 * @var int
-	 * @db int(11) DEFAULT '0' NOT NULL
+	 * @DatabaseField(type="string", sql="int(11) DEFAULT '0' NOT NULL")
 	 */
 	protected $customField;
 
