@@ -8,6 +8,7 @@ declare(strict_types = 1);
 namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Localization\LanguageStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -37,7 +38,7 @@ class LanguageHandler extends LanguageStore
      */
     public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
-        // If we are called early in the TYPO3 bootstrap we mus return early with the default label
+        // If we are called early in the TYPO3 bootstrap we must return early with the default label
         if (empty($GLOBALS['TCA'])) {
             return $default;
         }
@@ -47,10 +48,11 @@ class LanguageHandler extends LanguageStore
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
 
-        $value = LocalizationUtility::translate($key, $extensionName, $arguments);
-
-        if (null !== $value) {
-            return $value;
+        // LocalizationUtility::translate() throws exception if $GLOBALS['TYPO3_REQUEST'] is not instanceof ServerRequestInterface.
+        if ($GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface) {
+            if($value = LocalizationUtility::translate($key, $extensionName, $arguments)) {
+                return $value;
+            }
         }
 
         if (null === $default || '' === $default) {

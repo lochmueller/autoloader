@@ -8,6 +8,8 @@
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
+// define TAB for XliffWriter template
+defined('TAB') ?: define('TAB', chr(9));
 
 \HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader', [
     'Hooks',
