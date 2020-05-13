@@ -13,6 +13,34 @@ Autoloader: Swiss Knife for Developers
 
 > Autoloader speeds up your development cycle - more time for coffee!
 
+Autoloader Annotations
+------
+```php
+/**
+
+* @DatabaseTable(tableName="")
+* @DatabaseKey([key=""|argumentName=""])
+* @DatabaseField(type=""[, sql=""])
+*
+* @EnableRicjText([value=""|argumentName=""])
+* @Hook(locations={})
+* @NoCache([value=""|argumentName=""])
+* @NoHeader([value=""|argumentName=""])
+* @ParrentClass(parentClass="")
+* @Plugin([value=""|argumentName=""])
+* @RecordType(recordType="")
+
+* @SignalClass([value=""|argumentName=""])
+* @SignalName([value=""|argumentName=""])
+* @SignalPriority([value=""|argumentName=""])
+
+* @SmartExclude(excludes="{}")
+* @WizardTab(config="")
+*
+*/
+```
+
+
 Working Examples
 ------
 We drop the examples in EXT:autoloader.
@@ -55,7 +83,7 @@ use HDNET\Autoloader\Annotation\DatabaseTable;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Create a test-table for this model with this annotation.
- * @db
+ * @DatabaseTable(tableName="test")
  */
 class Test extends AbstractEntity {
 
@@ -87,7 +115,7 @@ class Test extends AbstractEntity {
 	 * Custom (variable that has a custom DB type)
 	 *
 	 * @var int
-	 * @DatabaseField(type="string", sql="int(11) DEFAULT '0' NOT NULL")
+	 * @DatabaseField(type="int", sql="int(11) DEFAULT '0' NOT NULL")
 	 */
 	protected $customField;
 
