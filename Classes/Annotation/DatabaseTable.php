@@ -16,15 +16,20 @@ class DatabaseTable
     public $tableName;
 
     /**
+     * @param array $values
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['value'])) {
-            $this->tableName = $values['value'];
+        if (\is_string($values['tableName'])) {
+            $this->tableName = $values['tableName'];
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->tableName;

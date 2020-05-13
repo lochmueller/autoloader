@@ -16,6 +16,8 @@ class Plugin
     public $argumentName;
 
     /**
+     * @param array $values
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
@@ -27,6 +29,9 @@ class Plugin
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->argumentName;

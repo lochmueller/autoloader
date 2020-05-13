@@ -20,6 +20,8 @@ class DatabaseField
     public $sql;
 
     /**
+     * @param array $values
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

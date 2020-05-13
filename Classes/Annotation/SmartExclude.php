@@ -16,12 +16,14 @@ class SmartExclude
     public $excludes = [];
 
     /**
+     * @param array $values
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
     {
-        if (\is_array($values['value'])) {
-            $this->excludes = $values['value'];
+        if (\is_array($values['excludes'])) {
+            $this->excludes = $values['excludes'];
         }
     }
 }
