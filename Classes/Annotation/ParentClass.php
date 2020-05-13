@@ -16,8 +16,6 @@ class ParentClass
     public $parentClass;
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

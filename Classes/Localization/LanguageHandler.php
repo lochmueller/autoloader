@@ -20,8 +20,6 @@ class LanguageHandler extends LanguageStore
 {
     /**
      * Cache the created labels.
-     *
-     * @var array
      */
     protected static $createdLabelCache = [];
 
@@ -50,7 +48,7 @@ class LanguageHandler extends LanguageStore
 
         // LocalizationUtility::translate() throws exception if $GLOBALS['TYPO3_REQUEST'] is not instanceof ServerRequestInterface.
         if ($GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface) {
-            if($value = LocalizationUtility::translate($key, $extensionName, $arguments)) {
+            if ($value = LocalizationUtility::translate($key, $extensionName, $arguments)) {
                 return $value;
             }
         }

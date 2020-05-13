@@ -16,8 +16,6 @@ class DatabaseTable
     public $tableName;
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

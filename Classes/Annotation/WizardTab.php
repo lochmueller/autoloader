@@ -16,8 +16,6 @@ class WizardTab
     public $config;
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

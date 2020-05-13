@@ -16,15 +16,11 @@ class Mapper implements SingletonInterface
 {
     /**
      * Custom mapper.
-     *
-     * @var array
      */
     protected $customMapper = [];
 
     /**
      * Internal mapper.
-     *
-     * @var array
      */
     protected $internalMapper = [
         'Boolean',

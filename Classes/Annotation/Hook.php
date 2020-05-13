@@ -16,8 +16,6 @@ class Hook
     public $locations = [];
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

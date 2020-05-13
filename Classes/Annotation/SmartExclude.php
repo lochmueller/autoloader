@@ -16,8 +16,6 @@ class SmartExclude
     public $excludes = [];
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

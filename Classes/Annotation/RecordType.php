@@ -16,8 +16,6 @@ class RecordType
     public $recordType;
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

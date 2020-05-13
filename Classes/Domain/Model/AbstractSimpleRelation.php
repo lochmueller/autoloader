@@ -21,7 +21,6 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     /**
      * Local UID.
      *
-     * @var int
      * @db
      */
     protected $uidLocal;
@@ -29,7 +28,6 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     /**
      * Foreign UID.
      *
-     * @var int
      * @db
      */
     protected $uidForeign;
@@ -37,7 +35,6 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     /**
      * Sorting.
      *
-     * @var int
      * @db
      */
     protected $sorting;

@@ -16,8 +16,6 @@ class DatabaseKey
     public $key;
 
     /**
-     * @param array $values
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)

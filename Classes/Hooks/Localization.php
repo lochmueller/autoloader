@@ -7,7 +7,6 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Hooks;
 
-use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Localization\LanguageHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

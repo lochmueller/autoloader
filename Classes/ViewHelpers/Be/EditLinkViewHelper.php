@@ -22,8 +22,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
      *
      * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
      *
-     * @var bool
-     *
      * @api
      */
     protected $escapeChildren = false;
@@ -32,8 +30,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
      * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
      *
      * @see isOutputEscapingEnabled()
-     *
-     * @var bool
      *
      * @api
      */
