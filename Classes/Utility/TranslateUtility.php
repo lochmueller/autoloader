@@ -7,6 +7,7 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -106,6 +107,10 @@ class TranslateUtility
     public static function getLll($key, $extensionKey, $tableName = null)
     {
         $file = self::getLllString($key, $extensionKey, null, $tableName);
+
+        if (Environment::isCli()) {
+            return $file;
+        }
 
         if (\defined('TYPO3_REQUESTTYPE') && TYPO3_REQUESTTYPE === 16) {
             // Do not call the translation workflow in install tool
