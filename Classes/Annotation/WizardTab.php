@@ -22,6 +22,8 @@ class WizardTab
     {
         if (\is_string($values['config'])) {
             $this->config = $values['config'];
+        } elseif (\is_string($values['value'])) {
+            $this->config = $values['value'];
         }
     }
 

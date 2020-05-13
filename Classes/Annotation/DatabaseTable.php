@@ -22,6 +22,8 @@ class DatabaseTable
     {
         if (\is_string($values['tableName'])) {
             $this->tableName = $values['tableName'];
+        } elseif (\is_string($values['value'])) {
+            $this->tableName = $values['value'];
         }
     }
 

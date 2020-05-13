@@ -63,31 +63,26 @@ class StaticInfoTablesMapper implements MapperInterface
                 $itemsProcFunc = 'translateCountriesSelector';
 
                 break;
-
             case 'countryzone':
                 $table = 'static_country_zones';
                 $itemsProcFunc = 'translateCountryZonesSelector';
 
                 break;
-
             case 'currency':
                 $table = 'static_currencies';
                 $itemsProcFunc = 'translateCurrenciesSelector';
 
                 break;
-
             case 'language':
                 $table = 'static_languages';
                 $itemsProcFunc = 'translateLanguagesSelector';
 
                 break;
-
             case 'territory':
                 $table = 'static_territories';
                 $itemsProcFunc = 'translateTerritoriesSelector';
 
                 break;
-
             default:
                 return [];
         }

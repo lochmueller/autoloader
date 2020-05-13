@@ -29,8 +29,8 @@
 		}
 	],
 	"require": {
-		"php": ">=7.2.0",
-		"typo3/cms-core": "^10.3||^10.4||^10.5"
+		"php": "^7.2||^7.3||^7.4",
+		"typo3/cms-core": "^10.4"
 	},
 	"replace": {
 		"typo3-ter/autoloader": "self.version"
@@ -46,7 +46,6 @@
 		"friendsofphp/php-cs-fixer": "^2.14",
 		"scrutinizer/ocular": "^1.3"
 	},
-	"minimum-stability": "dev",
 	"config": {
 		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin"

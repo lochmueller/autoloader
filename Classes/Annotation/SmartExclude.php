@@ -22,6 +22,8 @@ class SmartExclude
     {
         if (\is_array($values['excludes'])) {
             $this->excludes = $values['excludes'];
+        } elseif (\is_array($values['value'])) {
+            $this->excludes = $values['value'];
         }
     }
 }

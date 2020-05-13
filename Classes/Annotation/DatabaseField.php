@@ -26,6 +26,8 @@ class DatabaseField
     {
         if (isset($values['type'])) {
             $this->type = $values['type'];
+        } elseif (isset($values['value'])) {
+            $this->type = $values['value'];
         }
         if (isset($values['sql'])) {
             $this->sql = $values['sql'];

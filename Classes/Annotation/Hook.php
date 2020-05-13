@@ -24,6 +24,10 @@ class Hook
             $this->locations[] = $values['locations'];
         } elseif (\is_array($values['locations'])) {
             $this->locations = $values['locations'];
+        } elseif (\is_string($values['value'])) {
+            $this->locations[] = $values['value'];
+        } elseif (\is_array($values['value'])) {
+            $this->locations = $values['value'];
         }
     }
 }

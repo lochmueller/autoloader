@@ -22,6 +22,8 @@ class RecordType
     {
         if (isset($values['recordType'])) {
             $this->recordType = (string)$values['recordType'];
+        } elseif (isset($values['value'])) {
+            $this->recordType = (string)$values['value'];
         }
     }
 

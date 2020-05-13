@@ -22,6 +22,8 @@ class ParentClass
     {
         if (isset($values['parentClass'])) {
             $this->parentClass = (string)$values['parentClass'];
+        } elseif (isset($values['value'])) {
+            $this->parentClass = (string)$values['value'];
         }
     }
 
