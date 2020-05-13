@@ -24,8 +24,6 @@ class StaticInfoTablesMapper implements MapperInterface
 
     /**
      * Last class name.
-     *
-     * @var string
      */
     protected $lastClass;
 

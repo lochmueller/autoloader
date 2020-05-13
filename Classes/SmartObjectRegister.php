@@ -14,8 +14,6 @@ class SmartObjectRegister
 {
     /**
      * Register for smart object information.
-     *
-     * @var array
      */
     protected static $smartObjectRegistry = [];
 

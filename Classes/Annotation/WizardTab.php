@@ -20,11 +20,14 @@ class WizardTab
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['value'])) {
-            $this->config = $values['value'];
+        if (\is_string($values['config'])) {
+            $this->config = $values['config'];
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->config;

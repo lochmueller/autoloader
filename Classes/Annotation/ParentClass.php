@@ -20,11 +20,14 @@ class ParentClass
      */
     public function __construct(array $values)
     {
-        if (isset($values['value'])) {
-            $this->parentClass = (string)$values['value'];
+        if (isset($values['parentClass'])) {
+            $this->parentClass = (string)$values['parentClass'];
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->parentClass;

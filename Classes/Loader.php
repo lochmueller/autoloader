@@ -18,8 +18,6 @@ class Loader implements SingletonInterface
 {
     /**
      * The different implementations and the order of the execution.
-     *
-     * @var array
      */
     protected $implementations = [
         // class replacement
@@ -50,15 +48,11 @@ class Loader implements SingletonInterface
 
     /**
      * The Extension key.
-     *
-     * @var string
      */
     protected $extensionKey;
 
     /**
      * The vendorName.
-     *
-     * @var string
      */
     protected $vendorName;
 

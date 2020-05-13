@@ -17,8 +17,6 @@ class DataSet implements SingletonInterface
 {
     /**
      * The different implementations and the order of the execution.
-     *
-     * @var array
      */
     protected $implementations = [
         'EnableFields',

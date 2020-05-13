@@ -20,10 +20,10 @@ class Hook
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['value'])) {
-            $this->locations[] = $values['value'];
-        } elseif (\is_array($values['value'])) {
-            $this->locations = $values['value'];
+        if (\is_string($values['locations'])) {
+            $this->locations[] = $values['locations'];
+        } elseif (\is_array($values['locations'])) {
+            $this->locations = $values['locations'];
         }
     }
 }

@@ -20,13 +20,16 @@ class DatabaseKey
      */
     public function __construct(array $values)
     {
-        if (isset($values['value'])) {
-            $this->key = $values['value'];
+        if (isset($values['key'])) {
+            $this->key = $values['key'];
         } elseif (isset($values['argumentName'])) {
             $this->key = $values['argumentName'];
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->key;

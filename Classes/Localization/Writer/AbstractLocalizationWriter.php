@@ -18,8 +18,6 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 {
     /**
      * Language file base name.
-     *
-     * @var string
      */
     protected $languageBaseName = 'locallang';
 

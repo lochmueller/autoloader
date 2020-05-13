@@ -19,7 +19,6 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     /**
      * Tablesnames.
      *
-     * @var string
      * @db varchar(60) DEFAULT '' NOT NULL
      */
     protected $tablenames;
@@ -27,7 +26,6 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     /**
      * Sorting foreign.
      *
-     * @var int
      * @db
      */
     protected $sortingForeign;
@@ -35,7 +33,6 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     /**
      * Ident.
      *
-     * @var string
      * @db varchar(30) DEFAULT '' NOT NULL
      */
     protected $ident;
