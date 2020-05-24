@@ -62,7 +62,7 @@ class Hooks implements LoaderInterface
                 $methodHook = $annotationReader->getMethodAnnotation($method, Hook::class);
                 if (null !== $methodHook) {
                     $hooks[] = [
-                        'locations' => $classHook->locations,
+                        'locations' => $methodHook->locations,
                         'configuration' => $hookClass . '->' . $method->getName(),
                     ];
                 }
