@@ -6,6 +6,8 @@
 declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Domain\Model;
+use HDNET\Autoloader\Annotation\SmartExclude;
+use HDNET\Autoloader\Annotation\DatabaseField;
 
 /**
  * Advanced relation model.
@@ -19,21 +21,19 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     /**
      * Tablesnames.
      *
-     * @db varchar(60) DEFAULT '' NOT NULL
+     * @DatabaseField(type="varchar", sql="varchar(60) DEFAULT '' NOT NULL")
      */
     protected $tablenames;
 
     /**
      * Sorting foreign.
-     *
-     * @db
+     * @DatabaseField(type="string")
      */
     protected $sortingForeign;
 
     /**
      * Ident.
-     *
-     * @db varchar(30) DEFAULT '' NOT NULL
+     * @DatabaseField(type="varchar", sql="varchar(30) DEFAULT '0' NOT NULL")
      */
     protected $ident;
 }
