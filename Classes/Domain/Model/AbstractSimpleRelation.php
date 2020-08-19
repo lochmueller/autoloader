@@ -7,9 +7,9 @@ declare(strict_types = 1);
 
 namespace HDNET\Autoloader\Domain\Model;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\SmartExclude;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Simple relation model.
@@ -29,12 +29,12 @@ abstract class AbstractSimpleRelation extends AbstractEntity
 
     /**
      * @DatabaseField(type="int")
-     *
      */
     protected $uidForeign;
 
     /**
      * Sorting.
+     *
      * @DatabaseField(type="int")
      */
     protected $sorting;
