@@ -79,9 +79,9 @@ class Language implements DataSetInterface
     public function getDatabaseSql(string $tableName): array
     {
         return [
-            'sys_language_uid int(11) DEFAULT \'0\' NOT NULL',
-            'l10n_parent int(11) DEFAULT \'0\' NOT NULL',
-            'l10n_diffsource mediumblob',
+            //'sys_language_uid int(11) DEFAULT \'0\' NOT NULL',
+            //'l10n_parent int(11) DEFAULT \'0\' NOT NULL',
+            //'l10n_diffsource mediumblob',
         ];
     }
 

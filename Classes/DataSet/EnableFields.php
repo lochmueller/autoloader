@@ -27,6 +27,7 @@ class EnableFields implements DataSetInterface
                     'endtime' => 'endtime',
                     'fe_group' => 'fe_group',
                 ],
+                'editlock' => 'editlock',
             ],
             'columns' => [
                 'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
@@ -84,11 +85,11 @@ class EnableFields implements DataSetInterface
     public function getDatabaseSql(string $tableName): array
     {
         return [
-            'hidden tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
-            'starttime int(11) unsigned DEFAULT \'0\' NOT NULL',
-            'endtime int(11) unsigned DEFAULT \'0\' NOT NULL',
-            'fe_group varchar(100) DEFAULT \'0\' NOT NULL',
-            'editlock tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
+            //'hidden tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
+            //'starttime int(11) unsigned DEFAULT \'0\' NOT NULL',
+            //'endtime int(11) unsigned DEFAULT \'0\' NOT NULL',
+            //'fe_group varchar(100) DEFAULT \'0\' NOT NULL',
+            //'editlock tinyint(4) unsigned DEFAULT \'0\' NOT NULL',
         ];
     }
 

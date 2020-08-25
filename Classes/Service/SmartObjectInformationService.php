@@ -324,13 +324,13 @@ class SmartObjectInformationService
     protected function generateCompleteSqlQuery($modelClassName, $tableName, array $custom)
     {
         $fields = [];
-        $fields[] = 'uid int(11) NOT NULL auto_increment';
-        $fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
-        $fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
-        $fields[] = 'crdate int(11) unsigned DEFAULT \'0\' NOT NULL';
-        $fields[] = 'cruser_id int(11) unsigned DEFAULT \'0\' NOT NULL';
-        $fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
-        $fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'uid int(11) NOT NULL auto_increment';
+        //$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'crdate int(11) unsigned DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'cruser_id int(11) unsigned DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
+        //$fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
 
         foreach ($custom as $field) {
             $fields[] = $field;
@@ -344,8 +344,8 @@ class SmartObjectInformationService
         $fields = array_merge($fields, $dataSet->getDatabaseSqlInformation($dataImplementations, $tableName));
 
         // default keys
-        $fields[] = 'PRIMARY KEY (uid)';
-        $fields[] = 'KEY parent (pid)';
+        //$fields[] = 'PRIMARY KEY (uid)';
+        //$fields[] = 'KEY parent (pid)';
 
         // add custom keys set by @key annotations
 
