@@ -28,7 +28,7 @@ class Language implements DataSetInterface
             'columns' => [
                 'sys_language_uid' => [
                     'exclude' => 1,
-                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
+                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
                     'config' => [
                         'type' => 'select',
                         'renderType' => 'selectSingle',
@@ -36,7 +36,7 @@ class Language implements DataSetInterface
                         'special' => 'languages',
                         'items' => [
                             [
-                                'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
+                                'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
                                 -1,
                                 'flags-multiple',
                             ],
@@ -46,7 +46,7 @@ class Language implements DataSetInterface
                 'l10n_parent' => [
                     'displayCond' => 'FIELD:sys_language_uid:>:0',
                     'exclude' => 1,
-                    'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
                     'config' => [
                         'type' => 'select',
                         'renderType' => 'selectSingle',
