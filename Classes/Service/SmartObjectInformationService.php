@@ -227,7 +227,11 @@ class SmartObjectInformationService
         $fields = [];
         foreach ($fieldInformation as $info) {
             if ('' === $info['db']) {
-                $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
+                try {
+                    $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
+                } catch (\Exception $exception) {
+                    throw new \Exception('Error for mapping in ' . $modelClassName . ' in property ' . $info['property'] . ' with problem: ' . $exception->getMessage(), 123681);
+                }
             } else {
                 try {
                     $info['db'] = $this->getDatabaseMappingByVarType($info['db']);
