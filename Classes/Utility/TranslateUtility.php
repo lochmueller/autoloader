@@ -116,7 +116,7 @@ class TranslateUtility
             // Do not call the translation workflow in install tool
             return $file;
         }
-        if (GeneralUtility::getApplicationContext()->isTesting()) {
+        if (Environment::getContext()->isTesting()) {
             // Do not call translation workflow in testinng
             return $file;
         }
