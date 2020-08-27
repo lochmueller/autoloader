@@ -178,9 +178,8 @@ class ModelUtility
                     $settings->setRespectSysLanguage(true);
                     $settings->setLanguageUid((int)$data['sys_language_uid']);
                 }
-                $object = $query->execute()->getFirst();
 
-                return $object;
+                return $query->execute()->getFirst();
             }
         }
 

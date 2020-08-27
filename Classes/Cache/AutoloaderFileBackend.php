@@ -33,9 +33,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
     public function get($entryIdentifier)
     {
         if ($this->has($entryIdentifier)) {
-            $content = include $this->getCacheFileName($entryIdentifier);
-
-            return $content;
+            return include $this->getCacheFileName($entryIdentifier);
         }
 
         return null;

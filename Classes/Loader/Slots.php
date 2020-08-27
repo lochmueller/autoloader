@@ -100,7 +100,7 @@ class Slots implements LoaderInterface
     public function loadExtensionConfiguration(Loader $autoLoader, array $loaderInformation): void
     {
         if (!empty($loaderInformation)) {
-            /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+            /** @var Dispatcher $signalSlotDispatcher */
             $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
             foreach ($loaderInformation as $slot) {
                 $signalSlotDispatcher->connect(

@@ -47,7 +47,7 @@ class ExtendedUtility
     public static function getQuery($objectName)
     {
         $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
-        /** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
+        /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {
             $manager = self::create(PersistenceManagerInterface::class);
@@ -124,13 +124,13 @@ class ExtendedUtility
      * @param string $extensionKey
      * @param string $templatePath
      *
-     * @return \TYPO3\CMS\Fluid\View\StandaloneView
+     * @return StandaloneView
      */
     public static function createExtensionStandaloneView($extensionKey, $templatePath)
     {
         $templatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
-        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
+        /** @var StandaloneView $view */
         $view = self::create(StandaloneView::class);
         $view->setTemplatePathAndFilename($templatePath);
 

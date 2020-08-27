@@ -64,7 +64,7 @@ class Loader implements SingletonInterface
      */
     public static function extTables($vendorName, $extensionKey, array $implementations = []): void
     {
-        /** @var \HDNET\Autoloader\Loader $loader */
+        /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
     }
@@ -77,7 +77,7 @@ class Loader implements SingletonInterface
      */
     public static function extLocalconf($vendorName, $extensionKey, array $implementations = []): void
     {
-        /** @var \HDNET\Autoloader\Loader $loader */
+        /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }

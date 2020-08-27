@@ -29,7 +29,7 @@ class SmartObjectInformationService
     /**
      * Get a instance of this object.
      *
-     * @return \HDNET\Autoloader\Service\SmartObjectInformationService
+     * @return SmartObjectInformationService
      */
     public static function getInstance()
     {
