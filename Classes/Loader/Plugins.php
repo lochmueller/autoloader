@@ -50,8 +50,9 @@ class Plugins implements LoaderInterface
 
             $reflectionClass = new \ReflectionClass($controllerName);
 
-            $controllerKey = str_replace('/', '\\', $controller);
-            $controllerKey = str_replace('Controller', '', $controllerKey);
+            //$controllerKey = str_replace('/', '\\', $controller);
+            //$controllerKey = str_replace('Controller', '', $controllerKey);
+            $controllerKey = $controllerName;
 
             foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                 $configuration = $annotationReader->getMethodAnnotation($method, Plugin::class);
@@ -92,7 +93,7 @@ class Plugins implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
-        $prefix = $loader->getVendorName() . '.' . $loader->getExtensionKey();
+        $prefix = $loader->getExtensionKey();
         foreach ($loaderInformation as $key => $information) {
             ExtensionUtility::configurePlugin($prefix, $key, $information['cache'], $information['noCache']);
         }

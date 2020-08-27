@@ -188,9 +188,6 @@ class SmartObjectInformationService
                 'searchFields' => implode(',', $searchFields),
                 'iconfile' => IconUtility::getByModelName($modelClassName, true),
             ],
-            'interface' => [
-                'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
-            ],
             'types' => [
                 '1' => ['showitem' => implode(',', $showitem)],
             ],

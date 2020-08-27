@@ -11,6 +11,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\Annotation\NoHeader;
 use HDNET\Autoloader\Annotation\WizardTab;
+use HDNET\Autoloader\Controller\ContentController;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\NameMapperService;
@@ -252,7 +253,7 @@ mod.wizards.newContentElement.wizardItems.' . $element . ' {
 
         if ($loadPlugin) {
             $loadPlugin = false;
-            ExtensionUtility::configurePlugin('HDNET.autoloader', 'Content', ['Content' => 'index'], ['Content' => '']);
+            ExtensionUtility::configurePlugin('autoloader', 'Content', [ContentController::class => 'index'], [ContentController::class => '']);
             if (!$csc) {
                 $typoScript .= 'tt_content = CASE
 tt_content.key.field = CType';
