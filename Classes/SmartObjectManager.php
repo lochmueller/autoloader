@@ -14,6 +14,7 @@ use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -123,7 +124,7 @@ class SmartObjectManager implements SingletonInterface
      */
     protected static function getSmartObjectClassLoadingIgnorePattern()
     {
-        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
         return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string)$configuration['smartObjectClassLoadingIgnorePattern'] : '';
     }

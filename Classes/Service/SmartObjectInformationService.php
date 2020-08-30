@@ -19,6 +19,7 @@ use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -206,7 +207,7 @@ class SmartObjectInformationService
      */
     protected function useTableNameFileBase()
     {
-        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
         return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }

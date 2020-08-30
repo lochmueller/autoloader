@@ -8,6 +8,7 @@ declare(strict_types = 1);
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Localization\LanguageHandler;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -46,7 +47,7 @@ class Localization
      */
     protected function useTableNameFileBase()
     {
-        $configuration = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['autoloader']);
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
         return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
