@@ -14,10 +14,10 @@ autoloader.template = TEXT
 autoloader.template {
 
 	stdWrap.cache {
-		key = tscobj-template-{TSFE:id}-{TSFE:sys_language_uid}
+		key = tscobj-template-{page:uid}-{siteLanguage:languageId}
 		key.insertData = 1
 	}
-	
+
 	cObject =< autoloader.templateConfiguration
 	split {
 		token = /

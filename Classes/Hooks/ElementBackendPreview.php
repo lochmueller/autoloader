@@ -60,12 +60,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
             return '';
         }
 
-        // Workarround for wrong FrontendUserGroup Restriction in TYPO3 8.x
-        if (TYPO3_MODE === 'BE' && !\is_object($GLOBALS['TSFE'])) {
-            $GLOBALS['TSFE'] = new \stdClass();
-            $GLOBALS['TSFE']->gr_list = '';
-        }
-
         $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
 
         /** @var FrontendInterface $cache */
