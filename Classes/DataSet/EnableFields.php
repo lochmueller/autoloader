@@ -54,7 +54,7 @@ class EnableFields implements DataSetInterface
                     'config' => [
                         'type' => 'input',
                         'renderType' => 'inputDateTime',
-                        'eval' => 'datetime',
+                        'eval' => 'datetime,int',
                         'default' => 0,
                     ],
                     'l10n_mode' => 'exclude',
@@ -66,7 +66,7 @@ class EnableFields implements DataSetInterface
                     'config' => [
                         'type' => 'input',
                         'renderType' => 'inputDateTime',
-                        'eval' => 'datetime',
+                        'eval' => 'datetime,int',
                         'default' => 0,
                         'range' => [
                             'upper' => mktime(0, 0, 0, 1, 1, 2038),
