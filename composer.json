@@ -29,8 +29,8 @@
 		}
 	],
 	"require": {
-		"php": "^7.2||^7.3||^7.4",
-		"typo3/cms-core": "^10.4.6"
+		"php": "^7.3||^7.4||^8.0",
+		"typo3/cms-core": "^10.4.6||^11.1"
 	},
 	"replace": {
 		"typo3-ter/autoloader": "self.version"
