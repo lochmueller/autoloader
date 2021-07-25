@@ -29,7 +29,7 @@ abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
     /**
      * Sorting foreign.
      *
-     * @DatabaseField(type="string")
+     * @DatabaseField(type="int")
      */
     protected $sortingForeign;
 
