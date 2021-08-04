@@ -3,7 +3,7 @@
 /**
  * Loading Plugins.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -35,14 +35,14 @@ class Plugins implements LoaderInterface
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
 
-        $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Controller/';
+        $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Controller/';
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
 
         foreach ($controllers as $controller) {
             $controllerName = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Controller/' . $controller
+                'Controller/'.$controller
             );
             if (!$loader->isInstantiableClass($controllerName)) {
                 continue;
@@ -58,7 +58,7 @@ class Plugins implements LoaderInterface
                 $configuration = $annotationReader->getMethodAnnotation($method, Plugin::class);
 
                 if (null !== $configuration) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', (string)$configuration, true);
+                    $pluginKeys = GeneralUtility::trimExplode(' ', (string) $configuration, true);
                     $actionName = str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
@@ -83,7 +83,7 @@ class Plugins implements LoaderInterface
     public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
         foreach (array_keys($loaderInformation) as $key) {
-            $label = TranslateUtility::getLllOrHelpMessage('plugin.' . $key, $loader->getExtensionKey());
+            $label = TranslateUtility::getLllOrHelpMessage('plugin.'.$key, $loader->getExtensionKey());
             ExtensionUtility::registerPlugin($loader->getExtensionKey(), $key, $label);
         }
     }

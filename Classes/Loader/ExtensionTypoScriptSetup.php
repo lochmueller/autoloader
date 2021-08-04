@@ -3,7 +3,7 @@
 /**
  * ExtensionTypoScriptSetup.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -60,7 +60,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     protected function addTypoScript(array $loaderInformation): void
     {
         if (!empty($loaderInformation)) {
-            ExtensionManagementUtility::addTypoScriptSetup(LF . implode(LF, $loaderInformation) . LF);
+            ExtensionManagementUtility::addTypoScriptSetup(LF.implode(LF, $loaderInformation).LF);
         }
     }
 
@@ -81,17 +81,17 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
             $reflectionClass = new \ReflectionClass($className);
 
-            $table = (string)$annotationReader->getClassAnnotation($reflectionClass, DatabaseTable::class);
-            $recordType = (string)$annotationReader->getClassAnnotation($reflectionClass, RecordType::class);
-            $parentClass = (string)$annotationReader->getClassAnnotation($reflectionClass, ParentClass::class);
+            $table = (string) $annotationReader->getClassAnnotation($reflectionClass, DatabaseTable::class);
+            $recordType = (string) $annotationReader->getClassAnnotation($reflectionClass, RecordType::class);
+            $parentClass = (string) $annotationReader->getClassAnnotation($reflectionClass, ParentClass::class);
             if ('' !== $table) {
-                $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
+                $setup[] = 'config.tx_extbase.persistence.classes.'.$className.'.mapping.tableName = '.$table;
             }
             if ('' !== $recordType) {
-                $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.recordType = ' . $recordType;
+                $setup[] = 'config.tx_extbase.persistence.classes.'.$className.'.mapping.recordType = '.$recordType;
             }
             if ('' !== $parentClass) {
-                $setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
+                $setup[] = 'config.tx_extbase.persistence.classes.'.$parentClass.'.subclasses.'.$className.' = '.$className;
             }
         }
 

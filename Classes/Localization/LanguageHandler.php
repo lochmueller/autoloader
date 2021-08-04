@@ -3,7 +3,7 @@
 /**
  * Handling of the language files.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization;
 
@@ -32,7 +32,7 @@ class LanguageHandler extends LanguageStore
      * @param array  $arguments            arguments are being passed over to vsprintf
      * @param string $overrideLanguageBase
      *
-     * @return string|null
+     * @return null|string
      */
     public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
     {
@@ -54,13 +54,13 @@ class LanguageHandler extends LanguageStore
         }
 
         if (null === $default || '' === $default) {
-            $default = $extensionName . ' ==> LLL:' . $key;
+            $default = $extensionName.' ==> LLL:'.$key;
         }
 
         $handler = $this->getBestLanguageWriter($extensionName, $overrideLanguageBase);
         $handler->createFileIfNotExists($extensionName);
 
-        $labelCacheKey = $extensionName . '|' . $key;
+        $labelCacheKey = $extensionName.'|'.$key;
         if (!\in_array($labelCacheKey, self::$createdLabelCache, true)) {
             $handler->addLabel($extensionName, $key, $default);
             self::$createdLabelCache[] = $labelCacheKey;

@@ -3,7 +3,7 @@
 /**
  * Loading Slots.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -26,7 +26,7 @@ class StaticTyposcript implements LoaderInterface
     {
         $tsConfiguration = [];
         $extPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
-        $baseDir = $extPath . 'Configuration/TypoScript/';
+        $baseDir = $extPath.'Configuration/TypoScript/';
         if (!is_dir($baseDir)) {
             return $tsConfiguration;
         }
@@ -34,8 +34,8 @@ class StaticTyposcript implements LoaderInterface
         $extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
         foreach ($typoScriptFolder as $folder) {
-            if (is_file($folder . 'setup.txt') || is_file($folder . 'constants.txt') || is_file($folder . 'setup.typoscript') || is_file($folder . 'constants.typoscript')) {
-                $setupName = $extensionName . '/' . str_replace($baseDir, '', $folder);
+            if (is_file($folder.'setup.txt') || is_file($folder.'constants.txt') || is_file($folder.'setup.typoscript') || is_file($folder.'constants.typoscript')) {
+                $setupName = $extensionName.'/'.str_replace($baseDir, '', $folder);
                 $setupName = implode(' - ', GeneralUtility::trimExplode('/', $setupName, true));
                 $folder = str_replace($extPath, '', $folder);
                 $tsConfiguration[] = [

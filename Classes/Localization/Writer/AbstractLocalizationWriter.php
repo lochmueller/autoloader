@@ -3,7 +3,7 @@
 /**
  * Abstraction of the Writer.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 
@@ -91,7 +91,7 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
     protected function wrapCdata($content)
     {
         if (htmlentities($content, ENT_NOQUOTES) !== $content) {
-            $content = '<![CDATA[' . $content . ']]>';
+            $content = '<![CDATA['.$content.']]>';
         }
 
         return $content;

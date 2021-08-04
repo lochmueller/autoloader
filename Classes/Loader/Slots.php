@@ -3,7 +3,7 @@
 /**
  * Loading Slots.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -35,14 +35,14 @@ class Slots implements LoaderInterface
         $slots = [];
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-        $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Slots/';
+        $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
 
         foreach ($slotClasses as $slot) {
             $slotClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Slots/' . $slot
+                'Slots/'.$slot
             );
 
             if (!$loader->isInstantiableClass($slotClass)) {
@@ -53,12 +53,12 @@ class Slots implements LoaderInterface
             foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                 $signalClassAnnotation = $annotationReader->getMethodAnnotation($method, SignalClass::class);
                 if (null !== $signalClassAnnotation) {
-                    $priority = (int)$annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
+                    $priority = (int) $annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
-                        'signalClassName' => (string)$signalClassAnnotation->argumentName,
-                        'signalName' => (string)$annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
+                        'signalClassName' => (string) $signalClassAnnotation->argumentName,
+                        'signalName' => (string) $annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName' => $method->getName(),
                     ];

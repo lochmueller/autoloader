@@ -3,7 +3,7 @@
 /**
  * Loading FlexForms.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -26,26 +26,26 @@ class FlexForms implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $flexForms = [];
-        $flexFormPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/FlexForms/';
+        $flexFormPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Configuration/FlexForms/';
 
         // Plugins
         $extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
         $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath, 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $pluginSignature = mb_strtolower($extensionName . '_' . $fileKey);
+            $pluginSignature = mb_strtolower($extensionName.'_'.$fileKey);
             $flexForms[] = [
                 'pluginSignature' => $pluginSignature,
-                'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
+                'path' => 'FILE:EXT:'.$loader->getExtensionKey().'/Configuration/FlexForms/'.$fileKey.'.xml',
             ];
         }
 
         // Content
-        $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath . 'Content/', 'xml');
+        $flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath.'Content/', 'xml');
         foreach ($flexFormsFiles as $fileKey) {
-            $contentSignature = mb_strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
+            $contentSignature = mb_strtolower($loader->getExtensionKey().'_'.GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
             $flexForms[] = [
                 'contentSignature' => $contentSignature,
-                'path' => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
+                'path' => 'FILE:EXT:'.$loader->getExtensionKey().'/Configuration/FlexForms/Content/'.$fileKey.'.xml',
             ];
         }
 

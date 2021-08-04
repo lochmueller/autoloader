@@ -3,7 +3,7 @@
 /**
  * ClassNamingUtility.php.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -35,14 +35,14 @@ class ClassNamingUtility
             } else {
                 $extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
             }
-            $regEx = '/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix';
+            $regEx = '/'.$extensionName.'\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix';
         } else {
             $regEx = '/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z0-9_]+)/ix';
         }
 
         preg_match($regEx, $modelName, $matches);
         if (empty($matches)) {
-            throw new Exception('Could not determine extension key for: ' . $modelName, 140657775);
+            throw new Exception('Could not determine extension key for: '.$modelName, 140657775);
         }
 
         return $matches;
@@ -51,7 +51,7 @@ class ClassNamingUtility
     /**
      * Get the extension key by the given model name.
      *
-     * @param string|object $modelClassName
+     * @param object|string $modelClassName
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class ClassNamingUtility
      */
     public static function getFqnByPath($vendorName, $extensionKey, $path)
     {
-        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace(
+        return $vendorName.'\\'.ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)).'\\'.str_replace(
             '/',
             '\\',
             ltrim($path, '/')

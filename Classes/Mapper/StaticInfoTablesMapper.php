@@ -3,7 +3,7 @@
 /**
  * StaticInfoTablesMapper.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Mapper;
 
@@ -20,7 +20,7 @@ class StaticInfoTablesMapper implements MapperInterface
     /**
      * Class base.
      */
-    const CLASS_BASE = 'sjbr\\staticinfotables\\domain\\model\\';
+    public const CLASS_BASE = 'sjbr\\staticinfotables\\domain\\model\\';
 
     /**
      * Last class name.
@@ -63,26 +63,31 @@ class StaticInfoTablesMapper implements MapperInterface
                 $itemsProcFunc = 'translateCountriesSelector';
 
                 break;
+
             case 'countryzone':
                 $table = 'static_country_zones';
                 $itemsProcFunc = 'translateCountryZonesSelector';
 
                 break;
+
             case 'currency':
                 $table = 'static_currencies';
                 $itemsProcFunc = 'translateCurrenciesSelector';
 
                 break;
+
             case 'language':
                 $table = 'static_languages';
                 $itemsProcFunc = 'translateLanguagesSelector';
 
                 break;
+
             case 'territory':
                 $table = 'static_territories';
                 $itemsProcFunc = 'translateTerritoriesSelector';
 
                 break;
+
             default:
                 return [];
         }
@@ -98,7 +103,7 @@ class StaticInfoTablesMapper implements MapperInterface
                 'items' => [
                     ['', 0],
                 ],
-                'itemsProcFunc' => TcaSelectItemsProcessor::class . '->' . $itemsProcFunc,
+                'itemsProcFunc' => TcaSelectItemsProcessor::class.'->'.$itemsProcFunc,
                 'foreign_table' => $table,
                 'wizards' => [
                     'suggest' => ['type' => 'suggest',

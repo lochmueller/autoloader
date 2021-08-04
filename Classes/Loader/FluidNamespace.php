@@ -3,7 +3,7 @@
 /**
  * FluidNamespace.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -25,11 +25,11 @@ class FluidNamespace implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $loaderInformation = [];
-        $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/ViewHelpers/';
+        $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/ViewHelpers/';
         if (is_dir($viewHelperFolder)) {
             $extKey = $loader->getExtensionKey();
             $key = GeneralUtility::underscoredToLowerCamelCase($extKey);
-            $loaderInformation[$key] = $loader->getVendorName() . '\\' . GeneralUtility::underscoredToUpperCamelCase($extKey) . '\\ViewHelpers';
+            $loaderInformation[$key] = $loader->getVendorName().'\\'.GeneralUtility::underscoredToUpperCamelCase($extKey).'\\ViewHelpers';
         }
 
         return $loaderInformation;

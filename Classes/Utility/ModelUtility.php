@@ -3,7 +3,7 @@
 /**
  * Utility to interact with the Model.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -52,7 +52,7 @@ class ModelUtility
             return '';
         }
 
-        return (string)$classAnnotation->tableName;
+        return (string) $classAnnotation->tableName;
     }
 
     /**
@@ -78,7 +78,7 @@ class ModelUtility
             }
             $classNameParts = \array_slice($classNameParts, $classPartsToSkip);
             $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
-            $tableName = 'tx_' . str_replace('\\', '_', mb_strtolower(implode('_', $classNameParts)));
+            $tableName = 'tx_'.str_replace('\\', '_', mb_strtolower(implode('_', $classNameParts)));
         } else {
             $tableName = mb_strtolower($className);
         }
@@ -154,7 +154,7 @@ class ModelUtility
      * @param string $modelName
      * @param array  $data
      *
-     * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity|object
+     * @return object|\TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public static function getModel($modelName, $data)
     {
@@ -169,14 +169,14 @@ class ModelUtility
             GeneralUtility::makeInstance(Session::class)->destroy();
             $settings->setIgnoreEnableFields(true);
 
-            if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
-                $_GET['L'] = (int)$data['sys_language_uid'];
+            if (isset($data['sys_language_uid']) && (int) $data['sys_language_uid'] > 0) {
+                $_GET['L'] = (int) $data['sys_language_uid'];
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
                     $settings->setLanguageMode(null);
                     $settings->setRespectSysLanguage(true);
-                    $settings->setLanguageUid((int)$data['sys_language_uid']);
+                    $settings->setLanguageUid((int) $data['sys_language_uid']);
                 }
 
                 return $query->execute()->getFirst();

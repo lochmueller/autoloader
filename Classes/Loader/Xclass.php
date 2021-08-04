@@ -3,7 +3,7 @@
 /**
  * Loading Xclass.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -31,14 +31,14 @@ class Xclass implements LoaderInterface
         if (LoaderInterface::EXT_TABLES === $type) {
             return $return;
         }
-        $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';
+        $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Xclass/';
         $xClasses = FileUtility::getBaseFilesRecursivelyInDir($xClassesPath, 'php');
 
         foreach ($xClasses as $xClass) {
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Xclass/' . $xClass
+                'Xclass/'.$xClass
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;

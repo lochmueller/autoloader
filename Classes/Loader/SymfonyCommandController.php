@@ -3,7 +3,7 @@
 /**
  * SymfonyCommandController.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -29,19 +29,19 @@ class SymfonyCommandController implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $commandConfigurationFile = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/Commands.php';
+        $commandConfigurationFile = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Configuration/Commands.php';
 
         if (is_file($commandConfigurationFile)) {
             return [];
         }
 
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Command/';
         $controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
         foreach ($controllers as $controller) {
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Command/' . $controller
+                'Command/'.$controller
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;
@@ -58,7 +58,7 @@ class SymfonyCommandController implements LoaderInterface
 
         $configuration = [];
         foreach ($classNames as $name => $class) {
-            $configuration[$loader->getExtensionKey() . ':' . $name] = [
+            $configuration[$loader->getExtensionKey().':'.$name] = [
                 'class' => $class,
             ];
         }
@@ -66,7 +66,7 @@ class SymfonyCommandController implements LoaderInterface
         $content = '<?php
 // This file is geenrated by EXT:autoloader. If you delete this file, clear the System cache and autoloader will generate a new one ;)
 
-return ' . ArrayUtility::arrayExport($configuration) . ';';
+return '.ArrayUtility::arrayExport($configuration).';';
 
         FileUtility::writeFileAndCreateFolder($commandConfigurationFile, $content);
 

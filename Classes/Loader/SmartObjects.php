@@ -3,7 +3,7 @@
 /**
  * Loading SmartObjects.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -28,7 +28,7 @@ class SmartObjects implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $configuration = [];
-        $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/';
+        $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Domain/Model/';
         if (!is_dir($modelPath)) {
             return $configuration;
         }
@@ -38,7 +38,7 @@ class SmartObjects implements LoaderInterface
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Domain/Model/' . $model
+                'Domain/Model/'.$model
             );
             if (SmartObjectManager::isSmartObjectClass($className)) {
                 $configuration[] = $className;

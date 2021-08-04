@@ -41,9 +41,8 @@
 		"issues": "https://github.com/lochmueller/autoloader/issues"
 	},
 	"require-dev": {
-		"namelesscoder/typo3-repository-client": "^2.0",
 		"typo3/testing-framework": "^6.2",
-		"friendsofphp/php-cs-fixer": "^2.14",
+		"friendsofphp/php-cs-fixer": "^3.0",
 		"scrutinizer/ocular": "^1.3"
 	},
 	"config": {

@@ -3,7 +3,7 @@
 /**
  * Loading LanguageOverride.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -30,7 +30,7 @@ class LanguageOverride implements LoaderInterface
             return $languageOverride;
         }
 
-        $languageOverridePath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Language/Overrides/';
+        $languageOverridePath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/Language/Overrides/';
         if (!is_dir($languageOverridePath)) {
             return $languageOverride;
         }
@@ -55,8 +55,8 @@ class LanguageOverride implements LoaderInterface
 
             $languageOverride[] = [
                 'language' => $language,
-                'original' => 'EXT:' . $extension . '/' . implode('/', $parts),
-                'override' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/Overrides/' . $file,
+                'original' => 'EXT:'.$extension.'/'.implode('/', $parts),
+                'override' => 'EXT:'.$loader->getExtensionKey().'/Resources/Private/Language/Overrides/'.$file,
             ];
         }
 

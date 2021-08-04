@@ -3,7 +3,7 @@
 /**
  * DataSet information for languages.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\DataSet;
 
@@ -57,7 +57,7 @@ class Language implements DataSetInterface
                             ],
                         ],
                         'foreign_table' => $tableName,
-                        'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
+                        'foreign_table_where' => 'AND '.$tableName.'.pid=###CURRENT_PID### AND '.$tableName.'.sys_language_uid IN (-1,0)',
                     ],
                 ],
                 'l10n_diffsource' => [

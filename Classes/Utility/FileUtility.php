@@ -3,7 +3,7 @@
 /**
  * FileUtility.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -28,12 +28,12 @@ class FileUtility
      */
     public static function writeFileAndCreateFolder($absoluteFileName, $content)
     {
-        $dir = PathUtility::dirname($absoluteFileName) . '/';
+        $dir = PathUtility::dirname($absoluteFileName).'/';
         if (!is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
         }
         if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
-            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!', 234627835);
+            throw new Exception('The autoloader try to add same content to '.$absoluteFileName.' but the file is not writable for the autoloader. Please fix it!', 234627835);
         }
 
         return GeneralUtility::writeFile($absoluteFileName, $content);
@@ -87,7 +87,7 @@ class FileUtility
         $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtensions, false, $recursively);
         foreach ($files as $key => $file) {
             $pathInfo = PathUtility::pathinfo($file);
-            $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
+            $files[$key] = $pathInfo['dirname'].'/'.$pathInfo['filename'];
         }
         $files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
 

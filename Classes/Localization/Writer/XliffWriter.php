@@ -3,7 +3,7 @@
 /**
  * Xliff writer.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 
@@ -27,7 +27,7 @@ class XliffWriter extends AbstractLocalizationWriter
     {
         return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="' . date('c') . '" product-name="' . $extensionKey . '">
+	<file source-language="en" datatype="plaintext" original="messages" date="'.date('c').'" product-name="'.$extensionKey.'">
 		<header/>
 		<body>
 		</body>
@@ -44,7 +44,7 @@ class XliffWriter extends AbstractLocalizationWriter
      */
     public function getAbsoluteFilename($extensionKey)
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xlf');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/'.$this->getLanguageBaseName().'.xlf');
     }
 
     /**
@@ -71,10 +71,10 @@ class XliffWriter extends AbstractLocalizationWriter
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (false !== mb_strpos($content, ' id="' . $key . '"') || '' === trim($content)) {
+        if (false !== mb_strpos($content, ' id="'.$key.'"') || '' === trim($content)) {
             return;
         }
-        $replace = '<body>' . LF . TAB . TAB . TAB . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';
+        $replace = '<body>'.LF.TAB.TAB.TAB.'<trans-unit id="'.$key.'"><source>'.$this->wrapCdata($default).'</source></trans-unit>';
         $content = str_replace('<body>', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

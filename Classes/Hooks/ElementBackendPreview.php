@@ -3,7 +3,7 @@
 /**
  * Custom Backend Preview for Elements like Content Objects.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Hooks;
 
@@ -60,7 +60,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
             return '';
         }
 
-        $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
+        $cacheIdentifier = 'tt-content-preview-'.$row['uid'].'-'.$row['tstamp'];
 
         /** @var FrontendInterface $cache */
         $cache = GeneralUtility::makeInstance(CacheManager::class)
@@ -117,6 +117,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     {
         $ctype = $row['CType'];
 
-        return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+        return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
     }
 }

@@ -3,7 +3,7 @@
 /**
  * BackendLayout.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -30,22 +30,22 @@ class BackendLayout implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $backendLayouts = [];
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/BackendLayouts/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/BackendLayouts/';
         $backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt,typoscript');
 
         foreach ($backendLayoutFiles as $file) {
             $pathInfo = PathUtility::pathinfo($file);
-            $iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/BackendLayouts/' . $pathInfo['filename'] . '.';
+            $iconPath = 'EXT:'.$loader->getExtensionKey().'/Resources/Public/Icons/BackendLayouts/'.$pathInfo['filename'].'.';
             $extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
-            $translationKey = 'backendLayout.' . $pathInfo['basename'];
+            $translationKey = 'backendLayout.'.$pathInfo['basename'];
             if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
             }
             $backendLayouts[] = [
-                'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
+                'path' => 'EXT:'.$loader->getExtensionKey().'/Resources/Private/BackendLayouts/'.$file,
                 'filename' => $pathInfo['filename'],
-                'icon' => $extension ? $iconPath . $extension : false,
+                'icon' => $extension ? $iconPath.$extension : false,
                 'label' => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
                 'extension' => $loader->getExtensionKey(),
             ];

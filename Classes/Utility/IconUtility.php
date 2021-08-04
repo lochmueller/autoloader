@@ -3,7 +3,7 @@
 /**
  * Icon helper.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -37,7 +37,7 @@ class IconUtility
         }
         /** @var IconRegistry $iconRegistry */
         $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-        $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
+        $iconIdentifier = 'tcarecords-'.$table.'-'.$type;
         $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
         $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
     }
@@ -52,13 +52,13 @@ class IconUtility
      */
     public static function getByExtensionKey($extensionKey, $extSyntax = false)
     {
-        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/Extension.');
+        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey).'Resources/Public/Icons/Extension.');
         if ($fileExtension) {
-            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.' . $fileExtension, $extSyntax);
+            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.'.$fileExtension, $extSyntax);
         }
-        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.');
+        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey).'ext_icon.');
         if ($fileExtension) {
-            return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
+            return self::returnRelativeIconPath($extensionKey, 'ext_icon.'.$fileExtension, $extSyntax);
         }
 
         return self::getByExtensionKey('autoloader');
@@ -79,12 +79,12 @@ class IconUtility
         $extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
         $modelName = str_replace('\\', '/', $modelInformation['modelName']);
 
-        $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
+        $tableIconPath = ExtensionManagementUtility::extPath($extensionKey).'Resources/Public/Icons/'.$modelName.'.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
         if ($fileExtension) {
             return self::returnRelativeIconPath(
                 $extensionKey,
-                'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
+                'Resources/Public/Icons/'.$modelName.'.'.$fileExtension,
                 $extSyntax
             );
         }
@@ -110,7 +110,7 @@ class IconUtility
             'jpg',
         ];
         foreach ($fileExtensions as $fileExtension) {
-            if (is_file($absolutePathWithoutExtension . $fileExtension)) {
+            if (is_file($absolutePathWithoutExtension.$fileExtension)) {
                 return $fileExtension;
             }
         }
@@ -129,7 +129,7 @@ class IconUtility
      */
     protected static function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
     {
-        $extSyntaxPath = 'EXT:' . $extensionKey . '/' . $path;
+        $extSyntaxPath = 'EXT:'.$extensionKey.'/'.$path;
         if ($extSyntax) {
             return $extSyntaxPath;
         }

@@ -3,7 +3,7 @@
 /**
  * Edit link for the backend.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\ViewHelpers\Be;
 
@@ -52,11 +52,11 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
     public function render()
     {
         $urlParameter = [
-            'edit[tt_content][' . $this->arguments['data']['uid'] . ']' => 'edit',
+            'edit[tt_content]['.$this->arguments['data']['uid'].']' => 'edit',
             'returnUrl' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ];
 
-        return '<a href="' . $this->getModuleUrl('record_edit', $urlParameter) . '">' . $this->renderChildren() . '</a>';
+        return '<a href="'.$this->getModuleUrl('record_edit', $urlParameter).'">'.$this->renderChildren().'</a>';
     }
 
     /**
@@ -69,6 +69,6 @@ class EditLinkViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewH
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
-        return (string)$uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
+        return (string) $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
     }
 }

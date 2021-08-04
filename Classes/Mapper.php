@@ -3,7 +3,7 @@
 /**
  * Mapper for variables types to TCA and DB information.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
@@ -100,7 +100,7 @@ class Mapper implements SingletonInterface
             }
         }
 
-        throw new Exception('No valid mapper for the given type found: ' . $type, 123712631);
+        throw new Exception('No valid mapper for the given type found: '.$type, 123712631);
     }
 
     /**
@@ -127,7 +127,7 @@ class Mapper implements SingletonInterface
     {
         $mapper = [];
         foreach ($this->internalMapper as $key => $value) {
-            $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper';
+            $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\'.$value.'Mapper';
         }
 
         return $mapper;

@@ -3,7 +3,7 @@
 /**
  * Loading Hooks.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -30,7 +30,7 @@ class Hooks implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $hooks = [];
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/';
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Hooks/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
         /** @var AnnotationReader $annotationReader */
@@ -40,7 +40,7 @@ class Hooks implements LoaderInterface
             $hookClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Hooks/' . $hookFile
+                'Hooks/'.$hookFile
             );
             if (!$loader->isInstantiableClass($hookClass)) {
                 continue;
@@ -63,7 +63,7 @@ class Hooks implements LoaderInterface
                 if (null !== $methodHook) {
                     $hooks[] = [
                         'locations' => $methodHook->locations,
-                        'configuration' => $hookClass . '->' . $method->getName(),
+                        'configuration' => $hookClass.'->'.$method->getName(),
                     ];
                 }
             }

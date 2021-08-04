@@ -3,7 +3,7 @@
 /**
  * Loading AlternativeImplementations.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -29,14 +29,14 @@ class AlternativeImplementations implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/AlternativeImplementations/';
+        $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/AlternativeImplementations/';
         $alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
         foreach ($alternativeClasses as $aic) {
             $aicClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'AlternativeImplementations/' . $aic
+                'AlternativeImplementations/'.$aic
             );
 
             if (!$loader->isInstantiableClass($aicClass)) {

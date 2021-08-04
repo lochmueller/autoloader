@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Annotation;
 
@@ -32,6 +32,6 @@ class WizardTab
      */
     public function __toString()
     {
-        return (string)$this->config;
+        return (string) $this->config;
     }
 }

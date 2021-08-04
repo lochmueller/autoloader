@@ -3,7 +3,7 @@
 /**
  * ContextSensitiveHelp (CSH) based on smart objects.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -103,21 +103,21 @@ class ContextSensitiveHelps implements LoaderInterface
      * @param string $extensionKey
      * @param string $table
      *
-     * @return string|null
+     * @return null|string
      */
     protected function checkCshValues($extensionKey, $table, array $properties)
     {
-        $baseFileName = 'locallang_csh_' . $table;
+        $baseFileName = 'locallang_csh_'.$table;
         /** @var LanguageHandler $languageHandler */
         $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
         foreach ($properties as $property) {
             $default = '';
-            $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
+            $languageHandler->handle($property.'.alttitle', $extensionKey, $default, null, $baseFileName);
         }
 
         $checkPath = ['xlf', 'xml'];
         foreach ($checkPath as $extension) {
-            $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
+            $path = 'EXT:'.$extensionKey.'/Resources/Private/Language/'.$baseFileName.'.'.$extension;
             if (is_file(GeneralUtility::getFileAbsFileName($path))) {
                 return $path;
             }

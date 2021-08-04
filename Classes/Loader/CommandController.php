@@ -3,7 +3,7 @@
 /**
  * Loading CommandController.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -26,7 +26,7 @@ class CommandController implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Command/';
         $controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
         foreach ($controllers as $controller) {
             if ('AbstractCommandController' === $controller) {
@@ -36,7 +36,7 @@ class CommandController implements LoaderInterface
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Command/' . $controller
+                'Command/'.$controller
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;

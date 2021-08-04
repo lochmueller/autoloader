@@ -3,7 +3,7 @@
 /**
  * SmartObjectInformationService.php.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Service;
 
@@ -75,7 +75,7 @@ class SmartObjectInformationService
         $searchFields = [];
         $customFields = [];
         foreach ($customFieldInfo as $info) {
-            $key = $tableName . '.' . $info['name'];
+            $key = $tableName.'.'.$info['name'];
 
             if ($this->useTableNameFileBase()) {
                 // Without prefix !
@@ -165,16 +165,16 @@ class SmartObjectInformationService
         }
 
         if (!\in_array('workspaces', $excludes, true)) {
-            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
+            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ','.$labelField;
         }
 
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
         $languagePrefixCore = 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf';
         if (!\in_array('enableFields', $excludes, true)) {
-            $showitem[] = '--div--;' . $languagePrefixCore . ':access';
-            $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
+            $showitem[] = '--div--;'.$languagePrefixCore.':access';
+            $showitem[] = '--palette--;'.$languagePrefix.'locallang_tca.xlf:pages.palettes.access;access';
         }
-        $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
+        $showitem[] = '--div--;'.$languagePrefix.'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
             'ctrl' => [
@@ -207,9 +207,9 @@ class SmartObjectInformationService
      */
     protected function useTableNameFileBase()
     {
-        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
@@ -228,7 +228,7 @@ class SmartObjectInformationService
                 try {
                     $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
                 } catch (\Exception $exception) {
-                    throw new \Exception('Error for mapping in ' . $modelClassName . ' in property ' . $info['property'] . ' with problem: ' . $exception->getMessage(), 123681);
+                    throw new \Exception('Error for mapping in '.$modelClassName.' in property '.$info['property'].' with problem: '.$exception->getMessage(), 123681);
                 }
             } else {
                 try {
@@ -237,7 +237,7 @@ class SmartObjectInformationService
                     // Do not handle the getDatabaseMappingByVarType by db, Fallback is the var call
                 }
             }
-            $fields[] = '`' . $info['name'] . '` ' . $info['db'];
+            $fields[] = '`'.$info['name'].'` '.$info['db'];
         }
 
         return $fields;
@@ -282,12 +282,12 @@ class SmartObjectInformationService
         $fields = [];
 
         foreach ($properties as $name => $annotation) {
-            $var = (string)$annotation->type;
+            $var = (string) $annotation->type;
             $fields[] = [
                 'property' => $name,
                 'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
-                'db' => trim((string)$annotation->sql),
-                'var' => trim((string)$var),
+                'db' => trim((string) $annotation->sql),
+                'var' => trim((string) $var),
                 'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
             ];
         }
@@ -308,7 +308,7 @@ class SmartObjectInformationService
             return '';
         }
 
-        return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
+        return LF.'CREATE TABLE '.$tableName.' ('.LF.implode(','.LF, $fields).LF.');'.LF;
     }
 
     /**
@@ -350,9 +350,9 @@ class SmartObjectInformationService
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
         $key = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseKey::class);
         if (null !== $key) {
-            $additionalKeys = [(string)$key];
+            $additionalKeys = [(string) $key];
             array_walk($additionalKeys, function (&$item): void {
-                $item = 'KEY ' . $item;
+                $item = 'KEY '.$item;
             });
             $fields = array_merge($fields, $additionalKeys);
         }

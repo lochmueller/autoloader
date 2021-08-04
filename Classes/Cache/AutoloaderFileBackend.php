@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Cache;
 
@@ -21,7 +21,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
     {
         if (\is_array($data)) {
             $cacheFile = $this->getCacheFileName($entryIdentifier);
-            GeneralUtility::writeFile($cacheFile, '<?php return ' . var_export($data, true) . ';');
+            GeneralUtility::writeFile($cacheFile, '<?php return '.var_export($data, true).';');
         }
 
         return null;
@@ -60,7 +60,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
      */
     public function flush(): void
     {
-        $files = glob(Environment::getVarPath() . '/autoloader_*');
+        $files = glob(Environment::getVarPath().'/autoloader_*');
         foreach ($files as $file) {
             unlink($file);
         }
@@ -77,6 +77,6 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
 
     protected function getCacheFileName($entryIdentifier): string
     {
-        return Environment::getVarPath() . '/autoloader_' . $entryIdentifier . '.php';
+        return Environment::getVarPath().'/autoloader_'.$entryIdentifier.'.php';
     }
 }

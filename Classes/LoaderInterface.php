@@ -3,7 +3,7 @@
 /**
  * General loading interface.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
@@ -16,12 +16,12 @@ interface LoaderInterface extends SingletonInterface
     /**
      * Preparation type for (ext_localconf).
      */
-    const EXT_LOCAL_CONFIGURATION = 1;
+    public const EXT_LOCAL_CONFIGURATION = 1;
 
     /**
      * Preparation type for (ext_tables).
      */
-    const EXT_TABLES = 2;
+    public const EXT_TABLES = 2;
 
     /**
      * Get all the complex data and information for the loader.

@@ -3,7 +3,7 @@
 /**
  * XML writer.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 
@@ -29,7 +29,7 @@ class XmlWriter extends AbstractLocalizationWriter
 <T3locallang>
 	<meta type="array">
 	<type>database</type>
-	<description>Language file is created via the autoloader for the ' . $extensionKey . ' extension on ' . date(DATE_COOKIE) . '</description>
+	<description>Language file is created via the autoloader for the '.$extensionKey.' extension on '.date(DATE_COOKIE).'</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -47,7 +47,7 @@ class XmlWriter extends AbstractLocalizationWriter
      */
     public function getAbsoluteFilename($extensionKey)
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xml');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/'.$this->getLanguageBaseName().'.xml');
     }
 
     /**
@@ -76,10 +76,10 @@ class XmlWriter extends AbstractLocalizationWriter
         }
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (false !== mb_strpos($content, ' index="' . $key . '"') || '' === trim($content)) {
+        if (false !== mb_strpos($content, ' index="'.$key.'"') || '' === trim($content)) {
             return;
         }
-        $replace = '<languageKey index="default" type="array">' . LF . TAB . TAB . TAB . '<label index="' . $key . '">' . $this->wrapCdata($default) . '</label>';
+        $replace = '<languageKey index="default" type="array">'.LF.TAB.TAB.TAB.'<label index="'.$key.'">'.$this->wrapCdata($default).'</label>';
         $content = str_replace('<languageKey index="default" type="array">', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

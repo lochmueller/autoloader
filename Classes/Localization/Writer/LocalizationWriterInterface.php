@@ -3,7 +3,7 @@
 /**
  * Interface for L10N file writers.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Localization\Writer;
 

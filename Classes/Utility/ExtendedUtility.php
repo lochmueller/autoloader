@@ -3,7 +3,7 @@
 /**
  * Utility functions for the Autoloader.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -40,7 +40,7 @@ class ExtendedUtility
     /**
      * Get the query for the given class name oder object.
      *
-     * @param string|object $objectName
+     * @param object|string $objectName
      *
      * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
      */
@@ -67,8 +67,8 @@ class ExtendedUtility
     public static function addXclass($source, $target)
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source])) {
-            $message = 'Double registration of Xclass for ' . $source;
-            $message .= ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
+            $message = 'Double registration of Xclass for '.$source;
+            $message .= ' ('.$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'].' and '.$target.')';
             self::log($message);
 
             return false;
@@ -114,7 +114,7 @@ class ExtendedUtility
     public static function addHook($location, $configuration): void
     {
         $location = explode('|', $location);
-        array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
+        $location[] = 'via_autoloader_'.GeneralUtility::shortMD5($configuration);
         ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
     }
 
@@ -146,13 +146,13 @@ class ExtendedUtility
 
         $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths.']) ? $viewConfiguration['layoutRootPaths.'] : [];
         if (!isset($layoutRootPaths[5])) {
-            $layoutRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Layouts/';
+            $layoutRootPaths[5] = 'EXT:'.$extensionKey.'/Resources/Private/Layouts/';
         }
         $view->setLayoutRootPaths($layoutRootPaths);
 
         $partialRootPaths = \is_array($viewConfiguration['partialRootPaths.']) ? $viewConfiguration['partialRootPaths.'] : [];
         if (!isset($partialRootPaths[5])) {
-            $partialRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Partials/';
+            $partialRootPaths[5] = 'EXT:'.$extensionKey.'/Resources/Private/Partials/';
         }
         $view->setPartialRootPaths($partialRootPaths);
 

@@ -3,7 +3,7 @@
 /**
  * Loading eID.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -25,13 +25,13 @@ class ExtensionId implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $scripts = [];
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Php/eID/';
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/Php/eID/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
         foreach ($files as $eIdFile) {
             $scripts[] = [
                 'name' => $eIdFile,
-                'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Php/eID/' . $eIdFile . '.php',
+                'path' => 'EXT:'.$loader->getExtensionKey().'/Resources/Private/Php/eID/'.$eIdFile.'.php',
             ];
         }
 

@@ -3,7 +3,7 @@
 /**
  * Reflection helper.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -21,7 +21,7 @@ class ReflectionUtility
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        return (bool)$reflectionClass->isInstantiable();
+        return (bool) $reflectionClass->isInstantiable();
     }
 
     /**
@@ -75,11 +75,11 @@ class ReflectionUtility
     {
         $classReflection = new \ReflectionClass($className);
         $own = array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return trim((string)$property->class, '\\') === trim($className, '\\');
+            return trim((string) $property->class, '\\') === trim($className, '\\');
         });
 
         return array_map(function ($item) {
-            return (string)$item->name;
+            return (string) $item->name;
         }, $own);
     }
 }

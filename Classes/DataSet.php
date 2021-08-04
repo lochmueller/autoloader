@@ -3,7 +3,7 @@
 /**
  * Central DataSet object.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
@@ -119,7 +119,7 @@ class DataSet implements SingletonInterface
     protected function getDataSetObjects(array $implementations)
     {
         foreach ($implementations as $key => $value) {
-            $implementations[$key] = GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet\\' . $value);
+            $implementations[$key] = GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet\\'.$value);
         }
 
         return $implementations;

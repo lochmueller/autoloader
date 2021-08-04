@@ -3,7 +3,7 @@
 /**
  * Add backend layouts.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Hooks;
 
@@ -51,7 +51,7 @@ class BackendLayoutProvider implements DataProviderInterface
      * @param string $identifier
      * @param int    $pageId
      *
-     * @return BackendLayout|null
+     * @return null|BackendLayout
      */
     public function getBackendLayout($identifier, $pageId)
     {
@@ -89,6 +89,6 @@ class BackendLayoutProvider implements DataProviderInterface
      */
     protected function getIdentifier($info)
     {
-        return $info['extension'] . '/' . $info['filename'];
+        return $info['extension'].'/'.$info['filename'];
     }
 }

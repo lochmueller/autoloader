@@ -3,7 +3,7 @@
 /**
  * TranslateUtility.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -45,7 +45,7 @@ class TranslateUtility
             }
         }
 
-        return (string)$default;
+        return (string) $default;
     }
 
     /**
@@ -65,7 +65,7 @@ class TranslateUtility
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
         if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey, $tableName)) {
-            $lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
+            $lllString = self::getLll('pleaseSet', 'autoloader').$lllString;
             if (isset($GLOBALS['LANG'])) {
                 self::assureLabel($key, $extensionKey, $key, null, $tableName);
             }
@@ -90,10 +90,10 @@ class TranslateUtility
             $file = 'locallang.xlf';
         }
         if (self::useTableNameFileBase() && null !== $tableName) {
-            $file = $tableName . '.xlf';
+            $file = $tableName.'.xlf';
         }
 
-        return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
+        return 'LLL:EXT:'.$extensionKey.'/Resources/Private/Language/'.$file.':'.$key;
     }
 
     /**
@@ -132,8 +132,8 @@ class TranslateUtility
      */
     protected static function useTableNameFileBase()
     {
-        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

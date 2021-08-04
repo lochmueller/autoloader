@@ -3,7 +3,7 @@
 /**
  * Loading TypeConverter.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
@@ -27,14 +27,14 @@ class TypeConverter implements LoaderInterface
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classes = [];
-        $converterPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
+        $converterPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Property/TypeConverter/';
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
 
         foreach ($converterClasses as $converterClass) {
             $converterClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Property/TypeConverter/' . $converterClass
+                'Property/TypeConverter/'.$converterClass
             );
             if ($loader->isInstantiableClass($converterClass)) {
                 $classes[] = $converterClass;

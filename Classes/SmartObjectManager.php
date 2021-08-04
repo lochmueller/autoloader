@@ -3,7 +3,7 @@
 /**
  * Management for Smart Objects.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
@@ -81,8 +81,8 @@ class SmartObjectManager implements SingletonInterface
         $register = SmartObjectRegister::getRegister();
 
         $baseTemplatePath = ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/');
-        $defaultTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Default.tmpl');
-        $overrideTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Override.tmpl');
+        $defaultTemplate = GeneralUtility::getUrl($baseTemplatePath.'Default.tmpl');
+        $overrideTemplate = GeneralUtility::getUrl($baseTemplatePath.'Override.tmpl');
 
         $search = [
             '__modelName__',
@@ -92,21 +92,21 @@ class SmartObjectManager implements SingletonInterface
 
         foreach ($register as $model) {
             $extensionKey = ClassNamingUtility::getExtensionKeyByModel($model);
-            $basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
+            $basePath = ExtensionManagementUtility::extPath($extensionKey).'Configuration/TCA/';
 
             $tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
             if ('' !== $tableName) {
-                $tcaFileName = $basePath . 'Overrides/' . $tableName . '.php';
+                $tcaFileName = $basePath.'Overrides/'.$tableName.'.php';
                 $template = $overrideTemplate;
             } else {
                 $tableName = ModelUtility::getTableNameByModelName($model);
-                $tcaFileName = $basePath . $tableName . '.php';
+                $tcaFileName = $basePath.$tableName.'.php';
                 $template = $defaultTemplate;
             }
 
             if (!is_file($tcaFileName)) {
                 $replace = [
-                    '\\' . trim($model) . '::class',
+                    '\\'.trim($model).'::class',
                     $tableName,
                     $extensionKey,
                 ];
@@ -124,8 +124,8 @@ class SmartObjectManager implements SingletonInterface
      */
     protected static function getSmartObjectClassLoadingIgnorePattern()
     {
-        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string)$configuration['smartObjectClassLoadingIgnorePattern'] : '';
+        return isset($configuration['smartObjectClassLoadingIgnorePattern']) ? (string) $configuration['smartObjectClassLoadingIgnorePattern'] : '';
     }
 }

@@ -3,7 +3,7 @@
 /**
  * Central Loader object.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader;
 
@@ -171,8 +171,8 @@ class Loader implements SingletonInterface
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
             if (!isset($objectCache[$autoLoaderObjectName])) {
-                if (class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
-                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
+                if (class_exists('HDNET\\Autoloader\\Loader\\'.$autoLoaderObjectName)) {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\'.$autoLoaderObjectName);
                 } else {
                     $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
                 }
@@ -215,7 +215,7 @@ class Loader implements SingletonInterface
      */
     protected function prepareAutoLoaderObjects(array $objects, $type)
     {
-        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(serialize($objects)) . '_' . $type;
+        $cacheIdentifier = $this->getVendorName().'_'.$this->getExtensionKey().'_'.GeneralUtility::shortMD5(serialize($objects)).'_'.$type;
 
         // Do not use Caching Framework here
         /** @var AutoloaderFileBackend $cacheBackend */

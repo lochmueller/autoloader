@@ -5,7 +5,7 @@
  *
  * General file information
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
@@ -33,10 +33,10 @@ class TcaUtility
             throw new Exception('A proper TCA configuration is needed!', 17823492);
         }
 
-        $divider = '--div--;' . $tabTitle . ',';
+        $divider = '--div--;'.$tabTitle.',';
         foreach ($base['types'] as $key => $layout) {
             $tempShowitem = explode($columnName, $layout['showitem']);
-            $showItem = $tempShowitem[0] . $divider . $columnName . $tempShowitem[1];
+            $showItem = $tempShowitem[0].$divider.$columnName.$tempShowitem[1];
             $base['types'][$key]['showitem'] = $showItem;
         }
 

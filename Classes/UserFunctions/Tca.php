@@ -3,7 +3,7 @@
 /**
  * Tca UserFunctions.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Autoloader\UserFunctions;
 
@@ -62,11 +62,11 @@ class Tca
     {
         $infoField = '<strong>Please configure your TCA for this field.</strong><br/>';
         $infoField .= 'You see this message because you have NOT configured the TCA.';
-        $infoField .= '<ul><li>table: <em>' . $configuration['table'] . '</em></li>';
-        $infoField .= '<li>field: <em>' . $configuration['field'] . '</em></li>';
+        $infoField .= '<ul><li>table: <em>'.$configuration['table'].'</em></li>';
+        $infoField .= '<li>field: <em>'.$configuration['field'].'</em></li>';
         $infoField .= '<li>config-file';
-        $infoField .= '<ul><li>own table: <em>Configuration/TCA/' . $configuration['table'] . '.php</em></li>';
-        $infoField .= '<li>foreign table: <em>Configuration/TCA/Overrides/' . $configuration['table'] . '.php</em></li></ul>';
+        $infoField .= '<ul><li>own table: <em>Configuration/TCA/'.$configuration['table'].'.php</em></li>';
+        $infoField .= '<li>foreign table: <em>Configuration/TCA/Overrides/'.$configuration['table'].'.php</em></li></ul>';
         $infoField .= '</li></ul>';
         $infoField .= 'Common foreign tables are <em>tt_content</em>, <em>tt_address</em>, &hellip;.<br/><br/>';
         $infoField .= 'Information about proper TCA configuration as ';
@@ -87,6 +87,6 @@ class Tca
      */
     protected function wrapInInfoBox($content)
     {
-        return '<div style="padding: 5px; border: 2px solid red;">' . $content . '</div>';
+        return '<div style="padding: 5px; border: 2px solid red;">'.$content.'</div>';
     }
 }
