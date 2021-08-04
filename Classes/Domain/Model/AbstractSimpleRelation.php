@@ -23,19 +23,22 @@ abstract class AbstractSimpleRelation extends AbstractEntity
     /**
      * Local UID.
      *
+     * @var int
      * @DatabaseField(type="int")
      */
-    protected $uidLocal;
+    protected $uidLocal = 0;
 
     /**
+     * @var int
      * @DatabaseField(type="int")
      */
-    protected $uidForeign;
+    protected $uidForeign = 0;
 
     /**
      * Sorting.
      *
+     * @var int
      * @DatabaseField(type="int")
      */
-    protected $sorting;
+    protected $sorting = 0;
 }
