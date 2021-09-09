@@ -22,11 +22,11 @@ Autoloader Annotations
 * @DatabaseKey([key=""|argumentName=""])
 * @DatabaseField(type=""[, sql=""])
 *
-* @EnableRicjText([value=""|argumentName=""])
+* @EnableRichText([value=""|argumentName=""])
 * @Hook(locations={})
 * @NoCache([value=""|argumentName=""])
 * @NoHeader([value=""|argumentName=""])
-* @ParrentClass(parentClass="")
+* @ParentClass(parentClass="")
 * @Plugin([value=""|argumentName=""])
 * @RecordType(recordType="")
 
