@@ -20,9 +20,9 @@ class SmartExclude
      */
     public function __construct(array $values)
     {
-        if (\is_array($values['excludes'])) {
+        if (isset($values['excludes']) && \is_array($values['excludes'])) {
             $this->excludes = $values['excludes'];
-        } elseif (\is_array($values['value'])) {
+        } elseif (isset($values['value']) && \is_array($values['value'])) {
             $this->excludes = $values['value'];
         }
     }

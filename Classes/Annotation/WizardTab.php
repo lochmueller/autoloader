@@ -20,9 +20,9 @@ class WizardTab
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['config'])) {
+        if (isset($values['config']) && \is_string($values['config'])) {
             $this->config = $values['config'];
-        } elseif (\is_string($values['value'])) {
+        } elseif (isset($values['value']) && \is_string($values['value'])) {
             $this->config = $values['value'];
         }
     }

@@ -20,9 +20,9 @@ class DatabaseTable
      */
     public function __construct(array $values)
     {
-        if (\is_string($values['tableName'])) {
+        if (isset($values['tableName']) && \is_string($values['tableName'])) {
             $this->tableName = $values['tableName'];
-        } elseif (\is_string($values['value'])) {
+        } elseif (isset($values['value']) && \is_string($values['value'])) {
             $this->tableName = $values['value'];
         }
     }
