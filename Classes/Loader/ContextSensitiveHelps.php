@@ -108,8 +108,9 @@ class ContextSensitiveHelps implements LoaderInterface
     protected function checkCshValues($extensionKey, $table, array $properties)
     {
         $baseFileName = 'locallang_csh_'.$table;
-        /** @var LanguageHandler $languageHandler */
-        $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
+        
+        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
+        $languageHandler = new LanguageHandler($packageManager);
         foreach ($properties as $property) {
             $default = '';
             $languageHandler->handle($property.'.alttitle', $extensionKey, $default, null, $baseFileName);
