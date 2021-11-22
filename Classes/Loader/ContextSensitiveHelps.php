@@ -17,6 +17,7 @@ use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * ContextSensitiveHelp (CSH) based on smart objects.
@@ -109,9 +110,15 @@ class ContextSensitiveHelps implements LoaderInterface
     protected function checkCshValues($extensionKey, $table, array $properties)
     {
         $baseFileName = 'locallang_csh_'.$table;
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.5.2', '<=')){
+            /** @var LanguageHandler $languageHandler */
+            $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
+        } else {
+            $packageManager = GeneralUtility::makeInstance(PackageManager::class);
+            /** @var LanguageHandler $languageHandler */
+            $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class, $packageManager);
+        }
         
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
-        $languageHandler = new LanguageHandler($packageManager);
         foreach ($properties as $property) {
             $default = '';
             $languageHandler->handle($property.'.alttitle', $extensionKey, $default, null, $baseFileName);
