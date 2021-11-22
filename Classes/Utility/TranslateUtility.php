@@ -59,19 +59,21 @@ class TranslateUtility
      */
     public static function getLllOrHelpMessage($key, $extensionKey, $tableName = null)
     {
-        $lllString = self::getLllString($key, $extensionKey, null, $tableName);
-        if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG']) && isset($GLOBALS['BE_USER'])) {
-            $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
-            $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
-        }
-        if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey, $tableName)) {
-            $lllString = self::getLll('pleaseSet', 'autoloader').$lllString;
-            if (isset($GLOBALS['LANG'])) {
-                self::assureLabel($key, $extensionKey, $key, null, $tableName);
-            }
-        }
+        return self::getLllString($key, $extensionKey, null, $tableName);
+        
+        // @todo refactor, migrate TYPO3_MODE for v12 to ApplicationType
+        // if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG']) && isset($GLOBALS['BE_USER'])) {
+        //     $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
+        //     $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
+        // }
+        // if (TYPO3_MODE === 'BE' && null === self::getLll($key, $extensionKey, $tableName)) {
+        //     $lllString = self::getLll('pleaseSet', 'autoloader').$lllString;
+        //     if (isset($GLOBALS['LANG'])) {
+        //         self::assureLabel($key, $extensionKey, $key, null, $tableName);
+        //     }
+        // }
 
-        return $lllString;
+        // return $lllString;
     }
 
     /**
