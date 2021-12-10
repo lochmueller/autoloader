@@ -36,7 +36,7 @@ class TranslateUtility
      */
     public static function assureLabel($key, $extensionName, $default = null, $arguments = null, $tableName = null)
     {
-        if (\is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'])) {
+        if (\is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] ?? null)) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] as $classConfig) {
                 $object = GeneralUtility::makeInstance($classConfig);
                 if (\is_object($object) && method_exists($object, 'assureLabel')) {
@@ -60,7 +60,7 @@ class TranslateUtility
     public static function getLllOrHelpMessage($key, $extensionKey, $tableName = null)
     {
         return self::getLllString($key, $extensionKey, null, $tableName);
-        
+
         // @todo refactor, migrate TYPO3_MODE for v12 to ApplicationType
         // if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG']) && isset($GLOBALS['BE_USER'])) {
         //     $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
