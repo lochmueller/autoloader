@@ -418,7 +418,7 @@ tt_content.key.field = CType';
             $fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, true);
             if (\in_array($fieldConfiguration[0], $existingFields, true)) {
                 $defaultFields[] = $fieldConfiguration[0];
-            } elseif ('--palette--' === $fieldConfiguration[0]) {
+            } elseif ('--palette--' === $fieldConfiguration[0] && isset($fieldConfiguration[2])) {
                 $paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
                 if (\is_string($paletteConfiguration)) {
                     $defaultFields = array_merge(
