@@ -75,6 +75,8 @@ class ObjectStorageMapper implements MapperInterface
         $typoscriptConfigurationService->popSerialisationCache();
         $fieldString = implode("\n", $fields);
         $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $className);
+        // @todo(flo): Add check for ObjectStorage<$objectStorageTemplateClassType> for m:n relations and add the right query for that
+        // note: also look at the default m:n tca table convention here https://docs.typo3.org/m/typo3/reference-tca/main/en-us/ColumnsConfig/CommonProperties/Mm.html#auto-creation-of-intermediate-mm-tables-from-tca
         if (null === $objectStorageTemplateFieldRelationName) {
             return "
                 {$fieldName} = TEXT
