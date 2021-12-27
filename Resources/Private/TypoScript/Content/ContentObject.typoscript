@@ -1,0 +1,2 @@
+tt_content.__cType__ =< lib.__contentElementWithOrWithoutHeader__
+tt_content.__cType__.fields.content.fields {

@@ -11,6 +11,7 @@ use HDNET\Autoloader\MapperInterface;
 use SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor;
 use SJBR\StaticInfoTables\Hook\Backend\Form\Wizard\SuggestReceiver;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * StaticInfoTablesMapper.
@@ -124,5 +125,17 @@ class StaticInfoTablesMapper implements MapperInterface
     public function getDatabaseDefinition()
     {
         return 'int(11) DEFAULT \'0\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
     }
 }

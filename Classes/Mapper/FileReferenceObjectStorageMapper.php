@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Map FileReferenceObjectStorage.
@@ -54,5 +55,22 @@ class FileReferenceObjectStorageMapper implements MapperInterface
     public function getDatabaseDefinition()
     {
         return 'int(11) DEFAULT \'0\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName}.dataProcessing {
+            10 = HDNET\\Autoloader\\DataProcessing\\FileProcessor
+            10 {
+                references.fieldName = {$fieldNameUnderscored}
+                references.table = {$tableName}
+                as = {$fieldName}
+            }
+        }
+        ";
     }
 }

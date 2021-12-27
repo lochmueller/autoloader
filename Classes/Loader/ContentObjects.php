@@ -326,10 +326,11 @@ tt_content.key.field = CType';
         foreach ($loaderInformation as $configuration) {
             $templatePath = $siteRelPathPrivate.'Templates/Content/'.$configuration['model'].'.html';
             $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
-            if (!is_file($absoluteTemplatePath)) {
-                $beTemplatePath = $siteRelPathPrivate.'Templates/Content/'.$configuration['model'].'Backend.html';
-                $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
 
+            $beTemplatePath = $siteRelPathPrivate.'Templates/Content/'.$configuration['model'].'Backend.html';
+            $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
+
+            if (!is_file($absoluteTemplatePath) && !is_file($absoluteBeTemplatePath)) {
                 $this->writeContentTemplateToTarget('Frontend', $absoluteTemplatePath);
                 $this->writeContentTemplateToTarget('Backend', $absoluteBeTemplatePath);
             }
