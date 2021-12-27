@@ -24,7 +24,7 @@ class ExtbasePersistenceUtility
      *
      * @return mixed[]
      */
-    protected static function getSmartObjectsForExtensionKey($extensionKey): array
+    public static function getSmartObjectsForExtensionKey($extensionKey): array
     {
         $smartObjects = SmartObjectRegister::getRegister();
         $extensionObjects = [];

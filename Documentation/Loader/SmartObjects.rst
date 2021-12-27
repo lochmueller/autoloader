@@ -24,3 +24,10 @@ If the variable contains a complex data type, you have to add a proper field def
 
 .. note::
 	You can place the Icon for the SmartObjects just in the right folder to connect the Model with the Icon. E.g. Your Model is VENDOR\Ext\Domain\Model\Test place the Icon in Resources/Public/Icons/Test.[svg,png,gif]. If your Model is in a more deeper folder, just add the folder also in the Icons folder to use the icon.
+
+.. note::
+    To add the mapping necessary for extbase insert the following line into "Configuration/Extbase/Persistence/Classes.php":
+
+.. code-block:: php
+
+    return \HDNET\Autoloader\Utility\ExtbasePersistenceUtility::getClassMappingForExtension('extension_key');

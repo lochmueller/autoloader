@@ -7,6 +7,10 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\NoHeader;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Reflection helper.
  */
@@ -77,5 +81,20 @@ class ReflectionUtility
         return array_map(function ($item): string {
             return (string)$item->name;
         }, $own);
+    }
+
+    /**
+     * Check if the class is tagged with noHeader.
+     *
+     * @param $class
+     */
+    public static function isTaggedWithNoHeader($class): bool
+    {
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $classNameRef = new \ReflectionClass($class);
+
+        return null !== $annotationReader->getClassAnnotation($classNameRef, NoHeader::class);
     }
 }

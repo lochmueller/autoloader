@@ -68,7 +68,7 @@ class ContentObjects implements LoaderInterface
             }
             $fieldConfiguration = [];
             $richTextFields = [];
-            $noHeader = $this->isTaggedWithNoHeader($className);
+            $noHeader = ReflectionUtility::isTaggedWithNoHeader($className);
 
             $reflectionClass = new \ReflectionClass($className);
 
@@ -288,21 +288,6 @@ tt_content.key.field = CType';
         } else {
             ExtensionManagementUtility::addTypoScriptSetup($typoScript);
         }
-    }
-
-    /**
-     * Check if the class is tagged with noHeader.
-     *
-     * @param $class
-     */
-    protected function isTaggedWithNoHeader($class): bool
-    {
-        /** @var AnnotationReader $annotationReader */
-        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-        $classNameRef = new \ReflectionClass($class);
-
-        return null !== $annotationReader->getClassAnnotation($classNameRef, NoHeader::class);
     }
 
     /**

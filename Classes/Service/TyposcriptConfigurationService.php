@@ -72,7 +72,7 @@ class TyposcriptConfigurationService implements SingletonInterface
         }
         $this->alreadySerializedCache[array_key_last($this->alreadySerializedCache)][] = $modelClassName;
 
-        $fieldInformation = $this->getCustomModelFields($modelClassName);
+        $fieldInformation = ModelUtility::getCustomModelFields($modelClassName);
         $fields = [];
         $jsonConfiguration = '';
         foreach ($fieldInformation as $info) {
@@ -97,7 +97,7 @@ class TyposcriptConfigurationService implements SingletonInterface
 
     public function getRelationDatabaseFieldNameFor(string $class, string $type): ?string
     {
-        $fieldInformation = $this->getCustomModelFields($class);
+        $fieldInformation = ModelUtility::getCustomModelFields($class);
         foreach ($fieldInformation as $info) {
             if ($info['var'] !== $type) {
                 continue;
@@ -120,42 +120,5 @@ class TyposcriptConfigurationService implements SingletonInterface
         $mapper = ExtendedUtility::create(Mapper::class);
 
         return $mapper->getJsonDefinition($var, $fieldName, $className, $extensionKey, $tableName);
-    }
-
-    /**
-     * Get custom database information for the given model.
-     *
-     * @return array<int, array<string, bool|string>>
-     */
-    protected function getCustomModelFields(string $modelClassName): array
-    {
-        /** @var AnnotationReader $annotationReader */
-        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-        $reflectionClass = new \ReflectionClass($modelClassName);
-        $properties = [];
-        foreach ($reflectionClass->getProperties() as $property) {
-            $propertiesCheck = $annotationReader->getPropertyAnnotation($property, DatabaseField::class);
-            if (null !== $propertiesCheck) {
-                $properties[$property->getName()] = $propertiesCheck;
-            }
-        }
-
-        $tableName = ModelUtility::getTableName($modelClassName);
-        $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
-        $fields = [];
-
-        foreach ($properties as $name => $annotation) {
-            $var = (string)$annotation->type;
-            $fields[] = [
-                'property' => $name,
-                'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
-                'db' => trim((string)$annotation->sql),
-                'var' => trim((string)$var),
-                'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
-            ];
-        }
-
-        return $fields;
     }
 }

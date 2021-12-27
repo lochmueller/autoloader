@@ -10,13 +10,13 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\TyposcriptConfigurationService;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\Utility\ExtbasePersistenceUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-// TODO: Add class hierarchy entry for ContentObjectLoader
 class HeadlessJson implements LoaderInterface
 {
     /**
@@ -35,9 +35,9 @@ class HeadlessJson implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
-        $register = SmartObjectRegister::getRegister();
+        $modelNames = ExtbasePersistenceUtility::getSmartObjectsForExtensionKey($loader->getExtensionKey());
 
-        foreach ($register as $modelName) {
+        foreach ($modelNames as $modelName) {
             if (false === strpos($modelName, '\\Content\\')) {
                 continue;
             }
@@ -45,16 +45,13 @@ class HeadlessJson implements LoaderInterface
             if (!$class->isInstantiable()) {
                 continue;
             }
-            $noHeader = $this->isTaggedWithNoHeader($modelName);
+            $noHeader = ReflectionUtility::isTaggedWithNoHeader($modelName);
             $this->checkAndCreateTyposcriptTemplate(
                 $loader,
                 $modelName,
                 $noHeader,
                 $loader->getExtensionKey()
             );
-            /*$reflectionClass = new \ReflectionClass($className);
-            $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
-            $fieldConfiguration = ReflectionUtility::getDeclaringProperties($className);*/
         }
     }
 
@@ -63,21 +60,6 @@ class HeadlessJson implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
-    }
-
-    /**
-     * Check if the class is tagged with noHeader.
-     *
-     * @param $class
-     */
-    protected function isTaggedWithNoHeader($class): bool
-    {
-        /** @var AnnotationReader $annotationReader */
-        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-        $classNameRef = new \ReflectionClass($class);
-
-        return null !== $annotationReader->getClassAnnotation($classNameRef, NoHeader::class);
     }
 
     /**

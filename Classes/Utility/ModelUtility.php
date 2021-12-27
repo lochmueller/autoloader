@@ -8,8 +8,11 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Utility;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\Annotation\SmartExclude;
+use HDNET\Autoloader\Service\NameMapperService;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -171,5 +174,42 @@ class ModelUtility
         return $query->execute()
             ->getFirst()
         ;
+    }
+
+    /**
+     * Get custom database information for the given model.
+     *
+     * @return array<int, array<string, bool|string>>
+     */
+    public static function getCustomModelFields(string $modelClassName): array
+    {
+        /** @var AnnotationReader $annotationReader */
+        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
+
+        $reflectionClass = new \ReflectionClass($modelClassName);
+        $properties = [];
+        foreach ($reflectionClass->getProperties() as $property) {
+            $propertiesCheck = $annotationReader->getPropertyAnnotation($property, DatabaseField::class);
+            if (null !== $propertiesCheck) {
+                $properties[$property->getName()] = $propertiesCheck;
+            }
+        }
+
+        $tableName = ModelUtility::getTableName($modelClassName);
+        $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
+        $fields = [];
+
+        foreach ($properties as $name => $annotation) {
+            $var = (string)$annotation->type;
+            $fields[] = [
+                'property' => $name,
+                'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
+                'db' => trim((string)$annotation->sql),
+                'var' => trim((string)$var),
+                'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
+            ];
+        }
+
+        return $fields;
     }
 }

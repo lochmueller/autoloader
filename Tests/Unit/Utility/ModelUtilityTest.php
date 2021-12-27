@@ -17,11 +17,13 @@ class ModelUtilityTest extends AbstractTest
     {
         $input = [
             'TEST\\Name\\Domain\\Model\\Name',
+            'TEST\\Name\\Domain\\Model\\Content\\ContentName',
             'TYPO3\\CMS\\Name\\Domain\\Model\\Name',
             'TEST\\Name\\Domain\\Model\\Name\\Deeper\\Deeper',
         ];
         $output = [
             'tx_name_domain_model_name',
+            'tx_name_domain_model_content_contentname',
             'tx_name_domain_model_name',
             'tx_name_domain_model_name_deeper_deeper',
         ];

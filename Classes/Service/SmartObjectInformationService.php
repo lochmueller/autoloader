@@ -66,7 +66,7 @@ class SmartObjectInformationService
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
         $extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
         $tableName = ModelUtility::getTableName($modelClassName);
-        $customFieldInfo = $this->getCustomModelFields($modelClassName);
+        $customFieldInfo = ModelUtility::getCustomModelFields($modelClassName);
         $searchFields = [];
         $customFields = [];
         foreach ($customFieldInfo as $info) {
@@ -210,7 +210,7 @@ class SmartObjectInformationService
      */
     protected function getCustomDatabaseInformation(string $modelClassName): array
     {
-        $fieldInformation = $this->getCustomModelFields($modelClassName);
+        $fieldInformation = ModelUtility::getCustomModelFields($modelClassName);
         $fields = [];
         foreach ($fieldInformation as $info) {
             if ('' === $info['db']) {
@@ -245,43 +245,6 @@ class SmartObjectInformationService
         $mapper = ExtendedUtility::create(Mapper::class);
 
         return $mapper->getDatabaseDefinition($var);
-    }
-
-    /**
-     * Get custom database information for the given model.
-     *
-     * @return array<int, array<string, bool|string>>
-     */
-    protected function getCustomModelFields(string $modelClassName): array
-    {
-        /** @var AnnotationReader $annotationReader */
-        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-        $reflectionClass = new \ReflectionClass($modelClassName);
-        $properties = [];
-        foreach ($reflectionClass->getProperties() as $property) {
-            $propertiesCheck = $annotationReader->getPropertyAnnotation($property, DatabaseField::class);
-            if (null !== $propertiesCheck) {
-                $properties[$property->getName()] = $propertiesCheck;
-            }
-        }
-
-        $tableName = ModelUtility::getTableName($modelClassName);
-        $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
-        $fields = [];
-
-        foreach ($properties as $name => $annotation) {
-            $var = (string)$annotation->type;
-            $fields[] = [
-                'property' => $name,
-                'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
-                'db' => trim((string)$annotation->sql),
-                'var' => trim((string)$var),
-                'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
-            ];
-        }
-
-        return $fields;
     }
 
     /**
