@@ -6,7 +6,6 @@ namespace HDNET\Autoloader\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\DataProcessing\FilesProcessor;
 use TYPO3\CMS\Frontend\Resource\FileCollector;
 
 /**
@@ -14,7 +13,10 @@ use TYPO3\CMS\Frontend\Resource\FileCollector;
  */
 class FileProcessor extends \FriendsOfTYPO3\Headless\DataProcessing\FilesProcessor
 {
-    protected array $additionalReferences = [];
+    /**
+     * @var array
+     */
+    protected $additionalReferences = [];
 
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
     {
@@ -23,7 +25,7 @@ class FileProcessor extends \FriendsOfTYPO3\Headless\DataProcessing\FilesProcess
             isset($processorConfiguration['references.'])
             && $processorConfiguration['references.']
         ) {
-            $referencesUidList = (string) $cObj->stdWrapValue('references', $processorConfiguration);
+            $referencesUidList = (string)$cObj->stdWrapValue('references', $processorConfiguration);
             $this->additionalReferences = GeneralUtility::intExplode(',', $referencesUidList, true);
         }
 

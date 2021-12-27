@@ -66,7 +66,7 @@ class ModelMapper implements MapperInterface
         $typeTableName = ModelUtility::getTableName($type);
 
         $fields = TyposcriptConfigurationService::getInstance()->getTyposcriptConfiguration($type, $extensionKey, $typeTableName);
-        $fieldString = \implode("\n", $fields);
+        $fieldString = implode("\n", $fields);
 
         return "
         {$fieldName} = CONTENT_JSON

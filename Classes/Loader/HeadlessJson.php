@@ -10,7 +10,6 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\TyposcriptConfigurationService;
 use HDNET\Autoloader\SmartObjectRegister;
-use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -22,6 +21,8 @@ class HeadlessJson implements LoaderInterface
 {
     /**
      * Prepare the content object loader.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -37,7 +38,7 @@ class HeadlessJson implements LoaderInterface
         $register = SmartObjectRegister::getRegister();
 
         foreach ($register as $modelName) {
-            if (false === \strpos($modelName, '\\Content\\')) {
+            if (false === strpos($modelName, '\\Content\\')) {
                 continue;
             }
             $class = new \ReflectionClass($modelName);
@@ -49,8 +50,7 @@ class HeadlessJson implements LoaderInterface
                 $loader,
                 $modelName,
                 $noHeader,
-                $loader->getExtensionKey(),
-                $loader->getVendorName()
+                $loader->getExtensionKey()
             );
             /*$reflectionClass = new \ReflectionClass($className);
             $fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
@@ -86,7 +86,7 @@ class HeadlessJson implements LoaderInterface
     protected function checkAndCreateTyposcriptTemplate(Loader $loader, string $className, bool $noHeader, string $extensionKey): void
     {
         $shortName = (new \ReflectionClass($className))->getShortName();
-        $templatePath = 'EXT:'.$loader->getExtensionKey().'/Resources/Private/TypoScript/Content/'.$shortName.'.typoscript';
+        $templatePath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/TypoScript/Content/' . $shortName . '.typoscript';
         $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
         $template = GeneralUtility::getUrl(ExtensionManagementUtility::extPath(
             'autoloader',
@@ -100,7 +100,7 @@ class HeadlessJson implements LoaderInterface
             ];
 
             $replace = [
-                $loader->getExtensionKey().'_'.GeneralUtility::camelCaseToLowerCaseUnderscored($shortName),
+                $loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($shortName),
                 $noHeader ? 'contentElement' : 'contentElementWithHeader',
             ];
 
@@ -124,11 +124,11 @@ class HeadlessJson implements LoaderInterface
      *
      * @param mixed $className
      *
-     * @return array
+     * @return string[]
      */
-    protected function getClassPropertiesInLowerCaseUnderscored($className)
+    protected function getClassPropertiesInLowerCaseUnderscored(string $className): array
     {
-        return array_map(function ($value) {
+        return array_map(function ($value): string {
             return GeneralUtility::camelCaseToLowerCaseUnderscored($value);
         }, ReflectionUtility::getDeclaringProperties($className));
     }

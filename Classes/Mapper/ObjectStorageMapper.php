@@ -61,25 +61,25 @@ class ObjectStorageMapper implements MapperInterface
     {
         $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
 
-        $braceStartPos = \strpos($type, '<');
-        $braceEndPos = \strpos($type, '>');
+        $braceStartPos = strpos($type, '<');
+        $braceEndPos = strpos($type, '>');
         if (false === $braceStartPos || false === $braceEndPos) {
             throw new \RuntimeException('The ObjectStorage needs to have a template type!');
         }
-        $objectStorageTemplateClassType = (new \ReflectionClass(\substr($type, $braceStartPos + 1, $braceEndPos - $braceStartPos - 1)))->getName();
+        $objectStorageTemplateClassType = (new \ReflectionClass(substr($type, $braceStartPos + 1, $braceEndPos - $braceStartPos - 1)))->getName();
         $objectStorageTemplateTableName = ModelUtility::getTableName($objectStorageTemplateClassType);
 
         $typoscriptConfigurationService = TyposcriptConfigurationService::getInstance();
         $typoscriptConfigurationService->pushSerialisationCache();
         $fields = $typoscriptConfigurationService->getTyposcriptConfiguration($objectStorageTemplateClassType, $extensionKey, $objectStorageTemplateTableName);
         $typoscriptConfigurationService->popSerialisationCache();
-        $fieldString = \implode("\n", $fields);
+        $fieldString = implode("\n", $fields);
         $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $className);
         if (null === $objectStorageTemplateFieldRelationName) {
             return "
                 {$fieldName} = TEXT
                 {$fieldName}.dataProcessing {
-                        10 = TYPO3\CMS\Frontend\DataProcessing\SplitProcessor
+                        10 = TYPO3\\CMS\\Frontend\\DataProcessing\\SplitProcessor
                         10 {
                             fieldName = {$fieldNameUnderscored}
                             delimiter = ,

@@ -329,7 +329,7 @@ tt_content.key.field = CType';
             $templatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . '.html';
             $absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
-            $beTemplatePath = $siteRelPathPrivate.'Templates/Content/'.$configuration['model'].'Backend.html';
+            $beTemplatePath = $siteRelPathPrivate . 'Templates/Content/' . $configuration['model'] . 'Backend.html';
             $absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
 
             if (!is_file($absoluteTemplatePath) && !is_file($absoluteBeTemplatePath)) {
