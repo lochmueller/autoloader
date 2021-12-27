@@ -8,9 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Service;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseKey;
-use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;

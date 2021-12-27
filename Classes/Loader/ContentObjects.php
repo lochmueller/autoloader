@@ -9,7 +9,6 @@ namespace HDNET\Autoloader\Loader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use HDNET\Autoloader\Annotation\EnableRichText;
-use HDNET\Autoloader\Annotation\NoHeader;
 use HDNET\Autoloader\Annotation\WizardTab;
 use HDNET\Autoloader\Controller\ContentController;
 use HDNET\Autoloader\Loader;

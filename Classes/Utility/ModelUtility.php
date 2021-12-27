@@ -195,7 +195,7 @@ class ModelUtility
             }
         }
 
-        $tableName = ModelUtility::getTableName($modelClassName);
+        $tableName = self::getTableName($modelClassName);
         $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
         $fields = [];
 

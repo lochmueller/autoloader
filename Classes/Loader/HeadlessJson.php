@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Loader;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use HDNET\Autoloader\Annotation\NoHeader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\TyposcriptConfigurationService;
-use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ExtbasePersistenceUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
