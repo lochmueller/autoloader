@@ -27,7 +27,7 @@ class ClassNamingUtility
      *
      * @see \TYPO3\CMS\Core\Utility\ClassNamingUtility::explodeObjectControllerName
      */
-    public static function explodeObjectModelName($modelName)
+    public static function explodeObjectModelName(string $modelName): array
     {
         if (false !== mb_strpos($modelName, '\\')) {
             if ('TYPO3\\CMS' === mb_substr($modelName, 0, 9)) {
@@ -35,14 +35,14 @@ class ClassNamingUtility
             } else {
                 $extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
             }
-            $regEx = '/'.$extensionName.'\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix';
+            $regEx = '/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix';
         } else {
             $regEx = '/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z0-9_]+)/ix';
         }
 
         preg_match($regEx, $modelName, $matches);
         if (empty($matches)) {
-            throw new Exception('Could not determine extension key for: '.$modelName, 140657775);
+            throw new Exception('Could not determine extension key for: ' . $modelName, 140657775);
         }
 
         return $matches;
@@ -52,10 +52,8 @@ class ClassNamingUtility
      * Get the extension key by the given model name.
      *
      * @param object|string $modelClassName
-     *
-     * @return string
      */
-    public static function getExtensionKeyByModel($modelClassName)
+    public static function getExtensionKeyByModel($modelClassName): string
     {
         if (\is_object($modelClassName)) {
             $modelClassName = \get_class($modelClassName);
@@ -67,16 +65,10 @@ class ClassNamingUtility
 
     /**
      * Get FQN by path (segment).
-     *
-     * @param string $vendorName
-     * @param string $extensionKey
-     * @param string $path
-     *
-     * @return string
      */
-    public static function getFqnByPath($vendorName, $extensionKey, $path)
+    public static function getFqnByPath(string $vendorName, string $extensionKey, string $path): string
     {
-        return $vendorName.'\\'.ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)).'\\'.str_replace(
+        return $vendorName . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($extensionKey)) . '\\' . str_replace(
             '/',
             '\\',
             ltrim($path, '/')

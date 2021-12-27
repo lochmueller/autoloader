@@ -14,6 +14,8 @@ class SmartObjectRegister
 {
     /**
      * Register for smart object information.
+     *
+     * @var mixed[]
      */
     protected static $smartObjectRegistry = [];
 
@@ -32,9 +34,9 @@ class SmartObjectRegister
     /**
      * Get the register content.
      *
-     * @return array
+     * @return mixed[]
      */
-    public static function getRegister()
+    public static function getRegister(): array
     {
         return self::$smartObjectRegistry;
     }

@@ -15,12 +15,9 @@ class Tca
     /**
      * Generate the help message for array fields.
      *
-     * @param array  $configuration
-     * @param object $formEngine    FormEngine object
-     *
-     * @return string
+     * @param mixed[] $configuration
      */
-    public function arrayInfoField($configuration, $formEngine)
+    public function arrayInfoField(array $configuration, object $formEngine): string
     {
         return $this->generateGenericRelationMessage($configuration);
     }
@@ -28,12 +25,9 @@ class Tca
     /**
      * Generate the help message for object storage fields.
      *
-     * @param array  $configuration
-     * @param object $formEngine    FormEngine object
-     *
-     * @return string
+     * @param mixed[] $configuration
      */
-    public function objectStorageInfoField($configuration, $formEngine)
+    public function objectStorageInfoField(array $configuration, object $formEngine): string
     {
         return $this->generateGenericRelationMessage($configuration);
     }
@@ -41,12 +35,9 @@ class Tca
     /**
      * Generate the help message for model fields.
      *
-     * @param array  $configuration
-     * @param object $formEngine    FormEngine object
-     *
-     * @return string
+     * @param mixed[] $configuration
      */
-    public function modelInfoField($configuration, $formEngine)
+    public function modelInfoField(array $configuration, object $formEngine): string
     {
         return $this->generateGenericRelationMessage($configuration);
     }
@@ -54,19 +45,17 @@ class Tca
     /**
      * Get a generic text for an info box.
      *
-     * @param array $configuration
-     *
-     * @return string
+     * @param mixed[] $configuration
      */
-    protected function generateGenericRelationMessage($configuration)
+    protected function generateGenericRelationMessage(array $configuration): string
     {
         $infoField = '<strong>Please configure your TCA for this field.</strong><br/>';
         $infoField .= 'You see this message because you have NOT configured the TCA.';
-        $infoField .= '<ul><li>table: <em>'.$configuration['table'].'</em></li>';
-        $infoField .= '<li>field: <em>'.$configuration['field'].'</em></li>';
+        $infoField .= '<ul><li>table: <em>' . $configuration['table'] . '</em></li>';
+        $infoField .= '<li>field: <em>' . $configuration['field'] . '</em></li>';
         $infoField .= '<li>config-file';
-        $infoField .= '<ul><li>own table: <em>Configuration/TCA/'.$configuration['table'].'.php</em></li>';
-        $infoField .= '<li>foreign table: <em>Configuration/TCA/Overrides/'.$configuration['table'].'.php</em></li></ul>';
+        $infoField .= '<ul><li>own table: <em>Configuration/TCA/' . $configuration['table'] . '.php</em></li>';
+        $infoField .= '<li>foreign table: <em>Configuration/TCA/Overrides/' . $configuration['table'] . '.php</em></li></ul>';
         $infoField .= '</li></ul>';
         $infoField .= 'Common foreign tables are <em>tt_content</em>, <em>tt_address</em>, &hellip;.<br/><br/>';
         $infoField .= 'Information about proper TCA configuration as ';
@@ -80,13 +69,9 @@ class Tca
 
     /**
      * Wrap the given content in a info box for the backend.
-     *
-     * @param string $content
-     *
-     * @return string
      */
-    protected function wrapInInfoBox($content)
+    protected function wrapInInfoBox(string $content): string
     {
-        return '<div style="padding: 5px; border: 2px solid red;">'.$content.'</div>';
+        return '<div style="padding: 5px; border: 2px solid red;">' . $content . '</div>';
     }
 }

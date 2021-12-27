@@ -16,6 +16,8 @@ class Language implements DataSetInterface
 {
     /**
      * Get TCA information.
+     *
+     * @return array<string, mixed[]>
      */
     public function getTca(string $tableName): array
     {
@@ -57,7 +59,7 @@ class Language implements DataSetInterface
                             ],
                         ],
                         'foreign_table' => $tableName,
-                        'foreign_table_where' => 'AND '.$tableName.'.pid=###CURRENT_PID### AND '.$tableName.'.sys_language_uid IN (-1,0)',
+                        'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
                     ],
                 ],
                 'l10n_diffsource' => [
@@ -74,6 +76,8 @@ class Language implements DataSetInterface
 
     /**
      * Get database sql information.
+     *
+     * @return mixed[]
      */
     public function getDatabaseSql(string $tableName): array
     {
@@ -86,6 +90,8 @@ class Language implements DataSetInterface
 
     /**
      * Get database sql key information.
+     *
+     * @return string[]
      */
     public function getDatabaseSqlKey(): array
     {

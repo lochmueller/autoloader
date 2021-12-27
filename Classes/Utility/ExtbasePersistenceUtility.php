@@ -8,6 +8,9 @@ use HDNET\Autoloader\SmartObjectRegister;
 
 class ExtbasePersistenceUtility
 {
+    /**
+     * @return mixed[]
+     */
     public static function getClassMappingForExtension(string $extension, array $additionalConfiguration = []): array
     {
         $objects = self::getSmartObjectsForExtensionKey($extension);
@@ -16,7 +19,12 @@ class ExtbasePersistenceUtility
         return array_merge($baseConfiguration, $additionalConfiguration);
     }
 
-    protected static function getSmartObjectsForExtensionKey($extensionKey)
+    /**
+     * @param mixed $extensionKey
+     *
+     * @return mixed[]
+     */
+    protected static function getSmartObjectsForExtensionKey($extensionKey): array
     {
         $smartObjects = SmartObjectRegister::getRegister();
         $extensionObjects = [];
@@ -30,7 +38,10 @@ class ExtbasePersistenceUtility
         return $extensionObjects;
     }
 
-    private static function generateAutoloaderConfiguration(array $objects)
+    /**
+     * @return array<int|string, array<string, string>>
+     */
+    private static function generateAutoloaderConfiguration(array $objects): array
     {
         $config = [];
         foreach ($objects as $className) {

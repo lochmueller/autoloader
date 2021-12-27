@@ -32,6 +32,6 @@ class Plugin
      */
     public function __toString()
     {
-        return (string) $this->argumentName;
+        return (string)$this->argumentName;
     }
 }

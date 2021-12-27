@@ -13,7 +13,7 @@ class SlotTest extends AbstractTest
     /**
      * @test
      */
-    public function sortByPriority()
+    public function sortByPriority(): void
     {
         $slots = new Slots();
 

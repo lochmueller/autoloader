@@ -18,14 +18,10 @@ class StringMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
-        return \in_array(mb_strtolower($type), [
-            'string',
-        ], true);
+        return 'string' === mb_strtolower($type);
     }
 
     /**
@@ -34,14 +30,14 @@ class StringMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         if ('slug' === $fieldName) {
             return [
                 'exclude' => 1,
-                'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+                'label' => $overWriteLabel ?: $fieldName,
                 'config' => [
                     'type' => 'slug',
                     'prependSlash' => true,
@@ -57,7 +53,7 @@ class StringMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => [
                 'type' => 'input',
             ],
@@ -66,10 +62,8 @@ class StringMapper implements MapperInterface
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'text';
     }

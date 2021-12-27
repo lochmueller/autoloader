@@ -19,21 +19,16 @@ class FileUtility
     /**
      * Write a file and create the target folder, if the folder do not exists.
      *
-     * @param string $absoluteFileName
-     * @param string $content
-     *
      * @throws Exception
-     *
-     * @return bool
      */
-    public static function writeFileAndCreateFolder($absoluteFileName, $content)
+    public static function writeFileAndCreateFolder(string $absoluteFileName, string $content): bool
     {
-        $dir = PathUtility::dirname($absoluteFileName).'/';
+        $dir = PathUtility::dirname($absoluteFileName) . '/';
         if (!is_dir($dir)) {
             GeneralUtility::mkdir_deep($dir);
         }
         if (is_file($absoluteFileName) && !is_writable($absoluteFileName)) {
-            throw new Exception('The autoloader try to add same content to '.$absoluteFileName.' but the file is not writable for the autoloader. Please fix it!', 234627835);
+            throw new Exception('The autoloader try to add same content to ' . $absoluteFileName . ' but the file is not writable for the autoloader. Please fix it!', 234627835);
         }
 
         return GeneralUtility::writeFile($absoluteFileName, $content);
@@ -43,12 +38,9 @@ class FileUtility
      * Get all base file names in the given directory with the given file extension
      * Check also if the directory exists.
      *
-     * @param string $dirPath
-     * @param string $fileExtension
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getBaseFilesInDir($dirPath, $fileExtension)
+    public static function getBaseFilesInDir(string $dirPath, string $fileExtension): array
     {
         return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_FILENAME);
     }
@@ -57,12 +49,9 @@ class FileUtility
      * Get all base file names in the given directory with the given file extension
      * Check also if the directory exists.
      *
-     * @param string $dirPath
-     * @param string $fileExtension
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getBaseFilesWithExtensionInDir($dirPath, $fileExtension)
+    public static function getBaseFilesWithExtensionInDir(string $dirPath, string $fileExtension): array
     {
         return self::getFileInformationInDir($dirPath, $fileExtension, PATHINFO_BASENAME);
     }
@@ -72,13 +61,9 @@ class FileUtility
      * Check also if the directory exists. If you scan the dir recursively you get
      * also the folder name. The filename is also "basename" only.
      *
-     * @param string $dirPath
-     * @param string $fileExtensions
-     * @param bool   $recursively
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getBaseFilesRecursivelyInDir($dirPath, $fileExtensions, $recursively = true)
+    public static function getBaseFilesRecursivelyInDir(string $dirPath, string $fileExtensions, bool $recursively = true): array
     {
         if (!is_dir($dirPath)) {
             return [];
@@ -87,7 +72,7 @@ class FileUtility
         $files = GeneralUtility::getAllFilesAndFoldersInPath([], $dirPath, $fileExtensions, false, $recursively);
         foreach ($files as $key => $file) {
             $pathInfo = PathUtility::pathinfo($file);
-            $files[$key] = $pathInfo['dirname'].'/'.$pathInfo['filename'];
+            $files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
         }
         $files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
 
@@ -97,13 +82,9 @@ class FileUtility
     /**
      * Get file information in the given folder.
      *
-     * @param string $dirPath
-     * @param string $fileExtension
-     * @param int    $informationType
-     *
-     * @return array
+     * @return mixed[]
      */
-    protected static function getFileInformationInDir($dirPath, $fileExtension, $informationType)
+    protected static function getFileInformationInDir(string $dirPath, string $fileExtension, int $informationType): array
     {
         if (!is_dir($dirPath)) {
             return [];

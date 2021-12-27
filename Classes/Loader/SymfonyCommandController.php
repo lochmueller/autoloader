@@ -11,6 +11,7 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
+use Symfony\Component\Console\Command\Command;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -25,29 +26,31 @@ class SymfonyCommandController implements LoaderInterface
      * There is no file monitoring for this cache.
      *
      * @see https://docs.typo3.org/typo3cms/InsideTypo3Reference/CoreArchitecture/BackendModules/CliScripts/Index.html
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $commandConfigurationFile = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Configuration/Commands.php';
+        $commandConfigurationFile = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/Commands.php';
 
         if (is_file($commandConfigurationFile)) {
             return [];
         }
 
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Command/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
         $controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
         foreach ($controllers as $controller) {
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Command/'.$controller
+                'Command/' . $controller
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;
             }
 
-            if (is_subclass_of($className, \Symfony\Component\Console\Command\Command::class)) {
+            if (is_subclass_of($className, Command::class)) {
                 $classNames[lcfirst($controller)] = $className;
             }
         }
@@ -58,7 +61,7 @@ class SymfonyCommandController implements LoaderInterface
 
         $configuration = [];
         foreach ($classNames as $name => $class) {
-            $configuration[$loader->getExtensionKey().':'.$name] = [
+            $configuration[$loader->getExtensionKey() . ':' . $name] = [
                 'class' => $class,
             ];
         }
@@ -66,7 +69,7 @@ class SymfonyCommandController implements LoaderInterface
         $content = '<?php
 // This file is geenrated by EXT:autoloader. If you delete this file, clear the System cache and autoloader will generate a new one ;)
 
-return '.ArrayUtility::arrayExport($configuration).';';
+return ' . ArrayUtility::arrayExport($configuration) . ';';
 
         FileUtility::writeFileAndCreateFolder($commandConfigurationFile, $content);
 

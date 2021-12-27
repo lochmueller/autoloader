@@ -25,6 +25,8 @@ class Icon implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -65,17 +67,15 @@ class Icon implements LoaderInterface
     /**
      * Get the icons.
      *
-     * @param string $relPath
-     *
-     * @return array
+     * @return mixed[]
      */
-    protected function getIconsByPath(Loader $loader, $relPath)
+    protected function getIconsByPath(Loader $loader, string $relPath): array
     {
         $icons = [];
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).$relPath;
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . $relPath;
         $extensionPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
         $files = GeneralUtility::getAllFilesAndFoldersInPath([], $folder, '', false, 99);
-        if (!\count($files)) {
+        if ([] === $files) {
             return $icons;
         }
 
@@ -90,8 +90,8 @@ class Icon implements LoaderInterface
             $pathElements = PathUtility::pathinfo(mb_strtolower(str_replace(['/', '_'], '-', GeneralUtility::camelCaseToLowerCaseUnderscored($iconPath))));
             $icons[] = [
                 'provider' => $provider,
-                'path' => 'EXT:'.$loader->getExtensionKey().'/'.$relativePath,
-                'identifier' => str_replace('_', '-', $loader->getExtensionKey()).'-'.$pathElements['filename'],
+                'path' => 'EXT:' . $loader->getExtensionKey() . '/' . $relativePath,
+                'identifier' => str_replace('_', '-', $loader->getExtensionKey()) . '-' . $pathElements['filename'],
             ];
         }
 

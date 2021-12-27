@@ -17,6 +17,8 @@ abstract class AbstractServerLoader implements LoaderInterface
 {
     /**
      * Server name.
+     *
+     * @var string
      */
     protected $serverName = 'unknown';
 

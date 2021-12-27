@@ -18,14 +18,10 @@ class ArrayMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
-        return \in_array(mb_strtolower($type), [
-            'array',
-        ], true);
+        return 'array' === mb_strtolower($type);
     }
 
     /**
@@ -34,9 +30,9 @@ class ArrayMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         $baseConfig = [
             'type' => 'user',
@@ -45,17 +41,15 @@ class ArrayMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => $baseConfig,
         ];
     }
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'text';
     }

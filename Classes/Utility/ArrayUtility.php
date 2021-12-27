@@ -27,7 +27,7 @@ class ArrayUtility
                 $keys = explode($separator, $name);
                 $optTree = &$array;
                 while (($key = array_shift($keys))) {
-                    if ($keys) {
+                    if ([] !== $keys) {
                         if (!isset($optTree[$key]) || !\is_array($optTree[$key])) {
                             $optTree[$key] = [];
                         }
@@ -43,9 +43,9 @@ class ArrayUtility
     /**
      * Merge the Array Smart.
      *
-     * @return array
+     * @return mixed[]
      */
-    public static function mergeRecursiveDistinct(array &$array1, array &$array2)
+    public static function mergeRecursiveDistinct(array &$array1, array &$array2): array
     {
         $merged = $array1;
 

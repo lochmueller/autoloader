@@ -20,16 +20,14 @@ class XmlWriter extends AbstractLocalizationWriter
      * Get the base file content.
      *
      * @param string $extensionKey
-     *
-     * @return string
      */
-    public function getBaseFileContent($extensionKey)
+    public function getBaseFileContent($extensionKey): string
     {
         return '<?xml version="1.0"?>
 <T3locallang>
 	<meta type="array">
 	<type>database</type>
-	<description>Language file is created via the autoloader for the '.$extensionKey.' extension on '.date(DATE_COOKIE).'</description>
+	<description>Language file is created via the autoloader for the ' . $extensionKey . ' extension on ' . date(DATE_COOKIE) . '</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -42,12 +40,10 @@ class XmlWriter extends AbstractLocalizationWriter
      * Get the absolute file name.
      *
      * @param string $extensionKey
-     *
-     * @return string
      */
-    public function getAbsoluteFilename($extensionKey)
+    public function getAbsoluteFilename($extensionKey): string
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/'.$this->getLanguageBaseName().'.xml');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xml');
     }
 
     /**
@@ -59,16 +55,16 @@ class XmlWriter extends AbstractLocalizationWriter
      *
      * @return bool|void
      */
-    public function addLabel($extensionKey, $key, $default)
+    public function addLabel($extensionKey, $key, $default): void
     {
         // Exclude
-        if (!mb_strlen($default)) {
+        if (0 === mb_strlen($default)) {
             return;
         }
-        if (!mb_strlen($key)) {
+        if (0 === mb_strlen($key)) {
             return;
         }
-        if (!mb_strlen($extensionKey)) {
+        if (0 === mb_strlen($extensionKey)) {
             return;
         }
         if (GeneralUtility::isFirstPartOfStr($key, 'LLL:')) {
@@ -76,10 +72,10 @@ class XmlWriter extends AbstractLocalizationWriter
         }
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (false !== mb_strpos($content, ' index="'.$key.'"') || '' === trim($content)) {
+        if (false !== mb_strpos($content, ' index="' . $key . '"') || '' === trim($content)) {
             return;
         }
-        $replace = '<languageKey index="default" type="array">'.LF.TAB.TAB.TAB.'<label index="'.$key.'">'.$this->wrapCdata($default).'</label>';
+        $replace = '<languageKey index="default" type="array">' . LF . "\t" . "\t" . "\t" . '<label index="' . $key . '">' . $this->wrapCdata($default) . '</label>';
         $content = str_replace('<languageKey index="default" type="array">', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

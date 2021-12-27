@@ -17,6 +17,8 @@ class NameMapperService
     /**
      * Core fields that are stored as camel case in the DB
      * So the field is mapped directly.
+     *
+     * @var mixed[][]
      */
     protected $coreCamelCaseField = [
         'tt_content' => [

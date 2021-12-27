@@ -21,7 +21,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // $containerConfigurator->import(Typo3SetList::TYPO3_11);
     $containerConfigurator->import(SetList::CODE_QUALITY);
     $containerConfigurator->import(SetList::TYPE_DECLARATION);
-    $containerConfigurator->import(SetList::TYPE_DECLARATION_STRICT);
     $containerConfigurator->import(LevelSetList::UP_TO_PHP_73);
 
     $parameters = $containerConfigurator->parameters();
@@ -45,8 +44,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'ext_tables.php',
         ],
     ]);
-
-    $services = $containerConfigurator->services();
-    $services->set(ExtEmConfRector::class);
-    $services->set(ExtensionComposerRector::class);
 };

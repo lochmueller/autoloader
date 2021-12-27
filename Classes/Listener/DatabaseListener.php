@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent;
 
 class DatabaseListener
 {
-    public function triggerEvent(AlterTableDefinitionStatementsEvent $event)
+    public function triggerEvent(AlterTableDefinitionStatementsEvent $event): AlterTableDefinitionStatementsEvent
     {
         $sqlStrings = SmartObjectManager::getSmartObjectRegisterSql();
         $before = $event->getSqlData();

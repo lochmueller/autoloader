@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * Note copy the SmartExclude to your relation model
  *
- * @SmartExclude(excludes={"EnableFields","Language","Workspaces"})
+ * @SmartExclude(excludes={"EnableFields", "Language", "Workspaces"})
  */
 abstract class AbstractSimpleRelation extends AbstractEntity
 {

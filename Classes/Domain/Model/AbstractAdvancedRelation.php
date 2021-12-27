@@ -15,7 +15,7 @@ use HDNET\Autoloader\Annotation\SmartExclude;
  *
  * Note copy the SmartExclude to your relation model
  *
- * @SmartExclude(excludes={"EnableFields","Language","Workspaces"})
+ * @SmartExclude(excludes={"EnableFields", "Language", "Workspaces"})
  */
 abstract class AbstractAdvancedRelation extends AbstractSimpleRelation
 {

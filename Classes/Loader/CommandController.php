@@ -22,11 +22,13 @@ class CommandController implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return string[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Command/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
         $controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
         foreach ($controllers as $controller) {
             if ('AbstractCommandController' === $controller) {
@@ -36,7 +38,7 @@ class CommandController implements LoaderInterface
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Command/'.$controller
+                'Command/' . $controller
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;

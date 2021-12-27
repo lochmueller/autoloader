@@ -16,6 +16,8 @@ class Workspaces implements DataSetInterface
 {
     /**
      * Get TCA information.
+     *
+     * @return array<string, mixed[]>
      */
     public function getTca(string $tableName): array
     {
@@ -42,6 +44,8 @@ class Workspaces implements DataSetInterface
      * Get database sql information.
      *
      * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html
+     *
+     * @return mixed[]
      */
     public function getDatabaseSql(string $tableName): array
     {
@@ -61,6 +65,8 @@ class Workspaces implements DataSetInterface
 
     /**
      * Get database sql key information.
+     *
+     * @return string[]
      */
     public function getDatabaseSqlKey(): array
     {

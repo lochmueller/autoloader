@@ -21,9 +21,9 @@ class ParentClass
     public function __construct(array $values)
     {
         if (isset($values['parentClass'])) {
-            $this->parentClass = (string) $values['parentClass'];
+            $this->parentClass = (string)$values['parentClass'];
         } elseif (isset($values['value'])) {
-            $this->parentClass = (string) $values['value'];
+            $this->parentClass = (string)$values['value'];
         }
     }
 
@@ -32,6 +32,6 @@ class ParentClass
      */
     public function __toString()
     {
-        return (string) $this->parentClass;
+        return (string)$this->parentClass;
     }
 }

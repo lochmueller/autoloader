@@ -24,10 +24,8 @@ class ModelUtility
      * Get the table name by either reflection or model name.
      *
      * @param $modelClassName
-     *
-     * @return string
      */
-    public static function getTableName($modelClassName)
+    public static function getTableName($modelClassName): string
     {
         $reflectionName = self::getTableNameByModelReflectionAnnotation($modelClassName);
 
@@ -36,49 +34,38 @@ class ModelUtility
 
     /**
      * Get the table name by reflection.
-     *
-     * @param string $modelClassName
-     *
-     * @return string
      */
-    public static function getTableNameByModelReflectionAnnotation($modelClassName)
+    public static function getTableNameByModelReflectionAnnotation(string $modelClassName): string
     {
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-        /** @var DatabaseTable $classAnnotation */
         $classAnnotation = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseTable::class);
 
-        if (null === $classAnnotation) {
+        if (!$classAnnotation instanceof DatabaseTable) {
             return '';
         }
 
-        return (string) $classAnnotation->tableName;
+        return (string)$classAnnotation->tableName;
     }
 
     /**
      * Resolve the table name for the given class name
      * Original method from extbase core to create the table name.
      *
-     * @param string $className
-     *
      * @return string The table name
      *
      * @see DataMapFactory->resolveTableName
      */
-    public static function getTableNameByModelName($className)
+    public static function getTableNameByModelName(string $className): string
     {
         $className = ltrim($className, '\\');
         if (false !== mb_strpos($className, '\\')) {
             $classNameParts = explode('\\', $className);
             // Skip vendor and product name for core classes
-            if (0 === mb_strpos($className, 'TYPO3\\CMS\\')) {
-                $classPartsToSkip = 2;
-            } else {
-                $classPartsToSkip = 1;
-            }
+            $classPartsToSkip = 0 === mb_strpos($className, 'TYPO3\\CMS\\') ? 2 : 1;
             $classNameParts = \array_slice($classNameParts, $classPartsToSkip);
             $classNameParts = explode('\\', implode('\\', $classNameParts), 4);
-            $tableName = 'tx_'.str_replace('\\', '_', mb_strtolower(implode('_', $classNameParts)));
+            $tableName = 'tx_' . str_replace('\\', '_', mb_strtolower(implode('_', $classNameParts)));
         } else {
             $tableName = mb_strtolower($className);
         }
@@ -89,6 +76,8 @@ class ModelUtility
     /**
      * get the smart exclude values e.g. language, workspace,
      * enableFields from the given model.
+     *
+     * @return mixed[]
      */
     public static function getSmartExcludesByModelName(string $name): array
     {
@@ -99,17 +88,15 @@ class ModelUtility
 
         $smartExcludes = $annotationReader->getClassAnnotation($reflectionClass, SmartExclude::class);
 
-        return null === $smartExcludes ? [] : $smartExcludes->excludes;
+        return $smartExcludes instanceof SmartExclude ? $smartExcludes->excludes : [];
     }
 
     /**
      * Get the base TCA for the given Model.
      *
-     * @param string $modelClassName
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getTcaInformation($modelClassName)
+    public static function getTcaInformation(string $modelClassName): array
     {
         $informationService = SmartObjectInformationService::getInstance();
 
@@ -120,12 +107,9 @@ class ModelUtility
      * Get the default TCA incl. smart object fields.
      * Add missing fields to the existing TCA structure.
      *
-     * @param string $extensionKey
-     * @param string $tableName
-     *
-     * @return array
+     * @return mixed[]
      */
-    public static function getTcaOverrideInformation($extensionKey, $tableName)
+    public static function getTcaOverrideInformation(string $extensionKey, string $tableName): array
     {
         $return = $GLOBALS['TCA'][$tableName] ?? [];
         $classNames = SmartObjectRegister::getRegister();
@@ -151,12 +135,11 @@ class ModelUtility
     /**
      * Get the target model.
      *
-     * @param string $modelName
-     * @param array  $data
+     * @param mixed[] $data
      *
      * @return object|\TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
-    public static function getModel($modelName, $data)
+    public static function getModel(string $modelName, array $data): ?object
     {
         // Base query
         $query = ExtendedUtility::getQuery($modelName);
@@ -169,14 +152,14 @@ class ModelUtility
             GeneralUtility::makeInstance(Session::class)->destroy();
             $settings->setIgnoreEnableFields(true);
 
-            if (isset($data['sys_language_uid']) && (int) $data['sys_language_uid'] > 0) {
-                $_GET['L'] = (int) $data['sys_language_uid'];
+            if (isset($data['sys_language_uid']) && (int)$data['sys_language_uid'] > 0) {
+                $_GET['L'] = (int)$data['sys_language_uid'];
 
                 if (isset($data['l18n_parent']) && $data['l18n_parent'] > 0) {
                     $settings->setLanguageOverlayMode(false);
                     $settings->setLanguageMode(null);
                     $settings->setRespectSysLanguage(true);
-                    $settings->setLanguageUid((int) $data['sys_language_uid']);
+                    $settings->setLanguageUid((int)$data['sys_language_uid']);
                 }
 
                 return $query->execute()->getFirst();

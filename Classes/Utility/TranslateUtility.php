@@ -26,15 +26,12 @@ class TranslateUtility
      *
      * @see LocalizationUtility::translate
      *
-     * @param string $key           key in the localization file
-     * @param string $extensionName
-     * @param string $default       default value of the label
-     * @param array  $arguments     arguments are being passed over to vsprintf
+     * @param string $key       key in the localization file
+     * @param string $default   default value of the label
+     * @param array  $arguments arguments are being passed over to vsprintf
      * @param string $tableName
-     *
-     * @return string
      */
-    public static function assureLabel($key, $extensionName, $default = null, $arguments = null, $tableName = null)
+    public static function assureLabel(string $key, string $extensionName, $default = null, $arguments = null, $tableName = null): string
     {
         if (\is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] ?? null)) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['autoloader']['assureLabel'] as $classConfig) {
@@ -45,22 +42,17 @@ class TranslateUtility
             }
         }
 
-        return (string) $default;
+        return (string)$default;
     }
 
     /**
      * Get the given LLL String or render a help message for the user.
      *
-     * @param string $key
-     * @param string $extensionKey
      * @param string $tableName
-     *
-     * @return string
      */
-    public static function getLllOrHelpMessage($key, $extensionKey, $tableName = null)
+    public static function getLllOrHelpMessage(string $key, string $extensionKey, $tableName = null): string
     {
         return self::getLllString($key, $extensionKey, null, $tableName);
-
         // @todo refactor, migrate TYPO3_MODE for v12 to ApplicationType
         // if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG']) && isset($GLOBALS['BE_USER'])) {
         //     $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
@@ -79,35 +71,28 @@ class TranslateUtility
     /**
      * Get the correct LLL string for the given key and extension.
      *
-     * @param string $key
      * @param        $extensionKey
      * @param string $file
      * @param string $tableName
-     *
-     * @return string
      */
-    public static function getLllString($key, $extensionKey, $file = null, $tableName = null)
+    public static function getLllString(string $key, $extensionKey, $file = null, $tableName = null): string
     {
         if (null === $file) {
             $file = 'locallang.xlf';
         }
         if (self::useTableNameFileBase() && null !== $tableName) {
-            $file = $tableName.'.xlf';
+            $file = $tableName . '.xlf';
         }
 
-        return 'LLL:EXT:'.$extensionKey.'/Resources/Private/Language/'.$file.':'.$key;
+        return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
     }
 
     /**
      * Get the translation for the given key.
      *
-     * @param string $key
-     * @param string $extensionKey
      * @param string $tableName
-     *
-     * @return string
      */
-    public static function getLll($key, $extensionKey, $tableName = null)
+    public static function getLll(string $key, string $extensionKey, $tableName = null): ?string
     {
         $file = self::getLllString($key, $extensionKey, null, $tableName);
 
@@ -129,13 +114,11 @@ class TranslateUtility
 
     /**
      * Check if table name file base is used.
-     *
-     * @return bool
      */
-    protected static function useTableNameFileBase()
+    protected static function useTableNameFileBase(): bool
     {
-        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

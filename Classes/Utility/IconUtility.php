@@ -22,12 +22,8 @@ class IconUtility
 {
     /**
      * Add the given icon to the TCA table type.
-     *
-     * @param string $table
-     * @param string $type
-     * @param string $icon
      */
-    public static function addTcaTypeIcon($table, $type, $icon): void
+    public static function addTcaTypeIcon(string $table, string $type, string $icon): void
     {
         $fullIconPath = mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
         if (StringUtility::endsWith(mb_strtolower($fullIconPath), 'svg')) {
@@ -37,7 +33,7 @@ class IconUtility
         }
         /** @var IconRegistry $iconRegistry */
         $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-        $iconIdentifier = 'tcarecords-'.$table.'-'.$type;
+        $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
         $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
         $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
     }
@@ -45,20 +41,17 @@ class IconUtility
     /**
      * Get the relative path of the extension icon.
      *
-     * @param string $extensionKey
-     * @param bool   $extSyntax    Get the EXT: Syntax instead of a rel Path
-     *
-     * @return string
+     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
      */
-    public static function getByExtensionKey($extensionKey, $extSyntax = false)
+    public static function getByExtensionKey(string $extensionKey, bool $extSyntax = false): string
     {
-        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey).'Resources/Public/Icons/Extension.');
-        if ($fileExtension) {
-            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.'.$fileExtension, $extSyntax);
+        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/Extension.');
+        if ('' !== $fileExtension && '0' !== $fileExtension) {
+            return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.' . $fileExtension, $extSyntax);
         }
-        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey).'ext_icon.');
-        if ($fileExtension) {
-            return self::returnRelativeIconPath($extensionKey, 'ext_icon.'.$fileExtension, $extSyntax);
+        $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.');
+        if ('' !== $fileExtension && '0' !== $fileExtension) {
+            return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
         }
 
         return self::getByExtensionKey('autoloader');
@@ -67,24 +60,21 @@ class IconUtility
     /**
      * Get the absolute table icon for the given model name.
      *
-     * @param string $modelClassName
-     * @param bool   $extSyntax      Get the EXT: Syntax instead of a rel Path
-     *
-     * @return string
+     * @param bool $extSyntax Get the EXT: Syntax instead of a rel Path
      */
-    public static function getByModelName($modelClassName, $extSyntax = false)
+    public static function getByModelName(string $modelClassName, bool $extSyntax = false): string
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 
         $extensionKey = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
         $modelName = str_replace('\\', '/', $modelInformation['modelName']);
 
-        $tableIconPath = ExtensionManagementUtility::extPath($extensionKey).'Resources/Public/Icons/'.$modelName.'.';
+        $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
-        if ($fileExtension) {
+        if ('' !== $fileExtension && '0' !== $fileExtension) {
             return self::returnRelativeIconPath(
                 $extensionKey,
-                'Resources/Public/Icons/'.$modelName.'.'.$fileExtension,
+                'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
                 $extSyntax
             );
         }
@@ -97,11 +87,9 @@ class IconUtility
      * without file extension but incl. the dot. e.g.:
      * "/test/icon.".
      *
-     * @param string $absolutePathWithoutExtension
-     *
-     * @return string
+     * @return bool|string
      */
-    public static function getIconFileExtension($absolutePathWithoutExtension)
+    public static function getIconFileExtension(string $absolutePathWithoutExtension)
     {
         $fileExtensions = [
             'svg',
@@ -110,7 +98,7 @@ class IconUtility
             'jpg',
         ];
         foreach ($fileExtensions as $fileExtension) {
-            if (is_file($absolutePathWithoutExtension.$fileExtension)) {
+            if (is_file($absolutePathWithoutExtension . $fileExtension)) {
                 return $fileExtension;
             }
         }
@@ -120,16 +108,10 @@ class IconUtility
 
     /**
      * Return the right relative path.
-     *
-     * @param string $extensionKey
-     * @param string $path
-     * @param bool   $extSyntax
-     *
-     * @return string
      */
-    protected static function returnRelativeIconPath($extensionKey, $path, $extSyntax = false)
+    protected static function returnRelativeIconPath(string $extensionKey, string $path, bool $extSyntax = false): string
     {
-        $extSyntaxPath = 'EXT:'.$extensionKey.'/'.$path;
+        $extSyntaxPath = 'EXT:' . $extensionKey . '/' . $path;
         if ($extSyntax) {
             return $extSyntaxPath;
         }

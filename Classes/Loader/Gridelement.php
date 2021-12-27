@@ -25,6 +25,8 @@ class Gridelement implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -33,28 +35,28 @@ class Gridelement implements LoaderInterface
             return $grids;
         }
 
-        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/Grids/';
+        $commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Grids/';
         $files = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt,typoscript');
 
         foreach ($files as $file) {
             $pathInfo = PathUtility::pathinfo($file);
-            $iconPath = 'EXT:'.$loader->getExtensionKey().'/Resources/Public/Icons/Grids/'.$pathInfo['filename'].'.';
+            $iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/Grids/' . $pathInfo['filename'] . '.';
             $extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
-            $translationKey = 'grid.'.$pathInfo['filename'];
-            $translationKeyDescription = $translationKey.'.description';
+            $translationKey = 'grid.' . $pathInfo['filename'];
+            $translationKeyDescription = $translationKey . '.description';
             if (LoaderInterface::EXT_TABLES === $type) {
                 TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
-                TranslateUtility::assureLabel($translationKeyDescription, $loader->getExtensionKey(), $pathInfo['filename'].' description ');
+                TranslateUtility::assureLabel($translationKeyDescription, $loader->getExtensionKey(), $pathInfo['filename'] . ' description ');
             }
 
-            $path = 'EXT:'.$loader->getExtensionKey().'/Resources/Private/Grids/'.$file;
-            $icon = $extension ? $iconPath.$extension : false;
+            $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Grids/' . $file;
+            $icon = '' !== $extension && '0' !== $extension ? $iconPath . $extension : false;
             $label = TranslateUtility::getLllString($translationKey, $loader->getExtensionKey());
             $description = TranslateUtility::getLllString($translationKeyDescription, $loader->getExtensionKey());
             $content = GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
 
-            $flexForm = 'EXT:'.$loader->getExtensionKey().'/Configuration/FlexForms/Grids/'.$pathInfo['filename'].'.xml';
+            $flexForm = 'EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Grids/' . $pathInfo['filename'] . '.xml';
             $flexFormFile = GeneralUtility::getFileAbsFileName($flexForm);
             $flexFormContent = is_file($flexFormFile) ? GeneralUtility::getUrl($flexFormFile) : false;
 
@@ -92,19 +94,17 @@ class Gridelement implements LoaderInterface
      * @param $icon
      * @param $flexForm
      * @param $description
-     *
-     * @return string
      */
-    protected function getPageTsConfig($id, $label, $config, $icon, $flexForm, $description)
+    protected function getPageTsConfig($id, $label, $config, $icon, $flexForm, $description): string
     {
         $lines = [];
         $lines[] = 'tx_gridelements.setup {';
-        $lines[] = $id.' {';
+        $lines[] = $id . ' {';
 
-        $lines[] = 'title = '.$label;
-        $lines[] = 'description = '.$description;
+        $lines[] = 'title = ' . $label;
+        $lines[] = 'description = ' . $description;
         if ($icon) {
-            $lines[] = 'icon = '.$icon;
+            $lines[] = 'icon = ' . $icon;
         }
         $lines[] = $config;
         if ($flexForm) {

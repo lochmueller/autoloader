@@ -14,24 +14,20 @@ class ReflectionUtility
 {
     /**
      * Check if the given class is instantiable.
-     *
-     * @param string $className
      */
-    public static function isInstantiable($className): bool
+    public static function isInstantiable(string $className): bool
     {
         $reflectionClass = new \ReflectionClass($className);
 
-        return (bool) $reflectionClass->isInstantiable();
+        return (bool)$reflectionClass->isInstantiable();
     }
 
     /**
      * Get the name of the parent class.
      *
-     * @param string $className
-     *
      * @return string
      */
-    public static function getParentClassName($className)
+    public static function getParentClassName(string $className)
     {
         $reflectionClass = new \ReflectionClass($className);
 
@@ -69,17 +65,17 @@ class ReflectionUtility
     /**
      * Get properties of the given class, that are als declared in the given class.
      *
-     * @return array
+     * @return string[]
      */
-    public static function getDeclaringProperties(string $className)
+    public static function getDeclaringProperties(string $className): array
     {
         $classReflection = new \ReflectionClass($className);
-        $own = array_filter($classReflection->getProperties(), function ($property) use ($className) {
-            return trim((string) $property->class, '\\') === trim($className, '\\');
+        $own = array_filter($classReflection->getProperties(), function ($property) use ($className): bool {
+            return trim((string)$property->class, '\\') === trim($className, '\\');
         });
 
-        return array_map(function ($item) {
-            return (string) $item->name;
+        return array_map(function ($item): string {
+            return (string)$item->name;
         }, $own);
     }
 }

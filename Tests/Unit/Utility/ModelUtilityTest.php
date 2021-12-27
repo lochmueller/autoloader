@@ -2,6 +2,7 @@
 
 namespace HDNET\Autoloader\Tests\Unit\Utility;
 
+use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Tests\Unit\AbstractTest;
 
 /**
@@ -12,7 +13,7 @@ class ModelUtilityTest extends AbstractTest
     /**
      * @test
      */
-    public function getTableNameByModelName()
+    public function getTableNameByModelName(): void
     {
         $input = [
             'TEST\\Name\\Domain\\Model\\Name',
@@ -26,7 +27,7 @@ class ModelUtilityTest extends AbstractTest
         ];
 
         foreach ($input as $key => $value) {
-            $result = \HDNET\Autoloader\Utility\ModelUtility::getTableNameByModelName($value);
+            $result = ModelUtility::getTableNameByModelName($value);
             $this->assertEquals($output[$key], $result);
         }
     }

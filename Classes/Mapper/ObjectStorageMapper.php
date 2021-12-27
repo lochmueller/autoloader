@@ -18,10 +18,8 @@ class ObjectStorageMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
         return false !== mb_stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage');
     }
@@ -32,9 +30,9 @@ class ObjectStorageMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         $baseConfig = [
             'type' => 'user',
@@ -43,17 +41,15 @@ class ObjectStorageMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => $baseConfig,
         ];
     }
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'varchar(255) DEFAULT \'\' NOT NULL';
     }

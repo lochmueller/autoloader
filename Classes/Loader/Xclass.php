@@ -24,6 +24,8 @@ class Xclass implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -31,14 +33,14 @@ class Xclass implements LoaderInterface
         if (LoaderInterface::EXT_TABLES === $type) {
             return $return;
         }
-        $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Xclass/';
+        $xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';
         $xClasses = FileUtility::getBaseFilesRecursivelyInDir($xClassesPath, 'php');
 
         foreach ($xClasses as $xClass) {
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Xclass/'.$xClass
+                'Xclass/' . $xClass
             );
             if (!$loader->isInstantiableClass($className)) {
                 continue;

@@ -9,6 +9,7 @@ namespace HDNET\Autoloader\Localization;
 
 use HDNET\Autoloader\Localization\Writer\AbstractLocalizationWriter;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageStore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -20,6 +21,8 @@ class LanguageHandler extends LanguageStore
 {
     /**
      * Cache the created labels.
+     *
+     * @var mixed[]
      */
     protected static $createdLabelCache = [];
 
@@ -27,14 +30,13 @@ class LanguageHandler extends LanguageStore
      * handler the adding of files.
      *
      * @param string $key                  key in the localization file
-     * @param string $extensionName
      * @param string $default              default value of the label
      * @param array  $arguments            arguments are being passed over to vsprintf
      * @param string $overrideLanguageBase
      *
-     * @return null|string
+     * @return string|null
      */
-    public function handle($key, $extensionName, $default, $arguments, $overrideLanguageBase = null)
+    public function handle(string $key, string $extensionName, string $default, array $arguments, $overrideLanguageBase = null): string
     {
         // If we are called early in the TYPO3 bootstrap we must return early with the default label
         if (empty($GLOBALS['TCA'])) {
@@ -42,25 +44,23 @@ class LanguageHandler extends LanguageStore
         }
 
         if (TYPO3_MODE === 'BE' && !isset($GLOBALS['LANG']) && isset($GLOBALS['BE_USER'])) {
-            $GLOBALS['LANG'] = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LanguageService::class);
+            $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageService::class);
             $GLOBALS['LANG']->init($GLOBALS['BE_USER']->uc['lang']);
         }
 
         // LocalizationUtility::translate() throws exception if $GLOBALS['TYPO3_REQUEST'] is not instanceof ServerRequestInterface.
-        if ($GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface) {
-            if ($value = LocalizationUtility::translate($key, $extensionName, $arguments)) {
-                return $value;
-            }
+        if ($GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface && ($value = LocalizationUtility::translate($key, $extensionName, $arguments))) {
+            return $value;
         }
 
         if (null === $default || '' === $default) {
-            $default = $extensionName.' ==> LLL:'.$key;
+            $default = $extensionName . ' ==> LLL:' . $key;
         }
 
         $handler = $this->getBestLanguageWriter($extensionName, $overrideLanguageBase);
         $handler->createFileIfNotExists($extensionName);
 
-        $labelCacheKey = $extensionName.'|'.$key;
+        $labelCacheKey = $extensionName . '|' . $key;
         if (!\in_array($labelCacheKey, self::$createdLabelCache, true)) {
             $handler->addLabel($extensionName, $key, $default);
             self::$createdLabelCache[] = $labelCacheKey;
@@ -72,12 +72,9 @@ class LanguageHandler extends LanguageStore
     /**
      * Get the best language writer.
      *
-     * @param string $extensionKey
      * @param string $overrideLanguageBase
-     *
-     * @return AbstractLocalizationWriter
      */
-    protected function getBestLanguageWriter($extensionKey, $overrideLanguageBase = null)
+    protected function getBestLanguageWriter(string $extensionKey, $overrideLanguageBase = null): AbstractLocalizationWriter
     {
         $services = [];
         foreach ($this->getSupportedExtensions() as $serviceKey) {

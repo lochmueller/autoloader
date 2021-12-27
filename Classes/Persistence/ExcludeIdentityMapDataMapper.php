@@ -25,7 +25,7 @@ class ExcludeIdentityMapDataMapper extends DataMapper
      *
      * @return object An object of the given class
      */
-    protected function mapSingleRow($className, array $row)
+    protected function mapSingleRow(string $className, array $row): AbstractEntity
     {
         /** @var AbstractEntity $object */
         $object = $this->createEmptyObject($className);

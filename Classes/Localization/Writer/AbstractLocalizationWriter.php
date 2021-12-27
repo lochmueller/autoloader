@@ -18,17 +18,15 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 {
     /**
      * Language file base name.
+     *
+     * @var string
      */
     protected $languageBaseName = 'locallang';
 
     /**
      * Create default file.
-     *
-     * @param string $extensionKey
-     *
-     * @return bool
      */
-    public function createFileIfNotExists($extensionKey)
+    public function createFileIfNotExists(string $extensionKey): bool
     {
         $fileName = $this->getAbsoluteFilename($extensionKey);
         if (is_file($fileName)) {
@@ -40,10 +38,8 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 
     /**
      * Get language base name.
-     *
-     * @return string
      */
-    public function getLanguageBaseName()
+    public function getLanguageBaseName(): string
     {
         return $this->languageBaseName;
     }
@@ -83,15 +79,11 @@ abstract class AbstractLocalizationWriter implements LocalizationWriterInterface
 
     /**
      * Wrap CDATA.
-     *
-     * @param string $content
-     *
-     * @return string
      */
-    protected function wrapCdata($content)
+    protected function wrapCdata(string $content): string
     {
         if (htmlentities($content, ENT_NOQUOTES) !== $content) {
-            $content = '<![CDATA['.$content.']]>';
+            $content = '<![CDATA[' . $content . ']]>';
         }
 
         return $content;

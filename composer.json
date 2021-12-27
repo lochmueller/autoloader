@@ -37,9 +37,6 @@
 	},
 	"homepage": "https://github.com/lochmueller/autoloader",
 	"license": "GPL-2.0-or-later",
-	"support": {
-		"issues": "https://github.com/lochmueller/autoloader/issues"
-	},
 	"require-dev": {
 		"typo3/testing-framework": "^6.2",
 		"friendsofphp/php-cs-fixer": "^3.0",
@@ -54,7 +51,6 @@
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "autoloader",
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web",
 			"Package": {
 				"partOfMinimalUsableSystem": true

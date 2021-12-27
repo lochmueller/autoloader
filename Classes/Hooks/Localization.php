@@ -22,13 +22,12 @@ class Localization
     /**
      * Take care that the label exists.
      *
-     * @param string $key           key in the localization file
-     * @param string $extensionName
-     * @param string $default       default value of the label
-     * @param array  $arguments     arguments are being passed over to vsprintf
-     * @param string $tableName     The tablename of the given table (null, in non table context)
+     * @param string $key       key in the localization file
+     * @param string $default   default value of the label
+     * @param array  $arguments arguments are being passed over to vsprintf
+     * @param string $tableName The tablename of the given table (null, in non table context)
      */
-    public function assureLabel($key, $extensionName, &$default, $arguments, $tableName): void
+    public function assureLabel(string $key, string $extensionName, string &$default, array $arguments, string $tableName): void
     {
         $overrideBaseName = null;
         if ($this->useTableNameFileBase()) {
@@ -42,13 +41,11 @@ class Localization
 
     /**
      * Check if table name file base is used.
-     *
-     * @return bool
      */
-    protected function useTableNameFileBase()
+    protected function useTableNameFileBase(): bool
     {
-        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 }

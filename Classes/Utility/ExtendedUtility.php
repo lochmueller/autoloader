@@ -12,6 +12,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -21,30 +22,23 @@ class ExtendedUtility
 {
     /**
      * Create a object with the given class name.
-     *
-     * @param string $className
-     *
-     * @return object
      */
-    public static function create($className)
+    public static function create(string $className): object
     {
         $arguments = \func_get_args();
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        return \call_user_func_array([
-            $objManager,
-            'get',
-        ], $arguments);
+        return \call_user_func_array(function ($className, $constructorArguments) use ($objManager) {
+            return $objManager->get($className, $constructorArguments);
+        }, $arguments);
     }
 
     /**
      * Get the query for the given class name oder object.
      *
      * @param object|string $objectName
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
      */
-    public static function getQuery($objectName)
+    public static function getQuery($objectName): QueryInterface
     {
         $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
         /** @var PersistenceManagerInterface $manager */
@@ -61,14 +55,12 @@ class ExtendedUtility
      *
      * @param $source
      * @param $target
-     *
-     * @return bool
      */
-    public static function addXclass($source, $target)
+    public static function addXclass($source, $target): bool
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source])) {
-            $message = 'Double registration of Xclass for '.$source;
-            $message .= ' ('.$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'].' and '.$target.')';
+            $message = 'Double registration of Xclass for ' . $source;
+            $message .= ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
             self::log($message);
 
             return false;
@@ -95,10 +87,8 @@ class ExtendedUtility
 
     /**
      * Add a hooks.
-     *
-     * @param string $configuration
      */
-    public static function addHooks(array $locations, $configuration): void
+    public static function addHooks(array $locations, string $configuration): void
     {
         foreach ($locations as $location) {
             self::addHook($location, $configuration);
@@ -108,25 +98,19 @@ class ExtendedUtility
     /**
      * Add a hook.
      *
-     * @param string $location      The location of the hook separated bei pipes
-     * @param string $configuration
+     * @param string $location The location of the hook separated bei pipes
      */
-    public static function addHook($location, $configuration): void
+    public static function addHook(string $location, string $configuration): void
     {
         $location = explode('|', $location);
-        $location[] = 'via_autoloader_'.GeneralUtility::shortMD5($configuration);
+        $location[] = 'via_autoloader_' . GeneralUtility::shortMD5($configuration);
         ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
     }
 
     /**
      * Create a StandaloneView for a extension context.
-     *
-     * @param string $extensionKey
-     * @param string $templatePath
-     *
-     * @return StandaloneView
      */
-    public static function createExtensionStandaloneView($extensionKey, $templatePath)
+    public static function createExtensionStandaloneView(string $extensionKey, string $templatePath): StandaloneView
     {
         $templatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
@@ -146,13 +130,13 @@ class ExtendedUtility
 
         $layoutRootPaths = \is_array($viewConfiguration['layoutRootPaths.']) ? $viewConfiguration['layoutRootPaths.'] : [];
         if (!isset($layoutRootPaths[5])) {
-            $layoutRootPaths[5] = 'EXT:'.$extensionKey.'/Resources/Private/Layouts/';
+            $layoutRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Layouts/';
         }
         $view->setLayoutRootPaths($layoutRootPaths);
 
         $partialRootPaths = \is_array($viewConfiguration['partialRootPaths.']) ? $viewConfiguration['partialRootPaths.'] : [];
         if (!isset($partialRootPaths[5])) {
-            $partialRootPaths[5] = 'EXT:'.$extensionKey.'/Resources/Private/Partials/';
+            $partialRootPaths[5] = 'EXT:' . $extensionKey . '/Resources/Private/Partials/';
         }
         $view->setPartialRootPaths($partialRootPaths);
 
