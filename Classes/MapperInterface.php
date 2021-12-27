@@ -37,4 +37,17 @@ interface MapperInterface extends SingletonInterface
      * @return string
      */
     public function getDatabaseDefinition();
+
+    /**
+     * Gets the json definition from the headless typoscript for the current mapper.
+     *
+     * @param string $type
+     * @param string $fieldName
+     * @param string $className
+     * @param string $extensionKey
+     * @param string $tableName
+     *
+     * @return string
+     */
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName);
 }

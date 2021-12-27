@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Map DateTime.
@@ -52,5 +53,17 @@ class DateTimeMapper implements MapperInterface
     public function getDatabaseDefinition(): string
     {
         return 'int(11) DEFAULT \'0\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
     }
 }

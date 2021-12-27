@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Map Array.
@@ -52,5 +53,17 @@ class ArrayMapper implements MapperInterface
     public function getDatabaseDefinition(): string
     {
         return 'text';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
     }
 }

@@ -16,6 +16,11 @@ class DatabaseTable
     public $tableName;
 
     /**
+     * @var bool
+     */
+    public $isHeadless = false;
+
+    /**
      * @throws \InvalidArgumentException
      */
     public function __construct(array $values)
@@ -24,6 +29,10 @@ class DatabaseTable
             $this->tableName = $values['tableName'];
         } elseif (isset($values['value']) && \is_string($values['value'])) {
             $this->tableName = $values['value'];
+        }
+
+        if (isset($values['isHeadless']) && \is_bool($values['isHeadless'])) {
+            $this->isHeadless = $values['isHeadless'];
         }
     }
 

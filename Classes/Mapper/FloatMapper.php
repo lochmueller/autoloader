@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Map float/double.
@@ -54,5 +55,17 @@ class FloatMapper implements MapperInterface
     public function getDatabaseDefinition(): string
     {
         return 'varchar(255) DEFAULT \'\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
     }
 }

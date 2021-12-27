@@ -68,6 +68,29 @@ class Mapper implements SingletonInterface
     }
 
     /**
+     * @param string $type
+     * @param string $fieldName
+     * @param string $className
+     * @param string $extensionKey
+     * @param string $tableName
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        try {
+            $mapper = $this->getMapperByType($type);
+        } catch (\Exception $exception) {
+            // always return a valid mapper
+            $mapper = $this->getMapperByType('String');
+        }
+
+        return $mapper->getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName);
+    }
+
+    /**
      * Add a custom mapper.
      */
     public function addCustomMapper(string $className): void
