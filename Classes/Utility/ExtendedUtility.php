@@ -27,10 +27,7 @@ class ExtendedUtility
     {
         $arguments = \func_get_args();
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
-
-        return \call_user_func_array(function ($className, $constructorArguments) use ($objManager) {
-            return $objManager->get($className, $constructorArguments);
-        }, $arguments);
+        return $objManager->get($className);
     }
 
     /**

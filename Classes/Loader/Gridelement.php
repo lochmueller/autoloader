@@ -27,6 +27,8 @@ class Gridelement implements LoaderInterface
      * There is no file monitoring for this cache.
      *
      * @return mixed[]
+     *
+     * @noRector
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -51,7 +53,7 @@ class Gridelement implements LoaderInterface
             }
 
             $path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Grids/' . $file;
-            $icon = '' !== $extension && '0' !== $extension ? $iconPath . $extension : false;
+            $icon = $extension ? $iconPath . $extension : false;
             $label = TranslateUtility::getLllString($translationKey, $loader->getExtensionKey());
             $description = TranslateUtility::getLllString($translationKeyDescription, $loader->getExtensionKey());
             $content = GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
