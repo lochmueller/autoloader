@@ -27,6 +27,7 @@ class ExtendedUtility
     {
         $arguments = \func_get_args();
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         return $objManager->get($className);
     }
 

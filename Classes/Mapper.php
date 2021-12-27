@@ -44,6 +44,7 @@ class Mapper implements SingletonInterface
      * Get the TCA configuration for the current type.
      *
      * @param bool|string $overWriteLabel
+     *
      * @return mixed[]
      */
     public function getTcaConfiguration(string $type, string $fieldName, $overWriteLabel = false): array
