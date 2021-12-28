@@ -76,7 +76,7 @@ class ObjectStorageMapper implements MapperInterface
         $fieldString = implode("\n", $fields);
         $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $className);
         if (null === $objectStorageTemplateFieldRelationName) {
-            $objectStorageClassName = 'typo3\\cms\\extbase\\persistence\\objectstorage<'.\trim($className, '\\').'>';
+            $objectStorageClassName = 'typo3\\cms\\extbase\\persistence\\objectstorage<' . trim($className, '\\') . '>';
             $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $objectStorageClassName);
 
             if (null === $objectStorageTemplateFieldRelationName) {
@@ -96,9 +96,9 @@ class ObjectStorageMapper implements MapperInterface
                 ";
             }
 
-            // @todo(flo): Add doctrine like annotation to DatabaseField for local/foreign side generation and mm table name?
-            $lowercaseObjectStorageTemplateFieldRelationName = \strtolower($objectStorageTemplateFieldRelationName);
-            $lowercaseFieldName = \strtolower($fieldName);
+            /** @todo(flo): Add doctrine like annotation to DatabaseField for local/foreign side generation and mm table name? */
+            $lowercaseObjectStorageTemplateFieldRelationName = strtolower($objectStorageTemplateFieldRelationName);
+            $lowercaseFieldName = strtolower($fieldName);
             $mmTableName = "tx_{$extensionKey}_{$lowercaseFieldName}_{$lowercaseObjectStorageTemplateFieldRelationName}_mm";
 
             return "

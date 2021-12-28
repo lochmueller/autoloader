@@ -96,7 +96,7 @@ class TyposcriptConfigurationService implements SingletonInterface
     {
         $fieldInformation = ModelUtility::getCustomModelFields($class);
         foreach ($fieldInformation as $info) {
-            if (false === mb_stristr(trim($type, '\\'), \trim($info['var'], '\\'))) {
+            if (false === mb_stristr(trim($type, '\\'), trim($info['var'], '\\'))) {
                 continue;
             }
 
