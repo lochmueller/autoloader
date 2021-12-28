@@ -75,10 +75,12 @@ class ObjectStorageMapper implements MapperInterface
         $typoscriptConfigurationService->popSerialisationCache();
         $fieldString = implode("\n", $fields);
         $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $className);
-        // @todo(flo): Add check for ObjectStorage<$objectStorageTemplateClassType> for m:n relations and add the right query for that
-        // note: also look at the default m:n tca table convention here https://docs.typo3.org/m/typo3/reference-tca/main/en-us/ColumnsConfig/CommonProperties/Mm.html#auto-creation-of-intermediate-mm-tables-from-tca
         if (null === $objectStorageTemplateFieldRelationName) {
-            return "
+            $objectStorageClassName = 'typo3\\cms\\extbase\\persistence\\objectstorage<'.\trim($className, '\\').'>';
+            $objectStorageTemplateFieldRelationName = $typoscriptConfigurationService->getRelationDatabaseFieldNameFor($objectStorageTemplateClassType, $objectStorageClassName);
+
+            if (null === $objectStorageTemplateFieldRelationName) {
+                return "
                 {$fieldName} = TEXT
                 {$fieldName}.dataProcessing {
                         10 = TYPO3\\CMS\\Frontend\\DataProcessing\\SplitProcessor
@@ -91,6 +93,32 @@ class ObjectStorageMapper implements MapperInterface
                             as = {$fieldName}
                         }
                     }
+                ";
+            }
+
+            // @todo(flo): Add doctrine like annotation to DatabaseField for local/foreign side generation and mm table name?
+            $lowercaseObjectStorageTemplateFieldRelationName = \strtolower($objectStorageTemplateFieldRelationName);
+            $lowercaseFieldName = \strtolower($fieldName);
+            $mmTableName = "tx_{$extensionKey}_{$lowercaseFieldName}_{$lowercaseObjectStorageTemplateFieldRelationName}_mm";
+
+            return "
+            {$fieldName} = CONTENT_JSON
+            {$fieldName} {
+                table = {$objectStorageTemplateTableName}
+                select {
+                    # @todo: Add the right table name and uid_local/uid_foreign combination for this specific field depending
+                    # on the local/foreign side and if it has the tablenames column
+                    pidInList = this
+                    join = {$mmTableName} on {$mmTableName}.uid_local = {$objectStorageTemplateTableName}.uid
+                    where = AND {$mmTableName}.tablenames = '{$tableName}' AND {$mmTableName}.uid_foreign={field:uid}
+                    where.insertData = 1
+                }
+
+                renderObj = JSON
+                renderObj.fields {
+                    {$fieldString}
+                }
+            }
             ";
         }
 
