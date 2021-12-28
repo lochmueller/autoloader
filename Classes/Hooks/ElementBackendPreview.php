@@ -50,17 +50,17 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     /**
      * Render the Backend Preview Template and return the HTML.
      *
-     * @param array $row
+     * @param mixed[] $row
      *
-     * @return string
+     * @return mixed|string
      */
-    public function getBackendPreview($row)
+    public function getBackendPreview(array $row)
     {
         if (!$this->hasBackendPreview($row)) {
             return '';
         }
 
-        $cacheIdentifier = 'tt-content-preview-'.$row['uid'].'-'.$row['tstamp'];
+        $cacheIdentifier = 'tt-content-preview-' . $row['uid'] . '-' . $row['tstamp'];
 
         /** @var FrontendInterface $cache */
         $cache = GeneralUtility::makeInstance(CacheManager::class)
@@ -90,11 +90,9 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     /**
      * Check if the ContentObject has a Backend Preview Template.
      *
-     * @param array $row
-     *
-     * @return bool
+     * @param mixed[] $row
      */
-    public function hasBackendPreview($row)
+    public function hasBackendPreview(array $row): bool
     {
         if (!$this->isAutoloaderContenobject($row)) {
             return false;
@@ -110,13 +108,11 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
 
     /**
      * Check if the the Element is registered by the ContenObject-Autoloader.
-     *
-     * @return bool
      */
-    public function isAutoloaderContenobject(array $row)
+    public function isAutoloaderContenobject(array $row): bool
     {
         $ctype = $row['CType'];
 
-        return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+        return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
     }
 }

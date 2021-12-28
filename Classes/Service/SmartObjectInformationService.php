@@ -8,9 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Service;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseKey;
-use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
@@ -29,10 +27,8 @@ class SmartObjectInformationService
 {
     /**
      * Get a instance of this object.
-     *
-     * @return SmartObjectInformationService
      */
-    public static function getInstance()
+    public static function getInstance(): self
     {
         return GeneralUtility::makeInstance(self::class);
     }
@@ -41,10 +37,8 @@ class SmartObjectInformationService
      * Get database information.
      *
      * @param $modelClassName
-     *
-     * @return string
      */
-    public function getDatabaseInformation($modelClassName)
+    public function getDatabaseInformation($modelClassName): string
     {
         $tableName = ModelUtility::getTableName($modelClassName);
         $custom = $this->getCustomDatabaseInformation($modelClassName);
@@ -61,21 +55,20 @@ class SmartObjectInformationService
     /**
      * Get the custom Model field TCA structure.
      *
-     * @param       $modelClassName
-     * @param array $searchFields
+     * @param $modelClassName
      *
-     * @return array
+     * @return array<int|string, mixed[]>
      */
-    public function getCustomModelFieldTca($modelClassName, &$searchFields = [])
+    public function getCustomModelFieldTca(string $modelClassName, array &$searchFields = []): array
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
         $extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
         $tableName = ModelUtility::getTableName($modelClassName);
-        $customFieldInfo = $this->getCustomModelFields($modelClassName);
+        $customFieldInfo = ModelUtility::getCustomModelFields($modelClassName);
         $searchFields = [];
         $customFields = [];
         foreach ($customFieldInfo as $info) {
-            $key = $tableName.'.'.$info['name'];
+            $key = $tableName . '.' . $info['name'];
 
             if ($this->useTableNameFileBase()) {
                 // Without prefix !
@@ -112,11 +105,9 @@ class SmartObjectInformationService
     /**
      * Pre build TCA information for the given model.
      *
-     * @param string $modelClassName
-     *
-     * @return array
+     * @return mixed[]
      */
-    public function getTcaInformation($modelClassName)
+    public function getTcaInformation(string $modelClassName): array
     {
         $modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
         $extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
@@ -165,16 +156,16 @@ class SmartObjectInformationService
         }
 
         if (!\in_array('workspaces', $excludes, true)) {
-            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ','.$labelField;
+            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
 
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
         $languagePrefixCore = 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf';
         if (!\in_array('enableFields', $excludes, true)) {
-            $showitem[] = '--div--;'.$languagePrefixCore.':access';
-            $showitem[] = '--palette--;'.$languagePrefix.'locallang_tca.xlf:pages.palettes.access;access';
+            $showitem[] = '--div--;' . $languagePrefixCore . ':access';
+            $showitem[] = '--palette--;' . $languagePrefix . 'locallang_tca.xlf:pages.palettes.access;access';
         }
-        $showitem[] = '--div--;'.$languagePrefix.'locallang_ttc.xlf:tabs.extended';
+        $showitem[] = '--div--;' . $languagePrefix . 'locallang_ttc.xlf:tabs.extended';
 
         $overrideTca = [
             'ctrl' => [
@@ -202,33 +193,29 @@ class SmartObjectInformationService
 
     /**
      * Check if table name file base is used.
-     *
-     * @return bool
      */
-    protected function useTableNameFileBase()
+    protected function useTableNameFileBase(): bool
     {
-        $configuration = (array) GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
+        $configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('autoloader');
 
-        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool) $configuration['enableLanguageFileOnTableBase'] : false;
+        return isset($configuration['enableLanguageFileOnTableBase']) ? (bool)$configuration['enableLanguageFileOnTableBase'] : false;
     }
 
     /**
      * Get custom database information for the given model.
      *
-     * @param string $modelClassName
-     *
-     * @return array
+     * @return string[]
      */
-    protected function getCustomDatabaseInformation($modelClassName)
+    protected function getCustomDatabaseInformation(string $modelClassName): array
     {
-        $fieldInformation = $this->getCustomModelFields($modelClassName);
+        $fieldInformation = ModelUtility::getCustomModelFields($modelClassName);
         $fields = [];
         foreach ($fieldInformation as $info) {
             if ('' === $info['db']) {
                 try {
                     $info['db'] = $this->getDatabaseMappingByVarType($info['var']);
                 } catch (\Exception $exception) {
-                    throw new \Exception('Error for mapping in '.$modelClassName.' in property '.$info['property'].' with problem: '.$exception->getMessage(), 123681);
+                    throw new \Exception('Error for mapping in ' . $modelClassName . ' in property ' . $info['property'] . ' with problem: ' . $exception->getMessage(), 123681, $exception);
                 }
             } else {
                 try {
@@ -237,7 +224,7 @@ class SmartObjectInformationService
                     // Do not handle the getDatabaseMappingByVarType by db, Fallback is the var call
                 }
             }
-            $fields[] = '`'.$info['name'].'` '.$info['db'];
+            $fields[] = '`' . $info['name'] . '` ' . $info['db'];
         }
 
         return $fields;
@@ -249,10 +236,8 @@ class SmartObjectInformationService
      * @param $var
      *
      * @throws \HDNET\Autoloader\Exception
-     *
-     * @return string
      */
-    protected function getDatabaseMappingByVarType($var)
+    protected function getDatabaseMappingByVarType(string $var): string
     {
         /** @var Mapper $mapper */
         $mapper = ExtendedUtility::create(Mapper::class);
@@ -261,78 +246,24 @@ class SmartObjectInformationService
     }
 
     /**
-     * Get custom database information for the given model.
-     */
-    protected function getCustomModelFields(string $modelClassName): array
-    {
-        /** @var AnnotationReader $annotationReader */
-        $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-
-        $reflectionClass = new \ReflectionClass($modelClassName);
-        $properties = [];
-        foreach ($reflectionClass->getProperties() as $property) {
-            $propertiesCheck = $annotationReader->getPropertyAnnotation($property, DatabaseField::class);
-            if (null !== $propertiesCheck) {
-                $properties[$property->getName()] = $propertiesCheck;
-            }
-        }
-
-        $tableName = ModelUtility::getTableName($modelClassName);
-        $nameMapperService = GeneralUtility::makeInstance(NameMapperService::class);
-        $fields = [];
-
-        foreach ($properties as $name => $annotation) {
-            $var = (string) $annotation->type;
-            $fields[] = [
-                'property' => $name,
-                'name' => $nameMapperService->getDatabaseFieldName($tableName, $name),
-                'db' => trim((string) $annotation->sql),
-                'var' => trim((string) $var),
-                'rte' => null !== $annotationReader->getPropertyAnnotation($reflectionClass->getProperty($name), EnableRichText::class),
-            ];
-        }
-
-        return $fields;
-    }
-
-    /**
      * Generate SQL Query.
-     *
-     * @param string $tableName
-     *
-     * @return string
      */
-    protected function generateSqlQuery($tableName, array $fields)
+    protected function generateSqlQuery(string $tableName, array $fields): string
     {
         if (empty($fields)) {
             return '';
         }
 
-        return LF.'CREATE TABLE '.$tableName.' ('.LF.implode(','.LF, $fields).LF.');'.LF;
+        return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
     }
 
     /**
      * Generate complete SQL Query.
-     *
-     * @param string $modelClassName
-     * @param string $tableName
-     *
-     * @return string
      */
-    protected function generateCompleteSqlQuery($modelClassName, $tableName, array $custom)
+    protected function generateCompleteSqlQuery(string $modelClassName, string $tableName, array $custom): string
     {
         $fields = [];
-        //$fields[] = 'uid int(11) NOT NULL auto_increment';
-        //$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
-        //$fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
-        //$fields[] = 'crdate int(11) unsigned DEFAULT \'0\' NOT NULL';
-        //$fields[] = 'cruser_id int(11) unsigned DEFAULT \'0\' NOT NULL';
-        //$fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
-        //$fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
-
-        foreach ($custom as $field) {
-            $fields[] = $field;
-        }
+        $fields = $custom;
 
         $excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
         $dataSet = $this->getDataSet();
@@ -350,9 +281,9 @@ class SmartObjectInformationService
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
         $key = $annotationReader->getClassAnnotation(new \ReflectionClass($modelClassName), DatabaseKey::class);
         if (null !== $key) {
-            $additionalKeys = [(string) $key];
+            $additionalKeys = [(string)$key];
             array_walk($additionalKeys, function (&$item): void {
-                $item = 'KEY '.$item;
+                $item = 'KEY ' . $item;
             });
             $fields = array_merge($fields, $additionalKeys);
         }
@@ -365,23 +296,16 @@ class SmartObjectInformationService
 
     /**
      * Get the data set object.
-     *
-     * @return \HDNET\Autoloader\DataSet
      */
-    protected function getDataSet()
+    protected function getDataSet(): DataSet
     {
         return GeneralUtility::makeInstance(DataSet::class);
     }
 
     /**
      * Get TCA title.
-     *
-     * @param string $tableName
-     * @param string $extensionName
-     *
-     * @return string
      */
-    protected function getTcaTitle($tableName, $extensionName)
+    protected function getTcaTitle(string $tableName, string $extensionName): string
     {
         return TranslateUtility::getLllOrHelpMessage($tableName, $extensionName, $tableName);
     }

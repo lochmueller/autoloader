@@ -24,8 +24,11 @@ class ExcludeIdentityMapDataMapper extends DataMapper
      * @param array  $row       A single array with field_name => value pairs
      *
      * @return object An object of the given class
+     *
+     * Rector adds the string type declaration to $className, but the base method does not do that
+     * @noRector
      */
-    protected function mapSingleRow($className, array $row)
+    protected function mapSingleRow($className, array $row): AbstractEntity
     {
         /** @var AbstractEntity $object */
         $object = $this->createEmptyObject($className);

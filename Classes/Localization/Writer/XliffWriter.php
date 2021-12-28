@@ -20,14 +20,12 @@ class XliffWriter extends AbstractLocalizationWriter
      * Get the base file content.
      *
      * @param string $extensionKey
-     *
-     * @return string
      */
-    public function getBaseFileContent($extensionKey)
+    public function getBaseFileContent($extensionKey): string
     {
         return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="'.date('c').'" product-name="'.$extensionKey.'">
+	<file source-language="en" datatype="plaintext" original="messages" date="' . date('c') . '" product-name="' . $extensionKey . '">
 		<header/>
 		<body>
 		</body>
@@ -39,12 +37,10 @@ class XliffWriter extends AbstractLocalizationWriter
      * Get the absolute file name.
      *
      * @param string $extensionKey
-     *
-     * @return string
      */
-    public function getAbsoluteFilename($extensionKey)
+    public function getAbsoluteFilename($extensionKey): string
     {
-        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/'.$this->getLanguageBaseName().'.xlf');
+        return ExtensionManagementUtility::extPath($extensionKey, 'Resources/Private/Language/' . $this->getLanguageBaseName() . '.xlf');
     }
 
     /**
@@ -56,25 +52,25 @@ class XliffWriter extends AbstractLocalizationWriter
      *
      * @return bool|void
      */
-    public function addLabel($extensionKey, $key, $default)
+    public function addLabel($extensionKey, $key, $default): void
     {
         // Exclude
-        if (!mb_strlen($default)) {
+        if (0 === mb_strlen($default)) {
             return;
         }
-        if (!mb_strlen($key)) {
+        if (0 === mb_strlen($key)) {
             return;
         }
-        if (!mb_strlen($extensionKey)) {
+        if (0 === mb_strlen($extensionKey)) {
             return;
         }
 
         $absolutePath = $this->getAbsoluteFilename($extensionKey);
         $content = GeneralUtility::getUrl($absolutePath);
-        if (false !== mb_strpos($content, ' id="'.$key.'"') || '' === trim($content)) {
+        if (false !== mb_strpos($content, ' id="' . $key . '"') || '' === trim($content)) {
             return;
         }
-        $replace = '<body>'.LF.TAB.TAB.TAB.'<trans-unit id="'.$key.'"><source>'.$this->wrapCdata($default).'</source></trans-unit>';
+        $replace = '<body>' . LF . "\t" . "\t" . "\t" . '<trans-unit id="' . $key . '"><source>' . $this->wrapCdata($default) . '</source></trans-unit>';
         $content = str_replace('<body>', $replace, $content);
         FileUtility::writeFileAndCreateFolder($absolutePath, $content);
         $this->clearCache();

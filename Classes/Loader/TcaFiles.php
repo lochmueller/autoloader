@@ -20,6 +20,8 @@ class TcaFiles implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {

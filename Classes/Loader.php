@@ -18,6 +18,8 @@ class Loader implements SingletonInterface
 {
     /**
      * The different implementations and the order of the execution.
+     *
+     * @var string[]
      */
     protected $implementations = [
         // class replacement
@@ -32,6 +34,7 @@ class Loader implements SingletonInterface
         'TcaFiles',
         'ExtensionTypoScriptSetup',
         'ContextSensitiveHelps',
+        'HeadlessJson',
         // non-critical
         'Plugins',
         'FlexForms',
@@ -48,21 +51,22 @@ class Loader implements SingletonInterface
 
     /**
      * The Extension key.
+     *
+     * @var string|null
      */
     protected $extensionKey;
 
     /**
      * The vendorName.
+     *
+     * @var string|null
      */
     protected $vendorName;
 
     /**
      * Call this method in the ext_tables.php file.
-     *
-     * @param string $vendorName
-     * @param string $extensionKey
      */
-    public static function extTables($vendorName, $extensionKey, array $implementations = []): void
+    public static function extTables(string $vendorName, string $extensionKey, array $implementations = []): void
     {
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
@@ -71,11 +75,8 @@ class Loader implements SingletonInterface
 
     /**
      * Call this method in the ext_localconf.php file.
-     *
-     * @param string $vendorName
-     * @param string $extensionKey
      */
-    public static function extLocalconf($vendorName, $extensionKey, array $implementations = []): void
+    public static function extLocalconf(string $vendorName, string $extensionKey, array $implementations = []): void
     {
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
@@ -84,11 +85,8 @@ class Loader implements SingletonInterface
 
     /**
      * Load the ext tables information.
-     *
-     * @param string $vendorName
-     * @param string $extensionKey
      */
-    public function loadExtTables($vendorName, $extensionKey, array $implementations = []): void
+    public function loadExtTables(string $vendorName, string $extensionKey, array $implementations = []): void
     {
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
@@ -106,11 +104,8 @@ class Loader implements SingletonInterface
 
     /**
      * Load the ext localconf information.
-     *
-     * @param string $vendorName
-     * @param string $extensionKey
      */
-    public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = []): void
+    public function loadExtLocalconf(string $vendorName, string $extensionKey, array $implementations = []): void
     {
         $this->extensionKey = $extensionKey;
         $this->vendorName = $vendorName;
@@ -128,20 +123,16 @@ class Loader implements SingletonInterface
 
     /**
      * Get the extension key.
-     *
-     * @return string
      */
-    public function getExtensionKey()
+    public function getExtensionKey(): ?string
     {
         return $this->extensionKey;
     }
 
     /**
      * Get the vendor name.
-     *
-     * @return string
      */
-    public function getVendorName()
+    public function getVendorName(): ?string
     {
         return $this->vendorName;
     }
@@ -151,10 +142,8 @@ class Loader implements SingletonInterface
      * (exists and is no interface or abstraction etc.).
      *
      * @param $class
-     *
-     * @return bool
      */
-    public function isInstantiableClass($class)
+    public function isInstantiableClass(string $class): bool
     {
         return ReflectionUtility::isInstantiable($class);
     }
@@ -162,17 +151,17 @@ class Loader implements SingletonInterface
     /**
      * Build the Autoloader objects.
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function buildAutoLoaderObjects(array $objectNames = [])
+    protected function buildAutoLoaderObjects(array $objectNames = []): array
     {
         static $objectCache = [];
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
         $objects = [];
         foreach ($objectNames as $autoLoaderObjectName) {
             if (!isset($objectCache[$autoLoaderObjectName])) {
-                if (class_exists('HDNET\\Autoloader\\Loader\\'.$autoLoaderObjectName)) {
-                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\'.$autoLoaderObjectName);
+                if (class_exists('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName)) {
+                    $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
                 } else {
                     $objectCache[$autoLoaderObjectName] = GeneralUtility::makeInstance($autoLoaderObjectName);
                 }
@@ -186,9 +175,9 @@ class Loader implements SingletonInterface
     /**
      * Get the Autoloader Names in the right order.
      *
-     * @return array
+     * @return mixed[]|string[]
      */
-    protected function getAutoLoaderNamesInRightOrder(array $objectNames = [])
+    protected function getAutoLoaderNamesInRightOrder(array $objectNames = []): array
     {
         if (empty($objectNames)) {
             return $this->implementations;
@@ -209,13 +198,11 @@ class Loader implements SingletonInterface
     /**
      * Prepare the autoLoader information.
      *
-     * @param int $type
-     *
      * @return array
      */
-    protected function prepareAutoLoaderObjects(array $objects, $type)
+    protected function prepareAutoLoaderObjects(array $objects, int $type)
     {
-        $cacheIdentifier = $this->getVendorName().'_'.$this->getExtensionKey().'_'.GeneralUtility::shortMD5(serialize($objects)).'_'.$type;
+        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(serialize($objects)) . '_' . $type;
 
         // Do not use Caching Framework here
         /** @var AutoloaderFileBackend $cacheBackend */
@@ -236,9 +223,9 @@ class Loader implements SingletonInterface
      * @param $objects
      * @param $type
      *
-     * @return array
+     * @return array<class-string|int, mixed>
      */
-    protected function buildLoaderInformation($objects, $type)
+    protected function buildLoaderInformation($objects, $type): array
     {
         $return = [];
         foreach ($objects as $object) {

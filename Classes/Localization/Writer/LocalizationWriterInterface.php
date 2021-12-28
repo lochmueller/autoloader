@@ -15,36 +15,26 @@ interface LocalizationWriterInterface
     /**
      * Get the base file content.
      *
-     * @param string $extensionKey
-     *
      * @return string
      */
-    public function getBaseFileContent($extensionKey);
+    public function getBaseFileContent(string $extensionKey);
 
     /**
      * Get the absolute path to the file.
      *
-     * @param string $extensionKey
-     *
      * @return string
      */
-    public function getAbsoluteFilename($extensionKey);
+    public function getAbsoluteFilename(string $extensionKey);
 
     /**
      * Add the label.
      *
-     * @param string $extensionKey
-     * @param string $key
-     * @param string $default
-     *
      * @return bool
      */
-    public function addLabel($extensionKey, $key, $default);
+    public function addLabel(string $extensionKey, string $key, string $default);
 
     /**
      * Set language base name.
-     *
-     * @param string $languageBaseName
      */
-    public function setLanguageBaseName($languageBaseName);
+    public function setLanguageBaseName(string $languageBaseName);
 }

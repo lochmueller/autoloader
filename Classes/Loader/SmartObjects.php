@@ -24,11 +24,13 @@ class SmartObjects implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $configuration = [];
-        $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Domain/Model/';
+        $modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/';
         if (!is_dir($modelPath)) {
             return $configuration;
         }
@@ -38,7 +40,7 @@ class SmartObjects implements LoaderInterface
             $className = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Domain/Model/'.$model
+                'Domain/Model/' . $model
             );
             if (SmartObjectManager::isSmartObjectClass($className)) {
                 $configuration[] = $className;
@@ -69,9 +71,9 @@ class SmartObjects implements LoaderInterface
     /**
      * Add the given classes to the SmartObject Register.
      *
-     * @param array $loaderInformation
+     * @param mixed[] $loaderInformation
      */
-    protected function addClassesToSmartRegister($loaderInformation): void
+    protected function addClassesToSmartRegister(array $loaderInformation): void
     {
         foreach ($loaderInformation as $configuration) {
             SmartObjectRegister::register($configuration);

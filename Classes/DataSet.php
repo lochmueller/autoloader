@@ -17,6 +17,8 @@ class DataSet implements SingletonInterface
 {
     /**
      * The different implementations and the order of the execution.
+     *
+     * @var string[]
      */
     protected $implementations = [
         'EnableFields',
@@ -27,9 +29,9 @@ class DataSet implements SingletonInterface
     /**
      * Get all implementations and exclude the given list.
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getAllAndExcludeList(array $list)
+    public function getAllAndExcludeList(array $list): array
     {
         $return = $this->implementations;
         foreach ($return as $key => $value) {
@@ -44,9 +46,9 @@ class DataSet implements SingletonInterface
     /**
      * Get none implementations and include the given list.
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getNoneAndIncludeList(array $list)
+    public function getNoneAndIncludeList(array $list): array
     {
         return array_diff($this->implementations, $this->getAllAndExcludeList($list));
     }
@@ -57,9 +59,9 @@ class DataSet implements SingletonInterface
      * @param $implementations
      * @param $table
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getTcaInformation(array $implementations, $table)
+    public function getTcaInformation(array $implementations, $table): array
     {
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
@@ -77,9 +79,9 @@ class DataSet implements SingletonInterface
      *
      * @param $table
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getDatabaseSqlInformation(array $implementations, $table)
+    public function getDatabaseSqlInformation(array $implementations, $table): array
     {
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
@@ -97,9 +99,9 @@ class DataSet implements SingletonInterface
      * @param $implementations
      * @param $table
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getDatabaseSqlKeyInformation(array $implementations, $table)
+    public function getDatabaseSqlKeyInformation(array $implementations, $table): array
     {
         $dataSetObjects = $this->getDataSetObjects($implementations);
         $return = [];
@@ -114,12 +116,12 @@ class DataSet implements SingletonInterface
     /**
      * Create the data set objects.
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function getDataSetObjects(array $implementations)
+    protected function getDataSetObjects(array $implementations): array
     {
         foreach ($implementations as $key => $value) {
-            $implementations[$key] = GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet\\'.$value);
+            $implementations[$key] = GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet\\' . $value);
         }
 
         return $implementations;

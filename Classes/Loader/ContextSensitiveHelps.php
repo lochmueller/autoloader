@@ -28,6 +28,8 @@ class ContextSensitiveHelps implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -74,11 +76,9 @@ class ContextSensitiveHelps implements LoaderInterface
     /**
      * Find table and model information for the given extension key.
      *
-     * @param string $extensionKey
-     *
-     * @return array
+     * @return array<int, array<string, int[]|string[]|string>>
      */
-    protected function findTableAndModelInformationForExtension($extensionKey)
+    protected function findTableAndModelInformationForExtension(string $extensionKey): array
     {
         $information = [];
         $register = SmartObjectRegister::getRegister();
@@ -102,15 +102,12 @@ class ContextSensitiveHelps implements LoaderInterface
     /**
      * Check if the given file is already existing.
      *
-     * @param string $extensionKey
-     * @param string $table
-     *
-     * @return null|string
+     * @return string|void
      */
-    protected function checkCshValues($extensionKey, $table, array $properties)
+    protected function checkCshValues(string $extensionKey, string $table, array $properties)
     {
-        $baseFileName = 'locallang_csh_'.$table;
-        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.5.2', '<=')){
+        $baseFileName = 'locallang_csh_' . $table;
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.5.2', '<=')) {
             /** @var LanguageHandler $languageHandler */
             $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class);
         } else {
@@ -118,15 +115,15 @@ class ContextSensitiveHelps implements LoaderInterface
             /** @var LanguageHandler $languageHandler */
             $languageHandler = GeneralUtility::makeInstance(LanguageHandler::class, $packageManager);
         }
-        
+
         foreach ($properties as $property) {
             $default = '';
-            $languageHandler->handle($property.'.alttitle', $extensionKey, $default, null, $baseFileName);
+            $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
         }
 
         $checkPath = ['xlf', 'xml'];
         foreach ($checkPath as $extension) {
-            $path = 'EXT:'.$extensionKey.'/Resources/Private/Language/'.$baseFileName.'.'.$extension;
+            $path = 'EXT:' . $extensionKey . '/Resources/Private/Language/' . $baseFileName . '.' . $extension;
             if (is_file(GeneralUtility::getFileAbsFileName($path))) {
                 return $path;
             }

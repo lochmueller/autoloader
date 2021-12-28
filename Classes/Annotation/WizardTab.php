@@ -32,6 +32,6 @@ class WizardTab
      */
     public function __toString()
     {
-        return (string) $this->config;
+        return (string)$this->config;
     }
 }

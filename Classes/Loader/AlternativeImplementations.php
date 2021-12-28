@@ -25,18 +25,20 @@ class AlternativeImplementations implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return array<int, array<string, string>>
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classNames = [];
-        $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/AlternativeImplementations/';
+        $alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/AlternativeImplementations/';
         $alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
         foreach ($alternativeClasses as $aic) {
             $aicClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'AlternativeImplementations/'.$aic
+                'AlternativeImplementations/' . $aic
             );
 
             if (!$loader->isInstantiableClass($aicClass)) {

@@ -21,15 +21,17 @@ class FluidNamespace implements LoaderInterface
      * Get all the complex data and information for the loader.
      * This return value will be cached and stored in the core_cache of TYPO3.
      * There is no file monitoring for this cache.
+     *
+     * @return array<string, string>
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $loaderInformation = [];
-        $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/ViewHelpers/';
+        $viewHelperFolder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/ViewHelpers/';
         if (is_dir($viewHelperFolder)) {
             $extKey = $loader->getExtensionKey();
             $key = GeneralUtility::underscoredToLowerCamelCase($extKey);
-            $loaderInformation[$key] = $loader->getVendorName().'\\'.GeneralUtility::underscoredToUpperCamelCase($extKey).'\\ViewHelpers';
+            $loaderInformation[$key] = $loader->getVendorName() . '\\' . GeneralUtility::underscoredToUpperCamelCase($extKey) . '\\ViewHelpers';
         }
 
         return $loaderInformation;

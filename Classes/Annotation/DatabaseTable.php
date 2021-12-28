@@ -32,6 +32,6 @@ class DatabaseTable
      */
     public function __toString()
     {
-        return (string) $this->tableName;
+        return (string)$this->tableName;
     }
 }

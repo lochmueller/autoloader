@@ -29,20 +29,22 @@ class Slots implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $slots = [];
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
-        $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Slots/';
+        $slotPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Slots/';
         $slotClasses = FileUtility::getBaseFilesInDir($slotPath, 'php');
 
         foreach ($slotClasses as $slot) {
             $slotClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Slots/'.$slot
+                'Slots/' . $slot
             );
 
             if (!$loader->isInstantiableClass($slotClass)) {
@@ -53,12 +55,12 @@ class Slots implements LoaderInterface
             foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                 $signalClassAnnotation = $annotationReader->getMethodAnnotation($method, SignalClass::class);
                 if (null !== $signalClassAnnotation) {
-                    $priority = (int) $annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
+                    $priority = (int)$annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
                     $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
-                        'signalClassName' => (string) $signalClassAnnotation->argumentName,
-                        'signalName' => (string) $annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
+                        'signalClassName' => (string)$signalClassAnnotation->argumentName,
+                        'signalName' => (string)$annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName' => $method->getName(),
                     ];
@@ -72,9 +74,9 @@ class Slots implements LoaderInterface
     /**
      * Flatten slots by prio.
      *
-     * @return array
+     * @return mixed[]
      */
-    public function flattenSlotsByPriority(array $array)
+    public function flattenSlotsByPriority(array $array): array
     {
         krsort($array);
         $result = [];

@@ -7,8 +7,12 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Mapper;
 
+use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\MapperInterface;
+use HDNET\Autoloader\Service\TyposcriptConfigurationService;
+use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -20,10 +24,8 @@ class ModelMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
         return ReflectionUtility::isClassInOtherClassHierarchy($type, AbstractEntity::class);
     }
@@ -34,9 +36,9 @@ class ModelMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         $baseConfig = [
             'type' => 'user',
@@ -45,18 +47,43 @@ class ModelMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => $baseConfig,
         ];
     }
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'int(11) DEFAULT \'0\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+        $typeTableName = ModelUtility::getTableName($type);
+
+        $fields = TyposcriptConfigurationService::getInstance()->getTyposcriptConfiguration($type, $extensionKey, $typeTableName);
+        $fieldString = implode("\n", $fields);
+
+        return "
+        {$fieldName} = CONTENT_JSON
+        {$fieldName} {
+            singleItem = 1
+            table = {$typeTableName}
+            select {
+                pidInList = this
+                where = {$typeTableName}.uid={field:{$fieldNameUnderscored}}
+                where.insertData = 1
+            }
+
+            renderObj = JSON
+            renderObj.fields {
+                {$fieldString}
+            }
+        }
+        ";
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Cache;
 
+use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -12,7 +13,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * Note: This backend is usable without the caching framework
  */
-class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
+class AutoloaderFileBackend extends AbstractBackend
 {
     /**
      * {@inheritdoc}
@@ -21,7 +22,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
     {
         if (\is_array($data)) {
             $cacheFile = $this->getCacheFileName($entryIdentifier);
-            GeneralUtility::writeFile($cacheFile, '<?php return '.var_export($data, true).';');
+            GeneralUtility::writeFile($cacheFile, '<?php return ' . var_export($data, true) . ';');
         }
 
         return null;
@@ -29,6 +30,8 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
 
     /**
      * {@inheritdoc}
+     *
+     * @return mixed|null
      */
     public function get($entryIdentifier)
     {
@@ -42,7 +45,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
     /**
      * {@inheritdoc}
      */
-    public function has($entryIdentifier)
+    public function has($entryIdentifier): bool
     {
         return is_file($this->getCacheFileName($entryIdentifier));
     }
@@ -60,7 +63,7 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
      */
     public function flush(): void
     {
-        $files = glob(Environment::getVarPath().'/autoloader_*');
+        $files = glob(Environment::getVarPath() . '/autoloader_*');
         foreach ($files as $file) {
             unlink($file);
         }
@@ -77,6 +80,6 @@ class AutoloaderFileBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBacken
 
     protected function getCacheFileName($entryIdentifier): string
     {
-        return Environment::getVarPath().'/autoloader_'.$entryIdentifier.'.php';
+        return Environment::getVarPath() . '/autoloader_' . $entryIdentifier . '.php';
     }
 }

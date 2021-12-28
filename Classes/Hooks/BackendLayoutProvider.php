@@ -24,6 +24,8 @@ class BackendLayoutProvider implements DataProviderInterface
 {
     /**
      * Layout information.
+     *
+     * @var mixed[]
      */
     protected static $backendLayoutInformation = [];
 
@@ -51,7 +53,7 @@ class BackendLayoutProvider implements DataProviderInterface
      * @param string $identifier
      * @param int    $pageId
      *
-     * @return null|BackendLayout
+     * @return \TYPO3\CMS\Backend\View\BackendLayout\BackendLayout|void
      */
     public function getBackendLayout($identifier, $pageId)
     {
@@ -69,7 +71,7 @@ class BackendLayoutProvider implements DataProviderInterface
      *
      * @return mixed
      */
-    protected function createBackendLayout($info)
+    protected function createBackendLayout($info): BackendLayout
     {
         $fileName = GeneralUtility::getFileAbsFileName($info['path']);
         $backendLayout = BackendLayout::create($this->getIdentifier($info), $info['label'], GeneralUtility::getUrl($fileName));
@@ -84,11 +86,9 @@ class BackendLayoutProvider implements DataProviderInterface
      * Get identifier.
      *
      * @param $info
-     *
-     * @return string
      */
-    protected function getIdentifier($info)
+    protected function getIdentifier($info): string
     {
-        return $info['extension'].'/'.$info['filename'];
+        return $info['extension'] . '/' . $info['filename'];
     }
 }

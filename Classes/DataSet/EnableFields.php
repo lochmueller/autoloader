@@ -16,6 +16,8 @@ class EnableFields implements DataSetInterface
 {
     /**
      * Get TCA information.
+     *
+     * @return array<string, mixed[]>
      */
     public function getTca(string $tableName): array
     {
@@ -81,6 +83,8 @@ class EnableFields implements DataSetInterface
 
     /**
      * Get database sql information.
+     *
+     * @return mixed[]
      */
     public function getDatabaseSql(string $tableName): array
     {
@@ -95,6 +99,8 @@ class EnableFields implements DataSetInterface
 
     /**
      * Get database sql key information.
+     *
+     * @return mixed[]
      */
     public function getDatabaseSqlKey(): array
     {

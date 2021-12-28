@@ -16,16 +16,20 @@ class Mapper implements SingletonInterface
 {
     /**
      * Custom mapper.
+     *
+     * @var mixed[]
      */
     protected $customMapper = [];
 
     /**
      * Internal mapper.
+     *
+     * @var array<class-string<\DateTime>>|string[]
      */
     protected $internalMapper = [
         'Boolean',
         'Float',
-        'DateTime',
+        \DateTime::class,
         'FileReference',
         'FileReferenceObjectStorage',
         'ObjectStorage',
@@ -39,13 +43,11 @@ class Mapper implements SingletonInterface
     /**
      * Get the TCA configuration for the current type.
      *
-     * @param string $type
-     * @param string $fieldName
-     * @param bool   $overWriteLabel
+     * @param bool|string $overWriteLabel
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getTcaConfiguration($type, $fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration(string $type, string $fieldName, $overWriteLabel = false): array
     {
         try {
             $mapper = $this->getMapperByType($type);
@@ -59,12 +61,8 @@ class Mapper implements SingletonInterface
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @param string $type
-     *
-     * @return string
      */
-    public function getDatabaseDefinition($type)
+    public function getDatabaseDefinition(string $type): string
     {
         $mapper = $this->getMapperByType($type);
 
@@ -72,11 +70,24 @@ class Mapper implements SingletonInterface
     }
 
     /**
-     * Add a custom mapper.
-     *
-     * @param string $className
+     * @throws \Exception
      */
-    public function addCustomMapper($className): void
+    public function getJsonDefinition(string $type, string $fieldName, string $className, string $extensionKey, string $tableName): string
+    {
+        try {
+            $mapper = $this->getMapperByType($type);
+        } catch (\Exception $exception) {
+            // always return a valid mapper
+            $mapper = $this->getMapperByType('String');
+        }
+
+        return $mapper->getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName);
+    }
+
+    /**
+     * Add a custom mapper.
+     */
+    public function addCustomMapper(string $className): void
     {
         $this->customMapper[] = $className;
     }
@@ -84,13 +95,9 @@ class Mapper implements SingletonInterface
     /**
      * Get a valid mapper for the given type.
      *
-     * @param string $type
-     *
      * @throws \Exception
-     *
-     * @return MapperInterface
      */
-    protected function getMapperByType($type)
+    protected function getMapperByType(string $type): MapperInterface
     {
         $mappers = $this->getMappers();
         foreach ($mappers as $mapper) {
@@ -100,15 +107,15 @@ class Mapper implements SingletonInterface
             }
         }
 
-        throw new Exception('No valid mapper for the given type found: '.$type, 123712631);
+        throw new Exception('No valid mapper for the given type found: ' . $type, 123712631);
     }
 
     /**
      * Get all mappers.
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function getMappers()
+    protected function getMappers(): array
     {
         $mapper = array_merge($this->customMapper, $this->getInternalMapperClasses());
         foreach ($mapper as $key => $className) {
@@ -121,13 +128,13 @@ class Mapper implements SingletonInterface
     /**
      * Get internal mapper class names.
      *
-     * @return array
+     * @return array<int|string, string>
      */
-    protected function getInternalMapperClasses()
+    protected function getInternalMapperClasses(): array
     {
         $mapper = [];
         foreach ($this->internalMapper as $key => $value) {
-            $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\'.$value.'Mapper';
+            $mapper[$key] = 'HDNET\\Autoloader\\Mapper\\' . $value . 'Mapper';
         }
 
         return $mapper;

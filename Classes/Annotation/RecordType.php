@@ -21,9 +21,9 @@ class RecordType
     public function __construct(array $values)
     {
         if (isset($values['recordType'])) {
-            $this->recordType = (string) $values['recordType'];
+            $this->recordType = (string)$values['recordType'];
         } elseif (isset($values['value'])) {
-            $this->recordType = (string) $values['value'];
+            $this->recordType = (string)$values['value'];
         }
     }
 
@@ -32,6 +32,6 @@ class RecordType
      */
     public function __toString()
     {
-        return (string) $this->recordType;
+        return (string)$this->recordType;
     }
 }

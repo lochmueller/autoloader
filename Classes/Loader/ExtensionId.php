@@ -21,17 +21,19 @@ class ExtensionId implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return array<int, array<string, mixed>>
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $scripts = [];
-        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/Php/eID/';
+        $folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Php/eID/';
         $files = FileUtility::getBaseFilesInDir($folder, 'php');
 
         foreach ($files as $eIdFile) {
             $scripts[] = [
                 'name' => $eIdFile,
-                'path' => 'EXT:'.$loader->getExtensionKey().'/Resources/Private/Php/eID/'.$eIdFile.'.php',
+                'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Php/eID/' . $eIdFile . '.php',
             ];
         }
 

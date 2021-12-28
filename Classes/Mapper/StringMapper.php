@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Map String.
@@ -18,14 +19,10 @@ class StringMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
-        return \in_array(mb_strtolower($type), [
-            'string',
-        ], true);
+        return 'string' === mb_strtolower($type);
     }
 
     /**
@@ -34,14 +31,14 @@ class StringMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         if ('slug' === $fieldName) {
             return [
                 'exclude' => 1,
-                'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+                'label' => $overWriteLabel ?: $fieldName,
                 'config' => [
                     'type' => 'slug',
                     'prependSlash' => true,
@@ -57,7 +54,7 @@ class StringMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => [
                 'type' => 'input',
             ],
@@ -66,11 +63,31 @@ class StringMapper implements MapperInterface
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'text';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
+
+        /*
+        @todo(flo): Add link mapper for "link" var type?
+        link = TEXT
+        link.typolink {
+            parameter.field = link
+            returnLast = url
+            forceAbsoluteUrl = 1
+        }
+        */
     }
 }

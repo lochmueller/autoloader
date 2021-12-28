@@ -32,6 +32,6 @@ class DatabaseKey
      */
     public function __toString()
     {
-        return (string) $this->key;
+        return (string)$this->key;
     }
 }

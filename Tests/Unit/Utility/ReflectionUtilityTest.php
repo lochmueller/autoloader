@@ -17,8 +17,10 @@ class ReflectionUtilityTest extends AbstractTest
     /**
      * @test
      * @dataProvider classHierarchyProvider
+     * @param class-string<\HDNET\Autoloader\Controller\ContentController> $searchClass
+     * @param class-string<\Exception>|class-string<\HDNET\Autoloader\Controller\ContentController>|class-string<\TYPO3\CMS\Extbase\Mvc\Controller\ActionController> $checkedClass
      */
-    public function testIsClassInOtherClassHierarchy($searchClass, $checkedClass, $result)
+    public function testIsClassInOtherClassHierarchy(string $searchClass, string $checkedClass, bool $result): void
     {
         $res = ReflectionUtility::isClassInOtherClassHierarchy($searchClass, $checkedClass);
         $this->assertEquals($result, $res, 'Check ' . $searchClass . ' in ' . $checkedClass);
@@ -27,13 +29,16 @@ class ReflectionUtilityTest extends AbstractTest
     /**
      * @test
      */
-    public function testIsInstantiable()
+    public function testIsInstantiable(): void
     {
         $this->assertEquals(true, ReflectionUtility::isInstantiable(ContentController::class), 'Check ' . ContentController::class);
         $this->assertEquals(false, ReflectionUtility::isInstantiable(AbstractServerLoader::class), 'Check ' . AbstractServerLoader::class);
         $this->assertEquals(false, ReflectionUtility::isInstantiable(LoaderInterface::class), 'Check ' . LoaderInterface::class);
     }
 
+    /**
+     * @return array<int, array<bool|class-string<\Exception>|class-string<\TYPO3\CMS\Extbase\Mvc\Controller\ActionController>>>
+     */
     public function classHierarchyProvider(): array
     {
         return [

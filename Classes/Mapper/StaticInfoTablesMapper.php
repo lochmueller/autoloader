@@ -11,6 +11,7 @@ use HDNET\Autoloader\MapperInterface;
 use SJBR\StaticInfoTables\Hook\Backend\Form\FormDataProvider\TcaSelectItemsProcessor;
 use SJBR\StaticInfoTables\Hook\Backend\Form\Wizard\SuggestReceiver;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * StaticInfoTablesMapper.
@@ -31,10 +32,8 @@ class StaticInfoTablesMapper implements MapperInterface
      * Check if the current mapper can handle the given type.
      *
      * @param string $type
-     *
-     * @return bool
      */
-    public function canHandleType($type)
+    public function canHandleType($type): bool
     {
         if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
             return false;
@@ -42,7 +41,7 @@ class StaticInfoTablesMapper implements MapperInterface
 
         $this->lastClass = mb_strtolower($type);
 
-        return !(false === mb_strpos($this->lastClass, self::CLASS_BASE));
+        return false !== mb_strpos($this->lastClass, self::CLASS_BASE);
     }
 
     /**
@@ -51,9 +50,9 @@ class StaticInfoTablesMapper implements MapperInterface
      * @param string $fieldName
      * @param bool   $overWriteLabel
      *
-     * @return array
+     * @return array<string, mixed[]>
      */
-    public function getTcaConfiguration($fieldName, $overWriteLabel = false)
+    public function getTcaConfiguration($fieldName, $overWriteLabel = false): array
     {
         $withoutNameSpace = str_replace(self::CLASS_BASE, '', $this->lastClass);
 
@@ -94,7 +93,7 @@ class StaticInfoTablesMapper implements MapperInterface
 
         return [
             'exclude' => 1,
-            'label' => $overWriteLabel ? $overWriteLabel : $fieldName,
+            'label' => $overWriteLabel ?: $fieldName,
             'config' => [
                 'type' => 'select',
                 'size' => 1,
@@ -103,7 +102,7 @@ class StaticInfoTablesMapper implements MapperInterface
                 'items' => [
                     ['', 0],
                 ],
-                'itemsProcFunc' => TcaSelectItemsProcessor::class.'->'.$itemsProcFunc,
+                'itemsProcFunc' => TcaSelectItemsProcessor::class . '->' . $itemsProcFunc,
                 'foreign_table' => $table,
                 'wizards' => [
                     'suggest' => ['type' => 'suggest',
@@ -118,11 +117,21 @@ class StaticInfoTablesMapper implements MapperInterface
 
     /**
      * Get the database definition for the current mapper.
-     *
-     * @return string
      */
-    public function getDatabaseDefinition()
+    public function getDatabaseDefinition(): string
     {
         return 'int(11) DEFAULT \'0\' NOT NULL';
+    }
+
+    public function getJsonDefinition($type, $fieldName, $className, $extensionKey, $tableName)
+    {
+        $fieldNameUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored($fieldName);
+
+        return "
+        {$fieldName} = TEXT
+        {$fieldName} {
+            field = {$fieldNameUnderscored}
+        }
+        ";
     }
 }

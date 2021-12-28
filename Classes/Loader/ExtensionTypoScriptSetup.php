@@ -27,6 +27,8 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -60,7 +62,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface
     protected function addTypoScript(array $loaderInformation): void
     {
         if (!empty($loaderInformation)) {
-            ExtensionManagementUtility::addTypoScriptSetup(LF.implode(LF, $loaderInformation).LF);
+            ExtensionManagementUtility::addTypoScriptSetup(LF . implode(LF, $loaderInformation) . LF);
         }
     }
 
@@ -68,11 +70,9 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      * Generate the TypoScript setup for the smart objects defined
      * within the extension.
      *
-     * @param string $extensionKey
-     *
-     * @return array
+     * @return string[]
      */
-    private function generateTypoScriptSetup($extensionKey)
+    private function generateTypoScriptSetup(string $extensionKey): array
     {
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
@@ -81,17 +81,17 @@ class ExtensionTypoScriptSetup implements LoaderInterface
         foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
             $reflectionClass = new \ReflectionClass($className);
 
-            $table = (string) $annotationReader->getClassAnnotation($reflectionClass, DatabaseTable::class);
-            $recordType = (string) $annotationReader->getClassAnnotation($reflectionClass, RecordType::class);
-            $parentClass = (string) $annotationReader->getClassAnnotation($reflectionClass, ParentClass::class);
+            $table = (string)$annotationReader->getClassAnnotation($reflectionClass, DatabaseTable::class);
+            $recordType = (string)$annotationReader->getClassAnnotation($reflectionClass, RecordType::class);
+            $parentClass = (string)$annotationReader->getClassAnnotation($reflectionClass, ParentClass::class);
             if ('' !== $table) {
-                $setup[] = 'config.tx_extbase.persistence.classes.'.$className.'.mapping.tableName = '.$table;
+                $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
             }
             if ('' !== $recordType) {
-                $setup[] = 'config.tx_extbase.persistence.classes.'.$className.'.mapping.recordType = '.$recordType;
+                $setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.recordType = ' . $recordType;
             }
             if ('' !== $parentClass) {
-                $setup[] = 'config.tx_extbase.persistence.classes.'.$parentClass.'.subclasses.'.$className.' = '.$className;
+                $setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
             }
         }
 
@@ -100,18 +100,10 @@ class ExtensionTypoScriptSetup implements LoaderInterface
 
     /**
      * Check if the extension has smart objects.
-     *
-     * @param string $extensionKey
-     *
-     * @return bool
      */
-    private function extensionHasSmartObjects($extensionKey)
+    private function extensionHasSmartObjects(string $extensionKey): bool
     {
-        if ($this->getSmartObjectsForExtensionKey($extensionKey)) {
-            return true;
-        }
-
-        return false;
+        return (bool)$this->getSmartObjectsForExtensionKey($extensionKey);
     }
 
     /**
@@ -119,9 +111,9 @@ class ExtensionTypoScriptSetup implements LoaderInterface
      *
      * @param $extensionKey
      *
-     * @return mixed
+     * @return mixed[]
      */
-    private function getSmartObjectsForExtensionKey($extensionKey)
+    private function getSmartObjectsForExtensionKey(string $extensionKey): array
     {
         $smartObjects = SmartObjectRegister::getRegister();
         $extensionObjects = [];

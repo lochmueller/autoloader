@@ -22,6 +22,8 @@ class LanguageOverride implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -30,7 +32,7 @@ class LanguageOverride implements LoaderInterface
             return $languageOverride;
         }
 
-        $languageOverridePath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Resources/Private/Language/Overrides/';
+        $languageOverridePath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/Language/Overrides/';
         if (!is_dir($languageOverridePath)) {
             return $languageOverride;
         }
@@ -55,8 +57,8 @@ class LanguageOverride implements LoaderInterface
 
             $languageOverride[] = [
                 'language' => $language,
-                'original' => 'EXT:'.$extension.'/'.implode('/', $parts),
-                'override' => 'EXT:'.$loader->getExtensionKey().'/Resources/Private/Language/Overrides/'.$file,
+                'original' => 'EXT:' . $extension . '/' . implode('/', $parts),
+                'override' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/Overrides/' . $file,
             ];
         }
 

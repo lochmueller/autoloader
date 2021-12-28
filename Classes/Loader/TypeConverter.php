@@ -23,18 +23,20 @@ class TypeConverter implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return string[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
         $classes = [];
-        $converterPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Property/TypeConverter/';
+        $converterPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Property/TypeConverter/';
         $converterClasses = FileUtility::getBaseFilesRecursivelyInDir($converterPath, 'php', true);
 
         foreach ($converterClasses as $converterClass) {
             $converterClass = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Property/TypeConverter/'.$converterClass
+                'Property/TypeConverter/' . $converterClass
             );
             if ($loader->isInstantiableClass($converterClass)) {
                 $classes[] = $converterClass;

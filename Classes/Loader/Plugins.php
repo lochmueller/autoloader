@@ -28,6 +28,8 @@ class Plugins implements LoaderInterface
      * Get all the complex data for the loader.
      * This return value will be cached and stored in the database
      * There is no file monitoring for this cache.
+     *
+     * @return mixed[]
      */
     public function prepareLoader(Loader $loader, int $type): array
     {
@@ -35,14 +37,14 @@ class Plugins implements LoaderInterface
         /** @var AnnotationReader $annotationReader */
         $annotationReader = GeneralUtility::makeInstance(AnnotationReader::class);
 
-        $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()).'Classes/Controller/';
+        $controllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Controller/';
         $controllers = FileUtility::getBaseFilesRecursivelyInDir($controllerPath, 'php');
 
         foreach ($controllers as $controller) {
             $controllerName = ClassNamingUtility::getFqnByPath(
                 $loader->getVendorName(),
                 $loader->getExtensionKey(),
-                'Controller/'.$controller
+                'Controller/' . $controller
             );
             if (!$loader->isInstantiableClass($controllerName)) {
                 continue;
@@ -58,7 +60,7 @@ class Plugins implements LoaderInterface
                 $configuration = $annotationReader->getMethodAnnotation($method, Plugin::class);
 
                 if (null !== $configuration) {
-                    $pluginKeys = GeneralUtility::trimExplode(' ', (string) $configuration, true);
+                    $pluginKeys = GeneralUtility::trimExplode(' ', (string)$configuration, true);
                     $actionName = str_replace('Action', '', $method->getName());
 
                     foreach ($pluginKeys as $pluginKey) {
@@ -83,7 +85,7 @@ class Plugins implements LoaderInterface
     public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
         foreach (array_keys($loaderInformation) as $key) {
-            $label = TranslateUtility::getLllOrHelpMessage('plugin.'.$key, $loader->getExtensionKey());
+            $label = TranslateUtility::getLllOrHelpMessage('plugin.' . $key, $loader->getExtensionKey());
             ExtensionUtility::registerPlugin($loader->getExtensionKey(), $key, $label);
         }
     }
@@ -102,14 +104,9 @@ class Plugins implements LoaderInterface
     /**
      * Add the given plugin information to the plugin information array.
      *
-     * @param string $pluginKey
-     * @param string $controllerKey
-     * @param string $actionName
-     * @param bool   $noCache
-     *
-     * @return array
+     * @return mixed[]
      */
-    protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache)
+    protected function addPluginInformation(array $pluginInformation, string $pluginKey, string $controllerKey, string $actionName, bool $noCache): array
     {
         $first = false !== mb_strpos($pluginKey, '!');
         $pluginKey = trim($pluginKey, '!');
