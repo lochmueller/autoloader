@@ -13,7 +13,6 @@ use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Core\Utility\StringUtility;
 
 /**
  * Icon helper.
@@ -26,7 +25,7 @@ class IconUtility
     public static function addTcaTypeIcon(string $table, string $type, string $icon): void
     {
         $fullIconPath = mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
-        if (StringUtility::endsWith(mb_strtolower($fullIconPath), 'svg')) {
+        if (PathUtility::pathinfo($fullIconPath, PATHINFO_EXTENSION) === 'svg') {
             $iconProviderClass = SvgIconProvider::class;
         } else {
             $iconProviderClass = BitmapIconProvider::class;

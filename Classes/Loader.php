@@ -201,8 +201,9 @@ class Loader implements SingletonInterface
      * @return array
      */
     protected function prepareAutoLoaderObjects(array $objects, int $type)
-    {
-        $cacheIdentifier = $this->getVendorName() . '_' . $this->getExtensionKey() . '_' . GeneralUtility::shortMD5(serialize($objects)) . '_' . $type;
+    {        
+        $shortHash = substr(md5(serialize($objects)), 0, 10);
+        $cacheIdentifier = $this->getVendorName().'_'.$this->getExtensionKey().'_'.$shortHash.'_'.$type;
 
         // Do not use Caching Framework here
         /** @var AutoloaderFileBackend $cacheBackend */
