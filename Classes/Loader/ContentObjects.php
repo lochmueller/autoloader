@@ -191,7 +191,7 @@ class ContentObjects implements LoaderInterface
                 }
             }
 
-            IconUtility::addTcaTypeIcon('tt_content', $typeKey, $config['icon']);
+            IconUtility::addTcaTypeIcon('tt_content', $typeKey, $config['iconExt']);
 
             $tabName = $config['tabInformation'] ?: $loader->getExtensionKey();
             if (!\in_array($tabName, $predefinedWizards, true) && !\in_array($tabName, $createWizardHeader, true)) {

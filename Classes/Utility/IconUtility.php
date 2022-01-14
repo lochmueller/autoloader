@@ -45,11 +45,11 @@ class IconUtility
     public static function getByExtensionKey(string $extensionKey, bool $extSyntax = false): string
     {
         $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/Extension.');
-        if ('' !== $fileExtension && '0' !== $fileExtension) {
+        if (null !== $fileExtension) {
             return self::returnRelativeIconPath($extensionKey, 'Resources/Public/Icons/Extension.' . $fileExtension, $extSyntax);
         }
         $fileExtension = self::getIconFileExtension(ExtensionManagementUtility::extPath($extensionKey) . 'ext_icon.');
-        if ('' !== $fileExtension && '0' !== $fileExtension) {
+        if (null !== $fileExtension) {
             return self::returnRelativeIconPath($extensionKey, 'ext_icon.' . $fileExtension, $extSyntax);
         }
 
@@ -70,7 +70,7 @@ class IconUtility
 
         $tableIconPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Public/Icons/' . $modelName . '.';
         $fileExtension = self::getIconFileExtension($tableIconPath);
-        if ('' !== $fileExtension && '0' !== $fileExtension) {
+        if (null !== $fileExtension) {
             return self::returnRelativeIconPath(
                 $extensionKey,
                 'Resources/Public/Icons/' . $modelName . '.' . $fileExtension,
@@ -86,7 +86,7 @@ class IconUtility
      * without file extension but incl. the dot. e.g.:
      * "/test/icon.".
      *
-     * @return bool|string
+     * @return null|string
      */
     public static function getIconFileExtension(string $absolutePathWithoutExtension)
     {
@@ -102,7 +102,7 @@ class IconUtility
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

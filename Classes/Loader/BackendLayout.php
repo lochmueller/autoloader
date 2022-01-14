@@ -47,7 +47,7 @@ class BackendLayout implements LoaderInterface
             $backendLayouts[] = [
                 'path' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
                 'filename' => $pathInfo['filename'],
-                'icon' => '' !== $extension && '0' !== $extension ? $iconPath . $extension : false,
+                'icon' => null !== $extension ? $iconPath . $extension : false,
                 'label' => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
                 'extension' => $loader->getExtensionKey(),
             ];
