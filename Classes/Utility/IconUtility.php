@@ -24,8 +24,7 @@ class IconUtility
      */
     public static function addTcaTypeIcon(string $table, string $type, string $icon): void
     {
-        $fullIconPath = mb_substr(PathUtility::getAbsoluteWebPath($icon), 1);
-        if (PathUtility::pathinfo($fullIconPath, PATHINFO_EXTENSION) === 'svg') {
+        if (PathUtility::pathinfo($icon, PATHINFO_EXTENSION) === 'svg') {
             $iconProviderClass = SvgIconProvider::class;
         } else {
             $iconProviderClass = BitmapIconProvider::class;
@@ -33,7 +32,7 @@ class IconUtility
         /** @var IconRegistry $iconRegistry */
         $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
         $iconIdentifier = 'tcarecords-' . $table . '-' . $type;
-        $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $fullIconPath]);
+        $iconRegistry->registerIcon($iconIdentifier, $iconProviderClass, ['source' => $icon]);
         $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes'][$type] = $iconIdentifier;
     }
 
