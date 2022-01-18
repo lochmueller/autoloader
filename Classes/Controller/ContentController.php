@@ -48,7 +48,7 @@ class ContentController extends ActionController
             $contentDataProcessor = GeneralUtility::makeInstance(ContentDataProcessor::class);
             $variables = $contentDataProcessor->process(
                 $this->configurationManager->getContentObject(),
-                ['dataProcessing.' => $this->settings['dataProcessing']],
+                ['dataProcessing.' => $this->settings['dataProcessing'] ?? null],
                 ['data' => $data]
             );
             $variables['settings'] = $this->settings;
