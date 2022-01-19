@@ -118,7 +118,7 @@ class ContextSensitiveHelps implements LoaderInterface
 
         foreach ($properties as $property) {
             $default = '';
-            $languageHandler->handle($property . '.alttitle', $extensionKey, $default, null, $baseFileName);
+            $languageHandler->handle($property . '.alttitle', $extensionKey, $default, [], $baseFileName);
         }
 
         $checkPath = ['xlf', 'xml'];
