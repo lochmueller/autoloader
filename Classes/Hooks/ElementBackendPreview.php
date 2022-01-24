@@ -35,7 +35,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
      */
     public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row): void
     {
-        if (!$this->isAutoloaderContenobject($row)) {
+        if (!$this->isAutoloaderContentobject($row)) {
             return;
         }
 
@@ -94,7 +94,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
      */
     public function hasBackendPreview(array $row): bool
     {
-        if (!$this->isAutoloaderContenobject($row)) {
+        if (!$this->isAutoloaderContentobject($row)) {
             return false;
         }
         $ctype = $row['CType'];
@@ -109,10 +109,10 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface
     /**
      * Check if the the Element is registered by the ContenObject-Autoloader.
      */
-    public function isAutoloaderContenobject(array $row): bool
+    public function isAutoloaderContentobject(array $row): bool
     {
-        $ctype = $row['CType'];
+        $cType = $row['CType'];
 
-        return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+        return isset($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$cType]);
     }
 }
