@@ -156,6 +156,7 @@ class SmartObjectInformationService
         }
 
         if (!\in_array('workspaces', $excludes, true)) {
+            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] = $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] ?? '';
             $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
         }
 
