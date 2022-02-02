@@ -58,9 +58,8 @@ class Slots implements LoaderInterface
                     $signalPriorityAnnotation = $annotationReader->getMethodAnnotation($method, SignalPriority::class);
                     $priority = 0;
                     if (null !== $signalPriorityAnnotation) {
-                        $priority = (int)$signalPriorityAnnotation->argumentName;
+                        $priority = MathUtility::forceIntegerInRange((int)$signalPriorityAnnotation->argumentName, 0, 100);
                     }
-                    $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
 
                     $slots[$priority][] = [
                         'signalClassName' => (string)$signalClassAnnotation->argumentName,
