@@ -54,13 +54,13 @@ class Slots implements LoaderInterface
 
             foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                 $signalClassAnnotation = $annotationReader->getMethodAnnotation($method, SignalClass::class);
-                if (null !== $signalClassAnnotation) {
-                    $priority = (int)$annotationReader->getMethodAnnotation($method, SignalPriority::class)->argumentName;
-                    $priority = MathUtility::forceIntegerInRange($priority, 0, 100);
+                if (null !== $signalClassAnnotation && null != ($priority = $annotationReader->getMethodAnnotation($method, SignalPriority::class))) {
+                    $priorityArgumentName = $priority->argumentName;
+                    $priority = MathUtility::forceIntegerInRange((int)$priorityArgumentName, 0, 100);
 
                     $slots[$priority][] = [
                         'signalClassName' => (string)$signalClassAnnotation->argumentName,
-                        'signalName' => (string)$annotationReader->getMethodAnnotation($method, SignalName::class)->argumentName,
+                        'signalName' => (string)$priorityArgumentName,
                         'slotClassNameOrObject' => $slotClass,
                         'slotMethodName' => $method->getName(),
                     ];
