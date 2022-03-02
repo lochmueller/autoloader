@@ -42,7 +42,6 @@ class DateTimeMapper implements MapperInterface
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime',
-                'size' => 8,
             ],
         ];
     }
