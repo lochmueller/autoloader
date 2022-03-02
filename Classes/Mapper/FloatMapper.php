@@ -44,7 +44,7 @@ class FloatMapper implements MapperInterface
             'config' => [
                 'type' => 'input',
                 'eval' => 'double2',
-                'size' => 8,
+                'size' => 10,
             ],
         ];
     }

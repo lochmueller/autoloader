@@ -44,7 +44,7 @@ class IntMapper implements MapperInterface
             'config' => [
                 'type' => 'input',
                 'eval' => 'int',
-                'size' => 8,
+                'size' => 10,
             ],
         ];
     }
