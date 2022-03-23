@@ -102,7 +102,8 @@ class ExtendedUtility
     {
         $location = explode('|', $location);
         $location[] = 'via_autoloader_'.substr(md5($configuration), 0, 10);
-        ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS);
+        $firstLocation = array_shift($location);
+        ArrayUtility::setNodes([implode('|', $location) => $configuration], $GLOBALS[$firstLocation]);
     }
 
     /**
