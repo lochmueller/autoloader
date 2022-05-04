@@ -49,7 +49,7 @@ class LanguageHandler extends LanguageStore
         }
 
         // LocalizationUtility::translate() throws exception if $GLOBALS['TYPO3_REQUEST'] is not instanceof ServerRequestInterface.
-        if ($GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface && ($value = LocalizationUtility::translate($key, $extensionName, $arguments))) {
+        if (isset($GLOBALS['TYPO3_REQUEST']) && $GLOBALS['TYPO3_REQUEST'] instanceof ServerRequestInterface && ($value = LocalizationUtility::translate($key, $extensionName, $arguments))) {
             return $value;
         }
 
