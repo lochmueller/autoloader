@@ -144,7 +144,7 @@ class SmartObjectInformationService
         } catch (\Exception $ex) {
             // Do not handle the error of the assureLabel method
         }
-        if (!\is_array($baseTca['columns'])) {
+        if (!isset($baseTca['columns']) || !\is_array($baseTca['columns'])) {
             $baseTca['columns'] = [];
         }
         $baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
