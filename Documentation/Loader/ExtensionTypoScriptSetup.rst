@@ -18,3 +18,7 @@ config.tx_extbase.persistence.classes.YOUR\CLASS\Name.mapping.recordType = recor
 @parentClass
 The annotation is used, if the current model is part of a subclass set. After the tag you have to define the subclass name. The annotation generate and register the following TS:
 config.tx_extbase.persistence.classes.YOUR\CLASS\Name.subclasses.YOUR\Class\Subclass\Name = YOUR\CLASS\Name
+
+!!!Important!!!
+
+This old Mapping via TypoScript is deprecated and old. Please use the more modern Mapping via `Configuration/Extbase/Persistence/Classes.php` and call the Utility function in the file like ` return HDNET\Autoloader\Utility\ExtbasePersistenceUtility::getClassMappingForExtension('your_extension_key');`
