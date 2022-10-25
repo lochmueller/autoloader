@@ -24,7 +24,6 @@ class Workspaces implements DataSetInterface
         return [
             'ctrl' => [
                 'versioningWS' => true,
-                'shadowColumnsForNewPlaceholders' => 'sys_language_uid',
                 'origUid' => 't3_origuid',
             ],
             'columns' => [

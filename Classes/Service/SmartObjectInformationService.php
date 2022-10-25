@@ -155,11 +155,6 @@ class SmartObjectInformationService
             $showitem[] = '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language';
         }
 
-        if (!\in_array('workspaces', $excludes, true)) {
-            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] = $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] ?? '';
-            $baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
-        }
-
         $languagePrefix = 'LLL:EXT:frontend/Resources/Private/Language/';
         $languagePrefixCore = 'LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf';
         if (!\in_array('enableFields', $excludes, true)) {
