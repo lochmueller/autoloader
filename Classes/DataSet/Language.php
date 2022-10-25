@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\DataSet;
 
 use HDNET\Autoloader\DataSetInterface;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * DataSet information for languages.
@@ -21,6 +22,26 @@ class Language implements DataSetInterface
      */
     public function getTca(string $tableName): array
     {
+        if (version_compare(VersionNumberUtility::getCurrentTypo3Version(), '11.2.0', '<=')) {
+            $languageConfiguration = [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => '0',
+                'special' => 'languages',
+                'items' => [
+                    [
+                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
+                        -1,
+                        'flags-multiple',
+                    ],
+                ],
+            ];
+        } else {
+            $languageConfiguration = [
+                'type' => 'language',
+            ];
+        }
+
         return [
             'ctrl' => [
                 'languageField' => 'sys_language_uid',
@@ -31,19 +52,7 @@ class Language implements DataSetInterface
                 'sys_language_uid' => [
                     'exclude' => 1,
                     'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-                    'config' => [
-                        'type' => 'select',
-                        'renderType' => 'selectSingle',
-                        'default' => '0',
-                        'special' => 'languages',
-                        'items' => [
-                            [
-                                'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                                -1,
-                                'flags-multiple',
-                            ],
-                        ],
-                    ],
+                    'config' => $languageConfiguration,
                 ],
                 'l10n_parent' => [
                     'displayCond' => 'FIELD:sys_language_uid:>:0',
