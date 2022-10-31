@@ -44,7 +44,7 @@ class ContentController extends ActionController
 
             $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
-            // add dataprocessors
+            /** @var ContentDataProcessor $contentDataProcessor */
             $contentDataProcessor = GeneralUtility::makeInstance(ContentDataProcessor::class);
             $variables = $contentDataProcessor->process(
                 $this->configurationManager->getContentObject(),
