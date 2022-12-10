@@ -77,7 +77,8 @@ class ExtendedUtility
      */
     public static function log($message): void
     {
-        if (!\is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])
+            || !\is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
             $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = $message;
