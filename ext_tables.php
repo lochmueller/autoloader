@@ -5,9 +5,9 @@
  * @category Extension
  * @author   Tim Lochmüller
  */
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+// Note: Drop TYPO3_MODE if extension is TYPO3 >= v11 only
+defined('TYPO3_MODE') or defined('TYPO3') or die();
+
 // define TAB for XliffWriter template
 defined('TAB') ?: define('TAB', chr(9));
 
