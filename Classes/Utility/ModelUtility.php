@@ -12,9 +12,12 @@ use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Autoloader\Annotation\SmartExclude;
+use HDNET\Autoloader\Loader;
+use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\NameMapperService;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\TcaLoaderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
@@ -132,6 +135,21 @@ class ModelUtility
             }
         }
 
+        // via TcaLoaderInterface
+        $implemetations = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] ?? false;
+        if(is_array($implemetations)) {
+            $GLOBALS['TCA'][$tableName] = $return;
+            $loader = GeneralUtility::makeInstance(Loader::class);
+            $objects = $loader->buildAutoLoaderObjects($implemetations);
+            $information = $loader->prepareAutoLoaderObjects($objects, LoaderInterface::EXT_LOCAL_CONFIGURATION);
+            foreach ($objects as $object) {
+                if($object instanceof TcaLoaderInterface) {
+                    $object->loadTcaConfiguration($loader, $information[\get_class($object)], $extensionKey, $tableName);
+                }
+            }
+            $return = $GLOBALS['TCA'][$tableName];
+        }
+
         return $return;
     }
 
@@ -150,7 +168,7 @@ class ModelUtility
         $settings->setRespectStoragePage(false);
         $settings->setRespectSysLanguage(false);
         $query->matching($query->equals('uid', $data['uid']));
-        
+
         // Note: Change TYPO3_MODE if extension is TYPO3 >= v11 only
         // https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/11.0/Deprecation-92947-DeprecateTYPO3_MODEAndTYPO3_REQUESTTYPEConstants.html#typo3-mode-and-typo3-requesttype-usages-in-class-files
         if (TYPO3_MODE === 'BE') {

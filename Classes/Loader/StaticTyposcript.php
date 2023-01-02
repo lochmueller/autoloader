@@ -8,14 +8,14 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
-use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\TcaLoaderInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Loading Slots.
  */
-class StaticTyposcript implements LoaderInterface
+class StaticTyposcript implements TcaLoaderInterface
 {
     /**
      * Get all the complex data for the loader.
@@ -55,9 +55,6 @@ class StaticTyposcript implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
-        foreach ($loaderInformation as $tsConfig) {
-            ExtensionManagementUtility::addStaticFile($loader->getExtensionKey(), $tsConfig['path'], $tsConfig['title']);
-        }
     }
 
     /**
@@ -65,5 +62,18 @@ class StaticTyposcript implements LoaderInterface
      */
     public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
     {
+    }
+
+    public function loadTcaConfiguration(Loader $loader, array $loaderInformation, string $extensionKey, string $tableName)
+    {
+        if ($extensionKey !== 'site') {
+            return;
+        }
+        if ($tableName !== 'sys_template') {
+            return;
+        }
+        foreach ($loaderInformation as $tsConfig) {
+            ExtensionManagementUtility::addStaticFile($loader->getExtensionKey(), $tsConfig['path'], $tsConfig['title']);
+        }
     }
 }

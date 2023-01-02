@@ -70,6 +70,7 @@ class Loader implements SingletonInterface
     {
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
+        $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] = $implementations;
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
     }
 
@@ -80,6 +81,7 @@ class Loader implements SingletonInterface
     {
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
+        $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] = $implementations;
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }
 
@@ -153,7 +155,7 @@ class Loader implements SingletonInterface
      *
      * @return mixed[]
      */
-    protected function buildAutoLoaderObjects(array $objectNames = []): array
+    public function buildAutoLoaderObjects(array $objectNames = []): array
     {
         static $objectCache = [];
         $objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
@@ -200,8 +202,8 @@ class Loader implements SingletonInterface
      *
      * @return array
      */
-    protected function prepareAutoLoaderObjects(array $objects, int $type)
-    {        
+    public function prepareAutoLoaderObjects(array $objects, int $type)
+    {
         $shortHash = substr(md5(serialize($objects)), 0, 10);
         $cacheIdentifier = $this->getVendorName().'_'.$this->getExtensionKey().'_'.$shortHash.'_'.$type;
 

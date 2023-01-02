@@ -11,3 +11,8 @@ If there are FlexForms in the "Configuration/FlexForms/Content/" folder, the con
 
 .. note::
 	The loader change the subtypes_excludelist and subtypes_addlist of the given plugin signature. If you have any custom changes to this properties of tt_content you have to run your changes after the autoloader call.
+
+.. note::
+	Take care that you use this call `$GLOBALS['TCA']['tt_content'] = ModelUtility::getTcaOverrideInformation('EXT_KEY_HERE', 'tt_content');` in your Configuration/TCA/Overrides/tt_content.php file.
+
+

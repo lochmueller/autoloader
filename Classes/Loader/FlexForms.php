@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
-use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\TcaLoaderInterface;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Loading FlexForms.
  */
-class FlexForms implements LoaderInterface
+class FlexForms implements TcaLoaderInterface
 {
     /**
      * Get all the complex data for the loader.
@@ -59,6 +59,23 @@ class FlexForms implements LoaderInterface
      */
     public function loadExtensionTables(Loader $loader, array $loaderInformation): void
     {
+    }
+
+    /**
+     * Run the loading process for the ext_localconf.php file.
+     */
+    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
+    {
+    }
+
+    public function loadTcaConfiguration(Loader $loader, array $loaderInformation, string $extensionKey, string $tableName)
+    {
+        if ($extensionKey !== 'site') {
+            return;
+        }
+        if ($tableName !== 'tt_content') {
+            return;
+        }
         foreach ($loaderInformation as $info) {
             if (isset($info['pluginSignature'])) {
                 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$info['pluginSignature']] = 'layout,select_key,recursive';
@@ -72,12 +89,5 @@ class FlexForms implements LoaderInterface
                 ExtensionManagementUtility::addPiFlexFormValue('*', $info['path'], $info['contentSignature']);
             }
         }
-    }
-
-    /**
-     * Run the loading process for the ext_localconf.php file.
-     */
-    public function loadExtensionConfiguration(Loader $loader, array $loaderInformation): void
-    {
     }
 }
