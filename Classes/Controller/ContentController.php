@@ -46,11 +46,21 @@ class ContentController extends ActionController
 
             /** @var ContentDataProcessor $contentDataProcessor */
             $contentDataProcessor = GeneralUtility::makeInstance(ContentDataProcessor::class);
-            $variables = $contentDataProcessor->process(
-                $this->configurationManager->getContentObject(),
-                ['dataProcessing.' => $this->settings['dataProcessing'] ?? null],
-                ['data' => $data]
-            );
+
+            $dataProcessingAsTyposcriptArray = [];
+            if (array_key_exists('dataProcessing', $this->settings)) {
+                $dataProcessingAsTyposcriptArray = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class)->convertPlainArrayToTypoScriptArray($this->settings['dataProcessing']);
+            }
+
+            $variables = [];
+            if (!empty($dataProcessingAsTyposcriptArray)) {
+                $variables = $contentDataProcessor->process(
+                    $this->configurationManager->getContentObject(),
+                    ['dataProcessing.' => $dataProcessingAsTyposcriptArray],
+                    ['data' => $data]
+                );
+            }
+
             $variables['settings'] = $this->settings;
             $variables['object'] = $model;
 
