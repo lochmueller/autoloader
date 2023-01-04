@@ -70,9 +70,6 @@ class FlexForms implements TcaLoaderInterface
 
     public function loadTcaConfiguration(Loader $loader, array $loaderInformation, string $extensionKey, string $tableName)
     {
-        if ($extensionKey !== 'site') {
-            return;
-        }
         if ($tableName !== 'tt_content') {
             return;
         }
