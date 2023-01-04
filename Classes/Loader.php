@@ -86,6 +86,14 @@ class Loader implements SingletonInterface
     }
 
     /**
+     * @param string|null $extensionKey
+     */
+    public function setExtensionKey(?string $extensionKey): void
+    {
+        $this->extensionKey = $extensionKey;
+    }
+
+    /**
      * Load the ext tables information.
      */
     public function loadExtTables(string $vendorName, string $extensionKey, array $implementations = []): void

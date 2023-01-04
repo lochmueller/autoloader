@@ -139,7 +139,10 @@ class ModelUtility
         $implemetations = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] ?? false;
         if(is_array($implemetations)) {
             $GLOBALS['TCA'][$tableName] = $return;
+            /** @var Loader $loader */
             $loader = GeneralUtility::makeInstance(Loader::class);
+            $loader->setExtensionKey($extensionKey);
+
             $objects = $loader->buildAutoLoaderObjects($implemetations);
             $information = $loader->prepareAutoLoaderObjects($objects, LoaderInterface::EXT_LOCAL_CONFIGURATION);
             foreach ($objects as $object) {
