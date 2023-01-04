@@ -71,6 +71,7 @@ class Loader implements SingletonInterface
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] = $implementations;
+        $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Vendor'][$extensionKey] = $vendorName;
         $loader->loadExtTables($vendorName, $extensionKey, $implementations);
     }
 
@@ -82,6 +83,7 @@ class Loader implements SingletonInterface
         /** @var Loader $loader */
         $loader = GeneralUtility::makeInstance(self::class);
         $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Implementations'][$extensionKey] = $implementations;
+        $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Vendor'][$extensionKey] = $vendorName;
         $loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
     }
 
@@ -91,6 +93,14 @@ class Loader implements SingletonInterface
     public function setExtensionKey(?string $extensionKey): void
     {
         $this->extensionKey = $extensionKey;
+    }
+
+    /**
+     * @param string|null $vendorName
+     */
+    public function setVendorName(?string $vendorName): void
+    {
+        $this->vendorName = $vendorName;
     }
 
     /**

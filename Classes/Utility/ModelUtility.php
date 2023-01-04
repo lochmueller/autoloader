@@ -142,6 +142,7 @@ class ModelUtility
             /** @var Loader $loader */
             $loader = GeneralUtility::makeInstance(Loader::class);
             $loader->setExtensionKey($extensionKey);
+            $loader->setVendorName($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Vendor'][$extensionKey] ?? '');
 
             $objects = $loader->buildAutoLoaderObjects($implemetations);
             $information = $loader->prepareAutoLoaderObjects($objects, LoaderInterface::EXT_LOCAL_CONFIGURATION);
