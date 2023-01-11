@@ -78,7 +78,7 @@ class FlexForms implements TcaLoaderInterface
                 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$info['pluginSignature']] = 'layout,select_key,recursive';
                 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$info['pluginSignature']] = 'pi_flexform';
                 ExtensionManagementUtility::addPiFlexFormValue($info['pluginSignature'], $info['path']);
-            } elseif (isset($info['contentSignature'])) {
+            } elseif (isset($info['contentSignature']) && isset($GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'])) {
                 $fields = GeneralUtility::trimExplode(',', $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem']);
                 if (!\in_array('pi_flexform', $fields, true)) {
                     $GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'] .= ',pi_flexform';
