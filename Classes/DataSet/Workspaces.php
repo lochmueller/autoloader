@@ -27,13 +27,6 @@ class Workspaces implements DataSetInterface
                 'origUid' => 't3_origuid',
             ],
             'columns' => [
-                't3ver_label' => [
-                    'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
-                    'config' => [
-                        'type' => 'input',
-                        'max' => 255,
-                    ],
-                ],
             ],
         ];
     }
@@ -50,7 +43,6 @@ class Workspaces implements DataSetInterface
         return [
             //'t3ver_oid int(11) DEFAULT \'0\' NOT NULL',
             //'t3ver_id int(11) DEFAULT \'0\' NOT NULL',
-            //'t3ver_label varchar(255) DEFAULT \'\' NOT NULL',
             //'t3ver_wsid int(11) DEFAULT \'0\' NOT NULL',
             //'t3ver_state tinyint(4) DEFAULT \'0\' NOT NULL',
             //'t3ver_stage int(11) DEFAULT \'0\' NOT NULL',
