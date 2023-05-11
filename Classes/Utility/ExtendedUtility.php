@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Autoloader\Utility;
 
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -26,6 +27,12 @@ class ExtendedUtility
     public static function create(string $className): object
     {
         $arguments = \func_get_args();
+
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        if ($versionInformation->getMajorVersion() >= 11) {
+            return GeneralUtility::makeInstance($className);
+        }
+
         $objManager = GeneralUtility::makeInstance(ObjectManager::class);
 
         return $objManager->get($className);
@@ -119,9 +126,8 @@ class ExtendedUtility
         $view->setTemplatePathAndFilename($templatePath);
 
         // Get configuration
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var ConfigurationManager $configurationManager */
-        $configurationManager = $objectManager->get(ConfigurationManager::class);
+        $configurationManager = self::create(ConfigurationManager::class);
         $configuration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         $viewConfiguration = [];
         if (isset($configuration['module.']['tx_autoloader.']['view.'])) {
